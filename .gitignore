@@ -260,4 +260,4 @@ config/initializers/constants.rb
 /tmp/
 config/database.yml
 deploy.rb
-deploy.rb
+

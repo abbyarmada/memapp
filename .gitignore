@@ -258,3 +258,6 @@ config/initializers/constants.rb
 /test/tmp/
 /test/version_tmp/
 /tmp/
+config/database.yml
+deploy.rb
+deploy.rb

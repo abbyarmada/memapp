@@ -1,0 +1,24 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+
+<%= "List of Members by Membership Class" %><br/>
+
+Number of Payments <%= @pays.size%><br/>
+
+<table class="listing">
+ <th>Amount</th> <th>Mem Class</th> <th>Last Name</th> <th>First Name</th> <th>Date Lodged</th>
+<%@pays.each do |p| %>
+    <% n = p.member.people[0] %>
+   <tr class="<%= cycle('odd', 'even') %>">
+    
+     <td><%= p.amount%></td>
+     
+     <td> <%= p.privilege.name%></td>
+     <td><%= n.last_name %></td>
+     <td><%= n.first_name %></td>
+     <td><%= p.date_lodged.to_date%></td>
+  </tr>
+<% end %>
+</table>

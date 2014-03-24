@@ -1,0 +1,33 @@
+ 
+<h5>Car Park Passes <br> </h5><br/>
+
+ Number of car park passes to be issued: <%=@carpark.size %>
+ <br>
+ 
+ 
+<table class="listing">
+ <th>Surname</th> <th>First Name</th> <th>Home Phone</th> <th>Mobile </th> <th>email</th> <th>Membership Class</th>
+ <th>Last Payment</th> <th>Car Park ID</th>
+ 
+ 
+ 
+<% @carpark.each do |p| %>
+
+   <tr class="<%= cycle('odd', 'even') %>">
+
+
+	<td><%= p.last_name%>  		</td> 
+	<td><%= p.first_name%> 		</td>
+    <td><%= p.home_phone%>  		</td> 
+	<td><%= p.mobile_phone%>  	</td>
+	<td><%= p.email_addr %>		</td>
+	<td><%= p.mem_class %>		</td>
+	<td><%= p.date_lodged.to_date.to_s(:db) %>    </td>
+	<td><%= p.car_park_id %>	</td>
+	 
+  </tr>
+<% end %>
+<% form_tag({ :action => :carpark_csv })do %> <%= submit_tag 'Export CSV file' -%>
+
+    <% end -%>
+

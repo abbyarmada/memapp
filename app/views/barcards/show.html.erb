@@ -1,0 +1,19 @@
+<h1>Barcard#show</h1>
+
+
+
+<table class="listing">
+<th>Name</th><th>Type</th> <th>Class</th><th>Sail No</th><th>Surname</th><th>Firstname</th>
+<% @bcs.each do |b|%>
+  <tr>
+   <!-- <% x = b.member.people.find_by_status('m') %> 
+    <td><%= b.boat_name%></td><td><%=b.boat_type%></td><td><%=b.boat_class%></td><td><%=b.sail_number%></td><td><%= x.last_name%></td><td><%= x.first_name%></td>
+  -->
+  </tr>
+<% end%>
+
+</table>
+
+
+<%= link_to 'Edit', edit_barcard_path(@barcard) %> |
+<%= link_to 'Back', barcards_path %>

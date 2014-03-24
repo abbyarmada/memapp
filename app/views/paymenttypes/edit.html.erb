@@ -1,0 +1,12 @@
+<h1>Editing paymenttype</h1>
+
+<%= form_for(@paymenttype) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @paymenttype %> |
+<%= link_to 'Back', paymenttypes_path %>

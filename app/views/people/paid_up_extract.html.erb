@@ -1,0 +1,27 @@
+<h2>Member Extracts  <br> </h2>
+<table>
+ <tr><td> Memberships Count: <%= @people = Member.current_members.count %> </td></tr>
+ <tr><td> People      Count: <%= @people = Person.current.count %> </td></tr> 
+</table>
+
+<br /><br /><br />
+<%= link_to "This Year", :action => :paid_up_extract_current %> &nbsp; | &nbsp;
+<%= link_to "Last Year", :action => :paid_up_extract_last_year %> &nbsp; | &nbsp;
+<%= link_to "2 Years Ago", :action => :paid_up_extract_two_year_ago%> &nbsp; | &nbsp;
+<%= link_to "3 Years Ago", :action => :paid_up_extract_three_year_ago%>  &nbsp; | &nbsp;
+<%= link_to "4 Years Ago", :action => :paid_up_extract_four_year_ago%>  &nbsp; | &nbsp;
+<%= link_to "5 Years Ago", :action => :paid_up_extract_five_year_ago%>  &nbsp; | &nbsp;
+
+<br />
+<br />
+<br />
+
+This year :- Fully paid up members that have renewed for the current year <br />
+other files:- Members that were paid up that year. The column named "RenewedDate" will display the current latest renewal date - 
+even though the extract refers to a previous year. This will simplify determining who has renewed or not from each indivdual file.
+
+
+
+
+	
+

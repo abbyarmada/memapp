@@ -1,0 +1,20 @@
+<h1>Listing barcards</h1>
+
+
+<table>
+  <tr>
+  </tr>
+
+<% for barcard in @barcards %>
+  <tr>
+	<td> <%= barcard.bar_card_no %> 
+	<td> <%= barcard.new_mem_no %> 
+    <td><%= link_to 'Edit', edit_barcard_path(barcard) %></td>
+    <td><%= link_to 'Delete', barcard, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New barcard', new_barcard_path %>

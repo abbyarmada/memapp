@@ -1,0 +1,150 @@
+<%= semantic_form_for @person do |form| %>
+	<%= form.inputs :name => "Personal Information" do %>
+	<%= form.input :first_name %>
+	<%= form.input :last_name %>
+	<%= form.input :status, :as => :select , :collection => Person.status, :include_blank => false %>
+	<%= form.input :occupation %>
+	<%= form.input :dob, :as => :date ,:order => [:day, :month, :year] ,:include_blank => true , :start_year => Time.now.year - 100 %> 
+	<%= form.input :home_phone %> 
+	<%= form.input :mobile_phone %> 
+	
+	
+	<%= form.input :snd_txt, :as => :radio , :collection => [["Yes",'Y'], ["No","N"]]%>  %>  
+	<%= form.input :email_addr %>
+	<%= form.input :snd_eml, :as => :radio , :collection => [["Yes",'Y'], ["No","N"]]%>  %>  
+	
+	<%#= form.autocompleted_input :proposed, :url => autocomplete_member_proposed_members_path, :label => "Proposed" 
+	%> 
+	<%= hidden_field 'person', 'member_number'  %>
+    <%= hidden_field 'person', 'member_id' rescue nil%>
+<% end %>
+<% end %> 
+
+
+
+<fieldset>
+    <legend>Personal Details</legend> 
+
+   
+
+    <table>
+        <tr>
+            <td>First name</td>
+
+            <td>
+            <%= text_field 'person', 'first_name'  %></td>
+        </tr>
+
+        <tr>
+            <td>Last name</td>
+
+            <td>
+            <%= text_field 'person', 'last_name'  %></td>
+        </tr>
+
+        <tr>
+            <td>Status</td>
+
+            <td>
+            <%= collection_select("person" ,"status", Person.status,:first,:last ) %></td>
+        </tr>
+
+        <tr>
+            <td>
+            </td>
+
+            <td>(m, p, ch)</td>
+        </tr>
+		
+		<tr>
+			<td>Occupation</td>
+			<td>
+				<%= text_field 'person','occupation'  %>
+				</td>
+        
+			
+        </tr>
+		
+		
+		
+
+        <tr>
+            <td>Date of Birth</td>
+
+            <td>
+            <%= date_select('person', 'dob',:include_blank => true,:start_year => Time.now.year - 100)  %></td>
+        </tr>
+
+        <tr>
+            <td>Age:</td>
+
+            <td><%= @person.age %></td>
+        </tr>
+
+        <tr>
+            <td>Home phone</td>
+
+            <td>
+            <%= text_field 'person', 'home_phone'  %></td>
+        </tr>
+
+        <tr>
+            <td>Mobile phone</td>
+
+            <td>
+            <%= text_field 'person', 'mobile_phone'  %></td>
+        </tr>
+
+        <tr>
+            <td>Send Text Messages ?</td>
+
+            <td>
+            <%= radio_button(:person, :snd_txt, "Y")  %><label
+             for="person_snd_txt_y">Yes</label>
+            <%= radio_button(:person, :snd_txt, "N")  %><label
+             for="person_snd_txt_n">No</label> </td>
+        </tr>
+
+        <tr>
+            <td>Email addr</td>
+
+            <td>
+            <%= text_field 'person', 'email_addr'  %></td>
+        </tr>
+
+        <tr>
+            <td>Send Email Messages ?</td>
+
+            <td>
+            <%= radio_button(:person, :snd_eml, "Y")  %><label
+             for="person_snd_eml_y">Yes</label>
+            <%= radio_button(:person, :snd_eml, "N") %><label
+             for="person_snd_eml_n">No</label> </td>
+        </tr>
+
+        <tr>
+            <td>
+            </td>
+
+            <td>
+            <%= hidden_field 'person', 'member_number'  %></td>
+        </tr>
+
+        <tr>
+            <td>Member Unique Number:</td>
+
+            <td><%= @person.id  %></td>
+        </tr>
+
+        <tr>
+            <td>Belongs to Membership:</td>
+
+            <td><%= @person.member_id %></td>
+
+            <td>
+            <%= hidden_field 'person', 'member_id' rescue nil%></td>
+        </tr>
+    </table>   
+
+</fieldset>
+

@@ -1,0 +1,6 @@
+
+<tr class="<%= cycle('odd', 'even') %>">
+<td><%= link_to  "%05d" % @person.peoplebarcard.barcard.id, edit_peoplebarcard_path(@person.peoplebarcard.id,:pid => @person.id) %> </td>
+<td><%= number_to_currency( (@person.loyaltycard.Current_Points).to_f / 100, :unit => "&euro;") rescue nil  %> </td>
+<td><%= link_to 'Delete', peoplebarcard_path(@person.peoplebarcard.id) , :action => :destroy, :confirm => "Are you sure you want to delete this Barcard ?", :method => :delete %></td>
+</tr>

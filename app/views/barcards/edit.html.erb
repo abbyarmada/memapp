@@ -1,0 +1,21 @@
+<h1>Editing barcard</h1>
+
+
+
+<% @pid = (params[:pid])%>
+<% @mid = (params[:mid])%>
+
+<%= form_tag :action => 'update', :pid => @pid , :mid => @mid  do %>
+<%= form_for(@barcard) do |f| %>
+	
+<%= render :partial => "form", :locals => { :button_label => "Update", :barcard => @barcard, :pid => @pid ,:mid => @mid } %> 
+  
+
+<%= link_to 'Back', :controller => 'people', :action => 'edit', :id => @pid %>
+ 
+<% end %>
+<% end %>
+
+
+
+

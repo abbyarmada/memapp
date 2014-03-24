@@ -1,0 +1,7 @@
+<%= semantic_form_for(@person) do |form|  %>
+<h1>New person</h1>
+<% @pid = (params[:pid]) %>
+  		<%= render :partial => 'shared/person', :locals => { :form => form ,:buttons => true ,:button_label => 'Create Person'} %>
+<%= link_to 'Back', edit_person_path(@person.member.main_member)  %>
+<% end %>
+ 

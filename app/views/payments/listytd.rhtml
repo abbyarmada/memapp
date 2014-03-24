@@ -1,0 +1,18 @@
+<%= "list of payments this year to date" %><br/>
+
+Number of Payments <%= @payments.size%><br/>
+
+<table class="listing">
+ <th>Amount</th> <th>Payment Method</th> <th>Member Class</th> <th>Payment Type</th> <th>Last Name</th> <th>First Name</th> <th>Date Lodged</th>
+<%@payments.each do |payment| %>
+   <tr class="<%= cycle('odd', 'even') %>">
+     <td><%= link_to payment.amount , edit_payment_path(:id => payment.id) %></td>
+     <td><%= Payment.cardname(payment.pay_type)   %></td>
+     <td><%= payment.privilege.class_desc %></td>
+	 <td><%= payment.paymenttype.description %></td>
+     <td><%= payment.member.people[0].last_name %></td> 
+	  <td><%= payment.member.people[0].first_name %></td> 
+     <td><%= payment.date_lodged.to_date%></td>
+  </tr>
+<% end %>
+</table>

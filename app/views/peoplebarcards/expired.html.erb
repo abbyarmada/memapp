@@ -1,0 +1,21 @@
+<h1>Barcards of Expired Members</h1>
+
+<p> Number Expired : <%= @expiredmems.length %></p>
+ <%=  @expiredmemscount %>
+<table class="listing">
+<th>Person ID</th><th>Last<br>Name</th><th>First<br>Name</th><th>Barcard<br>ID</th>
+<% @expiredmems.each do |@expired|%>
+
+ <%    @expired.people.each do |@person| %>
+  <tr class="<%= cycle('odd', 'even') %>">
+  	
+  <td> <%= @person.id %></td>
+ <td> <%= @person.last_name %></td>
+ <td> <%= @person.first_name %></td>
+ <td>   <%= @person.peoplebarcard.barcard_id rescue nil %> </td>
+  </tr>
+<% end%>
+<% end%>
+
+</table>
+

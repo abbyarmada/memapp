@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: MemberController</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">MemberController</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/app/controllers/member_controller_rb.html">
+                app/controllers/member_controller.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="ApplicationController.html">
+                ApplicationController
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000060">all_member_details_csv</a>&nbsp;&nbsp;
+      <a href="#M000063">carpark_passes</a>&nbsp;&nbsp;
+      <a href="#M000064">carpark_passes2</a>&nbsp;&nbsp;
+      <a href="#M000059">create</a>&nbsp;&nbsp;
+      <a href="#M000061">for_mail_merge_csv</a>&nbsp;&nbsp;
+      <a href="#M000058">new</a>&nbsp;&nbsp;
+      <a href="#M000057">show</a>&nbsp;&nbsp;
+      <a href="#M000062">update_renewed_from_payments</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <a href="#M000060" class="method-signature">
+          <span class="method-name">all_member_details_csv</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <h6>=========================================</h6>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000060-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/member_controller.rb, line 80</span>
+ 80:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">all_member_details_csv</span>
+ 81:     <span class="ruby-comment cmt"># this generates an inelegant CSV file with data on all members including their</span>
+ 82:     <span class="ruby-comment cmt">#  latest payment date. Its easier to organize lists with a spreadsheet.</span>
+ 83:     
+ 84:     <span class="ruby-comment cmt"># open the CSV file - the old version gets overwritten</span>
+ 85:     <span class="ruby-comment cmt">#f = File.open(File.expand_path(File.dirname(__FILE__)+ </span>
+ 86:     <span class="ruby-comment cmt">#      &quot;/../../public/all_member_details&quot; + Time.now.to_s + &quot;.csv&quot;),&quot;w&quot;)</span>
+ 87:     <span class="ruby-identifier">t</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+ 88:     <span class="ruby-identifier">f</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-value str">&quot;C:/MYCStuff/All_Member_Details_&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">mon</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">day</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.csv&quot;</span>, <span class="ruby-value str">&quot;w&quot;</span>)
+ 89: 
+ 90:     <span class="ruby-constant">CSV</span><span class="ruby-operator">::</span><span class="ruby-constant">Writer</span>.<span class="ruby-identifier">generate</span>(<span class="ruby-identifier">f</span>, <span class="ruby-value str">','</span>) <span class="ruby-keyword kw">do</span>  <span class="ruby-operator">|</span><span class="ruby-identifier">csv</span><span class="ruby-operator">|</span> 
+ 91:     <span class="ruby-comment cmt"># create the header row</span>
+ 92:     
+ 93:     <span class="ruby-identifier">csv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%w(lpdate barvch mtype mlast mfirst mnum dear addr0 addr1 addr2 addr3 addr4 occ hph
+ 94:               bn bt bc sn mfirst mlast mph eml so ra cr di ju
+ 95:               pfirst plast pmph peml pso pra pcr pdi pju
+ 96:               c1first c1last c1dob c1mph c1eml c1so c1ra c1cr c1di c1ju
+ 97:               c2first c2last c2dob c2mph c2eml c2so c2ra c2cr c2di c2ju
+ 98:               c3first c3last c3dob c3mph c3eml c3so c3ra c3cr c3di c3ju
+ 99:               c4first c4last c4dob c4mph c4eml c4so c4ra c4cr c4di c4ju
+100:               c5first c5last c5dob c5mph c5eml c5so c5ra c5cr c5di c5ju       
+101:             )</span>
+102: 
+103:     
+104:     <span class="ruby-comment cmt"># first find all the members and include the relevant other tables</span>
+105:     <span class="ruby-identifier">m1</span> = <span class="ruby-constant">Member</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:include</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-identifier">:payments</span>, <span class="ruby-identifier">:people</span>, <span class="ruby-identifier">:boats</span>, <span class="ruby-identifier">:peoplebarcards</span>], <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:member_num</span>
+106:       <span class="ruby-comment cmt"># for every member</span>
+107:       <span class="ruby-identifier">m1</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+108:       <span class="ruby-ivar">@mnum</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">member_num</span>
+109:       <span class="ruby-ivar">@occ</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">occupation</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+110:       
+111:       <span class="ruby-comment cmt"># get all the member's payments</span>
+112:       <span class="ruby-comment cmt">#  we want to get the data for the most recent payment</span>
+113:       
+114:       <span class="ruby-identifier">lpmt</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">payments</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;date_lodged DESC&quot;</span>
+115:       <span class="ruby-ivar">@latest_pmt_date</span> = <span class="ruby-identifier">lpmt</span>.<span class="ruby-identifier">date_lodged</span>.<span class="ruby-identifier">to_date</span>
+116:       <span class="ruby-ivar">@barvch</span> = <span class="ruby-identifier">lpmt</span>.<span class="ruby-identifier">bar_billies</span>
+117:       
+118:       <span class="ruby-ivar">@mtype</span> = <span class="ruby-identifier">lpmt</span>.<span class="ruby-identifier">mtype</span>
+119:       <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span> <span class="ruby-ivar">@mtype</span>
+120:         <span class="ruby-ivar">@mtype</span> = <span class="ruby-value str">&quot;&quot;</span>
+121:       <span class="ruby-keyword kw">end</span>
+122:       
+123:         
+124:       <span class="ruby-comment cmt"># initialize variables to prevent NIL errors</span>
+125:       
+126:       <span class="ruby-ivar">@a1</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">address1</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+127:       <span class="ruby-ivar">@a2</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">address2</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+128:       <span class="ruby-ivar">@a3</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">address3</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+129:       <span class="ruby-ivar">@a4</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">address4</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+130:       
+131:       <span class="ruby-ivar">@ch</span> = []
+132:       <span class="ruby-ivar">@mf</span> = <span class="ruby-value str">&quot;&quot;</span>
+133:       <span class="ruby-ivar">@ml</span> = <span class="ruby-value str">&quot;&quot;</span>
+134:       <span class="ruby-ivar">@pf</span> = <span class="ruby-value str">&quot;&quot;</span>
+135:       <span class="ruby-ivar">@pl</span> = <span class="ruby-value str">&quot;&quot;</span>
+136:       
+137:       <span class="ruby-identifier">fn</span> = <span class="ruby-value">0</span>
+138:       <span class="ruby-identifier">ln</span> = <span class="ruby-value">1</span>
+139:       <span class="ruby-identifier">dob</span> = <span class="ruby-value">2</span>
+140:       <span class="ruby-identifier">so</span> = <span class="ruby-value">3</span>
+141:       <span class="ruby-identifier">ra</span> = <span class="ruby-value">4</span>
+142:       <span class="ruby-identifier">cr</span> = <span class="ruby-value">5</span>
+143:       <span class="ruby-identifier">di</span> = <span class="ruby-value">6</span>
+144:       <span class="ruby-identifier">ju</span> = <span class="ruby-value">7</span>
+145:       <span class="ruby-identifier">mp</span> = <span class="ruby-value">8</span>
+146:       <span class="ruby-identifier">em</span> = <span class="ruby-value">9</span>
+147:       
+148:       <span class="ruby-identifier">c</span> = []
+149:       <span class="ruby-identifier">c</span>[<span class="ruby-value">0</span>] = []
+150:       <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>] = []
+151:       <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>] = []
+152:       <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>] = []
+153:       <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>] = []
+154:       <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>] = []
+155:       <span class="ruby-identifier">c</span>[<span class="ruby-value">6</span>] = []
+156:       <span class="ruby-identifier">c</span>[<span class="ruby-value">7</span>] = []
+157:       <span class="ruby-identifier">c</span>[<span class="ruby-value">8</span>] = []
+158:       <span class="ruby-identifier">c</span>[<span class="ruby-value">9</span>] = []
+159:       
+160:       <span class="ruby-comment cmt"># now get all the people associated with the member</span>
+161:       <span class="ruby-identifier">p1</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">people</span> <span class="ruby-comment cmt">#.find :all</span>
+162:       <span class="ruby-ivar">@ch_num</span> = <span class="ruby-value">0</span> <span class="ruby-comment cmt"># for counting the kids</span>
+163:       <span class="ruby-identifier">p1</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+164:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;m&quot;</span>
+165:           <span class="ruby-ivar">@mf</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+166:           <span class="ruby-ivar">@ml</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+167:           <span class="ruby-ivar">@so</span> = <span class="ruby-value str">&quot;&quot;</span>
+168:           <span class="ruby-ivar">@ra</span> = <span class="ruby-value str">&quot;&quot;</span>
+169:           <span class="ruby-ivar">@cr</span> = <span class="ruby-value str">&quot;&quot;</span>
+170:           <span class="ruby-ivar">@di</span> = <span class="ruby-value str">&quot;&quot;</span>
+171:           <span class="ruby-ivar">@ju</span> = <span class="ruby-value str">&quot;&quot;</span>
+172:           <span class="ruby-ivar">@cp</span> = <span class="ruby-value str">&quot;&quot;</span>
+173:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>
+174:             <span class="ruby-ivar">@cp</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>.<span class="ruby-identifier">upcase</span>
+175:           <span class="ruby-keyword kw">end</span>
+176:           <span class="ruby-comment cmt"># there is probably a more elegant way, but this works</span>
+177:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/SO/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+178:             <span class="ruby-ivar">@so</span> = <span class="ruby-value str">&quot;X&quot;</span>
+179:           <span class="ruby-keyword kw">end</span>
+180:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/CR/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+181:             <span class="ruby-ivar">@cr</span> = <span class="ruby-value str">&quot;X&quot;</span>
+182:           <span class="ruby-keyword kw">end</span>
+183:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/RA/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+184:             <span class="ruby-ivar">@ra</span> = <span class="ruby-value str">&quot;X&quot;</span>
+185:           <span class="ruby-keyword kw">end</span>
+186:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/DI/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+187:             <span class="ruby-ivar">@di</span> = <span class="ruby-value str">&quot;X&quot;</span>
+188:           <span class="ruby-keyword kw">end</span>
+189:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/JU/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+190:             <span class="ruby-ivar">@ju</span> = <span class="ruby-value str">&quot;X&quot;</span>
+191:           <span class="ruby-keyword kw">end</span>
+192:           <span class="ruby-ivar">@hph</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">home_phone</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+193:           <span class="ruby-ivar">@mph</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+194:           <span class="ruby-ivar">@eml</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+195:         <span class="ruby-keyword kw">end</span>
+196:         <span class="ruby-comment cmt"># now do the partner</span>
+197:         <span class="ruby-comment cmt"># initialise variables in case there is no partner</span>
+198: 
+199:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;p&quot;</span>
+200:           <span class="ruby-ivar">@pf</span> = <span class="ruby-value str">&quot;&quot;</span>
+201:           <span class="ruby-ivar">@pl</span> = <span class="ruby-value str">&quot;&quot;</span>
+202:           <span class="ruby-ivar">@pmph</span> = <span class="ruby-value str">&quot;&quot;</span>
+203:           <span class="ruby-ivar">@peml</span> =<span class="ruby-value str">&quot;&quot;</span>
+204:           <span class="ruby-ivar">@pso</span> = <span class="ruby-value str">&quot;&quot;</span>
+205:           <span class="ruby-ivar">@pra</span> = <span class="ruby-value str">&quot;&quot;</span>
+206:           <span class="ruby-ivar">@pcr</span> = <span class="ruby-value str">&quot;&quot;</span>
+207:           <span class="ruby-ivar">@pdi</span> = <span class="ruby-value str">&quot;&quot;</span>
+208:           <span class="ruby-ivar">@pju</span> = <span class="ruby-value str">&quot;&quot;</span>
+209:           <span class="ruby-ivar">@pf</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+210:           <span class="ruby-ivar">@pl</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+211:           
+212:           <span class="ruby-ivar">@cp</span> = <span class="ruby-value str">&quot;&quot;</span>
+213:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>
+214:             <span class="ruby-ivar">@cp</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>.<span class="ruby-identifier">upcase</span>
+215:           <span class="ruby-keyword kw">end</span>
+216:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/SO/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+217:             <span class="ruby-ivar">@pso</span> = <span class="ruby-value str">&quot;X&quot;</span>
+218:           <span class="ruby-keyword kw">end</span>
+219:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/CR/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+220:             <span class="ruby-ivar">@pcr</span> = <span class="ruby-value str">&quot;X&quot;</span>
+221:           <span class="ruby-keyword kw">end</span>
+222:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/RA/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+223:             <span class="ruby-ivar">@pra</span> = <span class="ruby-value str">&quot;X&quot;</span>
+224:           <span class="ruby-keyword kw">end</span>
+225:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/DI/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+226:             <span class="ruby-ivar">@pdi</span> = <span class="ruby-value str">&quot;X&quot;</span>
+227:           <span class="ruby-keyword kw">end</span>
+228:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/JU/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+229:             <span class="ruby-ivar">@pju</span> = <span class="ruby-value str">&quot;X&quot;</span>
+230:           <span class="ruby-keyword kw">end</span>
+231:           <span class="ruby-ivar">@pmph</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+232:           <span class="ruby-ivar">@peml</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+233:         <span class="ruby-keyword kw">end</span>
+234:         
+235:         <span class="ruby-comment cmt"># and now do a child</span>
+236:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;ch&quot;</span>    
+237:           <span class="ruby-ivar">@ch_num</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+238:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>] = []
+239:           <span class="ruby-ivar">@cf</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+240:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">fn</span>] = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+241:           <span class="ruby-ivar">@cl</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+242:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">ln</span>] = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+243:           <span class="ruby-ivar">@cd</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">child_dob</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+244:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">dob</span>] = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">child_dob</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+245:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">so</span>] = <span class="ruby-value str">&quot;&quot;</span> 
+246:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">ra</span>] = <span class="ruby-value str">&quot;&quot;</span> 
+247:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">cr</span>] = <span class="ruby-value str">&quot;&quot;</span> 
+248:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">di</span>] = <span class="ruby-value str">&quot;&quot;</span> 
+249:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">ju</span>] = <span class="ruby-value str">&quot;&quot;</span> 
+250:           
+251:           <span class="ruby-ivar">@cp</span> = <span class="ruby-value str">&quot; &quot;</span>
+252:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>
+253:             <span class="ruby-ivar">@cp</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>.<span class="ruby-identifier">upcase</span>
+254:           <span class="ruby-keyword kw">end</span>
+255:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/SO/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+256:             <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">so</span>] = <span class="ruby-value str">&quot;X&quot;</span>
+257:           <span class="ruby-keyword kw">end</span>
+258:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/CR/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+259:             <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">cr</span>] = <span class="ruby-value str">&quot;X&quot;</span>
+260:           <span class="ruby-keyword kw">end</span>
+261:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/RA/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+262:             <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">ra</span>] = <span class="ruby-value str">&quot;X&quot;</span>
+263:           <span class="ruby-keyword kw">end</span>
+264:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/DI/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+265:             <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">di</span>] = <span class="ruby-value str">&quot;X&quot;</span>
+266:           <span class="ruby-keyword kw">end</span>
+267:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/JU/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+268:             <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">ju</span>] = <span class="ruby-value str">&quot;X&quot;</span>
+269:           <span class="ruby-keyword kw">end</span>
+270:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">mp</span>] = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot; &quot;</span>
+271:           <span class="ruby-identifier">c</span>[<span class="ruby-ivar">@ch_num</span>][<span class="ruby-identifier">em</span>] = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot; &quot;</span>
+272:               
+273:               
+274:         <span class="ruby-keyword kw">end</span>
+275:         
+276:       <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># p1 - the data for a person</span>
+277:       
+278:       <span class="ruby-comment cmt"># get data about the first boat</span>
+279:       <span class="ruby-identifier">b</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">boats</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">:first</span>
+280:       <span class="ruby-ivar">@bn</span> = <span class="ruby-value str">&quot;&quot;</span>
+281:       <span class="ruby-ivar">@bt</span> = <span class="ruby-value str">&quot;&quot;</span>
+282:       <span class="ruby-ivar">@bl</span> = <span class="ruby-value str">&quot;&quot;</span>
+283:       <span class="ruby-ivar">@bc</span> = <span class="ruby-value str">&quot;&quot;</span>
+284:       <span class="ruby-ivar">@sn</span> = <span class="ruby-value str">&quot;&quot;</span>
+285:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">b</span>
+286:         <span class="ruby-ivar">@bn</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">boat_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+287:         <span class="ruby-ivar">@bt</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">boat_type</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+288:         <span class="ruby-ivar">@bc</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">boat_class</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+289:         <span class="ruby-ivar">@sn</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">sail_number</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+290:       <span class="ruby-keyword kw">end</span>
+291:       <span class="ruby-comment cmt"># now we need to work out the envelope address - which goes in @a0</span>
+292:       <span class="ruby-comment cmt"># and the Dear Joe and Mary for the letter - which goes in @dear</span>
+293:       
+294:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@pl</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-comment cmt"># no partner</span>
+295:         <span class="ruby-ivar">@a0</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@ml</span>
+296:         <span class="ruby-ivar">@dear</span> = <span class="ruby-ivar">@mf</span>
+297:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@pl</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@ml</span> <span class="ruby-comment cmt"># partner does not use her own name</span>
+298:         <span class="ruby-ivar">@a0</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &amp; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@ml</span>
+299:         <span class="ruby-ivar">@dear</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &amp; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pf</span>
+300:       <span class="ruby-keyword kw">else</span> <span class="ruby-comment cmt"># partner does use her own name</span>
+301:         <span class="ruby-ivar">@a0</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@ml</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &amp; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pl</span>
+302:         <span class="ruby-ivar">@dear</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &amp; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pf</span>
+303:       <span class="ruby-keyword kw">end</span>
+304:       
+305:       <span class="ruby-comment cmt"># use csv because it automatically puts in quotes if a field cotains a comma</span>
+306:       <span class="ruby-identifier">csv</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-ivar">@latest_pmt_date</span>, <span class="ruby-ivar">@barvch</span>, <span class="ruby-ivar">@mtype</span>, <span class="ruby-ivar">@ml</span>, <span class="ruby-ivar">@mf</span>, <span class="ruby-ivar">@mnum</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-ivar">@dear</span>, 
+307:               <span class="ruby-ivar">@a0</span>, <span class="ruby-ivar">@a1</span>, <span class="ruby-ivar">@a2</span>, <span class="ruby-ivar">@a3</span>, <span class="ruby-ivar">@a4</span>, <span class="ruby-ivar">@occ</span>, <span class="ruby-ivar">@hph</span>, 
+308:               <span class="ruby-ivar">@bn</span>, <span class="ruby-ivar">@bt</span>, <span class="ruby-ivar">@bc</span>, <span class="ruby-ivar">@sn</span>,
+309:               <span class="ruby-ivar">@mf</span>, <span class="ruby-ivar">@ml</span>, <span class="ruby-ivar">@mph</span>, <span class="ruby-ivar">@eml</span>, <span class="ruby-ivar">@so</span>, <span class="ruby-ivar">@ra</span>, <span class="ruby-ivar">@cr</span>, <span class="ruby-ivar">@di</span>, <span class="ruby-ivar">@ju</span>,
+310:               <span class="ruby-ivar">@pf</span>, <span class="ruby-ivar">@pl</span>, <span class="ruby-ivar">@pmph</span>, <span class="ruby-ivar">@peml</span>, <span class="ruby-ivar">@pso</span>, <span class="ruby-ivar">@pra</span>, <span class="ruby-ivar">@pcr</span>, <span class="ruby-ivar">@pdi</span>, <span class="ruby-ivar">@pju</span>,
+311:               <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">fn</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">ln</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">dob</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">mp</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">em</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">so</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">ra</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">cr</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">di</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">ju</span>],
+312:               <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">fn</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">ln</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">dob</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">mp</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">em</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">so</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">ra</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">cr</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">di</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>][<span class="ruby-identifier">ju</span>],
+313:               <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">fn</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">ln</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">dob</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">mp</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">em</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">so</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">ra</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">cr</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">di</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>][<span class="ruby-identifier">ju</span>],
+314:               <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">fn</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">ln</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">dob</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">mp</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">em</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">so</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">ra</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">cr</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">di</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>][<span class="ruby-identifier">ju</span>],
+315:               <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">fn</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">ln</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">dob</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">mp</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">em</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">so</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">ra</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">cr</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">di</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>][<span class="ruby-identifier">ju</span>]
+316:             ]
+317: 
+318:     
+319:     <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># m1 - the data for a member</span>
+320:     
+321:     <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># csv writer</span>
+322:     <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
+323:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'person'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'listm'</span>
+324:     
+325:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+          <a href="#M000063" class="method-signature">
+          <span class="method-name">carpark_passes</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000063-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/member_controller.rb, line 605</span>
+605:  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">carpark_passes</span>
+606:    <span class="ruby-identifier">this_yr_start</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;-01-01&quot;</span> 
+607:    
+608:    <span class="ruby-ivar">@mems</span> = <span class="ruby-constant">Member</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">:all</span>,<span class="ruby-identifier">:select</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;privileges.car_park&quot;</span>,
+609:    <span class="ruby-identifier">:joins</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'inner join privileges ON privileges.id = members.privilege_id'</span>, 
+610:    <span class="ruby-identifier">:include</span> =<span class="ruby-operator">&gt;</span>[<span class="ruby-identifier">:people</span>],
+611:    <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;renew_date &gt;= '#{this_yr_start}' and privileges.car_park &gt; 0 and people.status in ('m','p') &quot;</span>
+612:    
+613:   
+614:  
+615:    
+616:    <span class="ruby-ivar">@cp</span> = []
+617:    <span class="ruby-ivar">@carpark</span> = []
+618:    <span class="ruby-ivar">@carparks</span> = []
+619:    
+620:    <span class="ruby-ivar">@mems</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">mem</span><span class="ruby-operator">|</span>
+621:    <span class="ruby-comment cmt"># puts(mem.privileges.car_park)    </span>
+622:        <span class="ruby-ivar">@p</span> = <span class="ruby-identifier">mem</span>.<span class="ruby-identifier">people</span>
+623:        
+624:        <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+625:        <span class="ruby-ivar">@p</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+626:           <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+627:         <span class="ruby-comment cmt"># puts(@p.size)</span>
+628:          <span class="ruby-comment cmt">#puts(p.id)</span>
+629:          <span class="ruby-comment cmt">#puts(p.last_name)</span>
+630:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span>
+631:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span>
+632:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">home_phone</span>
+633:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span>
+634:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span>
+635:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member</span>.<span class="ruby-identifier">privilege</span>.<span class="ruby-identifier">class_desc</span>
+636:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member</span>.<span class="ruby-identifier">renew_date</span>.<span class="ruby-identifier">to_date</span>
+637:          
+638:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'00'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_s</span>    
+639:          <span class="ruby-ivar">@carparks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@cp</span>
+640:        <span class="ruby-keyword kw">end</span>
+641:        
+642:      <span class="ruby-keyword kw">end</span>
+643:     <span class="ruby-ivar">@carpark</span> = <span class="ruby-ivar">@carparks</span>.<span class="ruby-identifier">sort</span>
+644:  
+645:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:commit</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'Export CSV file'</span>
+646:      <span class="ruby-comment cmt">#  </span>
+647:      <span class="ruby-identifier">report</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>
+648:      <span class="ruby-constant">CSV</span><span class="ruby-operator">::</span><span class="ruby-constant">Writer</span>.<span class="ruby-identifier">generate</span>(<span class="ruby-identifier">report</span>,<span class="ruby-value str">','</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">title</span><span class="ruby-operator">|</span>
+649:    
+650:        <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span>  [<span class="ruby-value str">'Last Name'</span>, <span class="ruby-value str">'First Name'</span>, <span class="ruby-value str">'Home Phone'</span>, <span class="ruby-value str">'Mobile'</span>, <span class="ruby-value str">'Email'</span>, <span class="ruby-value str">'Mem Class'</span>, <span class="ruby-value str">'renewed date'</span>, <span class="ruby-value str">'Car Park No'</span>]
+651:        <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>   
+652:        <span class="ruby-ivar">@carpark</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+653:          <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">0</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">3</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">4</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">5</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">6</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">7</span>]]  
+654:          <span class="ruby-identifier">i</span> = <span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">8</span> 
+655:          <span class="ruby-keyword kw">end</span>
+656:      <span class="ruby-keyword kw">end</span>
+657:  
+658: <span class="ruby-identifier">report</span>.<span class="ruby-identifier">rewind</span>
+659: 
+660:  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">report</span>.<span class="ruby-identifier">read</span>,<span class="ruby-identifier">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/csv; charset=iso-8859-1; header=present'</span>,<span class="ruby-identifier">:filename</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'CarParkPasses.csv'</span>, <span class="ruby-identifier">:disposition</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'attachment'</span>, <span class="ruby-identifier">:encoding</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'utf8'</span>)
+661: 
+662:   <span class="ruby-keyword kw">end</span>
+663:  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
+
+        <div class="method-heading">
+          <a href="#M000064" class="method-signature">
+          <span class="method-name">carpark_passes2</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000064-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/member_controller.rb, line 665</span>
+665: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">carpark_passes2</span>
+666:   
+667:   <span class="ruby-ivar">@mems</span> = <span class="ruby-constant">Member</span>.<span class="ruby-identifier">parking_members</span>
+668:  
+669:    
+670:    <span class="ruby-ivar">@cp</span> = []
+671:    <span class="ruby-ivar">@carpark</span> = []
+672:    <span class="ruby-ivar">@carparks</span> = []
+673:    <span class="ruby-identifier">s</span> = <span class="ruby-ivar">@mems</span>.<span class="ruby-identifier">size</span>
+674:    <span class="ruby-comment cmt">#p = @mems.person.size</span>
+675:    
+676:    <span class="ruby-ivar">@mems</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">mem</span><span class="ruby-operator">|</span>
+677:      
+678:        
+679:       
+680:        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mem</span>.<span class="ruby-identifier">people</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">mem</span>.<span class="ruby-identifier">privilege</span>.<span class="ruby-identifier">car_park</span>
+681:        <span class="ruby-ivar">@p</span> = <span class="ruby-identifier">mem</span>.<span class="ruby-identifier">people</span>
+682:        <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+683:        <span class="ruby-ivar">@p</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+684:          
+685:          <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+686:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">id</span>
+687:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span>
+688:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span>
+689:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">home_phone</span>
+690:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span>
+691:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span>
+692:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member</span>.<span class="ruby-identifier">privilege</span>.<span class="ruby-identifier">class_desc</span>
+693:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member</span>.<span class="ruby-identifier">renew_date</span>.<span class="ruby-identifier">to_date</span>
+694:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'00'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_s</span>    
+695:          <span class="ruby-ivar">@carparks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@cp</span>
+696: 
+697:        <span class="ruby-keyword kw">end</span>
+698:       <span class="ruby-keyword kw">elsif</span>  <span class="ruby-identifier">mem</span>.<span class="ruby-identifier">privilege</span>.<span class="ruby-identifier">car_park</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">mem</span>.<span class="ruby-identifier">people</span>.<span class="ruby-identifier">size</span>
+699:        
+700:        <span class="ruby-identifier">p</span> = <span class="ruby-identifier">mem</span>.<span class="ruby-identifier">people</span>[<span class="ruby-value">0</span>]
+701:        
+702:        <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+703:        <span class="ruby-identifier">mem</span>.<span class="ruby-identifier">privilege</span>.<span class="ruby-identifier">car_park</span>.<span class="ruby-identifier">times</span>  <span class="ruby-keyword kw">do</span> 
+704:          
+705:          <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+706:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">id</span>
+707:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span>
+708:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span>
+709:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">home_phone</span>
+710:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span>
+711:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span>
+712:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member</span>.<span class="ruby-identifier">privilege</span>.<span class="ruby-identifier">class_desc</span>
+713:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member</span>.<span class="ruby-identifier">renew_date</span>.<span class="ruby-identifier">to_date</span>
+714:          <span class="ruby-ivar">@cp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'00'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_s</span>    
+715:          <span class="ruby-ivar">@carparks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@cp</span>
+716:          
+717:        <span class="ruby-keyword kw">end</span>
+718:        <span class="ruby-keyword kw">end</span>
+719:      <span class="ruby-keyword kw">end</span>
+720:     <span class="ruby-ivar">@carpark</span> = <span class="ruby-ivar">@carparks</span>.<span class="ruby-identifier">sort</span>
+721:  
+722:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:commit</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'Export CSV file'</span>
+723:      <span class="ruby-comment cmt">#  </span>
+724:      <span class="ruby-identifier">report</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>
+725:      <span class="ruby-constant">CSV</span><span class="ruby-operator">::</span><span class="ruby-constant">Writer</span>.<span class="ruby-identifier">generate</span>(<span class="ruby-identifier">report</span>,<span class="ruby-value str">','</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">title</span><span class="ruby-operator">|</span>
+726:    
+727:        <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span>  [<span class="ruby-value str">'Last Name'</span>, <span class="ruby-value str">'First Name'</span>, <span class="ruby-value str">'Home Phone'</span>, <span class="ruby-value str">'Mobile'</span>, <span class="ruby-value str">'Email'</span>, <span class="ruby-value str">'Mem Class'</span>, <span class="ruby-value str">'renewed date'</span>, <span class="ruby-value str">'Car Park No'</span>]
+728:        <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>   
+729:        <span class="ruby-ivar">@carpark</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+730:          <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">0</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">3</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">4</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">5</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">6</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">7</span>], <span class="ruby-identifier">p</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">8</span>]]  
+731:          <span class="ruby-identifier">i</span> = <span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">9</span> 
+732:          <span class="ruby-keyword kw">end</span>
+733:      <span class="ruby-keyword kw">end</span>
+734:  
+735: <span class="ruby-identifier">report</span>.<span class="ruby-identifier">rewind</span>
+736: 
+737:  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">report</span>.<span class="ruby-identifier">read</span>,<span class="ruby-identifier">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/csv; charset=iso-8859-1; header=present'</span>,<span class="ruby-identifier">:filename</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'CarParkPasses.csv'</span>, <span class="ruby-identifier">:disposition</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'attachment'</span>, <span class="ruby-identifier">:encoding</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'utf8'</span>)
+738: 
+739:   <span class="ruby-keyword kw">end</span>
+740:  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="#M000059" class="method-signature">
+          <span class="method-name">create</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000059-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/member_controller.rb, line 29</span>
+29:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
+30:     
+31:     
+32:     <span class="ruby-ivar">@member</span> = <span class="ruby-constant">Member</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:member</span>])
+33:     <span class="ruby-ivar">@person</span> = <span class="ruby-constant">Person</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:person</span>])
+34:     <span class="ruby-ivar">@barcard</span> = <span class="ruby-constant">Barcard</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:barcard</span>])
+35:     <span class="ruby-ivar">@peoplebarcard</span> = <span class="ruby-constant">Peoplebarcard</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:peoplebarcard</span>])
+36:     
+37:     <span class="ruby-ivar">@member</span>.<span class="ruby-identifier">year_joined</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_s</span>
+38:     <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">status</span> = <span class="ruby-value str">&quot;m&quot;</span>
+39:     <span class="ruby-comment cmt">#@person.bar_card_no = '368120' </span>
+40:     
+41:     
+42:     
+43:     <span class="ruby-constant">Member</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span> 
+44:       <span class="ruby-ivar">@member</span>.<span class="ruby-identifier">save</span>
+45:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@member</span>.<span class="ruby-identifier">save</span> 
+46:         <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">member_id</span> = <span class="ruby-ivar">@member</span>.<span class="ruby-identifier">id</span>
+47:         <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">save</span>
+48:         <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">member_number</span> = <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">id</span>
+49:         <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">save</span>
+50:         <span class="ruby-ivar">@barcard</span>.<span class="ruby-identifier">save</span>
+51:         <span class="ruby-ivar">@peoplebarcard</span>.<span class="ruby-identifier">barcard_id</span> = <span class="ruby-ivar">@barcard</span>.<span class="ruby-identifier">id</span>
+52:         <span class="ruby-ivar">@peoplebarcard</span>.<span class="ruby-identifier">person_id</span>  = <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">id</span>
+53:         <span class="ruby-ivar">@peoplebarcard</span>.<span class="ruby-identifier">save</span>
+54:       <span class="ruby-keyword kw">end</span>
+55:       <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@member</span>.<span class="ruby-identifier">save</span> <span class="ruby-keyword kw">or</span>  <span class="ruby-operator">!</span><span class="ruby-ivar">@person</span>.<span class="ruby-identifier">save</span> <span class="ruby-keyword kw">or</span>  <span class="ruby-operator">!</span><span class="ruby-ivar">@barcard</span>.<span class="ruby-identifier">save</span> <span class="ruby-keyword kw">or</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@peoplebarcard</span>.<span class="ruby-identifier">save</span>
+56:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+57:       <span class="ruby-keyword kw">end</span>
+58:     <span class="ruby-keyword kw">end</span>
+59:     
+60:     
+61:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:mtop</span>] = <span class="ruby-value">0</span>
+62:     
+63:     <span class="ruby-comment cmt">#redirect_to :controller =&gt;'person', :action =&gt; 'edit',:id =&gt; p.id</span>
+64:     
+65:     
+66:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+67:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@member</span>.<span class="ruby-identifier">save</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">save</span>
+68:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">'Member Successfully Created.'</span>
+69:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span><span class="ruby-value str">'person'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'edit'</span>,<span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">id</span>   }
+70:         
+71:       <span class="ruby-keyword kw">else</span>
+72:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span> }
+73:       <span class="ruby-keyword kw">end</span>
+74:     <span class="ruby-keyword kw">end</span>
+75:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <a href="#M000061" class="method-signature">
+          <span class="method-name">for_mail_merge_csv</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <h6>=========================================</h6>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000061-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/member_controller.rb, line 329</span>
+329: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">for_mail_merge_csv</span>
+330: 
+331:     <span class="ruby-comment cmt">#m1 = Member.break # this needs to be updated to payment.date_lodged</span>
+332:     
+333:     <span class="ruby-comment cmt">#f = File.open(File.expand_path(File.dirname(__FILE__)+ &quot;/../../public/mailmerge.csv&quot;),&quot;w&quot;)</span>
+334:     <span class="ruby-identifier">t</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+335:     <span class="ruby-identifier">f</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-value str">&quot;C:/MYCStuff/MailMergeList_&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">mon</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">day</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.csv&quot;</span>, <span class="ruby-value str">&quot;w&quot;</span>)
+336: 
+337:     <span class="ruby-comment cmt"># create the header row</span>
+338:     <span class="ruby-ivar">@str</span> = <span class="ruby-value str">&quot;lpdate, mtype, mnum, dear, addr0, addr1, addr2, addr3, addr4, occ, hph, &quot;</span>
+339:     <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;bn, bt, bc, sn, &quot;</span>
+340:     <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;mfirst, mlast, mph, eml, so, ra, cr, di, ju, &quot;</span>
+341:     <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;pfirst, plast, pmph, peml, pso, pra, pcr, pdi, pju, &quot;</span>
+342:     <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;cfirst1, clast1, cdob1, c1mph, c1eml, c1so, c1ra, c1cr, c1di, c1ju, &quot;</span>
+343:     <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;cfirst2, clast2, cdob2, c2mph, c2eml, c2so, c2ra, c2cr, c2di, c2ju, &quot;</span>
+344:     <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;cfirst3, clast3, cdob3, c3mph, c3eml, c3so, c3ra, c3cr, c3di, c3ju, &quot;</span>
+345:     <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;cfirst4, clast4, cdob4, c4mph, c4eml, c4so, c4ra, c4cr, c4di, c4ju, &quot;</span>
+346:     <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;cfirst5, clast5, cdob5, c5mph, c5eml, c5so, c5ra, c5cr, c5di, c5ju, &quot;</span>
+347:     <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-ivar">@str</span>  
+348:     
+349:  
+350:     <span class="ruby-identifier">m1</span> = <span class="ruby-constant">Member</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:include</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-identifier">:payments</span>, <span class="ruby-identifier">:people</span>, <span class="ruby-identifier">:boats</span>]
+351:       <span class="ruby-identifier">m1</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+352:       <span class="ruby-identifier">pay</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">payments</span>
+353:       <span class="ruby-identifier">mcurrent</span> = <span class="ruby-keyword kw">false</span>
+354:       <span class="ruby-ivar">@latest_pmt_date</span> = <span class="ruby-value str">'2008-01-01'</span>.<span class="ruby-identifier">to_date</span>
+355:       <span class="ruby-ivar">@mt</span> = <span class="ruby-value str">&quot;O&quot;</span>
+356:       <span class="ruby-ivar">@mnum</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">member_num</span>
+357:       <span class="ruby-identifier">pay</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">py</span><span class="ruby-operator">|</span>
+358:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">py</span>.<span class="ruby-identifier">date_lodged</span>.<span class="ruby-identifier">to_date</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@latest_pmt_date</span> <span class="ruby-comment cmt">#'2007-01-01'.to_date</span>
+359:           <span class="ruby-identifier">mcurrent</span> = <span class="ruby-keyword kw">true</span>
+360:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">py</span>.<span class="ruby-identifier">date_lodged</span>.<span class="ruby-identifier">to_date</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@latest_pmt_date</span>
+361:             <span class="ruby-ivar">@latest_pmt_date</span> = <span class="ruby-identifier">py</span>.<span class="ruby-identifier">date_lodged</span>.<span class="ruby-identifier">to_date</span>
+362:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@mt</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">py</span>.<span class="ruby-identifier">mtype</span>
+363:               <span class="ruby-ivar">@mt</span> = <span class="ruby-identifier">py</span>.<span class="ruby-identifier">mtype</span> 
+364:               <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@mt</span>
+365:                 <span class="ruby-ivar">@mt</span> = <span class="ruby-value str">&quot;X&quot;</span> <span class="ruby-comment cmt"># to deal with possible nil</span>
+366:               <span class="ruby-keyword kw">end</span>
+367:             <span class="ruby-keyword kw">end</span>
+368:           <span class="ruby-keyword kw">end</span>
+369:         <span class="ruby-keyword kw">end</span>
+370:       <span class="ruby-keyword kw">end</span>
+371:       
+372:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mcurrent</span>
+373:       <span class="ruby-ivar">@a1</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">address1</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+374:       <span class="ruby-ivar">@a2</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">address2</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+375:       <span class="ruby-ivar">@a3</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">address3</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+376:       <span class="ruby-ivar">@a4</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">address4</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+377:       <span class="ruby-ivar">@ch</span> = []
+378:       <span class="ruby-ivar">@mf</span> = <span class="ruby-value str">&quot;&quot;</span>
+379:       <span class="ruby-ivar">@ml</span> = <span class="ruby-value str">&quot;&quot;</span>
+380:       <span class="ruby-ivar">@pf</span> = <span class="ruby-value str">&quot;&quot;</span>
+381:       <span class="ruby-ivar">@pl</span> = <span class="ruby-value str">&quot;&quot;</span>
+382:       <span class="ruby-identifier">p1</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">people</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">:all</span>
+383:       <span class="ruby-ivar">@ch_num</span> = <span class="ruby-value">0</span>
+384:       <span class="ruby-identifier">p1</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+385:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;m&quot;</span>
+386:           <span class="ruby-ivar">@mf</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+387:           <span class="ruby-ivar">@ml</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+388:           <span class="ruby-ivar">@so</span> = <span class="ruby-value str">&quot;&quot;</span>
+389:           <span class="ruby-ivar">@ra</span> = <span class="ruby-value str">&quot;&quot;</span>
+390:           <span class="ruby-ivar">@cr</span> = <span class="ruby-value str">&quot;&quot;</span>
+391:           <span class="ruby-ivar">@di</span> = <span class="ruby-value str">&quot;&quot;</span>
+392:           <span class="ruby-ivar">@ju</span> = <span class="ruby-value str">&quot;&quot;</span>
+393:           <span class="ruby-ivar">@cp</span> = <span class="ruby-value str">&quot;&quot;</span>
+394:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>
+395:             <span class="ruby-ivar">@cp</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>.<span class="ruby-identifier">upcase</span>
+396:           <span class="ruby-keyword kw">end</span>
+397:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/SO/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+398:             <span class="ruby-ivar">@so</span> = <span class="ruby-value str">&quot;X&quot;</span>
+399:           <span class="ruby-keyword kw">end</span>
+400:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/CR/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+401:             <span class="ruby-ivar">@cr</span> = <span class="ruby-value str">&quot;X&quot;</span>
+402:           <span class="ruby-keyword kw">end</span>
+403:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/RA/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+404:             <span class="ruby-ivar">@ra</span> = <span class="ruby-value str">&quot;X&quot;</span>
+405:           <span class="ruby-keyword kw">end</span>
+406:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/DI/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+407:             <span class="ruby-ivar">@di</span> = <span class="ruby-value str">&quot;X&quot;</span>
+408:           <span class="ruby-keyword kw">end</span>
+409:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/JU/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+410:             <span class="ruby-ivar">@ju</span> = <span class="ruby-value str">&quot;X&quot;</span>
+411:           <span class="ruby-keyword kw">end</span>
+412:           <span class="ruby-ivar">@hph</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">home_phone</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+413:           <span class="ruby-ivar">@mph</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+414:           <span class="ruby-ivar">@eml</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+415:         <span class="ruby-keyword kw">end</span>
+416:         <span class="ruby-comment cmt"># now do the partner</span>
+417:         <span class="ruby-comment cmt"># initialise variables in case there is no partner</span>
+418:         <span class="ruby-ivar">@pf</span> = <span class="ruby-value str">&quot;&quot;</span>
+419:         <span class="ruby-ivar">@pl</span> = <span class="ruby-value str">&quot;&quot;</span>
+420:         <span class="ruby-ivar">@pmph</span> = <span class="ruby-value str">&quot;&quot;</span>
+421:         <span class="ruby-ivar">@peml</span> =<span class="ruby-value str">&quot;&quot;</span>
+422:         <span class="ruby-ivar">@pso</span> = <span class="ruby-value str">&quot;&quot;</span>
+423:         <span class="ruby-ivar">@pra</span> = <span class="ruby-value str">&quot;&quot;</span>
+424:         <span class="ruby-ivar">@pcr</span> = <span class="ruby-value str">&quot;&quot;</span>
+425:         <span class="ruby-ivar">@pdi</span> = <span class="ruby-value str">&quot;&quot;</span>
+426:         <span class="ruby-ivar">@pju</span> = <span class="ruby-value str">&quot;&quot;</span>
+427:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;p&quot;</span>
+428:           <span class="ruby-ivar">@pf</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+429:           <span class="ruby-ivar">@pl</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+430:           
+431:           <span class="ruby-ivar">@cp</span> = <span class="ruby-value str">&quot;&quot;</span>
+432:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>
+433:             <span class="ruby-ivar">@cp</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>.<span class="ruby-identifier">upcase</span>
+434:           <span class="ruby-keyword kw">end</span>
+435:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/SO/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+436:             <span class="ruby-ivar">@pso</span> = <span class="ruby-value str">&quot;X&quot;</span>
+437:           <span class="ruby-keyword kw">end</span>
+438:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/CR/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+439:             <span class="ruby-ivar">@pcr</span> = <span class="ruby-value str">&quot;X&quot;</span>
+440:           <span class="ruby-keyword kw">end</span>
+441:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/RA/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+442:             <span class="ruby-ivar">@pra</span> = <span class="ruby-value str">&quot;X&quot;</span>
+443:           <span class="ruby-keyword kw">end</span>
+444:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/DI/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+445:             <span class="ruby-ivar">@pdi</span> = <span class="ruby-value str">&quot;X&quot;</span>
+446:           <span class="ruby-keyword kw">end</span>
+447:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/JU/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+448:             <span class="ruby-ivar">@pju</span> = <span class="ruby-value str">&quot;X&quot;</span>
+449:           <span class="ruby-keyword kw">end</span>
+450:           <span class="ruby-ivar">@pmph</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+451:           <span class="ruby-ivar">@peml</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+452:         <span class="ruby-keyword kw">end</span>
+453:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;ch&quot;</span>
+454:           <span class="ruby-ivar">@ch_num</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+455:           <span class="ruby-ivar">@cf</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">first_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+456:           <span class="ruby-ivar">@cl</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">last_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+457:           <span class="ruby-ivar">@cd</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">child_dob</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+458:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@ch_num</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+459:               <span class="ruby-ivar">@c1so</span> = <span class="ruby-value str">&quot;&quot;</span>
+460:               <span class="ruby-ivar">@c1ra</span> = <span class="ruby-value str">&quot;&quot;</span>
+461:               <span class="ruby-ivar">@c1cr</span> = <span class="ruby-value str">&quot;&quot;</span>
+462:               <span class="ruby-ivar">@c1di</span> = <span class="ruby-value str">&quot;&quot;</span>
+463:               <span class="ruby-ivar">@c1ju</span> = <span class="ruby-value str">&quot;&quot;</span>
+464:               <span class="ruby-ivar">@cp</span> = <span class="ruby-value str">&quot;&quot;</span>
+465:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>
+466:                 <span class="ruby-ivar">@cp</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>.<span class="ruby-identifier">upcase</span>
+467:               <span class="ruby-keyword kw">end</span>
+468:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/SO/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+469:                 <span class="ruby-ivar">@c1so</span> = <span class="ruby-value str">&quot;X&quot;</span>
+470:               <span class="ruby-keyword kw">end</span>
+471:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/CR/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+472:                 <span class="ruby-ivar">@c1cr</span> = <span class="ruby-value str">&quot;X&quot;</span>
+473:               <span class="ruby-keyword kw">end</span>
+474:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/RA/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+475:                 <span class="ruby-ivar">@c1ra</span> = <span class="ruby-value str">&quot;X&quot;</span>
+476:               <span class="ruby-keyword kw">end</span>
+477:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/DI/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+478:                 <span class="ruby-ivar">@c1di</span> = <span class="ruby-value str">&quot;X&quot;</span>
+479:               <span class="ruby-keyword kw">end</span>
+480:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/JU/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+481:                 <span class="ruby-ivar">@c1ju</span> = <span class="ruby-value str">&quot;X&quot;</span>
+482:               <span class="ruby-keyword kw">end</span>
+483:               <span class="ruby-ivar">@c1mph</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+484:               <span class="ruby-ivar">@c1eml</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+485:               <span class="ruby-ivar">@ch</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-ivar">@cf</span>, <span class="ruby-ivar">@cl</span>, <span class="ruby-ivar">@cd</span>, <span class="ruby-ivar">@c1mph</span>, <span class="ruby-ivar">@c1eml</span>, <span class="ruby-ivar">@c1so</span>, <span class="ruby-ivar">@c1ra</span>, <span class="ruby-ivar">@c1cr</span>, <span class="ruby-ivar">@c1di</span>, <span class="ruby-ivar">@c1ju</span>]
+486:           <span class="ruby-keyword kw">elsif</span>  <span class="ruby-ivar">@ch_num</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+487:               <span class="ruby-ivar">@c2so</span> = <span class="ruby-value str">&quot;&quot;</span>
+488:               <span class="ruby-ivar">@c2ra</span> = <span class="ruby-value str">&quot;&quot;</span>
+489:               <span class="ruby-ivar">@c2cr</span> = <span class="ruby-value str">&quot;&quot;</span>
+490:               <span class="ruby-ivar">@c2di</span> = <span class="ruby-value str">&quot;&quot;</span>
+491:               <span class="ruby-ivar">@c2ju</span> = <span class="ruby-value str">&quot;&quot;</span>
+492:               <span class="ruby-ivar">@cp</span> = <span class="ruby-value str">&quot;&quot;</span>
+493:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>
+494:                 <span class="ruby-ivar">@cp</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">comm_prefs</span>.<span class="ruby-identifier">upcase</span>
+495:               <span class="ruby-keyword kw">end</span>
+496:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/SO/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+497:                 <span class="ruby-ivar">@c2so</span> = <span class="ruby-value str">&quot;X&quot;</span>
+498:               <span class="ruby-keyword kw">end</span>
+499:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/CR/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+500:                 <span class="ruby-ivar">@c2cr</span> = <span class="ruby-value str">&quot;X&quot;</span>
+501:               <span class="ruby-keyword kw">end</span>
+502:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/RA/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+503:                 <span class="ruby-ivar">@c2ra</span> = <span class="ruby-value str">&quot;X&quot;</span>
+504:               <span class="ruby-keyword kw">end</span>
+505:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/DI/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+506:                 <span class="ruby-ivar">@c2di</span> = <span class="ruby-value str">&quot;X&quot;</span>
+507:               <span class="ruby-keyword kw">end</span>
+508:               <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/JU/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@cp</span>)
+509:                 <span class="ruby-ivar">@c2ju</span> = <span class="ruby-value str">&quot;X&quot;</span>
+510:               <span class="ruby-keyword kw">end</span>
+511:               <span class="ruby-ivar">@c2mph</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mobile_phone</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+512:               <span class="ruby-ivar">@c2eml</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">email_addr</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+513:               <span class="ruby-ivar">@ch</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-ivar">@cf</span>, <span class="ruby-ivar">@cl</span>, <span class="ruby-ivar">@cd</span>, <span class="ruby-ivar">@c2mph</span>, <span class="ruby-ivar">@c2eml</span>, <span class="ruby-ivar">@c2so</span>, <span class="ruby-ivar">@c2ra</span>, <span class="ruby-ivar">@c2cr</span>, <span class="ruby-ivar">@c2di</span>, <span class="ruby-ivar">@c2ju</span>]            
+514:           <span class="ruby-keyword kw">else</span>
+515:             <span class="ruby-ivar">@ch</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-ivar">@cf</span>, <span class="ruby-ivar">@cl</span>, <span class="ruby-ivar">@cd</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>]
+516:           <span class="ruby-keyword kw">end</span>
+517:         <span class="ruby-keyword kw">end</span>
+518:         
+519:       <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># p1</span>
+520:       <span class="ruby-ivar">@occ</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">occupation</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+521:       <span class="ruby-identifier">b</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">boats</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">:first</span>
+522:       <span class="ruby-ivar">@bn</span> = <span class="ruby-value str">&quot;&quot;</span>
+523:       <span class="ruby-ivar">@bt</span> = <span class="ruby-value str">&quot;&quot;</span>
+524:       <span class="ruby-ivar">@bl</span> = <span class="ruby-value str">&quot;&quot;</span>
+525:       <span class="ruby-ivar">@bc</span> = <span class="ruby-value str">&quot;&quot;</span>
+526:       <span class="ruby-ivar">@sn</span> = <span class="ruby-value str">&quot;&quot;</span>
+527:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">b</span>
+528:         <span class="ruby-ivar">@bn</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">boat_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+529:         <span class="ruby-ivar">@bt</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">boat_type</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+530:         <span class="ruby-ivar">@bc</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">boat_class</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+531:         <span class="ruby-ivar">@sn</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">sail_number</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+532:       <span class="ruby-keyword kw">end</span>
+533:       <span class="ruby-comment cmt"># now we need to work out the envelope address - which goes in @a0</span>
+534:       <span class="ruby-comment cmt"># and the Dear Joe and Mary for the letter - which goes in @dear</span>
+535:       
+536:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@pl</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-comment cmt"># no partner</span>
+537:         <span class="ruby-ivar">@a0</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@ml</span>
+538:         <span class="ruby-ivar">@dear</span> = <span class="ruby-ivar">@mf</span>
+539:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@pl</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@ml</span> <span class="ruby-comment cmt"># partner does not use her own name</span>
+540:         <span class="ruby-ivar">@a0</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &amp; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@ml</span>
+541:         <span class="ruby-ivar">@dear</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &amp; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pf</span>
+542:       <span class="ruby-keyword kw">else</span> <span class="ruby-comment cmt"># partner does use her own name</span>
+543:         <span class="ruby-ivar">@a0</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@ml</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &amp; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pl</span>
+544:         <span class="ruby-ivar">@dear</span> = <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &amp; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pf</span>
+545:       <span class="ruby-keyword kw">end</span>
+546:       <span class="ruby-comment cmt">#if @latest_pmt_date</span>
+547:         <span class="ruby-ivar">@str</span> = <span class="ruby-ivar">@latest_pmt_date</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@mt</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@mnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@dear</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span>
+548:       <span class="ruby-comment cmt">#else</span>
+549:       <span class="ruby-comment cmt">#  @str = &quot;No Pmt&quot; + &quot;, &quot; + @mt + &quot;, &quot; + @dear + &quot;, &quot;   </span>
+550:       <span class="ruby-comment cmt">#end</span>
+551:       
+552:       <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@a0</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@a1</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@a2</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@a3</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@a4</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@occ</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@hph</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> 
+553:       <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@bn</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@bt</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span>  <span class="ruby-operator">+</span> <span class="ruby-ivar">@bc</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@sn</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span>
+554:       <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@mf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@ml</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@mph</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@eml</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@so</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@ra</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@cr</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@di</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@ju</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span>
+555:       <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@pf</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pl</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pmph</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@peml</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pso</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pra</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pcr</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pdi</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@pju</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span>
+556:       <span class="ruby-ivar">@ch_num</span> = <span class="ruby-value">1</span>
+557:       <span class="ruby-ivar">@ch</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+558:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@ch_num</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">4</span>
+559:           <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">3</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">4</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> 
+560:           <span class="ruby-ivar">@str</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">5</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">6</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">7</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">8</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">9</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;, &quot;</span>
+561:         <span class="ruby-keyword kw">end</span>
+562:         <span class="ruby-ivar">@ch_num</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+563:       <span class="ruby-keyword kw">end</span>
+564:       <span class="ruby-comment cmt"># and write the row to the file</span>
+565:       <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-ivar">@str</span>
+566:     <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># mcurrent == true</span>
+567:     <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># m1</span>
+568:     <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
+569:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'person'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'listm'</span>
+570:     
+571:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <a href="#M000058" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <h6>=========================================</h6>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000058-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/member_controller.rb, line 11</span>
+11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
+12:     <span class="ruby-ivar">@member</span>  = <span class="ruby-constant">Member</span>.<span class="ruby-identifier">new</span>
+13:     <span class="ruby-ivar">@person</span> = <span class="ruby-constant">Person</span>.<span class="ruby-identifier">new</span>
+14:     <span class="ruby-ivar">@barcard</span> = <span class="ruby-constant">Barcard</span>.<span class="ruby-identifier">new</span> 
+15:     <span class="ruby-ivar">@peoplebarcard</span> = <span class="ruby-constant">Peoplebarcard</span>.<span class="ruby-identifier">new</span> 
+16:    
+17:     <span class="ruby-ivar">@member</span>.<span class="ruby-identifier">year_joined</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_s</span>
+18:     <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">status</span> = <span class="ruby-value str">&quot;m&quot;</span>
+19:     
+20:     <span class="ruby-comment cmt">#Set to Applicant</span>
+21:     <span class="ruby-ivar">@member</span>.<span class="ruby-identifier">privilege</span> = <span class="ruby-constant">Privilege</span>.<span class="ruby-identifier">find_by_member_class</span> <span class="ruby-value str">&quot;A&quot;</span>
+22:     <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">snd_txt</span> = <span class="ruby-value str">'Y'</span>
+23:     <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">snd_eml</span> = <span class="ruby-value str">'Y'</span>
+24:     <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">member_number</span> = <span class="ruby-value">0</span>
+25:    <span class="ruby-comment cmt"># @person.bar_card_no = '368120' </span>
+26:     <span class="ruby-ivar">@member</span>.<span class="ruby-identifier">year_joined</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_s</span>
+27:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <a href="#M000057" class="method-signature">
+          <span class="method-name">show</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <h6>=========================================</h6>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000057-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/controllers/member_controller.rb, line 6</span>
+6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
+7: 
+8:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <a href="#M000062" class="method-signature">
+          <span class="method-name">update_renewed_from_payments</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/member_controller.rb, line 574</span>
+574:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_renewed_from_payments</span>
+575:     
+576:    
+577:     <span class="ruby-ivar">@mems</span> = <span class="ruby-constant">Member</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">:all</span> 
+578:     
+579:     
+580:     <span class="ruby-ivar">@mems</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+581:       
+582:       <span class="ruby-identifier">puts</span>(<span class="ruby-identifier">m</span>.<span class="ruby-identifier">id</span>)
+583:       <span class="ruby-comment cmt">#puts (m.renew_date.to_date)</span>
+584:       
+585:       <span class="ruby-identifier">p</span> = <span class="ruby-constant">Payment</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">:first</span> ,<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;date_lodged DESC&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span>  <span class="ruby-node">&quot;member_id = '#{m.id}'&quot;</span>
+586:       <span class="ruby-identifier">puts</span>(<span class="ruby-identifier">p</span>.<span class="ruby-identifier">id</span>)
+587:       <span class="ruby-identifier">puts</span>(<span class="ruby-identifier">p</span>.<span class="ruby-identifier">date_lodged</span>.<span class="ruby-identifier">to_date</span>)
+588:       <span class="ruby-identifier">puts</span>(<span class="ruby-identifier">p</span>.<span class="ruby-identifier">member_class</span>) 
+589:       <span class="ruby-identifier">m</span>.<span class="ruby-identifier">renew_date</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">date_lodged</span>.<span class="ruby-identifier">to_date</span>
+590:        <span class="ruby-identifier">m</span>.<span class="ruby-identifier">mem_type</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">member_class</span> 
+591:       
+592:        <span class="ruby-identifier">t</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">save</span>
+593:        
+594:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">t</span> 
+595:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">'Data was successfully updated.'</span>
+596: 
+597:       <span class="ruby-keyword kw">else</span>
+598:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">'Problem updating data.'</span>
+599:       <span class="ruby-keyword kw">end</span>
+600:       
+601:       
+602:   <span class="ruby-keyword kw">end</span>
+603:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+<!-- products/_form.html.erb -->
+<p>
+  <%= f.label :category_name %>
+  <%= text_field_with_auto_complete :product, :category_name, { :size => 15 }, { :url => formatted_categories_path(:js), :method => :get, :param_name => 'search' } %>
+</p>

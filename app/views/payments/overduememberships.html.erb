@@ -1,0 +1,8 @@
+<h5>list of Last years Members Not renewed current year, excluding Terminated and Suspended members. <br> 
+<br>
+Number of payments overdue: <%=@overdues.size %></h5>
+<br/>
+<%= form_tag({ :action => :overduememberships })  %> 
+<%= submit_tag 'Export CSV file' -%>
+<%= render :partial => 'overduememberships'   %>
+

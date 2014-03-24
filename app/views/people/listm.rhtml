@@ -1,0 +1,53 @@
+<h1 class="Heading">Listing Current Members by Surname</h1>
+
+<h2 class="Heading">Members Current Year Plus Last Year Only</h2>
+
+
+<table class="listing">
+	<tr>
+		<th>Last Name</th><th>First Name</th><th>Membership Class</th>
+	
+                <th>Last Paid</th> <th>Member Unique Number</th>
+				<th>Bar Card Number</th>
+						
+	</tr>
+</div>
+
+<div id="table.listing"> 	
+	
+<% @p.each do |p| %>
+
+<%  renew_date = p.member.payments.find :first, :order => "date_lodged DESC" %>
+
+
+<tr class="<%= cycle('odd', 'even') %>">
+	
+<td><%= link_to p.last_name, :action => 'edit', :id => p.id %></td>
+<td><%= p.first_name %></td>
+<td><%= p.member.privilege.class_desc rescue nil%></td>
+<td><%= renew_date.date_lodged.year rescue nil%></td>
+<td><%= p.member_number %></td>
+<td><%= BAR_CARD_PREFIX + BAR_CARD_SUFF_FORMAT % p.peoplebarcard.barcard_id rescue nil%></td>
+</div>
+
+</tr>
+<% end %>
+
+</table>
+<br/>
+<% form_tag :action => 'listm',  :method => 'post' do %>
+<%= text_field 'person', 'last_name'  %>
+  <%= submit_tag 'Find last_name' %><br/>
+<% end %>
+<br>
+<% form_tag :action => 'listm',  :method => 'post' do %>
+<%= text_field 'person', 'first_name'  %>
+  <%= submit_tag 'Find first_name' %><br/>
+<% end %>
+<br> 
+<br> 
+<%= link_to ' <<- ', :action => 'listm',  :mpos => '0' %>
+<%= link_to ' <- ', :action => 'listm',  :mpos => (@mtop - @mrows + 1).to_s %>
+<%= link_to ' -> ', :action => 'listm',  :mpos => (@mtop + @mrows - 1).to_s %>
+<%= link_to ' ->> ', :action => 'listm',  :mpos => 'last' %>
+<br><br><br><br><br>

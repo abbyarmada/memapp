@@ -1,0 +1,11 @@
+<%= form_for(@payment) do %>
+<tr class="<%= cycle('odd', 'even') %>">
+<td><%= link_to @payment.paymenttype.name ,edit_payment_path(:id => @payment.id, :pid => @pid, :mid =>@mid) %>  </td>
+<td><%= @payment.date_lodged.year   %></td>
+<td><%= @payment.amount     %>  </td>
+<td><%= @payment.privilege.name  rescue nil   %>  </td>
+<td><%= @payment.date_lodged.to_date %>  </td>
+<td><%= @payment.payment_method.name rescue nil    %>  </td>
+<td><%= link_to 'Delete', @payment, :action => :destroy, :confirm => "Are you sure you want to delete this payment?" ,:method => :delete   %></td>
+</tr>
+<% end %>

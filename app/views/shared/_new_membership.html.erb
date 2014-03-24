@@ -1,0 +1,32 @@
+
+
+<%= form.inputs :name => "Membership Information" do %>
+	<%= form.input :privilege, :include_blank => false 
+	%>
+	<%= form.input :email_renewal, :as => :radio , :collection => [["Yes",'Y'], ["No","N"]]
+	%>
+	<%= form.input :occupation %>
+	<%= form.input :year_joined 
+	%>
+	<%= form.input :renew_date, :as => :date_select ,:order => [:day, :month, :year]  %>
+	<%= form.input :proposed %>
+	<%= form.input :seconded%>
+	
+	<%#= form.input :proposed, :as => :autocompleted, :url => autocomplete_member_proposed_people_path 	
+	%>
+	<%#= form.input :seconded, :as => :autocompleted ,:url => autocomplete_member_seconded_people_path 	
+	%>
+<% end %>
+<%= form.inputs :name => "Address Details" do %>
+	<%= form.input :name_no , :label => 'House Name or Number'%>
+	<%= form.input :street1 , :label => 'Street Address Line 1'%>
+	<%= form.input :street2 , :label => 'Street Address Line 2'%>
+	<%= form.input :town  %>
+	<%= form.input :city  %>
+	<%= form.input :county  %>
+	<%= form.input :postcode %>
+	<%= form.input :country , :priority_countries => ['Ireland','United Kingdom']%>
+<% end %>
+
+<%= form.submit button_label if buttons 
+%>

@@ -1,0 +1,35 @@
+<!-- ><h1 class="Heading">Listing Members</h1> --> 
+
+
+<%= form_tag people_path, :method => 'get' do %>
+
+<% 
+if !params[:searchmp].blank?
+	options = {:prompt => "-Select a Membership Class",:selected => params[:searchmp][:privilege_id]} 
+else 
+	options = {:prompt => "-Select a Membership Class"}
+end
+%>
+
+
+
+<table> 
+<tr><td><%= text_field_tag :search, params[:search] ,:placeholder => 'Last Name' %> </td> 
+    <td><%= text_field_tag :searchfn, params[:searchfn], :placeholder => 'First Name'%> </td>
+  	<td><%=collection_select(:searchmp, :privilege_id, Privilege.types, :id,:name, options, :class =>"" , :onchange => "submit();" ) %></td>
+</tr> 
+<tr><td><%= check_box_tag :past_members,true,params[:past_members],:onchange => "submit();" %><%= label_tag(:past_members, "Past Members") %></td> 
+  	<td><%= check_box_tag :group,true,params[:group],:onchange => "submit();" %><%= label_tag(:group, "Group Family Members") %></td> 
+    <td><%= submit_tag  'Go' %></td>
+	<td><%=form_tag  people_path, :method => :get  do 
+	   
+       submit_tag  'Reset'
+		end %> </td> 
+</tr> 
+</table>
+<% end %>
+
+<div id="people" data-no-turbolink >
+  <%= render 'people' %>
+</div>
+

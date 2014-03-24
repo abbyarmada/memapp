@@ -1,0 +1,22 @@
+<%= form_for(@privilege) do |f| %>
+ <%= f.error_messages %>
+
+
+<table class ="listing">
+	<th>Field</th> <th> value</th> 
+	<tr>	<td>Class</td><td><%= f.text_field :member_class  %></td></tr>
+	<tr>	<td>Description</td><td><%= f.text_field :name  %></td></tr>
+	<tr>	<td>Bar Billies</td><td><%= f.text_field :bar_billies, :size => 1  %></td></tr>
+	<tr>	<td>Car Park</td><td><%= f.text_field :car_park,  :size => 1 %></td></tr>
+	<tr>	<td>Votes</td><td><%= f.text_field :votes  ,:size => 1 %></td></tr>
+	<tr>	<td>Bar Reference</td><td><%= f.text_field :bar_reference  ,:size => 1 %></td></tr>
+	 <td> Boat Storage <td> <%= radio_button(:privilege, :boat_storage, 1)  %><label for="privilege_boat_storage_1">Yes</label>
+                  <%= radio_button(:privilege, :boat_storage, 0 )  %><label for="privilege_boat_storage_0">No</label> </td></tr>
+</table>
+
+  	 <p>
+  	 	
+    <%= f.submit   %>
+  </p>
+  
+<% end %>

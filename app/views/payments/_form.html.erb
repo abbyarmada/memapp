@@ -1,0 +1,38 @@
+
+<%= form_for @payment do |f| %> 
+<table>
+	
+	   <tr>
+        <td>Payment Type </td>
+        <td>
+            <%= collection_select(:payment, :paymenttype_id, Paymenttype.types, :id,:description, 
+                {:prompt => "-Select a  Payment type"},{ :class =>""} )%>
+        </td>
+</tr>
+	<tr>
+		<td>Amount</td>
+		<td><%= text_field 'payment', 'amount'  %></td>
+	</tr>
+	<tr>
+        <td>Payment Method</td>
+		<td><%= collection_select( :payment, :pay_type, Payment.types,:first ,:last ,{:prompt => true } ,{} )  %></td>
+     </tr>  
+	 <%= hidden_field 'payment', 'member_id'  %>
+		<tr>
+		<td>Member Class </td>
+		<td>
+			<%= collection_select(:payment, :privilege_id, Privilege.types, :id,:class_desc, 
+				options ={:prompt => "-Select a Member Class for Payment"}, :class =>"")%>
+		</td>
+</tr>
+		</td></tr>
+		<tr>
+		<td>Date Lodged</td>
+		<td><%= date_select 'payment', 'date_lodged'  %></td>
+	</tr><tr>
+		<td>Comment</td>
+		<td><%= text_area 'payment', 'comment', :cols => 40, :rows => 3  %></td>
+	</tr>
+</table>
+
+<% end %>

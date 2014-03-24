@@ -1,0 +1,30 @@
+<h2>Car Park Passes </h2>
+
+Number of car park passes to be issued: <%= @carpark.size %>
+
+<%= form_tag({ :action => :carpark_passes })  %> 
+<%= submit_tag 'Export CSV file' -%>
+
+
+<table class="listing">
+	<th>Surname</th><th>First Name</th><th>email</th><th>Mobile</th><th>Membership Type</th><th>Renew Date</th><th>Car Park id</th>
+
+	<% i = 0 %>
+	<% @carpark.each do |p| %>
+
+	<tr class="<%= cycle('odd', 'even') %>">
+
+		<td><%= p[i + 0] %> </td>
+		<td><%= p[i + 1] %> </td>
+		<td><%= p[i + 2] %> </td>
+		<td><%= p[i + 3] %> </td>
+		<td><%= p[i + 4] %> </td>
+		<td><%= p[i + 5] %> </td>
+		<td><%= p[i + 6] %> </td>
+
+		<% i = i + 15 %></i>
+
+	</tr>
+	<% end %>
+
+

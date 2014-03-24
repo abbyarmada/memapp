@@ -1,0 +1,31 @@
+
+<table class="listing">
+ <th>Surname</th> <th>First Name</th> <th>Home Phone</th> <th>Mobile </th> <th>email</th> <th>Membership Type</th>
+ <th>Age</th> <th>Last Payment</th>
+
+   <tr class="<%= cycle('odd', 'even') %>">
+
+<% for p in @overdues %>
+	   
+	<td><%= link_to p.people[0].last_name,:controller => 'people', :action => 'edit', :id => p.people[0].id %></td> 
+	<td><%= p.people[0].first_name%> 		</td>
+    <td><%= p.people[0].home_phone%>  		</td> 
+	<td><%= p.people[0].mobile_phone%>  	</td>
+	<td><%= p.people[0].email_address %>		</td>
+	<td><%= p.privilege.name %>		</td>
+	<td><%= p.people[0].age         %>      </td>
+	<td><%= p.renew_date.to_date.to_s(:db) %>    </td>
+	 
+  </tr>
+  
+<% end %>
+
+
+
+
+
+
+
+
+
+

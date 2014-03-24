@@ -1,0 +1,26 @@
+<h1>New Barcard</h1>
+
+<h3> A new barcard number will be assigned to this person Please be certain this is what you intend to do ! 
+	
+	<br> <br><br>
+	The current Barcard will be removed from this user. 
+</h3> 
+
+<% @mid = (params[:mid])%>
+<% @pid = (params[:pid])%>
+
+<%= form_tag :action => 'create',:mid => @mid, :pid => @pid do %>
+
+
+<%= render :partial => "formNew", :locals => { :button_label => "Create", :barcard => @barcard , :mid=> @mid  } %> 
+
+<% end%>
+
+
+
+<%= link_to 'Back', :controller => 'people', :action => 'edit', :id => @pid %>
+
+
+
+ 
+

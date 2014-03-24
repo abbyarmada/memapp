@@ -1,0 +1,13 @@
+<% @mid = (params[:mid])%>
+<% @pid = (params[:pid])%>
+<%= form_for(@barcard) do |f| %>
+<table class ="listing">
+	<th>Field</th> <th> value</th> 
+	<tr>	<td>Member ID</td><td><%= @mid  %></td></tr>
+	<tr>	<td>Person ID</td><td><%= @pid %></td></tr>
+</table>
+<p>
+    <%= f.submit button_label %>
+</p>
+<% end %>
+

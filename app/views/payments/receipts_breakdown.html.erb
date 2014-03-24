@@ -1,0 +1,68 @@
+
+<head> 
+<script language="Javascript1.2">
+  <!--
+  function printpage() {
+  this.print();
+  }
+  //-->
+</script>
+
+
+</head>
+
+<h1> Payments Summary </h1><br/>
+<br />
+<div class="noprint">
+<%= form_tag :action => 'receipts_breakdown' do %>
+
+<b>Select Month for Month End Figures:</b>
+
+ 
+<%=select_month(@endmonth.to_i, :prompt => 'Choose month',:include_blank => true) %>
+<%= submit_tag 'Go' %><br/>
+<br>
+<%= link_to_function("Print this Page", "javascript:print()") %>
+</div>
+
+
+
+
+<% @years.times do |y| %>
+
+<table class="vertical"> 
+ <caption> <h2><%= Time.now.year - y %> </h2></caption> 
+<tr>
+
+	<td> 
+	<table class="listing">
+         <caption> <h2>  Payment Breakdown </h2></caption> 
+         
+        <th>Month</th> <th>Transactions</th> <th>Type</th><th>Sum</th>
+
+        <% @paytypestd[y].each do |p| %>
+           <tr class="<%= cycle('odd', 'even') %>">
+            <td> <%=  p.monthname.camelcase  %></td>
+            <td> <%= p.transactions %></td>
+            <td> <%=  Payment.types[p.pay_type]  %></td>
+		<!--	<td> <%= link_to Payment.types[p.pay_type], :action => 'drill_pay',:year => Time.now.year - y, :pay_type => p.pay_type, :month => p.month %></td> -->
+			<td> <%= p.sum%></td>
+          </tr>
+        <% end %>
+        <tr class="<%= cycle('odd', 'even')%>">
+            <td>Total</td><td><%=@paytypestotaltd[y][0].transactions rescue nil%></td><td></td><td><%=@paytypestotaltd[y][0].sum rescue nil %></td>
+        </tr>
+		
+		
+    </table>
+	
+</td>
+ <br>
+</tr>	
+<% end %>
+</table> 
+
+
+
+	<% end %>
+

@@ -23,17 +23,17 @@ R3::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   # Do not compress assets
-config.assets.compress = true
+  config.assets.compress = true
  
-# Expands the lines which load the assets
-config.assets.debug = true
+  # Expands the lines which load the assets
+  config.assets.debug = true
 
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.delivery_method = :smtp
 
-   config.action_mailer.asset_host = "http://localhost:3000"
-   #config.action_controller.asset_host = "http://localhost"
+  config.action_mailer.asset_host = "http://localhost:3000"
+  #config.action_controller.asset_host = "http://localhost"
 
 end
 

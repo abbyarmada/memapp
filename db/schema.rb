@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080914020108) do
+ActiveRecord::Schema.define(:version => 11) do
 
   create_table "barcards", :force => true do |t|
     t.datetime "created_at"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20080914020108) do
     t.string   "pen_tag",     :default => "None Assigned"
   end
 
+  add_index "boats", ["id"], :name => "id", :unique => true
   add_index "boats", ["member_id"], :name => "BoatsMembers"
 
   create_table "loyaltycards", :force => true do |t|
@@ -102,14 +103,6 @@ ActiveRecord::Schema.define(:version => 20080914020108) do
     t.timestamp "updated_at",                             :null => false
   end
 
-  create_table "mailings", :force => true do |t|
-    t.string   "subject"
-    t.text     "content"
-    t.datetime "delivered_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "members", :force => true do |t|
     t.string   "address1"
     t.string   "address2"
@@ -143,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20080914020108) do
     t.datetime "updated_at"
   end
 
-  #add_index "payment_methods", ["id"], :name => "id", :unique => true
+  add_index "payment_methods", ["id"], :name => "id", :unique => true
 
   create_table "payments", :force => true do |t|
     t.integer  "member_id",                                        :null => false
@@ -167,7 +160,7 @@ ActiveRecord::Schema.define(:version => 20080914020108) do
     t.datetime "updated_at"
   end
 
-  #add_index "paymenttypes", ["id"], :name => "id", :unique => true
+  add_index "paymenttypes", ["id"], :name => "id", :unique => true
 
   create_table "people", :force => true do |t|
     t.integer  "member_id",                               :null => false
@@ -207,8 +200,8 @@ ActiveRecord::Schema.define(:version => 20080914020108) do
     t.datetime "updated_at"
   end
 
-  add_index "peoplebarcards", ["barcard_id"], :name => "ibarcards"
-  add_index "peoplebarcards", ["person_id"], :name => "ipeople"
+  add_index "peoplebarcards", ["barcard_id"], :name => "barcards"
+  add_index "peoplebarcards", ["person_id"], :name => "people"
 
   create_table "privileges", :force => true do |t|
     t.string   "member_class",  :limit => 1,                   :null => false
@@ -220,6 +213,15 @@ ActiveRecord::Schema.define(:version => 20080914020108) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "boat_storage",  :limit => 2,  :default => 0,   :null => false
+  end
+
+  create_table "renewals", :force => true do |t|
+    t.string   "subject"
+    t.text     "content"
+    t.datetime "delivered_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "requested_at"
   end
 
   create_table "schema_info", :id => false, :force => true do |t|
@@ -235,7 +237,7 @@ ActiveRecord::Schema.define(:version => 20080914020108) do
     t.integer  "privilege_id", :null => false
   end
 
-  #add_index "subscriptions", ["id"], :name => "id", :unique => true
+  add_index "subscriptions", ["id"], :name => "id", :unique => true
 
   create_table "versions", :force => true do |t|
     t.integer  "versioned_id"
@@ -251,6 +253,6 @@ ActiveRecord::Schema.define(:version => 20080914020108) do
     t.datetime "updated_at"
   end
 
-  #add_index "versions", ["id"], :name => "id", :unique => true
+  add_index "versions", ["id"], :name => "id", :unique => true
 
 end

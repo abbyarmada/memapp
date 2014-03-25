@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rails', '~> 3.1.0'
-gem 'mysql2'  
 gem  'mail'
 gem "paperclip", "~> 3.0"
 gem "execjs"
@@ -53,4 +52,24 @@ group :test do
   gem 'nokogiri', '>= 1.3.3'
 end
 
+group :development do 
+  gem 'mysql2' 
+end
+
+#heroku
+group :production_h do 
+  gem 'rails_12factor'
+  gem 'pg'
+  gem 'unicorn'
+end
+
+#seans VPS
+group :production do 
+  gem 'mysql2'
+end
+
+#preprod and prod currently uses mysql. Change to postgres soon..!
+group :preprod do 
+  gem 'mysql2' 
+end
 

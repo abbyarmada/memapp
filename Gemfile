@@ -64,12 +64,12 @@ group :production_h do
 end
 
 #seans VPS
-group :production do 
-  gem 'mysql2'
-end
+#group :production do 
+#  gem 'mysql2'
+#end
 
 #preprod and prod currently uses mysql. Change to postgres soon..!
-group :preprod do 
+group :preprod,:production do 
   gem 'mysql2' 
 end
 

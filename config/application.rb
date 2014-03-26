@@ -45,26 +45,29 @@ module R3
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
     
-      config.assets.enabled = true
-   config.assets.version = '1.0'
+    config.assets.enabled = true
+    config.assets.version = '1.0'
    
-   #reduce noise from assets in the log file for development..
-   config.quiet_assets = true
+    #reduce noise from assets in the log file for development..
+    config.quiet_assets = true
    
-   # scaffolding..
-   config.generators do |g|
-     g.test_framework :rspec,
-       :fixtures => true,
-       :view_specs => true,
-       :helper_specs => false,
-       :routing_specs => true,
-       :controller_specs => true,
-       :request_specs => true
-     g.fixture_replacement :factory_girl, :dir => "spec/factories"
-   end
+    # scaffolding..
+    config.generators do |g|
+      g.test_framework :rspec,
+        :fixtures => true,
+        :view_specs => true,
+        :helper_specs => false,
+        :routing_specs => true,
+        :controller_specs => true,
+        :request_specs => true
+      g.fixture_replacement :factory_girl, :dir => "spec/factories"
+    end
    
-   # stop the I18n messages...
-   I18n.enforce_available_locales = false 
+    # stop the I18n messages...
+    I18n.enforce_available_locales = false 
    
+    #for Heroku 
+    config.assets.initialize_on_precompile = false
+    
   end
 end

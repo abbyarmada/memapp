@@ -11,14 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 11) do
+ActiveRecord::Schema.define(:version => 20140218173518) do
 
   create_table "barcards", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "barcards", ["id"], :name => "id", :unique => true
 
   create_table "boats", :force => true do |t|
     t.integer  "member_id",                                :null => false
@@ -31,7 +29,6 @@ ActiveRecord::Schema.define(:version => 11) do
     t.string   "pen_tag",     :default => "None Assigned"
   end
 
-  add_index "boats", ["id"], :name => "id", :unique => true
   add_index "boats", ["member_id"], :name => "BoatsMembers"
 
   create_table "loyaltycards", :force => true do |t|
@@ -136,8 +133,6 @@ ActiveRecord::Schema.define(:version => 11) do
     t.datetime "updated_at"
   end
 
-  add_index "payment_methods", ["id"], :name => "id", :unique => true
-
   create_table "payments", :force => true do |t|
     t.integer  "member_id",                                        :null => false
     t.decimal  "amount",            :precision => 10, :scale => 0
@@ -160,10 +155,8 @@ ActiveRecord::Schema.define(:version => 11) do
     t.datetime "updated_at"
   end
 
-  add_index "paymenttypes", ["id"], :name => "id", :unique => true
-
   create_table "people", :force => true do |t|
-    t.integer  "member_id",                               :null => false
+    t.integer  "member_id",                                                :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "status"
@@ -178,17 +171,19 @@ ActiveRecord::Schema.define(:version => 11) do
     t.integer  "member_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "txt_bridge",               :default => 0, :null => false
-    t.integer  "txt_social",               :default => 0, :null => false
-    t.integer  "txt_crace",                :default => 0, :null => false
-    t.integer  "txt_cruiser_race_skipper", :default => 0, :null => false
-    t.integer  "txt_cruising",             :default => 0, :null => false
-    t.integer  "txt_cruiser_skipper",      :default => 0, :null => false
-    t.integer  "txt_dinghy_sailing",       :default => 0, :null => false
-    t.integer  "txt_junior",               :default => 0, :null => false
-    t.integer  "txt_test",                 :default => 0, :null => false
-    t.integer  "txt_op_co",                :default => 0, :null => false
+    t.integer  "txt_bridge",                            :default => 0,     :null => false
+    t.integer  "txt_social",                            :default => 0,     :null => false
+    t.integer  "txt_crace",                             :default => 0,     :null => false
+    t.integer  "txt_cruiser_race_skipper",              :default => 0,     :null => false
+    t.integer  "txt_cruising",                          :default => 0,     :null => false
+    t.integer  "txt_cruiser_skipper",                   :default => 0,     :null => false
+    t.integer  "txt_dinghy_sailing",                    :default => 0,     :null => false
+    t.integer  "txt_junior",                            :default => 0,     :null => false
+    t.integer  "txt_test",                 :limit => 1, :default => 0,     :null => false
+    t.integer  "txt_op_co",                             :default => 0,     :null => false
     t.string   "occupation"
+    t.boolean  "send_txt",                              :default => false, :null => false
+    t.boolean  "send_email",                            :default => false, :null => false
   end
 
   add_index "people", ["member_id"], :name => "PeoMembers"
@@ -200,8 +195,8 @@ ActiveRecord::Schema.define(:version => 11) do
     t.datetime "updated_at"
   end
 
-  add_index "peoplebarcards", ["barcard_id"], :name => "barcards"
-  add_index "peoplebarcards", ["person_id"], :name => "people"
+  add_index "peoplebarcards", ["barcard_id"], :name => "peoplebarcards_barcards"
+  add_index "peoplebarcards", ["person_id"], :name => "peoplebarcards_people"
 
   create_table "privileges", :force => true do |t|
     t.string   "member_class",  :limit => 1,                   :null => false
@@ -230,14 +225,12 @@ ActiveRecord::Schema.define(:version => 11) do
 
   create_table "subscriptions", :force => true do |t|
     t.float    "amount",       :null => false
-    t.date     "start_date",   :null => false
-    t.date     "end_date",     :null => false
+    t.datetime "start_date",   :null => false
+    t.datetime "end_date",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "privilege_id", :null => false
   end
-
-  add_index "subscriptions", ["id"], :name => "id", :unique => true
 
   create_table "versions", :force => true do |t|
     t.integer  "versioned_id"
@@ -252,7 +245,5 @@ ActiveRecord::Schema.define(:version => 11) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "versions", ["id"], :name => "id", :unique => true
 
 end

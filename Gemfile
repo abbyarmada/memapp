@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-#ruby '2.0.0'
+ruby '2.0.0'
 gem 'rails', '~> 3.1.0'
 gem  'mail'
 gem "paperclip", "~> 3.0"
@@ -43,6 +43,7 @@ group :test, :development ,:preprod do
 end
 
 group :test do 
+  gem 'factory_girl'
   gem 'factory_girl_rails'
   gem "sqlite3"
   gem 'faker'
@@ -53,6 +54,9 @@ group :test do
 end
 
 group :development do 
+   gem 'factory_girl'
+  gem 'factory_girl_rails'
+
   gem 'mysql2' 
 end
 

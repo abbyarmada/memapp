@@ -22,10 +22,10 @@ def payment_type_unique_for_year
   #return if paymenttype_id.blank?
   if self.paymenttype_id == 1 or self.paymenttype_id == 4
     if self.id == nil
-     num_duplicates = self.class.count(:conditions => ["(id <> ? or id <> '') AND member_id = ?  AND year(date_lodged) = ? and paymenttype_id in (1,4)", self.id, self.member_id, self.date_lodged.year ])
+     num_duplicates = self.class.count(:conditions => ["(id <> ? or id <> 0 ) AND member_id = ?  AND date_part('year',date_lodged) = ? and paymenttype_id in (1,4)", self.id, self.member_id, self.date_lodged.year ])
    else
    
-     num_duplicates = self.class.count(:conditions => ["id <> ? and  member_id = ?  AND year(date_lodged) = ? and paymenttype_id in (1,4)", self.id, self.member_id, self.date_lodged.year ])
+       num_duplicates = self.class.count(:conditions => ["id <> ? and  member_id = ?  AND date_part('year',date_lodged) = ? and paymenttype_id in (1,4)", self.id, self.member_id, self.date_lodged.year ])
    end
     if num_duplicates > 0
       #errors.add(:field, :taken)
@@ -39,12 +39,12 @@ def payment_final_and_first
   #return if paymenttype_id.blank?
   if self.paymenttype_id == 5 
     if self.new_record?
-       num_duplicates = self.class.count(:conditions => ["member_id = ?  AND year(date_lodged) = ? and paymenttype_id = 4 ", self.member_id, self.date_lodged.year ])
+      num_duplicates = self.class.count(:conditions => ["member_id = ?  AND date_part('year',date_lodged) = ? and paymenttype_id = 4 ", self.member_id, self.date_lodged.year ])
        if num_duplicates == 0
           errors.add( :paymenttype_id, 'Must have a First payment to have a Final payment')
        end
     else
-       num_duplicates = self.class.count(:conditions => ["member_id = ?  AND year(date_lodged) = ? and paymenttype_id = 4 ", self.member_id, self.date_lodged.year ])
+       num_duplicates = self.class.count(:conditions => ["member_id = ?  AND date_part('year',date_lodged) = ? and paymenttype_id = 4 ", self.member_id, self.date_lodged.year ])
        if num_duplicates >= 0
           errors.add( :paymenttype_id,  'Must have a First payment to have a Final payment')
        end

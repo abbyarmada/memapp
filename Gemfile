@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 ruby '2.0.0'
-gem 'rails', '~> 3.1.0'
+gem 'rails', '~> 3.2.0'
 gem  'mail'
 gem "paperclip", "~> 3.0"
 gem "execjs"
@@ -25,9 +25,9 @@ gem 'quiet_assets'
 
 # Needed for the new asset pipeline
 group :assets do
-  gem 'sass-rails',   "~> 3.1.5"
-  gem 'coffee-rails', "~> 3.1.1"
-  gem 'uglifier',     ">= 1.0.3"
+  gem 'sass-rails'#,   "~> 3.1.5"
+  gem 'coffee-rails'#, "~> 3.1.1"
+  gem 'uglifier'#,     ">= 1.0.3"
 end
  
 # jQuery is the default JavaScript library in Rails 3.1

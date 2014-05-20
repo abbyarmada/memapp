@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '2.0.0'  rescue nil
+ruby '2.0.0'
 gem 'rails', '~> 3.2.0'
 gem  'mail'
 gem "paperclip", "~> 3.0"
@@ -7,6 +7,7 @@ gem "execjs"
 gem 'therubyracer', :platforms => :ruby
 gem 'capistrano'
 gem 'formtastic'
+gem 'bugsnag'
 
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQL Server 5.5"'#
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'   

@@ -1,14 +1,13 @@
 mysql: &mysql
   adapter: mysql2
-  database: <%= Rails.root.basename.to_s %>_<%= Rails.env %>
-  database: memapp_test
+  database: memapp_<%= Rails.env %>
   username: travis
   encoding: utf8
 
 postgresql: &postgresql
   adapter: postgresql
   encoding: unicode
-  database: <%= Rails.root.basename.to_s %>_<%= Rails.env %>
+  database: memapp_<%= Rails.env %>
   username: travis
   encoding: utf8
 
@@ -25,5 +24,11 @@ defaults: &defaults
 <<: *<%= ENV['DB'] || "postgresql" %>
 
 test:
+  <<: *defaults
+
+development:
+  <<: *defaults
+
+production:
   <<: *defaults
 

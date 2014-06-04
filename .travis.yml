@@ -1,9 +1,9 @@
 language: ruby
 rvm:
   - 2.0.0
-  gemfile: Gemfile
+  -gemfile: Gemfile
   - 1.9.3
-  gemfile: gemfiles/1.9.3.gemfile
+  -gemfile: gemfiles/1.9.3.gemfile
   
 before_script:
   - cp config/database.travis.yml config/database.yml

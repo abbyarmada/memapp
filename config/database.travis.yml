@@ -6,7 +6,7 @@ mysql: &mysql
   encoding: utf8
 
 postgresql: &postgresql
-   adapter: postgresql
+  adapter: postgresql
   encoding: unicode
   database: <%= Rails.root.basename.to_s %>_<%= Rails.env %>
   username: travis

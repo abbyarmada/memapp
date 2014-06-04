@@ -12,8 +12,8 @@ rvm:
 #gemfile:
 
 env:
-  - DB=sqlite
-  - DB=mysql
+#  - DB=sqlite
+  - DB=mysql2
   - DB=postgresql
 
   

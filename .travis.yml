@@ -11,4 +11,7 @@ script:
  - bundle exec rake db:schema:load
  - bundle exec rake db:test:prepare
  - bundle exec rspec spec 
+gemfile:
+ - gemfiles/1.9.3.gemfile
+ - gemfiles/2.0.0.gemfile
  

@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '2.0.0'
+ruby '2.0.0' rescue nil
 gem 'rails', '~> 3.2.0'
 gem  'mail'
 gem "paperclip", "~> 3.0"

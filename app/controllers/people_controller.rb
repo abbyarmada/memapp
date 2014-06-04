@@ -154,11 +154,12 @@ class PeopleController < ApplicationController
       flash[:notice] = 'Person Moved to this membership'
       
     else
-      flash[:notice] = 'An Error occured while moving this person to a new  membership'
+      flash[:notice] = 'An Error occured while moving this person to the new  membership - check the member status'
       redirect_to :controller =>'people', :action => 'edit',:id => @person.id   
     end
   end
  
+  
  
  def renewal_email
      @person = Person.find(params[:id])

@@ -6,7 +6,7 @@ before_script:
   - cp config/database.travis.yml config/database.yml
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
   - mysql -e 'create database memapp_test'
- #  - psql -c 'create database memapp_test' -U postgres
+  - psql -c 'create database memapp_test' -U postgres
 script:
  - bundle exec rake db:schema:load
  - bundle exec rake db:test:prepare

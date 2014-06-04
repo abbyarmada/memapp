@@ -1,5 +1,22 @@
-test:
+mysql: &mysql
   adapter: mysql2
   database: memapp_test
   username: travis
   encoding: utf8
+
+postgresql: &postgresql
+  adapter: postgresql
+  encoding: unicode
+  database: memapp_test
+  username: travis
+  encoding: utf8
+  
+
+defaults: &defaults
+  pool: 5
+  timeout: 5000
+  host: localhost
+<<: *<%= ENV['DB'] || "postgresql" %>
+
+test:
+  <<: *defaults

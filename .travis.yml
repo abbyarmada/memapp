@@ -13,7 +13,7 @@ rvm:
 
 env:
 #  - DB=sqlite
-  - DB=mysql2
+  - DB=mysql
   - DB=postgresql
 
   
@@ -21,6 +21,7 @@ env:
 #  - DEFER_GC=false RAILS_EDGE=true
 
 before_script:
+  - export RAILS_ENV=test
   - cp config/database.travis.yml config/database.yml
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
   - mysql -e 'create database memapp_test'

@@ -20,3 +20,4 @@ defaults: &defaults
 
 test:
   <<: *defaults
+  database: memapp_test

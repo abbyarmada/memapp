@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140218173518) do
+ActiveRecord::Schema.define(:version => 20140513131717) do
 
   create_table "barcards", :force => true do |t|
     t.datetime "created_at"
@@ -32,72 +32,72 @@ ActiveRecord::Schema.define(:version => 20140218173518) do
   add_index "boats", ["member_id"], :name => "BoatsMembers"
 
   create_table "loyaltycards", :force => true do |t|
-    t.string    "Member_Title",            :limit => 16
-    t.string    "Member_Forename",         :limit => 64
-    t.string    "Member_Middlenames",      :limit => 64
-    t.string    "Member_Surname",          :limit => 64
-    t.string    "Address_1",               :limit => 128
-    t.string    "Address_2",               :limit => 128
-    t.string    "Address_3",               :limit => 128
-    t.string    "Town_City",               :limit => 128
-    t.string    "County",                  :limit => 128
-    t.string    "Post_Code",               :limit => 32
-    t.string    "Home_Telephone",          :limit => 64
-    t.string    "Work_Telephone",          :limit => 64
-    t.string    "Mobile_Telephone",        :limit => 64
-    t.string    "Company_Name",            :limit => 64
-    t.date      "Date_Of_Birth"
-    t.string    "Gender",                  :limit => 2
-    t.integer   "Cards_Issued_TD"
-    t.integer   "Age"
-    t.integer   "Scheme_Code"
-    t.string    "Data_Protection_Flag",    :limit => 1
-    t.integer   "Link_Member_Code"
-    t.date      "Date_Registered"
-    t.float     "Points_Claimed"
-    t.float     "Average_Points_Claimed"
-    t.integer   "RedeemedTD"
-    t.integer   "Current_Points"
-    t.integer   "Total_Points_Issued"
-    t.float     "Average_Points_Issued"
-    t.integer   "IssuedTD"
-    t.float     "Total_Spend"
-    t.float     "Average_Spend"
-    t.integer   "Loyalty_Transactions_TD"
-    t.date      "Date_Of_Last_Trans"
-    t.date      "Date_Of_Last_Redemption"
-    t.date      "Date_Of_Last_Issue"
-    t.integer   "Admissions"
-    t.date      "Last_Admission"
-    t.integer   "Declined"
-    t.date      "Last_Declined"
-    t.string    "PicFilePath",             :limit => 510
-    t.date      "LastContactedDate"
-    t.string    "Status",                  :limit => 100
-    t.string    "EMail",                   :limit => 510
-    t.integer   "DOBD"
-    t.string    "Scheme_Changed",          :limit => 1
-    t.string    "INTFlag",                 :limit => 1
-    t.integer   "SEREAL_NUMBER"
-    t.string    "Membership_Type",         :limit => 128
-    t.date      "Last_Renewal_Date"
-    t.integer   "Member_Code"
-    t.string    "Rewnewed_2009",           :limit => 1
-    t.date      "Renewed_Date"
-    t.date      "Renewed_2008"
-    t.string    "Bar_Billies",             :limit => 1
-    t.string    "Saluation",               :limit => 510
-    t.string    "House_Name_No",           :limit => 510
-    t.string    "Occupation",              :limit => 510
-    t.string    "Social",                  :limit => 510
-    t.string    "Racing",                  :limit => 510
-    t.string    "Cruser",                  :limit => 510
-    t.string    "Dinghy",                  :limit => 510
-    t.string    "Junor",                   :limit => 510
-    t.string    "City",                    :limit => 510
-    t.string    "Country",                 :limit => 510
-    t.integer   "MerberShipId"
-    t.timestamp "updated_at",                             :null => false
+    t.string   "Member_Title",            :limit => 16
+    t.string   "Member_Forename",         :limit => 64
+    t.string   "Member_Middlenames",      :limit => 64
+    t.string   "Member_Surname",          :limit => 64
+    t.string   "Address_1",               :limit => 128
+    t.string   "Address_2",               :limit => 128
+    t.string   "Address_3",               :limit => 128
+    t.string   "Town_City",               :limit => 128
+    t.string   "County",                  :limit => 128
+    t.string   "Post_Code",               :limit => 32
+    t.string   "Home_Telephone",          :limit => 64
+    t.string   "Work_Telephone",          :limit => 64
+    t.string   "Mobile_Telephone",        :limit => 64
+    t.string   "Company_Name",            :limit => 64
+    t.date     "Date_Of_Birth"
+    t.string   "Gender",                  :limit => 2
+    t.integer  "Cards_Issued_TD"
+    t.integer  "Age"
+    t.integer  "Scheme_Code"
+    t.string   "Data_Protection_Flag",    :limit => 1
+    t.integer  "Link_Member_Code"
+    t.date     "Date_Registered"
+    t.float    "Points_Claimed"
+    t.float    "Average_Points_Claimed"
+    t.integer  "RedeemedTD"
+    t.integer  "Current_Points"
+    t.integer  "Total_Points_Issued"
+    t.float    "Average_Points_Issued"
+    t.integer  "IssuedTD"
+    t.float    "Total_Spend"
+    t.float    "Average_Spend"
+    t.integer  "Loyalty_Transactions_TD"
+    t.date     "Date_Of_Last_Trans"
+    t.date     "Date_Of_Last_Redemption"
+    t.date     "Date_Of_Last_Issue"
+    t.integer  "Admissions"
+    t.date     "Last_Admission"
+    t.integer  "Declined"
+    t.date     "Last_Declined"
+    t.string   "PicFilePath",             :limit => 510
+    t.date     "LastContactedDate"
+    t.string   "Status",                  :limit => 100
+    t.string   "EMail",                   :limit => 510
+    t.integer  "DOBD"
+    t.string   "Scheme_Changed",          :limit => 1
+    t.string   "INTFlag",                 :limit => 1
+    t.integer  "SEREAL_NUMBER"
+    t.string   "Membership_Type",         :limit => 128
+    t.date     "Last_Renewal_Date"
+    t.integer  "Member_Code"
+    t.string   "Rewnewed_2009",           :limit => 1
+    t.date     "Renewed_Date"
+    t.date     "Renewed_2008"
+    t.string   "Bar_Billies",             :limit => 1
+    t.string   "Saluation",               :limit => 510
+    t.string   "House_Name_No",           :limit => 510
+    t.string   "Occupation",              :limit => 510
+    t.string   "Social",                  :limit => 510
+    t.string   "Racing",                  :limit => 510
+    t.string   "Cruser",                  :limit => 510
+    t.string   "Dinghy",                  :limit => 510
+    t.string   "Junor",                   :limit => 510
+    t.string   "City",                    :limit => 510
+    t.string   "Country",                 :limit => 510
+    t.integer  "MerberShipId"
+    t.datetime "updated_at",                             :null => false
   end
 
   create_table "members", :force => true do |t|
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(:version => 20140218173518) do
     t.integer  "txt_cruiser_skipper",                   :default => 0,     :null => false
     t.integer  "txt_dinghy_sailing",                    :default => 0,     :null => false
     t.integer  "txt_junior",                            :default => 0,     :null => false
-    t.integer  "txt_test",                 :limit => 1, :default => 0,     :null => false
+    t.integer  "txt_test",                 :limit => 2, :default => 0,     :null => false
     t.integer  "txt_op_co",                             :default => 0,     :null => false
     t.string   "occupation"
     t.boolean  "send_txt",                              :default => false, :null => false
@@ -219,10 +219,6 @@ ActiveRecord::Schema.define(:version => 20140218173518) do
     t.datetime "requested_at"
   end
 
-  create_table "schema_info", :id => false, :force => true do |t|
-    t.integer "version"
-  end
-
   create_table "subscriptions", :force => true do |t|
     t.float    "amount",       :null => false
     t.datetime "start_date",   :null => false
@@ -231,6 +227,24 @@ ActiveRecord::Schema.define(:version => 20140218173518) do
     t.datetime "updated_at"
     t.integer  "privilege_id", :null => false
   end
+
+  create_table "users", :force => true do |t|
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "versions", :force => true do |t|
     t.integer  "versioned_id"

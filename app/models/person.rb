@@ -20,7 +20,10 @@ class Person < ActiveRecord::Base
   validates_format_of :email_address, :if => Proc.new {|person| person.snd_eml == "Y" }, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member already Exists" },  :if => Proc.new {|person| person.status == 'm' }
   validates :status, :uniqueness => {:scope => :member_id ,:message => "Partner Member already Exists" },  :if => Proc.new {|person| person.status == 'p' }
-
+  validate :main_member_exists?, :message=>"Must have a main member",  on: :update 
+  #validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member does not Exist" }, :if => Proc.new {|person| person.status != 'm' }
+  
+  
   def self.search(params)
     people = scoped
     people = people.current unless params[:past_members]
@@ -31,18 +34,16 @@ class Person < ActiveRecord::Base
     people = people.order(:last_name, :first_name).includes({:member => :privilege},:peoplebarcard,:loyaltycard).paginate(:per_page => 30, :page => params[:page])
   end
 
-  def age
-    ((Date.today - dob) /365).to_i rescue nil
+  def main_member_exists?
+    main_member_count = self.class.count(:conditions => ["member_id = ? and status = ? ", self.member_id, 'm']) 
+      if main_member_count != 1  
+      errors.add(:status, "Must have a main member")
+    end
   end
 
   def adult?
     self.age >= 18 rescue nil
   end
-
-
-  
-  
-  
 
   def self.main_person(mid)
     main_person = Person.where(" status = 'm' and member_id = ? ", mid ).first
@@ -54,7 +55,6 @@ class Person < ActiveRecord::Base
 
   def self.main_person?
     if Person.status = "m"
-
     end
   end
 
@@ -138,7 +138,9 @@ class Person < ActiveRecord::Base
     end
   end
 
-
+def age
+    ((Date.today - dob)/365).to_i #rescue nil
+  end
 
 end
 

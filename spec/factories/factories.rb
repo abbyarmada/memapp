@@ -1,6 +1,7 @@
 FactoryGirl.define do 
   require 'faker'
    factory :person do |f|
+   # f.association :member
      f.member_id 1
      f.first_name  { Faker::Name.first_name }
      f.last_name { Faker::Name.last_name }
@@ -35,25 +36,46 @@ FactoryGirl.define do
      f.boat_storage 1 
    end
    factory :boat do |f|
-     f.association :member
+    # f.association :member
+     f.member_id 1
      f.boat_name "Good Ship Hope"
      f.boat_type "Cruiser"
      f.boat_class "J24"
      f.sail_number "IRL 1234"
      f.pen_tag "K 20"
    end
+ 
    factory :member do |f|
+#     f.association :privilege
+     f.privilege_id 1
      f.proposed "John Doe"
      f.seconded "Jane Doe"
      f.year_joined "2014"
      f.occupation "System Tester"
      f.renew_date "01.01.2014"
-     f.privilege_id 1
-     #f.association :privilege
      f.name_no "1234"
      f.street1 "Test street name 1"
      f.country "Ireland"
    end
+#   factory :payment_method do |f|
+#     f.name "Cash"
+#   end
+#   factory :paymenttypes do |f|
+#     f.name "Member Subscriptions"
+#   end
+  factory :payment do |f|
+ #   f.association :privilege
+    f.association :member
+    f.privilege_id 1
+    f.member_id 1
+    f.amount 480
+     f.date_lodged "01.01.2014" 
+##     f.pay_type "crap"
+     f.comment "payment"
+#     f.privilege_id 1
+     f.paymenttype_id 1
+     f.payment_method_id 1
+  end
 end
 
 #FactoryGirl.define do

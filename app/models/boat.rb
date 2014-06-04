@@ -1,6 +1,6 @@
 class Boat < ActiveRecord::Base
   belongs_to  :member
-  validates_presence_of :boat_class, :boat_type
+  validates_presence_of :boat_class, :boat_type,:member_id
   validates_inclusion_of :boat_type, :in => '(Dinghy,Cruiser,Motor,Windsurfer)', 
       :message => "must be Dinghy, Windsurfer, Cruiser or Motor"
   attr_accessible :boat_class, :boat_type, :boat_name ,:sail_no, :pen_tag

@@ -1,6 +1,12 @@
 R3::Application.routes.draw do
   
   
+  resources :boats
+
+
+  resources :paymenttypes
+
+
   resources :privileges
 
   # The priority is based upon order of creation:

@@ -1,20 +1,37 @@
 language: ruby
+before_install:
+  - gem update --system
+  - gem update bundler
 rvm:
-  - 2.0.0
-  -gemfile: Gemfile
   - 1.9.3
-  -gemfile: gemfiles/1.9.3.gemfile
+    - gemfiles/1.9.3.gemfile
+  - 2.0.0
+    - gemfiles/2.0.0.gemfile
+  - 2.1
+    - gemfiles/2.1.gemfile
+#gemfile:
+
   
+#env:
+#  - DEFER_GC=false RAILS_EDGE=true
+
 before_script:
   - cp config/database.travis.yml config/database.yml
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
   - mysql -e 'create database memapp_test'
   - psql -c 'create database memapp_test' -U postgres
-script:
+script: 
  - bundle exec rake db:schema:load
  - bundle exec rake db:test:prepare
- - bundle exec rspec spec 
-#gemfile:
-# - gemfiles/1.9.3.gemfile
-# - gemfiles/2.0.0.gemfile
- 
+ - bundle exec rake spec
+matrix:
+  allow_failures:
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_edge.gemfile
+      env: DEFER_GC=false RAILS_EDGE=true
+    - rvm: 2.0.0
+      gemfile: gemfiles/rails_edge.gemfile
+      env: DEFER_GC=false RAILS_EDGE=true
+    - rvm: 2.1
+      gemfile: gemfiles/rails_edge.gemfile
+      env: DEFER_GC=false RAILS_EDGE=true

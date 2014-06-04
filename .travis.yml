@@ -25,7 +25,7 @@ before_script:
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
   - mysql -e 'create database memapp_test'
   - psql -c 'create database memapp_test' -U postgres
-  - rake db:test:prepare
+  - bundle exec rake db:test:prepare
 script: 
  - bundle exec rake spec
 matrix:

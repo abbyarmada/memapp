@@ -51,6 +51,11 @@ group :test do
   gem 'launchy'
   gem 'nokogiri', '>= 1.3.3'
   gem 'zeus'
+  platforms :mri do
+    gem 'sqlite3'
+    gem 'mysql2'
+    gem 'pg'
+  end
 end
 
 group :development do 

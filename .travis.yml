@@ -11,6 +11,11 @@ rvm:
 #    - gemfiles/2.1.gemfile
 #gemfile:
 
+env:
+  - DB=sqlite
+  - DB=mysql
+  - DB=postgresql
+
   
 #env:
 #  - DEFER_GC=false RAILS_EDGE=true
@@ -20,9 +25,8 @@ before_script:
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
   - mysql -e 'create database memapp_test'
   - psql -c 'create database memapp_test' -U postgres
+  - rake db:test:prepare
 script: 
- - bundle exec rake db:schema:load
- - bundle exec rake db:test:prepare
  - bundle exec rake spec
 matrix:
   allow_failures:

@@ -113,10 +113,11 @@ class PeopleController < ApplicationController
     @member = @person.member
     respond_to do |format|
       if @person.update_attributes(params[:person]) 
-        flash[:notice] = 'Person was successfully updated.'
         format.html {render :action => "edit" ,:id => @person.id }
+         flash[:notice] = 'Person was successfully updated.'
       else
-        format.html { render :action => "edit" ,:id => @person.id  }
+      flash[:notice] = 'There was an issue that prevented this record from being saved.'  
+      format.html { render :action => "edit" ,:id => @person.id  }
       end
     end
   end
@@ -151,8 +152,10 @@ class PeopleController < ApplicationController
       session[:copypersonid] = ''
       redirect_to :back
       flash[:notice] = 'Person Moved to this membership'
+      
     else
-      flash[:notice] = 'An Error occured while moving this person to this membership'
+      flash[:notice] = 'An Error occured while moving this person to a new  membership'
+      redirect_to :controller =>'people', :action => 'edit',:id => @person.id   
     end
   end
  

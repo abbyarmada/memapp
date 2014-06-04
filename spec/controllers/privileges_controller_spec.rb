@@ -34,7 +34,7 @@ describe PrivilegesController do
 
   describe "GET index" do
     it "assigns all privileges as @privileges" do
-      privilege = Privilege.create! valid_attributes
+      privilege = create(:privilege)
       get :index, {}, valid_session
       assigns(:privileges).should eq([privilege])
     end

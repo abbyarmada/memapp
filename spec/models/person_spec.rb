@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe Person do
   #pending "add some examples to (or delete) #{__FILE__}"
-  
+   before(:each) do
+    build_stubbed(:member)
+    build_stubbed(:privilege)
+  end
   ########  VALIDATIONS    ######################## 
   it "has a vaild factory" do 
     create(:person).should be_valid
@@ -24,6 +27,9 @@ describe Person do
     create(:person)
     create(:person,  status: 'p', member_id: 1)
     build(:person,  status: 'p', member_id: 1).should_not be_valid
+  end
+  it "is invalid to have any status member without a main member within a single membership" do
+    create(:person,  status: 'p', member_id: 1).should_not be_valid
   end
   #### instance tests ############ 
   it "returns a Person's full name as a string" do

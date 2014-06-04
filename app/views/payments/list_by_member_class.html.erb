@@ -5,11 +5,11 @@
 
 <%= "List of Members by Membership Class" %><br/>
 
-Number of Payments <%= @pays.size%><br/>
+Number of Payments <%= @payments.size%><br/>
 
 <table class="listing">
  <th>Amount</th> <th>Mem Class</th> <th>Last Name</th> <th>First Name</th> <th>Date Lodged</th>
-<%@pays.each do |p| %>
+  <%@payments.each do |p| %>
     <% n = p.member.people[0] %>
    <tr class="<%= cycle('odd', 'even') %>">
     

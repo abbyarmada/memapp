@@ -29,7 +29,8 @@
 		<%= link_to_unless_current "List Boats", :controller => 'boats', :action => 'index' %><br /><br>
 		<%= link_to_unless_current "List by Member Class", :controller => 'payments', :action => 'list_by_member_class' %><br /><br>
 		<%= link_to_unless_current "Totals by Member Class", :controller => 'payments', :action => 'tot_by_member_class' %><br /><br>
-		<%= link_to_unless_current "Payment Breakdown", :controller => 'payments', :action => 'receipts_breakdown' %><br /><br>
+		<%#= link_to_unless_current "Payment Breakdown", :controller => 'payments', :action => 'receipts_breakdown' 
+    %>
 		
 		<%= link_to_unless_current "Payments This Year", :controller => 'payments', :action => 'listytd' %><br /><br><br>
 		<%= link_to_unless_current "Overdue Memberships",:controller => 'payments', :action => 'overduememberships' %><br /><br>
@@ -49,7 +50,7 @@
 		<%= link_to_unless_current "Bar System Interface", :controller => 'people', :action => 'bar_interface' %><br /><br>
 		<%= link_to_unless_current "export_paid_up_members", :controller => 'people', :action => 'paid_up_extract' %><br /><br>
 		
-		<p > Version-3.1.0 <a href="http://cunning.homeip.net/trac/ticket/68" target="_blank" >Whats new ? </a>    </p>         
+		      
     </div> 
 </div>
 

@@ -61,6 +61,9 @@ module R3
         :controller_specs => true,
         :request_specs => true
       g.fixture_replacement :factory_girl, :dir => "spec/factories"
+      g.stylesheets false
+      g.scss false
+      g.javascripts false
     end
    
     # stop the I18n messages...

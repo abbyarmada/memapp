@@ -4,13 +4,13 @@
 <th>Last Year</th><th>Subs<br>This Year</th><th>Next Year</th> <th> </th> 
 <% for privilege in @privileges %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= privilege.member_class %>  </td>
-    <td><%= privilege.name %>  </td>
-    <td><%= privilege.bar_billies%>  </td>
-    <td><%= privilege.car_park%>  </td>
-    <td><%= privilege.votes%>  </td>
-    <td><%= privilege.bar_reference%>  </td>
-    <td><%= privilege.boat_storage? ? 'Y' : 'N'  %>   </td>
+    <td><%= privilege.member_class %>                    </td>
+    <td><%= privilege.name %>                            </td>
+    <td><%= privilege.bar_billies%>                      </td>
+    <td><%= privilege.car_park%>                         </td>
+    <td><%= privilege.votes%>                            </td>
+    <td><%= privilege.bar_reference%>                    </td>
+    <td><%= privilege.boat_storage? ? 'Y' : 'N'  %>      </td>
     <td><%= privilege.subscriptions.lastyear(privilege.id)[0].amount rescue nil %></td>
     <td><%= privilege.subscriptions.thisyear(privilege.id)[0].amount rescue nil %></td>
     <td><%= privilege.subscriptions.nextyear(privilege.id)[0].amount rescue nil %></td>

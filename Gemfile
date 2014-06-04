@@ -7,14 +7,11 @@ gem "execjs"
 gem 'therubyracer', :platforms => :ruby
 gem 'capistrano'
 gem 'formtastic'
-gem 'bugsnag'
+
 
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQL Server 5.5"'#
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'   
-
-
 gem 'will_paginate'
-
 gem 'gchartrb', :require => 'google_chart'
 gem 'prawn'
 gem 'prawnto'
@@ -41,17 +38,19 @@ gem 'turbolinks'
 group :test, :development ,:preprod do
   gem "rspec-rails", "~> 2.0"
   gem "spring"
+   gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 group :test do 
-  gem 'factory_girl'
-  gem 'factory_girl_rails'
   gem "sqlite3"
   gem 'faker'
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
   gem 'nokogiri', '>= 1.3.3'
+  gem 'zeus'
 end
 
 group :development do 
@@ -62,11 +61,11 @@ group :development do
 end
 
 #heroku
-group :production_h do 
-  gem 'rails_12factor'
-  gem 'pg'
-  gem 'unicorn'
-end
+#group :production_h do 
+#  gem 'rails_12factor'
+#  gem 'pg'
+#  gem 'unicorn'
+#end
 
 #seans VPS
 #group :production do 
@@ -75,6 +74,10 @@ end
 
 #preprod and prod currently uses mysql. Change to postgres soon..!
 group :preprod,:production do 
-  gem 'mysql2' 
+#  gem 'mysql2' 
+  gem 'bugsnag'
+    gem 'rails_12factor'
+  gem 'pg'
+  gem 'unicorn'
 end
 

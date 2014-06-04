@@ -1,18 +1,9 @@
-
-
 <h1>Boats </h1>
-
-
-
 <%= form_tag :action => 'update', :pid => @pid  do %>
-<%= form_for(@boat) do |f| %>
-	
-<%= render :partial => "form", :locals => { :button_label => "Update", :boat => @boat, :pid => @pid  } %> 
-  
-
-<%= link_to 'Back', :controller => 'people', :action => 'edit', :id => Person.main_person(@boat.member_id) %>
- 
-<% end %>
+  <%= form_for(@boat) do |f| %>
+    <%= render :partial => "form", :locals => { :button_label => "Update", :boat => @boat, :pid => @pid  } %> 
+    <%= link_to 'Back', :controller => 'people', :action => 'edit', :id => Person.main_person(@boat.member_id) %>
+  <% end %>
 <% end %>
 
 

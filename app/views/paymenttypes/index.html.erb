@@ -6,6 +6,7 @@
 
 <% @paymenttypes.each do |paymenttype| %>
   <tr>
+    <td><%= paymenttype.name %>    </td> 
     <td><%= link_to 'Show', paymenttype %></td>
     <td><%= link_to 'Edit', edit_paymenttype_path(paymenttype) %></td>
     <td><%= link_to 'Destroy', paymenttype, :confirm => 'Are you sure?', :method => :delete %></td>

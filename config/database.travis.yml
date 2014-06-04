@@ -1,15 +1,21 @@
 mysql: &mysql
   adapter: mysql2
+  database: <%= Rails.root.basename.to_s %>_<%= Rails.env %>
   database: memapp_test
   username: travis
   encoding: utf8
 
 postgresql: &postgresql
-  adapter: postgresql
+   adapter: postgresql
   encoding: unicode
-  database: memapp_test
+  database: <%= Rails.root.basename.to_s %>_<%= Rails.env %>
   username: travis
   encoding: utf8
+
+sqlite: &sqlite
+  adapter: sqlite3
+  database: db/<%= Rails.env %>.sqlite3
+ 
   
 
 defaults: &defaults
@@ -20,4 +26,4 @@ defaults: &defaults
 
 test:
   <<: *defaults
-  database: memapp_test
+

@@ -27,10 +27,10 @@ defaults: &defaults
 #  <<: *defaults
 test:
   adapter: sqlite3
-  database: db/<%= Rails.env %>.sqlite3
+  database: db/test.sqlite3
   pool: 5
   timeout: 5000
-  host: localhost 
+ # host: localhost 
   
 development:
   <<: *defaults

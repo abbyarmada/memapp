@@ -17,14 +17,15 @@ sqlite: &sqlite
   pool: 5
   timeout: 5000
   host: localhost 
-
+  
 defaults: &defaults
 <<: *<%= ENV['DB'] || "postgresql" %>
 
-
-
 test:
-  <<: *defaults
+  adapter: mysql2
+  database: memapp_<%= Rails.env %>
+  username: travis
+  encoding: utf8
  
 development:
   <<: *defaults

@@ -11,16 +11,16 @@ postgresql: &postgresql
   username: travis
   encoding: utf8
 
+
 sqlite: &sqlite
   adapter: sqlite3
   database: db/<%= Rails.env %>.sqlite3
- 
+  pool: 5
+  timeout: 5000
+  host: localhost 
   
 
 defaults: &defaults
-  pool: 5
-  timeout: 5000
-  host: localhost
 <<: *<%= ENV['DB'] || "postgresql" %>
 
 test:

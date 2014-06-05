@@ -1,44 +1,32 @@
 language: ruby
+
 before_install:
  - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
-#  - gem update --system
-#  - gem update bundler
+ - ./script/travis/bundle_install.sh
+
 rvm:
-#  - 1.9.3
-#    gemfiles/1.9.3.gemfile
   - 2.0.0
-#    - gemfiles/2.0.0.gemfile
-#  - 2.1
-#    - gemfiles/2.1.gemfile
-#gemfile:
 
 env:
+  matrix:
   - DB=sqlite
-#  - DB=mysql
-#  - DB=postgresql
-
-  
-#env:
-#  - DEFER_GC=false RAILS_EDGE=true
+  global:
+    - RAILS_ENV=test
+    secure: gGj4X5f+JryM6XoouLs7xt3jHWnKPW4gAHyW4QhYb4DLyGGg/LpjNH051UAlUkrqpvT68/X594czIzXYAujmESnjkK2dnPaHKTF+/d3OChEIfCPhO8qCHVyFJyDcPE4IYHLCwvn4wV6a/IakKYKJujwJn6oJrEVbKwaFte9tlCg=
 
 before_script:
-  - export RAILS_ENV=test
   - cp config/database.travis.yml config/database.yml
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
   - mysql -e 'create database memapp_test'
   - psql -c 'create database memapp_test' -U postgres
-script: 
-  - RAILS_ENV=test bundle exec rake db:migrate
-  - RAILS_ENV=test bundle exec rake db:test:prepare
-  - RAILS_ENV=test bundle exec rake spec
-#matrix:
-#  allow_failures:
-#    - rvm: 1.9.3
-#      gemfile: gemfiles/rails_edge.gemfile
-#      env: DEFER_GC=false RAILS_EDGE=true
-#    - rvm: 2.0.0
-#      gemfile: gemfiles/rails_edge.gemfile
-#      env: DEFER_GC=false RAILS_EDGE=true
-#    - rvm: 2.1
-#      gemfile: gemfiles/rails_edge.gemfile
-#      env: DEFER_GC=false RAILS_EDGE=true
+
+after_script:
+  - ruby script/travis/bundle_cache.rb
+
+notifications:
+  email: false
+  
+script:
+  - bundle exec rake db:migrate
+  - bundle exec rake db:test:prepare
+  - bundle exec rake spec

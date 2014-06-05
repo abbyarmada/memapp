@@ -56,8 +56,6 @@ group :test do
 end
 
 group :development do 
-  gem 'factory_girl'
-  gem 'factory_girl_rails'
   gem 'mysql2' 
 end
 

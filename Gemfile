@@ -51,12 +51,13 @@ group :test do
   gem 'launchy'
   gem 'nokogiri', '>= 1.3.3'
   gem 'zeus'
+  gem 'pg'
+  gem 'mysql2'
 end
 
 group :development do 
-   gem 'factory_girl'
+  gem 'factory_girl'
   gem 'factory_girl_rails'
-
   gem 'mysql2' 
 end
 

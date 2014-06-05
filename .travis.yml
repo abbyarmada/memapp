@@ -1,5 +1,6 @@
 language: ruby
-#before_install:
+before_install:
+ - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
 #  - gem update --system
 #  - gem update bundler
 rvm:
@@ -13,8 +14,8 @@ rvm:
 
 env:
   - DB=sqlite
-  - DB=mysql
-  - DB=postgresql
+#  - DB=mysql
+#  - DB=postgresql
 
   
 #env:

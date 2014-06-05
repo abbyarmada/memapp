@@ -19,6 +19,7 @@ before_script:
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
   - mysql -e 'create database memapp_test'
   - psql -c 'create database memapp_test' -U postgres
+  - touch db/test.sqlite3
 
 after_script:
   - ruby script/travis/bundle_cache.rb

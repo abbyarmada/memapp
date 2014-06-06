@@ -1,5 +1,6 @@
-bundler_args: --without development production --path=~/.bundle
+bundler_args: --without development --path=~/.bundle
 language: ruby
+cache: bundler
 
 before_install:
  - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"

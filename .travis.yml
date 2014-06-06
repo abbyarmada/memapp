@@ -13,7 +13,7 @@ env:
   matrix:
   - DB=mysql
   - DB=sqlite
-  #- DB=postgresql
+  - DB=postgresql
   global:
     - RAILS_ENV=test
     - secure: gGj4X5f+JryM6XoouLs7xt3jHWnKPW4gAHyW4QhYb4DLyGGg/LpjNH051UAlUkrqpvT68/X594czIzXYAujmESnjkK2dnPaHKTF+/d3OChEIfCPhO8qCHVyFJyDcPE4IYHLCwvn4wV6a/IakKYKJujwJn6oJrEVbKwaFte9tlCg=

@@ -1,4 +1,4 @@
-bundler_args: --without development --path=~/.bundle
+bundler_args: --without development production --path=~/.bundle
 language: ruby
 
 before_install:
@@ -21,9 +21,9 @@ before_script:
   -cp "config/database.#{ENV['DB']}.yml", 'config/database.yml'
 #  - cp config/database.travis.yml config/database.yml
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
-  - mysql -e 'create database memapp_test'
-  - psql -c 'create database memapp_test' -U postgres
-  - touch db/<%= Rails.env %>.sqlite3
+  - mysql -e 'create database memapp_#{ENV['RAILS_ENV']}'
+  - psql -c 'create database memapp_#{ENV['RAILS_ENV']}' -U postgres
+  - touch db/#{ENV['RAILS_ENV']}.sqlite3
 
 after_script:
   - ruby script/travis/bundle_cache.rb
@@ -32,3 +32,10 @@ notifications:
   email: true
   
 script: "bundle exec rake db:create db:test:load spec"
+
+
+after_failure:
+#- "mysql -e 'show databases;'"
+- "cat ./config/database.yml"
+- "echo $RAILS_ENV"
+- "bundle exec rake --version"

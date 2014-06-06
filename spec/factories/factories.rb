@@ -65,7 +65,7 @@ FactoryGirl.define do
 #   end
   factory :payment do |f|
  #   f.association :privilege
-    f.association :member
+ #   f.association :member
     f.privilege_id 1
     f.member_id 1
     f.amount 480

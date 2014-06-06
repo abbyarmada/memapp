@@ -171,7 +171,7 @@ describe BoatsController do
       member = create(:member)
       boat = create(:boat)
       delete :destroy, {:id => boat.to_param}, valid_session
-      response.should redirect_to(edit_person_url)
+       response.should redirect_to edit_person_path(person.id)
     end
   end
 

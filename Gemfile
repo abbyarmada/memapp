@@ -73,10 +73,9 @@ end
 
 #preprod and prod currently uses mysql. Change to postgres soon..!
 group :preprod,:production do 
-#  gem 'mysql2' 
+  gem 'mysql2' 
   gem 'bugsnag'
-    gem 'rails_12factor'
+  gem 'rails_12factor'
   gem 'pg'
   gem 'unicorn'
 end
-

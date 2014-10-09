@@ -1,5 +1,4 @@
 <!DOCTYPE html >
-
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -10,24 +9,23 @@
 %>
 <%= javascript_include_tag "application"  %> 
 <div class="noprint">
-<%# = stylesheet_link_tag('print', :media => :print) 
-%>
-<link rel="icon" type="images/png" href="assets/MYC.jpg" />
+  <%# = stylesheet_link_tag('print', :media => :print) %>
+  <link rel="icon" type="images/png" href="assets/MYC.jpg">
 </div >
 </head>
 <body> 
-	<div id="framecontentLeft" class="noprint">
-		<div class="innertube">
-		<div id="banner" class="noprint">
-		<%= image_tag("MYC.jpg", :size => "140x120", :alt => "MYC Logo") %>
-		     
-		</div>
-		    
-		<br> 
-		<%= link_to "List Members", root_path %><br /><br>
-		
-		<%= link_to_unless_current "List Boats", :controller => 'boats', :action => 'index' %><br /><br>
-		<%= link_to_unless_current "List by Member Class", :controller => 'payments', :action => 'list_by_member_class' %><br /><br>
+
+  
+<div id="framecontentLeft" class="noprint">	  
+    <div class="innertube">
+		  <div id="banner" class="noprint">
+		  <%= image_tag("MYC.jpg", :size => "140x120", :alt => "MYC Logo") %>		     
+		  </div>
+		  <% if user_signed_in? %>   
+		  <br> 
+		  <%= link_to "List Members", root_path %><br /><br>
+		  <%= link_to_unless_current "List Boats", :controller => 'boats', :action => 'index' %><br /><br>
+		  <%= link_to_unless_current "List by Member Class", :controller => 'payments', :action => 'list_by_member_class' %><br /><br>
 		<%= link_to_unless_current "Totals by Member Class", :controller => 'payments', :action => 'tot_by_member_class' %><br /><br>
 		<%#= link_to_unless_current "Payment Breakdown", :controller => 'payments', :action => 'receipts_breakdown' 
     %>
@@ -49,25 +47,36 @@
 		
 		<%= link_to_unless_current "Bar System Interface", :controller => 'people', :action => 'bar_interface' %><br /><br>
 		<%= link_to_unless_current "export_paid_up_members", :controller => 'people', :action => 'paid_up_extract' %><br /><br>
-		
-		      
-    </div> 
+	<% end %> 			      
+</div>   
 </div>
-
-
-
-
 
 
 <div id="maincontent">
 	<div class="innertube">	
-		
     <div class="main">
-	    <p style="color: red"><%= flash[:notice] %><%= flash[:error] %></p>
-	    
-		<%= yield :layout  %>   
+      <p style="color: red"><%= flash[:notice] %><%= flash[:error] %>  <%= flash[:alert] %> </p>
+		  <%= yield :layout  %> 
+      
     </div>
+     <div id="container">
+  <div id="user_nav">
+  <% if user_signed_in? %>
+    Logged in as <strong><%= current_user.email %></strong>.
+    <%#= link_to 'Edit profile |', edit_user_registration_path  if devise_mapping.registerable? %> 
+    <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to "Sign up |", new_user_registration_path if devise_mapping.registerable? %>  
+      <%#= link_to "Login", new_user_session_path %>
+  <% end %>
+  </div>
+</div>  
+  </div>
+ 
 </div>
-</div> 
-</body>
+
+ 
+  
+
+  </body>
 </html>

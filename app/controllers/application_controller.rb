@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
-  
+  before_filter :authenticate_user!  #, except: [:index, :show]
   
  # for testing acts_as_iphone_controller(false)
  

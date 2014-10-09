@@ -1,3 +1,4 @@
+
 module ControllerHelpers
   def login_admin
     before(:each) do

@@ -19,7 +19,9 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe PaymentsController do
-
+  before :each do
+    login_user 
+  end
   # This should return the minimal set of attributes required to create a valid
   # Payment. As you add validations to Payment, be sure to
   # adjust the attributes here as well.
@@ -31,7 +33,8 @@ describe PaymentsController do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # PaymentsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+#  let(:valid_session) { {} }
+    let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
 
  # describe "GET list_by_member_class" do
  #   it "assigns all payments as @payments" do

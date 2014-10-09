@@ -19,19 +19,20 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe PrivilegesController do
-
+  before :each do
+    login_user 
+  end
   # This should return the minimal set of attributes required to create a valid
   # Privilege. As you add validations to Privilege, be sure to
   # adjust the attributes here as well.
-  #let(:valid_attributes) { {:member_class => 'T',:name => 'Test Class', :bar_billies => 'Y' ,:car_park => 0 ,:votes => 0,:bar_reference => 0 ,:boat_storage => 1 } }
-  
   let(:valid_attributes) { {:member_class => 'T',:name => 'Test Class', :bar_billies => 'Y' ,:car_park => 0 ,:votes => 0,:bar_reference => 0 ,:boat_storage => 1 } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # PrivilegesController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
+#  let(:valid_session) { {} }
+  let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
+  
   describe "GET index" do
     it "assigns all privileges as @privileges" do
       privilege = create(:privilege)

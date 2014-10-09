@@ -1,6 +1,8 @@
 R3::Application.routes.draw do
   
   
+  devise_for :users
+
   resources :boats
 
 
@@ -75,8 +77,13 @@ R3::Application.routes.draw do
 	
 	
 	end
-	
-root :to => 'people#index'
+  
+  
+  authenticated :user do
+    root :to => 'people#index', :as => :authenticated_root
+  end
+  root :to => redirect('/users/sign_in')	
+  #root :to => 'people#index'
 
 match '/:controller(/:action(/:id))'
 

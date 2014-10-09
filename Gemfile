@@ -36,7 +36,7 @@ gem 'turbolinks'
 
 
 group :test, :development ,:preprod do
-  gem "rspec-rails", "~> 2.0"
+  gem "rspec-rails", "~> 2.14.0"
   gem "spring"
    gem 'factory_girl'
   gem 'factory_girl_rails'
@@ -53,7 +53,7 @@ group :test do
   gem 'zeus'
   gem 'pg'
   gem 'mysql2'
-  gem 'rspec-activemodel-mocks'
+#  gem 'rspec-activemodel-mocks'
 end
 
 group :development do 

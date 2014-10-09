@@ -52,31 +52,16 @@ group :test do
   gem 'nokogiri', '>= 1.3.3'
   gem 'zeus'
   gem 'pg'
-  gem 'mysql2'
+
 #  gem 'rspec-activemodel-mocks'
 end
 
-group :development do 
+group :test,:production do 
   gem 'mysql2' 
 end
 
-#heroku
-#group :production_h do 
-#  gem 'rails_12factor'
-#  gem 'pg'
-#  gem 'unicorn'
-#end
-
-#seans VPS
-#group :production do 
-#  gem 'mysql2'
-#end
-
-#preprod and prod currently uses mysql. Change to postgres soon..!
-group :preprod,:production do 
-  gem 'mysql2' 
+group :production do 
   gem 'bugsnag'
   gem 'rails_12factor'
-  gem 'pg'
   gem 'unicorn'
 end

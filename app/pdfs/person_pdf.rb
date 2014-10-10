@@ -1,7 +1,8 @@
 # encoding: utf-8
 class PersonPdf < Prawn::Document
 include ActionView::Helpers::NumberHelper
-
+require 'prawn/table'
+  
   def initialize(person) 
     super(:page_size => "A4")
     #full_width = 525
@@ -371,7 +372,7 @@ end
 
 
   def logo
-    if Config::CONFIG['target_os'] = 'mingw32' 
+    if RbConfig::CONFIG['target_os'] = 'mingw32' 
       logo = Rails.root + "app/assets/images/MYCLogo2013.png"
    else 
       logo = 'images/MYCLogo2013.png'
@@ -430,7 +431,7 @@ end
   
   
    def pad
-    pad = [
+       [
        [  @person.salutation         ],
        [  @member.name_no            ] ,
        [  @member.street1            ] ,

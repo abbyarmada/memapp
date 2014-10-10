@@ -10,10 +10,11 @@ gem 'formtastic'
 gem 'devise'
 
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQL Server 5.5"'#
-#gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'   
+#gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'
 gem 'will_paginate'
 gem 'gchartrb', :require => 'google_chart'
 gem 'prawn'
+gem 'prawn-table'
 gem 'prawnto'
 gem 'rails3-jquery-autocomplete'#, '0.9.0'
 gem 'country-select' 

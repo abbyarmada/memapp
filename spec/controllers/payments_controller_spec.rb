@@ -161,12 +161,26 @@ describe PaymentsController do
 
 #  describe "DELETE destroy" do
 #    it "destroys the requested payment" do
-#      payment = Payment.create! valid_attributes
+#      privilege = create(:privilege)
+#      person = create(:person)
+#      member = create(:member)
+#      paymenttype = create(:paymenttype)
+#      payment = create(:payment)
 #      expect {
-#        delete :destroy, {:id => payment.to_param}, valid_session
+#        delete :destroy, {:id => payment.to_param } 
 #      }.to change(Payment, :count).by(-1)
-#    end##
-
+#    end
+#  end
+#describe "DELETE destroy2" do
+#    it "destroys the requested boat" do
+#      person = create(:person)
+#      member = create(:member)
+#      payment = create(:payment)
+#      expect {
+#        delete :destroy, {:id => payment.to_param}
+#        }.to change(Payment, :count).by(-1)
+#    end
+#end 
 #    it "redirects to the payments list" do
 #      payment = Payment.create! valid_attributes
 #      delete :destroy, {:id => payment.to_param}, valid_session

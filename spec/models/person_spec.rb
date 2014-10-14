@@ -36,6 +36,14 @@ describe Person do
     person = create(:person, first_name: "John", last_name: "Doe")
     person.salutation.should == "John Doe"
   end
+   it "is valid to have a missing age" do
+     person = create(:person, dob:nil )
+     person.age.should be_nil
+  end
+  it "Age is calculated correctly" do
+    person = create(:person, dob:(Date.today - 10.year) )
+     person.age.should == 10 
+  end
   it "returns a person's first name and partner first name as salutation when surnames match" do 
     person = create(:person, first_name: "John", last_name: "Doe")
     create(:person, first_name: "Jane", last_name: "Doe", status: 'p',member_id: 1 )

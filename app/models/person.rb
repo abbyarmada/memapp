@@ -139,7 +139,7 @@ class Person < ActiveRecord::Base
   end
 
 def age
-    ((Date.today - dob)/365).to_i #rescue nil
+  ((Date.today - dob) / 365).to_i rescue nil
   end
 
 end

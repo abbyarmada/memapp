@@ -1,16 +1,12 @@
-
-
 <%= form.inputs :name => "Personal Information" do %>
 <%= form.input :first_name %>
 <%= form.input :last_name %>
 <%= form.input :status, :as => :select , :collection => Person.status, :include_blank => false %>
 <%= form.input :occupation %>
 <%= form.input :dob, :as => :date_select ,:order => [:day, :month, :year] ,:include_blank => true , :start_year => Time.now.year - 100 ,:label => 'Date of Birth' %>
-<% if @person.dob %>
-<li><label>Age: </label><%= @person.age	%> </li>
+<% if person.dob %>
+<li><label>Age: </label><%= person.age	%> </li>
 <% end %>
-
-
 <%= form.input :member_id ,:as => :hidden %>
 <% end %>
 <%= form.submit button_label if buttons %>

@@ -50,7 +50,7 @@
 	   
 	            
 		<%= semantic_form_for(@person) do |form| %>
-        	<%= render :partial => 'shared/person', :locals => { :form => form, :buttons => true ,:button_label => 'Update ' +  @person.first_name }  %>
+  <%= render :partial => 'shared/person', :locals => { :form => form, :person => @person, :buttons => true ,:button_label => 'Update ' +  @person.first_name }  %>
     	<% end %>
       	</div>      
         <% end %>

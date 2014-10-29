@@ -283,7 +283,7 @@ end
   def destroy
     pm = Payment.find(params[:id])
      #m = Member.find(pm.member_id)       #  :first ,:conditions => "id = '#{pm.member_id}'"
-    m = pm.member_id.id
+    m = pm.member_id
      @person = Person.main_person(pm.member_id)
      pm.destroy
     if pm.paymenttype_id == 1 or pm.paymenttype_id == 4

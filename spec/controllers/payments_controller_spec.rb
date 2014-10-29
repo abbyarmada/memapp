@@ -179,6 +179,5 @@ describe PaymentsController do
     end
   end
 
-
 end
 

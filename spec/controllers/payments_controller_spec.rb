@@ -175,7 +175,7 @@ describe PaymentsController do
       person  = create(:person)
       member = create(:member) 
       delete :destroy, {:id => payment.to_param}  #, valid_session
-      response.should redirect_to :controller => :people, :action => :edit, :id => Person.main_person(member.id)
+      response.should redirect_to :controller => :people, :action => :edit, :id => Person.main_person(payment.member.id)
     end
   end
 

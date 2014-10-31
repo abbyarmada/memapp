@@ -1,82 +1,28 @@
-<!DOCTYPE html >
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-<title>MYC Members - <%= controller.action_name %></title>
+  <meta charset="utf-8">
+  <title>Malahide Yacht Club - Membership Application</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-<%= stylesheet_link_tag "application" %>
-<%# = stylesheet_link_tag 'app', 'myc2', 'dyn_drv' ,'formtastic', 'formtastic_changes', 'tabber',  :media => "all"  
-%>
-<%= javascript_include_tag "application"  %> 
-<div class="noprint">
-  <%# = stylesheet_link_tag('print', :media => :print) %>
-  <link rel="icon" type="images/png" href="assets/MYC.jpg">
-</div >
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js", "https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js" %>
+  <![endif]-->
+
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
 </head>
-<body> 
-
-  
-<div id="framecontentLeft" class="noprint">	  
-    <div class="innertube">
-		  <div id="banner" class="noprint">
-		  <%= image_tag("MYC.jpg", :size => "140x120", :alt => "MYC Logo") %>		     
-		  </div>
-		  <% if user_signed_in? %>   
-		  <br> 
-		  <%= link_to "List Members", root_path %><br /><br>
-		  <%= link_to_unless_current "List Boats", :controller => 'boats', :action => 'index' %><br /><br>
-		  <%= link_to_unless_current "List by Member Class", :controller => 'payments', :action => 'list_by_member_class' %><br /><br>
-		<%= link_to_unless_current "Totals by Member Class", :controller => 'payments', :action => 'tot_by_member_class' %><br /><br>
-		<%#= link_to_unless_current "Payment Breakdown", :controller => 'payments', :action => 'receipts_breakdown' 
-    %>
-		
-		<%= link_to_unless_current "Payments This Year", :controller => 'payments', :action => 'listytd' %><br /><br><br>
-		<%= link_to_unless_current "Overdue Memberships",:controller => 'payments', :action => 'overduememberships' %><br /><br>
-		<%= link_to_unless_current "Car Park Passes",carpark_passes_members_path  %><br /><br>
-		<%= link_to_unless_current "MemberShip Classes",:controller => 'privileges', :action => 'index' %><br /><br />
-		<%= link_to_unless_current "MemberShip Subscriptions",subscriptions_path %><br />
-		<br>
-		<br>                
-		<%= link_to_unless_current "New Member", new_member_path %><br /><br>
-		<br>
-		<h3>Renewal processing </h3></br>
-		<%= link_to_unless_current "Renewal processing",renewals_path  %><br /><br>
-		<h3>Extracts</h3> 
-		
-		<br /><br />
-		
-		<%= link_to_unless_current "Bar System Interface", :controller => 'people', :action => 'bar_interface' %><br /><br>
-		<%= link_to_unless_current "export_paid_up_members", :controller => 'people', :action => 'paid_up_extract' %><br /><br>
-	<% end %> 			      
-</div>   
-</div>
-
-
-<div id="maincontent">
-	<div class="innertube">	
-    <div class="main">
-      <p style="color: red"><%= flash[:notice] %><%= flash[:error] %>  <%= flash[:alert] %> </p>
-		  <%= yield :layout  %> 
-      
-    </div>
-     <div id="container">
-  <div id="user_nav">
-  <% if user_signed_in? %>
-    Logged in as <strong><%= current_user.email %></strong>.
-    <%#= link_to 'Edit profile |', edit_user_registration_path  if devise_mapping.registerable? %> 
-    <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "Sign up |", new_user_registration_path if devise_mapping.registerable? %>  
-      <%#= link_to "Login", new_user_session_path %>
-  <% end %>
-  </div>
-</div>  
-  </div>
- 
-</div>
-
- 
-  
-
-  </body>
+<body>
+<header>	
+    <%= render 'layouts/navbar' %> 
+</header>
+<main role="main" id="container">  
+  <%= render 'layouts/messages' %>
+  <%= yield %>
+</main>
+</body>
 </html>

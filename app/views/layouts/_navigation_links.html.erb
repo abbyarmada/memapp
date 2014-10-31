@@ -1,0 +1,13 @@
+<%# add navigation links to this file %>
+<li><%= link_to "Browse Boats", boats_path %></li>
+<li><%= link_to "Renewals", renewals_path %></li>
+<li><%= link_to "Totals",  tot_by_member_class_payments_path %></li>
+<li><%= link_to "Receipt Breakdown" , receipts_breakdown_payments_path %> </li>
+<li><%= link_to "List YTD" ,  listytd_payments_path  %> </li>
+<li><%= link_to "Parking" , carpark_passes_members_path %> </li>
+<li class="dropdown">
+  <%= render 'layouts/dropdown_configuration' %> 
+</li>
+<li class="dropdown">
+  <%= render 'layouts/dropdown_data_extracts' %> 
+</li>

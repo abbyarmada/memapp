@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 ruby '2.0.0'
-gem 'rails', '~> 3.2.0'
+gem 'rails', '~> 3.2.18'
 gem  'mail'
 gem "paperclip", "~> 3.0"
 gem "execjs"
@@ -12,9 +12,13 @@ gem 'gchartrb', :require => 'google_chart'
 gem 'prawn'
 gem 'prawn-table'
 gem 'prawnto'
-gem 'country-select' 
-gem 'formtastic' ,'~> 2.3.0.rc2'
-gem 'formtastic-bootstrap','3.0.0'  #'~> 2.1.3' 
+gem 'country-select'
+#gem 'formtastic' ,'~> 2.3.0.rc2'
+gem 'formtastic', '~> 3.0.0'
+gem 'formtastic-bootstrap', :git => 'https://github.com/0xCCD/formtastic-bootstrap.git'
+#see : https://github.com/mjbellantoni/formtastic-bootstrap/pull/110
+#gem 'formtastic-bootstrap', '~> 3.0.0'  #'~> 2.1.3'
+
 gem 'jquery-rails'
 #gem 'rails3-jquery-autocomplete'#, '0.9.0'
 gem 'jquery-ui-rails'

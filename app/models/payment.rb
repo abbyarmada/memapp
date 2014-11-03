@@ -1,26 +1,32 @@
 class Payment < ActiveRecord::Base
-  belongs_to :member 
+  belongs_to :member
   belongs_to :privilege
   belongs_to :paymenttype
   belongs_to :payment_method
-  
-  
+  belongs_to :person
   validates_presence_of :amount,:privilege_id,:payment_method_id,:paymenttype_id,:member_id
   validates_presence_of :date_lodged, :allow_nil => false
   validates :amount, numericality: true
-  
-  
-  validates_associated :member    
- 
+
+
+  #validates_associated :member
+
   validate :payment_type_unique_for_year, :unless => Proc.new {|payment| payment.date_lodged.nil? }
   validate :payment_final_and_first  , :unless => Proc.new {|payment| payment.date_lodged.nil?   } , :if => :final_payment?
-  
+  validate :check_unknown_payment_method
+
   attr_accessible :privilege_id , :amount, :date_lodged, :pay_type, :comment, :paymenttype_id, :member_id,:payment_method_id
+
+  def check_unknown_payment_method
+    if self.pay_type == '??'
+      errors.add( :pay_type, 'Please select the correct payment method for this payment')
+    end
+  end
 
   def final_payment?
     paymenttype_id == 5
   end
- 
+
 def payment_type_unique_for_year
   #Payment types 1 and 4 must not be duplicated in one year, this will cause problems with counts. 
   if self.paymenttype_id == 1 or self.paymenttype_id == 4
@@ -43,13 +49,13 @@ def payment_final_and_first
   end
 end
 
-  
-  def self.types  
-    
+
+  def self.types
+
   {'CS' => 'Cash', 'CH' => 'Cheque', 'CC'=>'Credit Card','VC'=>'Visa','MC'=>'Mastercard','AC'=>'Amex','LA'=>'Laser', '??'=>'Unknown','NP'=>'Not Paid' }
-  
+
   end
-  
+
  def self.cardname(pay_type)
    cardname = types[pay_type]
  end
@@ -67,9 +73,9 @@ def self.g_chart_mems(endmonth,endday)
       years.times do |y|
       yr_start = (Time.now.year - y).to_s + "-01-01"
       yr_end = (Time.now.year - y).to_s + "." + endmonth + "." + endday
-      @types[y] = Payment.count  :all,  
-                             :joins => "inner join privileges ON privileges.id = payments.privilege_id", 
-                            :conditions => "date_lodged >= '#{yr_start}' AND date_lodged <= '#{yr_end}' and member_class not in ('X','Y','E','T' ) and payments.paymenttype_id in ('1','4') ",  
+      @types[y] = Payment.count  :all,
+                             :joins => "inner join privileges ON privileges.id = payments.privilege_id",
+                            :conditions => "date_lodged >= '#{yr_start}' AND date_lodged <= '#{yr_end}' and member_class not in ('X','Y','E','T' ) and payments.paymenttype_id in ('1','4') ",
         :group => 'name, member_class' ,:order => 'member_class ASC '
     end
     classes = []
@@ -78,7 +84,7 @@ def self.g_chart_mems(endmonth,endday)
     end
     keys = Hash[*classes.collect {|v| [classes.index(v) ,v.to_s] }.flatten.uniq ].sort
     color_code = ['0000ff','ff0000','008000','FFd700','FFa500']
-    yr_end = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date    
+    yr_end = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date
     chart = GoogleChart::LineChart.new("600x200", "Membership Trends, Year To " + yr_end.strftime('%B %d') , false)
     years.times do |x|
       chart.shape_marker :circle, :color => color_code[x], :data_set_index => x, :data_point_index => -1, :pixel_size => 10
@@ -95,7 +101,7 @@ def self.g_chart_mems(endmonth,endday)
   chart.show_legend = true
   puts chart.to_url
   @line_graph = chart.to_url
-   
+
 end
 
 def year

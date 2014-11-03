@@ -1,12 +1,13 @@
-<h1>Editing paymenttype</h1>
+<div class="page-header">
+  <%= link_to paymenttypes_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to @paymenttype, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+  <h1>Editing paymenttype</h1>
+</div>
 
-<%= form_for(@paymenttype) do |f| %>
-
-<%= f.text_field :name %>    
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
-<% end %>
-
-<%= link_to 'Show', @paymenttype %> |
-<%= link_to 'Back', paymenttypes_path %>
+<%= render 'form' %>

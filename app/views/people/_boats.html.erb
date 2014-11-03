@@ -1,14 +1,10 @@
-
-
 <tr class="<%= cycle('odd', 'even') %>">
-
-
-	
-<td><%= link_to (@boat.boat_name.blank? ? "edit" : @boat.boat_name ) , { :controller => 'boats', :action => 'edit', :id => @boat.id, :pid => person_id }  %></td>
+<td><%= link_to (@boat.boat_name.blank? ? "edit" : @boat.boat_name ) , { :controller => 'boats', :action => 'edit', :id => @boat.id, :person_id => :person_id , :class => "btn btn-primary" }  %></td>
 <td><%= @boat.boat_type  %></td>
 <td><%= @boat.boat_class  %></td>
 <td><%= @boat.sail_number  %></td>
 <td><%= @boat.pen_tag  %></td>
-<td><%= link_to 'Delete', @boat, :confirm => 'Are you sure?', :method => :delete ,:id => @boat.id, :pid => person_id %></td>
+<td><%= link_to 'Delete', @boat, :confirm => 'Are you sure?', :method => :delete ,:id => @boat.id %></td>
+<td><%= link_to (@boat.boat_name.blank? ? "edit" : @boat.boat_name ) , edit_boat_path(@boat)   %></td>
 
 	

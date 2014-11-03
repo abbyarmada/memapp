@@ -1,29 +1,24 @@
-<%= form.semantic_fields_for :member do |form| %>
- <% if @person.member.errors.any? %>
+<%= semantic_form_for @member do |form| %>
+ <% if @member.errors.any? %>
     <div class="alert alert-danger alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <h4><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h4>
+      <h4><%= pluralize(@member.errors.count, "error") %> prohibited this person from being saved:</h4>
            <ul>
-      <% @person.errors.full_messages.each do |msg| %>
+      <% @member.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
-  <% end %> 
+  <% end %>
 
 <%= form.inputs :name => "Membership Information" do %>
 	<%= form.input :privilege, :include_blank => false %>
-	
-	<%= form.input :email_renewal, :as => :check_boxes , :collection => [["Yes",'Y'], ["No","N"]]%>
+	<%= form.input :email_renewal,   :as => :boolean %>
 	<%= form.input :occupation %>
 	<%= form.input :year_joined %>
 	<%= form.input :renew_date, :as => :date_select ,:order => [:day, :month, :year]  %>
 	<%= form.input :proposed %>
 	<%= form.input :seconded %>
-	<%#= form.input :proposed, :as => :autocompleted, :url => autocomplete_member_proposed_people_path 	
-	%>
-	<%#= form.input :seconded, :as => :autocompleted ,:url => autocomplete_member_seconded_people_path 	
-	%>
 <% end %>
 <%= form.inputs :name => "Address Details" do %>
 	<%= form.input :name_no , :label => 'House Name or Number'%>

@@ -17,12 +17,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<header>	
-    <%= render 'layouts/navbar' %> 
+  <% if current_user %>
+  <header>
+    <%= render 'layouts/navbar' %>
 </header>
-<main role="main" id="container">  
+  <% end %>
+<main role="main" id="container">
   <%= render 'layouts/messages' %>
   <%= yield %>
 </main>
+   <%= render 'layouts/usernav' %>
 </body>
 </html>

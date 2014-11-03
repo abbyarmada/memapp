@@ -1,17 +1,15 @@
 <%= semantic_form_for(@payment) do |form| %>
-
 <%= @person.last_name%> &nbsp; <%= @person.first_name%>
 <%= form.inputs :name => "" do %>
 <%= form.input :member_id, :as => :hidden %>
 <%= form.input :paymenttype ,:label =>  "Payment Type" %>
 <%= form.input :amount %>
-<%= form.input :privilege  %>
+<%= form.input :privilege ,:label => "Member Class"  %>
 <%= form.input :payment_method  %>
-<%= form.input :date_lodged ,:as => :date_select ,:order => [:day, :month, :year] ,:include_blank => false %>
+<%= form.input :date_lodged ,:as => :date ,:order => [:day, :month, :year] ,:include_blank => false %>
 <%= form.input :comment %>
 <% end %>
 <%= form.actions do %>
-      <%= form.action :submit, :as => :button %>
-      
+      <%= form.action :submit, :as => :button , :button_html => { :class => "btn btn-primary", :disable_with => 'Wait...' }  %>
     <% end %>
 <% end %>

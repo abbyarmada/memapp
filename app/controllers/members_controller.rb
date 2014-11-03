@@ -21,14 +21,12 @@ class MembersController < ApplicationController
  
   def new
     @member  = Member.new
-    @person = @member.people.build
-    #@member.people.barcard.build
-   # @person = Person.new
-    @barcard = Barcard.new 
-    @peoplebarcard = Peoplebarcard.new 
+    @member.people.build
     @member.year_joined = Time.now.year.to_s
+    @member.renew_date = Time.now
     @member.country = 'Ireland'
-    
+    @member.people[0].member_id = params[:id]
+    @member.people[0].status  = 'm'
     #Set to Applicant
     @member.privilege = Privilege.find_by_name "Applicant"
   
@@ -37,53 +35,44 @@ class MembersController < ApplicationController
   def create
    # Member.transaction do 
     @member = Member.new(params[:member])
-    @member.update_attributes!(params[:member])
-    @member.update_attributes!(:renew_date => Time.now)
-    @person = Person.new(params[:member][:person])
-    @person.update_attributes!(:member_id => @member.id, :status => 'm')
-    @barcard = Barcard.new(params[:barcard])
-    @barcard.update_attributes!(params[:barcard])
-     @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
-     @peoplebarcard.person_id = @person.id
-     @peoplebarcard.barcard_id = @barcard.id
-  # end 
-  # if !@member.save or  !@person.save or  !@barcard.save or !@peoplebarcard.save
-  #      raise ActiveRecord::Rollback
-  # end
-   #end
-   
-   
-    respond_to do |format|
-      if @member.save && @person.save 
-        flash[:notice] = 'Member Successfully Created.'
-        format.html { redirect_to edit_person_path(@person.id)  }
-      else
-        format.html { render :action => "new" }
-      end
+    @person = Person.new(params[:member][:people_attributes][0])
+    @member.people[0].member_id = params[:id]
+    
+    @member.update_attributes(:renew_date => Time.now)
+    if @member.save 
+      @barcard = Barcard.new(params[:barcard])
+      @barcard.update_attributes(params[:barcard])
+      @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
+      @peoplebarcard.person_id = @member.people[0].id 
+      @peoplebarcard.barcard_id = @barcard.id 
+      @peoplebarcard.save
+    end 
+     respond_to do |format|
+       if @member.save  #&& @barcard.save && @peoplebarcard.save
+         flash[:notice] = 'Member Successfully Created.'
+         format.html { redirect_to person_path(@member.people[0].id)  }
+       else
+         flash[:warn] = "Please correct the #{ helpers.pluralize(@member.errors.count - 2 ,"error")  } hilighted below" 
+         format.html { render :action => "new" }
+       end
     end
   end
   
+  def update
+     @member = Member.find(params[:id])
+    if @member.update_attributes(params[:member])
+      flash[:notice] = "Successfully updated Member."
+      redirect_to  person_path(Person.main_person(@member.id))  + '#tabs-2'
+    else
+      flash[:error] = "Member cannot be saved"
+      redirect_to  person_path(Person.main_person(@member.id)) + '#tabs-2' 
+    end
+  end
   
-#   def update
-#    @member = Member.find(params[:id])
-#    #pid = params[:pid]
-#    
-#    if @member.save 
-#        flash[:notice] = 'Member Successfully Updated.'
-#        format.html { redirect_to :controller =>'people', :action => 'edit',:id => Person.main_member(params[:id])  }
-#    end
-    
-   # respond_to do |format|
-   #   if @member.update_attributes(params[:member])
-   #     flash[:notice] = 'Member was successfully updated.'
-   #     format.html { redirect_to :controller =>'people', :action => 'edit',:id => Person.main_person(@member.id)   }
-   #   else
-   #     format.html { redirect_to :controller =>'people', :action => 'edit',:id => Person.main_person(@member.id)}
-   #   end
-   # end
- #  end
-  
-  
+  def edit 
+     @member = Member.find(params[:id])
+     redirect_to person_path(Person.main_person(@member.id))  + '#tabs-2' 
+  end
   
   
   def update_renewed_from_payments
@@ -176,7 +165,9 @@ class MembersController < ApplicationController
   end
  end
   
-
+  def helpers
+    ActionController::Base.helpers
+  end
   
  
 end # class

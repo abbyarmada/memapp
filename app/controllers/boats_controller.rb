@@ -1,10 +1,10 @@
 class BoatsController < ApplicationController
+  
+
   require 'csv'
   
   def index
      @boats = Boat.members_boats.paginate(:per_page => 30, :page => params[:page])  
-     #@boats = Boat.members_boats
-     #@boats = @boats.paginate(:per_page => 30, :page => params[:page])  
      session[:listpath] = session[:jumpcurrent] unless nil?
   end
 
@@ -37,21 +37,17 @@ end
 
   def create
     @boat = Boat.new(params[:boat])
+       pid = params[:pid]
     @boat.member_id = (params[:mid])
-    main_person = Person.main_person(@boat.member_id)
     respond_to do |format|
       if @boat.save
-        format.html { redirect_to :controller => "people" ,:action => "edit", :id => main_person.id }
-        flash[:notice] = 'Boat was successfully updated.'
+        flash[:notice] = 'Boat was successfully created.'
+        format.html {redirect_to  :controller => 'people', :action => 'edit', :id => pid }
+        format.xml  { render :xml => @boat, :status => :created, :location => @boat }
       else
         format.html { render :action => "new" }
+        format.xml  { render :xml => @boat.errors, :status => :unprocessable_entity }
       end
-     # if @boat.save
-       # flash[:notice] = 'Boat was successfully created.'
-     #   redirect_to edit_person_path(main_person.id) 
-     # else
-     #   render :action => "new" 
-     # end
     end
   end
 
@@ -70,10 +66,10 @@ end
 
   def destroy
     @boat = Boat.find(params[:id])
-    main_person = Person.main_person(@boat.member_id)
+    @main_member = @boat.member.main_member
     @boat.destroy
     respond_to do |format|
-      format.html   {redirect_to edit_person_path(main_person) }
+      format.html   {redirect_to edit_person_path(@main_member) }
       format.xml  { head :ok }
     end
   end

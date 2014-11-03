@@ -15,4 +15,8 @@ class Boat < ActiveRecord::Base
   def self.types
     {'Dinghy' => 'Dinghy','Cruiser' => 'Cruiser', 'Motor' => 'Motor' , 'Windsurfer' => 'Windsurfer'}
   end
+  def owner
+    member.main_member
+  end
+
 end

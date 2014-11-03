@@ -1,0 +1,25 @@
+ <%= semantic_form_for(@person, :namespace => @person.id ) do |f|  %>
+  <% if @person.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h4><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h4>
+           <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.inputs :name => "Personal Information"  do %>
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :status, :as => :select , :collection => Person.form_status(true), :include_blank => false %>
+    <%= f.input :email_address, :as => :email %>
+    <%= f.input :occupation, :required => false %>
+    <%= f.input :dob, :as => :date_select ,:order => [:day, :month, :year] ,:include_blank => true , :start_year => Time.now.year - 100 ,:label => 'Date of Birth' , :required => false%>
+    <%= f.input :member_id ,:as => :hidden %>
+  <% end %>
+  <%= f.actions do %>
+    <%= f.action :submit, :as => :button ,:button_html => { :class => "btn btn-primary", :disable_with => 'Wait...' } %>
+  <% end %>
+<% end %>

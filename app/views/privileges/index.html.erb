@@ -1,22 +1,40 @@
 <h1>Member Classes</h1>
+
+
+
 <table class="listing">
-<th>Class</th><th>Description</th><th>Bar Billies</th> <th>Car Park</th><th>Votes</th><th>Bar System Ref</th><th>Boat<br>storage</th>
+
+<th>Class</th><th>Description</th><th>Bar Billies</th> <th>Car Park</th><th>Votes</th><th>Bar System Ref</th>
 <th>Last Year</th><th>Subs<br>This Year</th><th>Next Year</th> <th> </th> 
+
+
 <% for privilege in @privileges %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= privilege.member_class %>                    </td>
-    <td><%= privilege.name %>                            </td>
-    <td><%= privilege.bar_billies%>                      </td>
-    <td><%= privilege.car_park%>                         </td>
-    <td><%= privilege.votes%>                            </td>
-    <td><%= privilege.bar_reference%>                    </td>
-    <td><%= privilege.boat_storage? ? 'Y' : 'N'  %>      </td>
+    
+    <td><%= privilege.member_class %>  </td>
+    <td><%= privilege.name %>  </td>
+    <td><%= privilege.bar_billies%>  </td>
+    <td><%= privilege.car_park%>  </td>
+    <td><%= privilege.votes%>  </td>
+    <td><%= privilege.bar_reference%>  </td>
     <td><%= privilege.subscriptions.lastyear(privilege.id)[0].amount rescue nil %></td>
     <td><%= privilege.subscriptions.thisyear(privilege.id)[0].amount rescue nil %></td>
     <td><%= privilege.subscriptions.nextyear(privilege.id)[0].amount rescue nil %></td>
     <td><%= link_to 'Edit', edit_privilege_path(privilege) %> </td>
+    
+    
+    
+<!-- Remove edit and Delete options - too dangerous! >
+     <td><#%= link_to 'Edit', edit_privilege_path(privilege) %>  </td>
+     <td><#%= link_to 'Delete', privilege, :confirm => 'Are you sure?', :method => :delete % ></td>
+    end remove edit and Delete options -->
   </tr>
+  
 <% end %>
 </table>
+
 <br />
+
 <%= button_to 'New Membership Class', new_privilege_path %>
+
+

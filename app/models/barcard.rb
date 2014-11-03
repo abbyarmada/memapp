@@ -5,7 +5,7 @@ class Barcard < ActiveRecord::Base
   # Modify only the peoplebarcards which is the link from Person to Bar accounts. 
  
   has_many :peoplebarcards
-
+  has_many :people
 end
 
 

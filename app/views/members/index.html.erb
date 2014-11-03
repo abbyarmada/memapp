@@ -1,0 +1,51 @@
+<h1>Listing members</h1>
+
+<table>
+  <tr>
+
+    <th>Proposed</th>
+    <th>Seconded</th>
+    <th>Year joined</th>
+    <th>Renew date</th>
+    <th>Privilege</th>
+    <th>Name no</th>
+    <th>Street1</th>
+    <th>Street2</th>
+    <th>Town</th>
+    <th>City</th>
+    <th>Postcode</th>
+    <th>County</th>
+    <th>Country</th>
+    <th>Email renewal</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @members.each do |member| %>
+  <tr>
+ 
+    <td><%= member.proposed %></td>
+    <td><%= member.seconded %></td>
+    <td><%= member.year_joined %></td>
+    <td><%= member.renew_date %></td>
+    <td><%= member.privilege_id %></td>
+    <td><%= member.name_no %></td>
+    <td><%= member.street1 %></td>
+    <td><%= member.street2 %></td>
+    <td><%= member.town %></td>
+    <td><%= member.city %></td>
+    <td><%= member.postcode %></td>
+    <td><%= member.county %></td>
+    <td><%= member.country %></td>
+    <td><%= member.email_renewal %></td>
+    <td><%= link_to 'Show', member %></td>
+    <td><%= link_to 'Edit', edit_member_path(member) %></td>
+    <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Member', new_member_path %>

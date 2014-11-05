@@ -1,4 +1,4 @@
 <h1>Editing Person</h1>
   <%= render :partial => 'person'  %> 
 
-<%= button_to 'Back', person_path(Person.main_person(@person.member_id)), :method => :get %>
+<%= link_to 'Back', person_path(@person.member.main_member) + "#tabs-3" %>

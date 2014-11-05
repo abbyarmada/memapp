@@ -1,6 +1,6 @@
 GIT
-  remote: https://github.com/0xCCD/formtastic-bootstrap.git
-  revision: b598f80a2d40124ca996a4d90fc31d68ef5e5166
+  remote: https://github.com/petercunning/formtastic-bootstrap
+  revision: 3b891d058852ccddbed936a7488f92a688592757
   specs:
     formtastic-bootstrap (3.0.0)
       formtastic (>= 3.0)

@@ -1,12 +1,12 @@
 class Boat < ActiveRecord::Base
   belongs_to  :member
   validates_presence_of :boat_class, :boat_type,:member_id
-  validates_inclusion_of :boat_type, :in => '(Dinghy,Cruiser,Motor,Windsurfer)', 
+  validates_inclusion_of :boat_type, :in => '(Dinghy,Cruiser,Motor,Windsurfer)',
       :message => "must be Dinghy, Windsurfer, Cruiser or Motor"
-  attr_accessible :boat_class, :boat_type, :boat_name ,:sail_no, :pen_tag
-  scope :penboats, { :conditions => ['boat_type = ? or boat_type = ? ','Dinghy','Windsurfer'] } 
-  scope :dinghy, { :conditions => ['boat_type = ? ','Dinghy'] } 
-  scope :windsurfer, { :conditions => ['boat_type = ? ','Windsurfer'] } 
+  attr_accessible :boat_class, :boat_type, :boat_name ,:sail_number, :pen_tag, :member_id
+  scope :penboats, { :conditions => ['boat_type = ? or boat_type = ? ','Dinghy','Windsurfer'] }
+  scope :dinghy, { :conditions => ['boat_type = ? ','Dinghy'] }
+  scope :windsurfer, { :conditions => ['boat_type = ? ','Windsurfer'] }
   scope :laser , { :conditions => ['boat_class LIKE ? ','Laser%'] }
   scope :topaz , { :conditions  => ['boat_class LIKE ? ','Topaz Uno Plus%'] }
   scope :oppi , { :conditions  => ['boat_class LIKE ? ','Opti%'] }

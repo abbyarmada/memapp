@@ -143,5 +143,9 @@ def age
   ((Date.today - dob) / 365).to_i rescue nil
   end
 
+  def main_person(member_id)
+    Person.where(:status => 'm', :member_id => member_id).first
+  end
+
 end
 

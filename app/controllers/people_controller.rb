@@ -368,12 +368,12 @@ def paid_up_extract2
             p.member.county ,
             p.member.country,
             renewedcurrentyear,p.member.renew_date.to_date.to_s,p.dob,occupation,
-            p.home_phone,p.mobile_phone,p.email_address,p.status ]  
+            p.home_phone,p.mobile_phone,p.email_address,p.status ]
           end
         end #do extract
         send_data(extract,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'PaidUpMembers.csv', :disposition => 'attachment', :encoding => 'utf8')
       end
-    end #if 
+    end #if
   end #def
 
 def check_search_form_reset
@@ -385,5 +385,5 @@ def check_search_form_reset
        params[:past_members] = false
      end
   end
-  
+
 end #class

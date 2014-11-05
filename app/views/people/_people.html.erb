@@ -1,11 +1,11 @@
- <%= pluralize(@people.total_entries ,'Members') %> Selected 
+ <%= pluralize(@people.total_entries ,'Members') %> Selected
 <table class="table table-striped table-responsive table-hover">
   <thead>
     <tr>
       <th>Last Name</th>
       <th>First Name</th>
       <th>Membership Class</th>
-      <th>Last Paid</th> 
+      <th>Last Paid</th>
       <th>Member Unique Number</th>
       <th>Bar Card Number</th>
       <th>Action</th>
@@ -21,8 +21,8 @@
       <td><%= person.id %></td>
       <td><%= BAR_CARD_PREFIX + BAR_CARD_SUFF_FORMAT % person.peoplebarcard.barcard_id rescue nil%></td>
       <td><%= link_to "pdf", person_path(:id => person.id,:format => 'pdf') ,:class => "pretty_button pdf_button" if @person.status == 'm' %>
-          <% if @person.email_address? && @person.member.email_renewal =='Y' && @person.status == 'm' %> 
-             <%= link_to "Email", renewal_email_people_path(:id => person.id) ,:confirm => 'Confirm send renewal by Email?', :method => :get , :class => "pretty_button pdf_button"  %> 
+          <% if @person.email_address? && @person.member.email_renewal =='Y' && @person.status == 'm' %>
+             <%= link_to "Email", renewal_email_people_path(:id => person.id) ,:confirm => 'Confirm send renewal by Email?', :method => :get , :class => "pretty_button pdf_button"  %>
           <% end %></td>
     </tr>
   <% end %>

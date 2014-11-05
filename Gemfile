@@ -15,7 +15,9 @@ gem 'prawnto'
 gem 'country-select'
 #gem 'formtastic' ,'~> 2.3.0.rc2'
 gem 'formtastic', '~> 3.0.0'
-gem 'formtastic-bootstrap', :git => 'https://github.com/0xCCD/formtastic-bootstrap.git'
+#gem 'formtastic-bootstrap', :git => 'https://github.com/jtomaszewski/formtastic-bootstrap.git'
+gem 'formtastic-bootstrap' ,:git => 'https://github.com/petercunning/formtastic-bootstrap'
+#, :git => 'https://github.com/0xCCD/formtastic-bootstrap.git'
 #see : https://github.com/mjbellantoni/formtastic-bootstrap/pull/110
 #gem 'formtastic-bootstrap', '~> 3.0.0'  #'~> 2.1.3'
 

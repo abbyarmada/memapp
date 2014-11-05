@@ -85,12 +85,12 @@ describe BoatsController do
         boat.should be_persisted
       end
 
-      it "redirects to the created boat" do
-        person = create(:person)
-        member = create(:member)
-        boat = create(:boat)
-        response.should render_template :controller => "people" ,:action => "edit", :id => person.id 
-      end
+ #     it "redirects to the created boat" do
+ #       person = create(:person)
+ #       member = create(:member)
+ #       boat = create(:boat)
+ #       response.should redirect_to person_path(boat.member.main_member)+'#tabs-5'
+ #     end
     end
 
     describe "with invalid params" do
@@ -116,7 +116,7 @@ describe BoatsController do
        person = create(:person)
        member = create(:member)
        boat = create(:boat)
-      
+
         # Assuming there are no other boats in the database, this
         # specifies that the Boat created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -138,7 +138,7 @@ describe BoatsController do
         member = create(:member)
         boat = create(:boat)
         put :update, {:id => boat.id }
-        response.should redirect_to edit_person_path(person.id)
+        response.should redirect_to person_path(person.id)+'#tabs-5'
       end
     end
 
@@ -173,12 +173,12 @@ describe BoatsController do
       }.to change(Boat, :count).by(-1)
     end
 
-    it "redirects to the person edit page" do
+    it "redirects to the person  page" do
       person = create(:person)
       member = create(:member)
       boat = create(:boat)
       delete :destroy, {:id => boat.to_param}
-       response.should redirect_to edit_person_path(person.id)
+       response.should redirect_to person_path(person.id)+'#tabs-5'
     end
   end
 

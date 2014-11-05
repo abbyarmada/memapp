@@ -1,4 +1,4 @@
-FactoryGirl.define do 
+FactoryGirl.define do
   require 'faker'
    factory :person do |f|
    # f.association :member
@@ -33,7 +33,7 @@ FactoryGirl.define do
      f.car_park 2
      f.votes 2
      f.bar_reference 1
-     f.boat_storage 1 
+     f.boat_storage 1
    end
    factory :boat do |f|
     # f.association :member
@@ -69,7 +69,7 @@ FactoryGirl.define do
     f.privilege_id 1
     f.member_id 1
     f.amount 480
-     f.date_lodged "01.01.2014" 
+     f.date_lodged "01.01.2014"
 ##     f.pay_type "crap"
      f.comment "payment"
 #     f.privilege_id 1

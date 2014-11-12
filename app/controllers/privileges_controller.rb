@@ -23,7 +23,7 @@ class PrivilegesController < ApplicationController
     @privilege = Privilege.new(params[:privilege])
     respond_to do |format|
       if @privilege.save
-        format.html { redirect_to privilege_path , notice: 'Member Class was successfully created.' }
+        format.html { redirect_to privilege_path(@privilege.id) , notice: 'Member Class was successfully created.' }
       else
         format.html { render action: "new" }
       end

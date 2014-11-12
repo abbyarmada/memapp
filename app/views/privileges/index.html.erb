@@ -1,41 +1,48 @@
+<%- model_class = Privilege -%>
 <div class="page-header">
-  <%= link_to new_privilege_path, :class => 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-plus"></span>
-    New Privilege
-  <% end %>
-  <h1>Listing privileges</h1>
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
-
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:member_class) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:bar_billies) %></th>
+      <th><%= model_class.human_attribute_name(:car_park) %></th>
+      <th><%= model_class.human_attribute_name(:votes) %></th>
+      <th><%= model_class.human_attribute_name(:bar_reference) %></th>
+      <th><%= model_class.human_attribute_name(:boat_storage) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @privileges.each do |privilege| %>
       <tr>
-            <th>Member class</th>
-            <th>Name</th>
-            <th>Bar billies</th>
-            <th>Car park</th>
-            <th>Votes</th>
-            <th>Bar reference</th>
-            <th>Boat storage</th>
-            <th></th>
-        <th></th>
-        <th></th>
+        <td><%= link_to privilege.id, privilege_path(privilege) %></td>
+        <td><%= privilege.member_class %></td>
+        <td><%= privilege.name %></td>
+        <td><%= privilege.bar_billies %></td>
+        <td><%= privilege.car_park %></td>
+        <td><%= privilege.votes %></td>
+        <td><%= privilege.bar_reference %></td>
+        <td><%= privilege.boat_storage %></td>
+        <td><%= privilege.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_privilege_path(privilege), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      privilege_path(privilege),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
       </tr>
-    </thead>
+    <% end %>
+  </tbody>
+</table>
 
-    <tbody>
-      <%= content_tag_for(:tr, @privileges) do |privilege| %>
-            <td><%= privilege.member_class %></td>
-            <td><%= privilege.name %></td>
-            <td><%= privilege.bar_billies %></td>
-            <td><%= privilege.car_park %></td>
-            <td><%= privilege.votes %></td>
-            <td><%= privilege.bar_reference %></td>
-            <td><%= privilege.boat_storage %></td>
-            <td><%= link_to 'Show', privilege %></td>
-        <td><%= link_to 'Edit', edit_privilege_path(privilege) %></td>
-        <td><%= link_to 'Destroy', privilege, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_privilege_path,
+            :class => 'btn btn-primary' %>

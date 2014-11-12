@@ -20,29 +20,30 @@ gem 'formtastic-bootstrap' ,:git => 'https://github.com/petercunning/formtastic-
 #, :git => 'https://github.com/0xCCD/formtastic-bootstrap.git'
 #see : https://github.com/mjbellantoni/formtastic-bootstrap/pull/110
 #gem 'formtastic-bootstrap', '~> 3.0.0'  #'~> 2.1.3'
-
+gem 'simple_form', '~> 2.1.1' #, github: 'plataformatec/simple_form'
 gem 'jquery-rails'
+gem 'twitter-bootstrap-rails', '~>2.2.8'
 #gem 'rails3-jquery-autocomplete'#, '0.9.0'
 gem 'jquery-ui-rails'
-gem 'bootstrap-sass', "~> 3.1.1"  #'~> 2.3.2.2' #
+gem 'bootstrap-sass', '~> 3.1.1.0'  #'~> 2.3.2.2' #
 gem 'bootstrap-generators', '~> 3.1.0'
 gem 'jquery-turbolinks'
 #gem 'turbolinks_transitions'
 gem 'turbolinks'
 gem 'nprogress-rails'
-#gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQL Server 5.5"'#
-#gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'   
 gem 'quiet_assets'
 
 #gem 'rake'
-
+####
+#
+#
 # Needed for the new asset pipeline
 group :assets do
-  gem 'sass-rails'#,   "~> 3.1.5"
-  gem 'coffee-rails'#, "~> 3.1.1"
-  gem 'uglifier'#,     ">= 1.0.3"
+  gem 'sass-rails' # '~> 3.1.5'
+  gem 'coffee-rails' #, '~> 3.1.1'
+  gem 'uglifier'     #, '>= 1.0.3'
 end
- 
+
 
 group :test, :development ,:preprod do
   gem "rspec-rails", "~> 2.14.0"
@@ -52,7 +53,7 @@ group :test, :development ,:preprod do
   gem 'database_cleaner'
 end
 
-group :test do 
+group :test do
   gem "sqlite3"
   gem 'faker'
   gem 'capybara'
@@ -65,11 +66,11 @@ group :test do
 #  gem 'rspec-activemodel-mocks'
 end
 
-group :test,:production do 
-  gem 'mysql2' 
+group :test,:production do
+  gem 'mysql2'
 end
 
-group :production do 
+group :production do
   gem 'bugsnag'
   gem 'rails_12factor'
   gem 'unicorn'

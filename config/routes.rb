@@ -1,15 +1,13 @@
 R3::Application.routes.draw do
   
-  
+ 
+
   devise_for :users
 
   resources :boats
 
 
   resources :paymenttypes
-
-
-  resources :privileges
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -56,7 +54,6 @@ R3::Application.routes.draw do
 	  end
 	end
 	
-	resources :boats
 	resources :members do
 		collection do 
 		   get 'carpark_passes'

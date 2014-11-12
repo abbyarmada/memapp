@@ -56,12 +56,12 @@ describe PrivilegesController do
     end
   end
 
-#  describe "GET new" do
-#    it "assigns a new privilege as @privilege" do
-#      get :new, {}, valid_session
-#      assigns(:privilege).should be_a_new(Privilege)
-#    end
-#  end
+  describe "GET new" do
+    it "assigns a new privilege as @privilege" do
+      get :new, {}, valid_session
+      assigns(:privilege).should be_a_new(Privilege)
+    end
+  end
 
  describe "GET edit" do
    it "assigns the requested privilege as @privilege" do

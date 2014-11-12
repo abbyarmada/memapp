@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141021161538) do
+ActiveRecord::Schema.define(:version => 20141008144947) do
 
   create_table "barcards", :force => true do |t|
     t.datetime "created_at"
@@ -182,8 +182,8 @@ ActiveRecord::Schema.define(:version => 20141021161538) do
     t.integer  "txt_test",                 :limit => 2, :default => 0,     :null => false
     t.integer  "txt_op_co",                             :default => 0,     :null => false
     t.string   "occupation"
-    t.boolean  "send_txt",                              :default => false
-    t.boolean  "send_email",                            :default => false
+    t.boolean  "send_txt",                              :default => false, :null => false
+    t.boolean  "send_email",                            :default => false, :null => false
   end
 
   add_index "people", ["member_id"], :name => "PeoMembers"
@@ -245,8 +245,6 @@ ActiveRecord::Schema.define(:version => 20141021161538) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
- 
 
   create_table "versions", :force => true do |t|
     t.integer  "versioned_id"

@@ -10,11 +10,11 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Amount</th>
-            <th>Start date</th>
-            <th>End date</th>
-            <th>Membership Class</th>
-            <th></th>
+        <th>Member Class</th>
+        <th>Amount</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -22,13 +22,13 @@
 
     <tbody>
       <%= content_tag_for(:tr, @subscriptions) do |subscription| %>
+            <td><%= subscription.privilege.name %></td>
             <td><%= subscription.amount %></td>
             <td><%= subscription.start_date %></td>
             <td><%= subscription.end_date %></td>
-            <td><%= subscription.privilege.name %></td>
             <td><%= link_to 'Show', subscription %></td>
-        <td><%= link_to 'Edit', edit_subscription_path(subscription) %></td>
-        <td><%= link_to 'Destroy', subscription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_subscription_path(subscription), :class => 'btn btn-mini' %></td>
+        <td><%= link_to 'Destroy', subscription, method: :delete, data: { confirm: 'Are you sure?' } , :html_options => { :class => 'btn btn-mini btn-danger'} %></td>
       <% end %>
     </tbody>
   </table>

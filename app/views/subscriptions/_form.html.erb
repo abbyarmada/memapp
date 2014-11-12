@@ -1,32 +1,14 @@
-<%= semantic_form_for(@subscription, :html => { :class => "form-horizontal" }) do |f| %>
+<%= simple_form_for(@subscription) do |f| %>
+  <%= f.error_notification %>
 
-  <div class="form-group">
-    <%= f.label :amount, :class => "col-sm-2 control-label" %>
-    <div class="col-sm-08">
-      <%= f.text_field :amount, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :start_date, :class => "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.date_select :start_date, :class => "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :end_date, :class => "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.date_select :end_date, :class => "form-control" %>
-    </div>
+  <div class="form-inputs">
+    <%= f.input :amount %>
+    <%= f.input :start_date %>
+    <%= f.input :end_date %>
+    <%= f.association :privilege,include_blank: false %>
   </div>
 
-
-      <%= f.input :privilege ,:input_html => { :class => "col-sm-10", :label_class =>  "col-sm-2"   } , :include_blank => true  %>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-    <%= f.actions do %>
-      <%= f.action :submit, :as => :button , :button_html => {:class => "btn btn-primary" , :disable_with => 'Wait...' }%>
-    <% end %>
-    </div>
+  <div class="form-actions">
+    <%= f.button :submit %>
   </div>
 <% end %>

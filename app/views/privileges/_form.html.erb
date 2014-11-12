@@ -1,17 +1,14 @@
-<%= simple_form_for(@privilege) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :member_class %>
-    <%= f.input :name %>
-    <%= f.input :bar_billies %>
-    <%= f.input :car_park %>
-    <%= f.input :votes %>
-    <%= f.input :bar_reference %>
-    <%= f.input :boat_storage %>
-  </div>
-
+<%= simple_form_for @privilege, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :member_class %>
+  <%= f.input :name %>
+  <%= f.input :bar_billies %>
+  <%= f.input :car_park %>
+  <%= f.input :votes %>
+  <%= f.input :bar_reference %>
+  <%= f.input :boat_storage %>
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                privileges_path, :class => 'btn' %>
   </div>
 <% end %>

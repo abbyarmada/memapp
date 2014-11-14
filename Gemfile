@@ -22,11 +22,11 @@ gem 'formtastic-bootstrap' ,:git => 'https://github.com/petercunning/formtastic-
 #gem 'formtastic-bootstrap', '~> 3.0.0'  #'~> 2.1.3'
 gem 'simple_form', '~> 2.1.1' #, github: 'plataformatec/simple_form'
 gem 'jquery-rails'
-gem 'twitter-bootstrap-rails', '~>2.2.8'
+#gem 'twitter-bootstrap-rails', '~>2.2.8'
 #gem 'rails3-jquery-autocomplete'#, '0.9.0'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 3.1.1.0'  #'~> 2.3.2.2' #
-gem 'bootstrap-generators', '~> 3.1.0'
+gem 'bootstrap-generators', '~> 3.2.0'
 gem 'jquery-turbolinks'
 #gem 'turbolinks_transitions'
 gem 'turbolinks'

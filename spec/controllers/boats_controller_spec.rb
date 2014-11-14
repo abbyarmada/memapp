@@ -20,14 +20,14 @@ require 'spec_helper'
 
 describe BoatsController do
   before :each do
-    login_user 
+    login_user
   end
 
   # This should return the minimal set of attributes required to create a valid
   # Boat. As you add validations to Boat, be sure to
   # adjust the attributes here as well.
   #let(:valid_attributes) { { "member_id" => "1", "boat_type" => "Dinghy" } }
-  let (:valid_attributes) { boat = FactoryGirl.create :boat }
+  let (:valid_attributes) { attributes_for(:boat) }
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # BoatsController. Be sure to keep this updated too.

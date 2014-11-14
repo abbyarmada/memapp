@@ -18,7 +18,6 @@ class BoatsController < ApplicationController
   def create
     @boat = Boat.new(params[:boat])
     @boat.member_id = params[:member_id]
-
     respond_to do |format|
       if @boat.save
         flash[:notice] = 'Boat was successfully created.'

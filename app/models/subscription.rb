@@ -14,9 +14,9 @@ class Subscription < ActiveRecord::Base
  # end
  
 
-  scope :lastyear,  lambda { |privilege|   { :conditions =>  ['start_date >= ? and end_date <= ?   ' , 1.year.ago.beginning_of_year ,1.year.ago.end_of_year   ] } }
-  scope :thisyear,  lambda { |privilege|   { :conditions =>  ['start_date >= ? and end_date <= ?   ' , Time.now.beginning_of_year ,Time.now.end_of_year   ] } }
-  scope :nextyear,  lambda { |privilege|   { :conditions =>  ['start_date >= ? and end_date <= ?   ' , 1.year.from_now.beginning_of_year ,1.year.from_now.end_of_year   ] } }
+  scope :lastyear, ->  { { :where =>  ['start_date >= ? and end_date <= ?   ' , 1.year.ago.beginning_of_year ,1.year.ago.end_of_year   ] } }
+  scope :thisyear, ->  { { :where =>  ['start_date >= ? and end_date <= ?   ' , Time.now.beginning_of_year ,Time.now.end_of_year   ] } }
+  scope :nextyear, ->  { { :where =>  ['start_date >= ? and end_date <= ?   ' , 1.year.from_now.beginning_of_year ,1.year.from_now.end_of_year   ] } }
 
 #  
 #  named_scope :current_subs,  lambda { |current_subs|   { :conditions =>  ['start_date <= ? and privilege_id = ? ' , time.now, privilege_id  ] } }

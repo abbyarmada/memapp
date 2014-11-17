@@ -6,8 +6,7 @@ class Person < ActiveRecord::Base
   has_many :payments, :through => :member
   has_many :boats, :through => :member
   has_one :barcard, :through => :peoplebarcard
-
-
+  
   accepts_nested_attributes_for :member
 
   attr_accessible :id,:member_id,:first_name,:last_name,:status,:child_dob,:home_phone,:mobile_phone,:email_address,:comm_prefs,:snd_txt,:snd_eml,:dob,:member_number ,:txt_bridge , :txt_social, :txt_crace,

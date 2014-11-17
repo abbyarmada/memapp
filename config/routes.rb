@@ -4,7 +4,13 @@ R3::Application.routes.draw do
 
   devise_for :users
 
-  resources :boats
+  resources :boats do 
+    collection do
+    get 'create_csv'
+    end
+
+  end 
+
 
 
   resources :paymenttypes
@@ -82,7 +88,7 @@ R3::Application.routes.draw do
   root :to => redirect('/users/sign_in')	
   #root :to => 'people#index'
 
-match '/:controller(/:action(/:id))'
+#match '/:controller(/:action(/:id))'
 
 
 end

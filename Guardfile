@@ -1,5 +1,5 @@
 
-guard :rspec, all_on_start: false, all_after_pass: false,cmd: 'zeus rspec --color --fail-fast',  parallel: false  do
+guard :rspec, all_on_start: false, all_after_pass: false,failed_mode: :none,cmd: 'spring rspec --color --fail-fast',  parallel: false  do
 #guard :rspec, all_on_start: false, all_after_pass: false, cmd: 'zeus rspec --color --format doc --fail-fast',  parallel: false  do  
  # 'zeus rspec --color --format nested --fail-fast'
 #failed_mode: :focus

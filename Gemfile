@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 ruby '2.0.0'
-gem 'rails', '~> 3.2.18'
+gem 'rails', '~> 4.0.0'
 gem  'mail'
-gem "paperclip", "~> 3.0"
+gem "paperclip"#, "~> 3.0"
 gem "execjs"
 gem 'therubyracer', :platforms => :ruby
 gem 'capistrano'
@@ -14,43 +14,37 @@ gem 'prawn-table'
 gem 'prawnto'
 gem 'country-select'
 #gem 'formtastic' ,'~> 2.3.0.rc2'
-gem 'formtastic', '~> 3.0.0'
+gem 'formtastic'#, '~> 3.0.0'
 #gem 'formtastic-bootstrap', :git => 'https://github.com/jtomaszewski/formtastic-bootstrap.git'
 gem 'formtastic-bootstrap' ,:git => 'https://github.com/petercunning/formtastic-bootstrap'
 #, :git => 'https://github.com/0xCCD/formtastic-bootstrap.git'
 #see : https://github.com/mjbellantoni/formtastic-bootstrap/pull/110
 #gem 'formtastic-bootstrap', '~> 3.0.0'  #'~> 2.1.3'
-gem 'simple_form', '~> 2.1.1' #, github: 'plataformatec/simple_form'
+gem 'simple_form', '~> 3.1.0.rc2' #, github: 'plataformatec/simple_form'
 gem 'jquery-rails'
 #gem 'twitter-bootstrap-rails', '~>2.2.8'
 #gem 'rails3-jquery-autocomplete'#, '0.9.0'
 gem 'jquery-ui-rails'
-gem 'bootstrap-sass', '~> 3.1.1.0'  #'~> 2.3.2.2' #
-gem 'bootstrap-generators', '~> 3.2.0'
+gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
+gem 'bootstrap-generators'#, '~> 3.2.0'
 gem 'jquery-turbolinks'
 #gem 'turbolinks_transitions'
 gem 'turbolinks'
 gem 'nprogress-rails'
 gem 'quiet_assets'
-
-#gem 'rake'
-####
-#
-#
-# Needed for the new asset pipeline
-group :assets do
-  gem 'sass-rails' # '~> 3.1.5'
-  gem 'coffee-rails' #, '~> 3.1.1'
-  gem 'uglifier'     #, '>= 1.0.3'
-end
+gem 'sass-rails', '~> 4.0.2'# '~> 3.1.5'
+gem 'coffee-rails' #, '~> 3.1.1'
+gem 'uglifier'     #, '>= 1.0.3'
 
 
 group :test, :development ,:preprod do
-  gem "rspec-rails", "~> 2.14.0"
+  gem "rspec-rails"#, "~> 2.14.0"
   gem "spring"
-   gem 'factory_girl'
+  gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'spring-commands-rspec'
+  gem 'rspec-activemodel-mocks'
 end
 
 group :test do
@@ -59,8 +53,8 @@ group :test do
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
-  gem 'nokogiri', '>= 1.3.3'
-  gem 'zeus'
+  gem 'nokogiri'#, '>= 1.3.3'
+#  gem 'zeus'
   gem 'pg'
 
 #  gem 'rspec-activemodel-mocks'
@@ -75,3 +69,12 @@ group :production do
   gem 'rails_12factor'
   gem 'unicorn'
 end
+
+#rails 4 upgrade gems
+gem 'rails4_upgrade'
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+gem 'activerecord-deprecated_finders'
+

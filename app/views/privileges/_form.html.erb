@@ -1,4 +1,5 @@
-<%= simple_form_for @privilege, :html => { :class => 'form-horizontal' } do |f| %>
+<%= simple_form_for(@privilege, html: { class: 'form-horizontal' }) do |f| %>
+<div class="container"> 
   <%= f.input :member_class %>
   <%= f.input :name %>
   <%= f.input :bar_billies %>
@@ -6,6 +7,7 @@
   <%= f.input :votes %>
   <%= f.input :bar_reference %>
   <%= f.input :boat_storage %>
+</div> 
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

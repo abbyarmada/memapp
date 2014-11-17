@@ -28,8 +28,8 @@ attr_accessible :proposed, :seconded, :year_joined, :privilege_id, :name_no, :st
   scope :memyear,  lambda { |memyear|   { :joins => :privilege , :conditions =>  ['renew_date >= ? and bar_reference > ? ' , memyear.to_date.beginning_of_year , 0 ]   }}
   scope :monthend, lambda { |monthend|  { :joins => :privilege , :conditions =>  ['renew_date <= ?  and bar_reference > ? ' ,  monthend.end_of_month, 0 ]   }}
 
-  scope :unique_proposers , group(:proposed)
-  scope :unique_seconders , group(:seconded)
+  #scope :unique_proposers , group(:proposed)
+  #scope :unique_seconders , group(:seconded)
 
   def email_address_exists?
     errors.add(:email_address, "is blank for the Main Member") if Person.main_person(id).email_address.blank? && email_renewal =='Y' rescue nil

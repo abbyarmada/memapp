@@ -1,7 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Payment do
-  
+ # before(:each) do 
+ #    build(:member)
+ # end
+
   
   ########  VALIDATIONS    ######################## 
   it "has a vaild factory" do 

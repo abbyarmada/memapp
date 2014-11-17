@@ -11,11 +11,25 @@ class Payment < ActiveRecord::Base
 
   #validates_associated :member
 
-  validate :payment_type_unique_for_year, :unless => Proc.new {|payment| payment.date_lodged.nil? }
+  validate :payment_type_unique_for_year ,:unless => Proc.new {|payment| payment.date_lodged.nil? } ,:if => :renewal_payment?
   validate :payment_final_and_first  , :unless => Proc.new {|payment| payment.date_lodged.nil?   } , :if => :final_payment?
   validate :check_unknown_payment_method
 
   attr_accessible :privilege_id , :amount, :date_lodged, :pay_type, :comment, :paymenttype_id, :member_id,:payment_method_id
+
+  #scope :previous_renewals, -> { where([' (id <> ? or id <> 0 ) AND member_id = ?  AND date_lodged >= ? and paymenttype_id in (1,4)' , self.id, self.member_id, self.date_lodged.beginning_of_year  ] )  }
+  
+  scope :renewal, -> { where('paymenttype_id in (1,4 ) ')   }
+  scope :current_year, -> {  where('date_lodged >= ? ', Time.now.beginning_of_year)  }
+  scope :member, -> { where('member_id = ?', member_id )}
+  scope :first_payment, -> { where('paymenttype_id = 4' )   }
+
+
+ 
+
+def renewal_payment?
+     paymenttype_id  == 1 or paymenttype_id == 4
+  end
 
   def check_unknown_payment_method
     if self.pay_type == '??'
@@ -27,28 +41,38 @@ class Payment < ActiveRecord::Base
     paymenttype_id == 5
   end
 
-def payment_type_unique_for_year
+  def payment_type_unique_for_year
   #Payment types 1 and 4 must not be duplicated in one year, this will cause problems with counts. 
-  if self.paymenttype_id == 1 or self.paymenttype_id == 4
-    if self.id == nil
-     num_duplicates = self.class.count(:conditions => ["(id <> ? or id <> 0 ) AND member_id = ?  AND date_lodged >= ? and paymenttype_id in (1,4)", self.id, self.member_id, self.date_lodged.beginning_of_year ])
-   else
-     num_duplicates = self.class.count(:conditions => ["id <> ? and  member_id = ?  AND date_lodged >= ? and paymenttype_id in (1,4)", self.id, self.member_id, self.date_lodged.beginning_of_year ])
-   end
-    if num_duplicates > 0
-      errors.add( :paymenttype_id, 'Please check the Subscription type, you cannot have two Subscription payments in one year')
+  #if self.paymenttype_id == 1 or self.paymenttype_id == 4 
+    if renewal_payment?  
+      if num_duplicates > 1
+        errors.add( :paymenttype_id, 'Please check the Subscription type, you cannot have two Subscription payments in one year')
+      end
     end
   end
-end
 
-def payment_final_and_first
-  #Must have a first payment in order to have a final payment. 
-  count_of_first_payments = self.class.count(:conditions => ["member_id = ?  AND date_lodged >= ? and paymenttype_id = 4 ", self.member_id, self.date_lodged.beginning_of_year ])
-  if count_of_first_payments == 0
-    errors.add( :paymenttype_id, "Must have a First payment to have a Final payment" )
+  def num_duplicates 
+    num_duplicates = renewals.count  
   end
-end
 
+  def renewals
+    if id == nil 
+       self.class.where('member_id = ? ',member_id).renewal.current_year
+    else
+      self.class.where('id <> ?  and member_id = ? ', id, member_id).renewal.current_year
+    end
+  end
+
+  def payment_final_and_first
+  #Must have a first payment in order to have a final payment. 
+    if first_payments.count == 0
+      errors.add( :paymenttype_id, "Must have a First payment to have a Final payment" )
+    end
+  end
+
+  def first_payments
+    self.class.where('member_id = ? ',member_id).current_year.first_payment
+  end
 
   def self.types
 

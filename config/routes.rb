@@ -2,6 +2,8 @@ R3::Application.routes.draw do
   
  
 
+  resources :privileges
+
   devise_for :users
 
   resources :boats do 

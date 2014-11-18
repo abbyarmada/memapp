@@ -87,16 +87,16 @@ describe PaymentsController do
         payment.should be_persisted
       end
 
- #     it "redirects to the created payment" do
- #     privilege = create(:privilege)
- #     person = create(:person)
- #     member = create(:member)
- #     paymenttype = create(:paymenttype)
- #       create(:payment)
- #       #response.should redirect_to(Payment.last)
- #       response.should redirect_to(person_path(person.id))
- #       #response.should redirect_to person_path(Payment.last.member.main_member)
- #     end
+      it "redirects to the created payment" do
+        privilege = create(:privilege)
+        person = create(:person)
+        member = create(:member)
+        paymenttype = create(:paymenttype)
+        create(:payment)
+        #response.should redirect_to(Payment.last)
+        response.should redirect_to(person_path(person.id))
+        #response.should redirect_to person_path(Payment.last.member.main_member)
+      end
     end
 
     describe "with invalid params" do
@@ -107,22 +107,22 @@ describe PaymentsController do
         payment.should be_a_new(Payment)
       end
 
-  #    it "re-renders the 'new' template" do
-  #      # Trigger the behavior that occurs when invalid params are submitted
-  #      Payment.any_instance.stub(:save).and_return(false)
-  #      payment = build(:payment,:member_id => 1)
-  #      response.should render_template("new")
-  #    end
+      it "re-renders the 'new' template" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Payment.any_instance.stub(:save).and_return(false)
+        payment = build(:payment,:member_id => 1)
+        response.should render_template("new")
+      end
     end
   end
 
  describe "PUT update" do
    before :each do
-     # @privilege   = create(:privilege)
-    #  @person      = create(:person)
-   #   @member      = create(:member)
-   #   @paymenttype = create(:paymenttype)
-    end
+     @privilege   = create(:privilege)
+     @person      = create(:person)
+     @member      = create(:member)
+     @paymenttype = create(:paymenttype)
+   end
     describe "with valid params" do
       it "updates the requested payment" do
         payment = create(:payment)
@@ -143,7 +143,7 @@ describe PaymentsController do
         payment = create(:payment)
         put :update, {:id => payment.id }
         #response.should redirect_to(payment)
-         response.should redirect_to person_path(1)
+         response.should redirect_to person_path(person.id)
       end
 
       describe "with invalid params" do
@@ -166,20 +166,21 @@ describe PaymentsController do
   end
 
   describe "DELETE destroy" do
+    before :each do
+     @privilege   = create(:privilege)
+     @person      = create(:person)
+     @member      = create(:member)
+     @paymenttype = create(:paymenttype)
+   end
     it "destroys the requested payment" do
-    #  privilege = create(:privilege)
-    #  person = create(:person)
-    #  member = create(:member)
-    #  paymenttype = create(:paymenttype)
+    
       payment = create(:payment)
       expect {
         delete :destroy, {:id => payment.to_param }
       }.to change(Payment, :count).by(-1)
     end
     it "resets the Renewed Date" do
-    #  privilege = create(:privilege)
-    #  person = create(:person)
-    #  member = create(:member)
+    
       paymenttype = create(:paymenttype)
       priorpayment = create(:payment, :date_lodged => "01.01.2013" )
       payment = create(:payment)
@@ -187,9 +188,7 @@ describe PaymentsController do
       payment.member.renew_date.should eq(priorpayment.date_lodged)
     end
     it "resets the Membership Class" do
-    #  privilege = create(:privilege)
-    #  person = create(:person)
-    #  member = create(:member)
+   
       paymenttype = create(:paymenttype)
       priorpayment = create(:payment, :date_lodged => "01.01.2013" ,:privilege_id => 2)
       payment = create(:payment)
@@ -198,11 +197,9 @@ describe PaymentsController do
     end
 
     it "redirects to the show person  page" do
-    #  payment = create(:payment)
-    #  person  = create(:person)
-    #  member = create(:member)
-      delete :destroy, {:id => payment.to_param}  #, valid_session
-      response.should redirect_to person_path(1)
+    
+      delete :destroy, {:id => payment.to_param}  , valid_session
+      response.should redirect_to person_path(person.id)
     end
   end
 

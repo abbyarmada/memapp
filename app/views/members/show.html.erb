@@ -1,0 +1,29 @@
+<div class="page-header">
+  <%= link_to members_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_member_path(@member), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show Member</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Street1:</dt>
+  <dd><%= @member.Street1 %></dd>
+
+  <dt>Member Class:</dt>
+  <dd><%= @member.privilege %></dd>
+
+  <dt>Proposed:</dt>
+  <dd><%= @member.proposed %></dd>
+
+  <dt>Seconded:</dt>
+  <dd><%= @member.seconded %></dd>
+
+   <dt>Year Joined:</dt>
+  <dd><%= @member.year_joined %></dd>
+
+</dl>

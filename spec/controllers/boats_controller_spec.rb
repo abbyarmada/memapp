@@ -90,7 +90,7 @@ describe BoatsController  do
  #       person = create(:person)
  #       member = create(:member)
  #       boat = create(:boat)
- #       response.should redirect_to person_path(boat.member.main_member)+'#tabs-5'
+ #       response.should redirect_to person_path(person.id)+'#tabs-5'
  #     end
     end
 
@@ -114,8 +114,8 @@ describe BoatsController  do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested boat" do
-       #person = create(:person)
-       #member = create(:member)
+       person = create(:person)
+       member = create(:member)
        boat = create(:boat)
 
         # Assuming there are no other boats in the database, this
@@ -127,26 +127,26 @@ describe BoatsController  do
       end
 
       it "assigns the requested boat as @boat" do
-      #  person = create(:person)
-      #  member = create(:member)
+        person = create(:person)
+        member = create(:member)
         boat = create(:boat)
         put :update , {:id => boat.id } 
         assigns(:boat).should eq(boat)
       end
 
       it "redirects to the boat" do
-        #person = create(:person)
-        #member = create(:member)
+        person = create(:person)
+        member = create(:member)
         boat = create(:boat)
         put :update, {:id => boat.id }
-        response.should redirect_to person_path(1)+'#tabs-5'
+        response.should redirect_to person_path(person.id)+'#tabs-5'
       end
     end
 
     describe "with invalid params" do
       it "assigns the boat as @boat" do
-       # person = create(:person)
-       # member = create(:member)
+        person = create(:person)
+        member = create(:member)
         boat = create(:boat)
         # Trigger the behavior that occurs when invalid params are submitted
         Boat.any_instance.stub(:save).and_return(false)
@@ -166,8 +166,8 @@ describe BoatsController  do
 
   describe "DELETE destroy" do
     it "destroys the requested boat" do
-      #person = create(:person)
-      #member = create(:member)
+      person = create(:person)
+      member = create(:member)
       boat = create(:boat)
       expect {
         delete :destroy, {:id => boat.to_param}
@@ -175,11 +175,11 @@ describe BoatsController  do
     end
 
     it "redirects to the person  page" do
-      #person = create(:person)
-      #member = create(:member)
+      person = create(:person)
+      member = create(:member)
       boat = create(:boat)
       delete :destroy, {:id => boat.to_param}
-       response.should redirect_to person_path(1)+'#tabs-5'
+       response.should redirect_to person_path(person.id)+'#tabs-5'
     end
   end
 

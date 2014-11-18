@@ -1,5 +1,13 @@
-<%- model_class = Privilege -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
+  <%= link_to privileges_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to @privilege, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+  <h1>Editing privilege</h1>
 </div>
-<%= render :partial => 'form' %>
+
+<%= render 'form' %>

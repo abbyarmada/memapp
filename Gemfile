@@ -51,7 +51,7 @@ group :test do
   gem 'guard-rspec'
   gem 'launchy'
   gem 'nokogiri', '>= 1.3.3'
-  gem 'zeus'
+  #gem 'zeus'
   gem 'pg'
 
 #  gem 'rspec-activemodel-mocks'

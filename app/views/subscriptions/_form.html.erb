@@ -1,8 +1,10 @@
-<%= simple_form_for(@subscription, html: { class: 'form-horizontal' }) do |f| %>
+<%= simple_form_for(@subscription) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
+    <span class="input-group-addon">$</span>
     <%= f.input :amount %>
+    <span class="input-group-addon">.00</span>
     <%= f.input :start_date %>
     <%= f.input :end_date %>
     <%= f.association :privilege,include_blank: false %>

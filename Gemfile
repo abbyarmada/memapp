@@ -47,7 +47,6 @@ group :test, :development ,:preprod do
   gem 'rspec-activemodel-mocks'
   gem 'better_errors'
   gem 'binding_of_caller'#, :platforms=>[:mri_20]
-  gem 'quiet_assets'
 end
 
 group :test do
@@ -56,13 +55,9 @@ group :test do
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
-<<<<<<< HEAD
   gem 'nokogiri'#, '>= 1.3.3'
-#  gem 'zeus'
-=======
-  gem 'nokogiri', '>= 1.3.3'
+  #gem 'nokogiri', '>= 1.3.3'
   #gem 'zeus'
->>>>>>> master
   gem 'pg'
 
 #  gem 'rspec-activemodel-mocks'

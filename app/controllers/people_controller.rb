@@ -271,8 +271,9 @@ def paid_up_extract_five_year_ago
           dinghy = "X" unless p.txt_dinghy_sailing == 0
           junior = "X" unless p.txt_junior == 0
       	  barcard = ''
-      	  barcd =  p.peoplebarcard.barcard_id rescue nil || 0000 
-      	  barcard =  BAR_CARD_PREFIX + BAR_CARD_SUFF_FORMAT % barcd.to_s if  p.peoplebarcard.barcard_id rescue nil 
+        barcd =  p.peoplebarcard.barcard_id || 0000  rescue nil
+
+        barcard = (ENV['BARCARD_PREFIX'] + '%05d' % barcd).to_s if  p.peoplebarcard.barcard_id rescue nil
           if barreference != 0 and p.status != 'g'
             csv << [bar_billies,barreference, barcard ,p.last_name,p.first_name,p.id, 
             p.salutation,
@@ -386,7 +387,7 @@ def paid_up_extract2
           dinghy = "X" unless p.txt_dinghy_sailing == 0
           junior = "X" if /JU/.match(@cp)
           if p.status == "m" 
-            csv << [bar_billies,barreference, p.member_id ,BAR_CARD_PREFIX + BAR_CARD_SUFF_FORMAT % p.peoplebarcard.barcard_id.to_s ,p.last_name,p.first_name,p.id, 
+            csv << [bar_billies,barreference, p.member_id ,ENV['BARCARD_PREFIX'] + '%05d' % p.peoplebarcard.barcard_id.to_s ,p.last_name,p.first_name,p.id, 
             p.salutation,   
             p.member.name_no,
             p.member.street1 ,

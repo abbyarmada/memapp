@@ -56,8 +56,13 @@ group :test do
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
+<<<<<<< HEAD
   gem 'nokogiri'#, '>= 1.3.3'
 #  gem 'zeus'
+=======
+  gem 'nokogiri', '>= 1.3.3'
+  #gem 'zeus'
+>>>>>>> master
   gem 'pg'
 
 #  gem 'rspec-activemodel-mocks'

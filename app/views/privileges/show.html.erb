@@ -1,33 +1,35 @@
-<%- model_class = Privilege -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+  <%= link_to privileges_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_privilege_path(@privilege), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show privilege</h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:member_class) %>:</strong></dt>
+  <dt>Member class:</dt>
   <dd><%= @privilege.member_class %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @privilege.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:bar_billies) %>:</strong></dt>
-  <dd><%= @privilege.bar_billies %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:car_park) %>:</strong></dt>
-  <dd><%= @privilege.car_park %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:votes) %>:</strong></dt>
-  <dd><%= @privilege.votes %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:bar_reference) %>:</strong></dt>
-  <dd><%= @privilege.bar_reference %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:boat_storage) %>:</strong></dt>
-  <dd><%= @privilege.boat_storage %></dd>
-</dl>
 
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              privileges_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_privilege_path(@privilege), :class => 'btn' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              privilege_path(@privilege),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
-</div>
+  <dt>Name:</dt>
+  <dd><%= @privilege.name %></dd>
+
+  <dt>Bar billies:</dt>
+  <dd><%= @privilege.bar_billies %></dd>
+
+  <dt>Car park:</dt>
+  <dd><%= @privilege.car_park %></dd>
+
+  <dt>Votes:</dt>
+  <dd><%= @privilege.votes %></dd>
+
+  <dt>Bar reference:</dt>
+  <dd><%= @privilege.bar_reference %></dd>
+
+  <dt>Boat storage:</dt>
+  <dd><%= @privilege.boat_storage %></dd>
+
+</dl>

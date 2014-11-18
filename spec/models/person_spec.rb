@@ -2,14 +2,16 @@ require 'rails_helper'
 
 describe Person do
   #pending "add some examples to (or delete) #{__FILE__}"
-   before(:each) do
-    build_stubbed(:member)
-    build_stubbed(:privilege)
-  end
+   #before(:each) do
+   # build_stubbed(:member)
+  #  build_stubbed(:privilege)
+  #end
   ########  VALIDATIONS    ######################## 
   it "has a vaild factory" do 
+    create(:member)
     create(:person).should be_valid
   end
+  
   it "is invalid without first_name" do 
     build(:person, first_name: nil).should_not be_valid
   end
@@ -21,7 +23,7 @@ describe Person do
   end
    it "is invalid to have a duplicate main member within a single membership" do
     create(:person)
-    build(:person,  status: 'm', member_id: 1).should_not be_valid
+    create(:person,  status: 'm', member_id: 1).should_not be_valid
   end
   it "is invalid to have a duplicate partner member within a single membership" do
     create(:person)

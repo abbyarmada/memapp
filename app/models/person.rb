@@ -7,22 +7,23 @@ class Person < ActiveRecord::Base
   has_many :boats, :through => :member
   has_one :barcard, :through => :peoplebarcard
   
-  accepts_nested_attributes_for :member
+  #accepts_nested_attributes_for :member
 
   attr_accessible :id,:member_id,:first_name,:last_name,:status,:child_dob,:home_phone,:mobile_phone,:email_address,:comm_prefs,:snd_txt,:snd_eml,:dob,:member_number ,:txt_bridge , :txt_social, :txt_crace,
-  :txt_cruiser_race_skipper, :txt_cruising, :txt_cruiser_skipper, :txt_dinghy_sailing, :txt_junior, :txt_test, :txt_op_co, :occupation , :send_txt, :send_email , :member_attributes
-
-
+  :txt_cruiser_race_skipper, :txt_cruising, :txt_cruiser_skipper, :txt_dinghy_sailing, :txt_junior, :txt_test, :txt_op_co, :occupation , :send_txt, :send_email 
+  
   scope :current, lambda { {:include => :member,:conditions => [' ( members.renew_date >= ? or (members.renew_date BETWEEN ? and ? and date(?) <= date(?))) ' , Time.now.beginning_of_year,1.year.ago.beginning_of_year,1.year.ago.end_of_year,Time.now, Time.now.year.to_s + "-05-01" ]}}
 
   validates_presence_of :last_name, :first_name,:status, :member_id
- validates_presence_of :email_address, :if => Proc.new {|person| person.send_email? } ,:message => "Please correct the Email address"
+  validates_presence_of :email_address, :if => Proc.new {|person| person.send_email? } ,:message => "Please correct the Email address"
   validates_presence_of :mobile_phone , :if => Proc.new {|person| person.send_txt? }
   validates_format_of :email_address, :if => Proc.new {|person| person.snd_eml == "Y" }, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member already Exists" },  :if => Proc.new {|person| person.status == 'm' }
-  validates :status, :uniqueness => {:scope => :member_id ,:message => "Partner Member already Exists" },  :if => Proc.new {|person| person.status == 'p' }
-  validate :main_member_exists?, :message=>"Must have a main member",  on: :update 
+  validates :status, uniqueness: { scope:  :member_id } #,   :if => Proc.new {|person| Person.status == 'm'  }
+  #validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists"    } , :if => Proc.new {|person| person.status == 'm' }
+  validates :status, uniqueness: {scope: :member_id, message: "Partner Member already Exists" },  :if => Proc.new {|person| person.status == 'p' }
+  #validate :main_member_exists?, :message=>"Must have a main member",  on: :update 
   #validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member does not Exist" }, :if => Proc.new {|person| person.status != 'm' }
+  #validates_presence_of :member
 
   def self.search(params)
     people = scoped

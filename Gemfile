@@ -45,6 +45,9 @@ group :test, :development ,:preprod do
   gem 'database_cleaner'
   gem 'spring-commands-rspec'
   gem 'rspec-activemodel-mocks'
+  gem 'better_errors'
+  gem 'binding_of_caller'#, :platforms=>[:mri_20]
+  gem 'quiet_assets'
 end
 
 group :test do

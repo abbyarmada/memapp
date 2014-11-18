@@ -1,32 +1,31 @@
 class MembersController < ApplicationController
   require 'csv'
   
-  #auto_complete :member ,:proposed 
-  #auto_complete :member ,:seconded
-  #auto_complete :member, :proposed 
-  #, :full => true
-  
-  #==============================================
+ 
   def index
-      show
+      @members = Member.find :all #, :include => :privilege ,:order => ""
+    respond_to do |format|
+      format.html
+    end
   end #
   
-  #===============================================
+  
   def show
-        @members = Member.find :all
+    @member = Member.find(params[:id])
   end # show
   
-  #===============================================
+ 
   
  
   def new
     @member  = Member.new
-    @member.people.build
+    #@member.people.build
+
     @member.year_joined = Time.now.year.to_s
     @member.renew_date = Time.now
     @member.country = 'Ireland'
-    @member.people[0].member_id = params[:id]
-    @member.people[0].status  = 'm'
+    #@member.people[0].member_id = params[:id]
+    #@member.people[0].status  = 'm'
     #Set to Applicant
     @member.privilege = Privilege.find_by_name "Applicant"
   
@@ -35,79 +34,57 @@ class MembersController < ApplicationController
   def create
    # Member.transaction do 
     @member = Member.new(params[:member])
-    @person = Person.new(params[:member][:people_attributes][0])
-    @member.people[0].member_id = params[:id]
-    
+    #@person = Person.new(params[:person])
+   # @person = @member.people.build(person_params)
+   # @person.status = 'm'
+     
+
+    #@member.people[0].member_id = params[:id]
+    #@person.member_id = @member.id 
     @member.update_attributes(:renew_date => Time.now)
     if @member.save 
-      @barcard = Barcard.new(params[:barcard])
-      @barcard.update_attributes(params[:barcard])
-      @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
-      @peoplebarcard.person_id = @member.people[0].id 
-      @peoplebarcard.barcard_id = @barcard.id 
-      @peoplebarcard.save
+      #@person.member_id = @member.id 
+      #@person.save 
+     # @barcard = Barcard.new(params[:barcard])
+    #  @barcard.update_attributes(params[:barcard])
+     # @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
+    #  @peoplebarcard.person_id = @person.id 
+    #  @peoplebarcard.barcard_id = @barcard.id 
+   #   @peoplebarcard.save
     end 
      respond_to do |format|
        if @member.save  #&& @barcard.save && @peoplebarcard.save
          flash[:notice] = 'Member Successfully Created.'
-         format.html { redirect_to person_path(@member.people[0].id)  }
+         format.html { redirect_to member_path(@member)  }
        else
-         flash[:warn] = "Please correct the #{ helpers.pluralize(@member.errors.count - 2 ,"error")  } hilighted below" 
+         flash[:warn] = "Please correct the #{ helpers.pluralize(@member.errors.count  ,"error")  } hilighted below" 
          format.html { render :action => "new" }
        end
     end
   end
-  
+ 
   def update
      @member = Member.find(params[:id])
-    if @member.update_attributes(params[:member])
-      flash[:notice] = "Successfully updated Member."
-      redirect_to  person_path(Person.main_person(@member.id))  + '#tabs-2'
-    else
-      flash[:error] = "Member cannot be saved"
-      redirect_to  person_path(Person.main_person(@member.id)) + '#tabs-2' 
-    end
+     respond_to do |format | 
+       if @member.update_attributes(params[:member])
+         flash[:notice] = "Successfully updated Member."
+         format.html { redirect_to(members_path) }
+         # redirect_to  person_path(Person.main_person(@member.id))  + '#tabs-2'
+       else
+         #flash[:error] = "Member cannot be saved"
+         #redirect_to  person_path(Person.main_person(@member.id)) + '#tabs-2' 
+         format.html { render :action => "edit" }
+       end
+     end 
   end
   
   def edit 
      @member = Member.find(params[:id])
-     redirect_to person_path(Person.main_person(@member.id))  + '#tabs-2' 
+    # redirect_to person_path(Person.main_person(@member.id))  + '#tabs-2' 
   end
   
   
-  def update_renewed_from_payments
-    
-   
-    @mems = Member.find :all ,:include => :people
-    
-    puts("here")
-    @mems.each do |m|
-      puts(m.id)
-    #  puts(m.people.last_name)
-      
-      p = Payment.find :first ,:order => "date_lodged DESC", :conditions =>  "member_id = '#{m.id}' and paymenttype_id in (1,4)    "
-      if p 
-        m.renew_date = p.date_lodged.to_date rescue nil
-        if !m.street1 
-          if !m.address1 
-            m.street1 = "unknown"
-          else   
-          m.street1 = m.address1
-        end
-        end
-        t = m.save!
-      end
-      
-      if t 
-        flash[:notice] = 'Data was successfully updated.'
-
-      else
-        flash[:notice] = 'Problem updating data.'
-      end
-      
-      
-  end
-  end
+ 
   
  def carpark_passes
 
@@ -169,5 +146,13 @@ class MembersController < ApplicationController
     ActionController::Base.helpers
   end
   
+  
+
+  private
+
+  
+
+
+
  
 end # class

@@ -1,5 +1,5 @@
 <%= semantic_form_for(@payment) do |form| %>
-<%= @person.last_name%> &nbsp; <%= @person.first_name%>
+
 <%= form.inputs :name => "" do %>
 <%= form.input :member_id, :as => :hidden %>
 <%= form.input :paymenttype ,:label =>  "Payment Type" %>

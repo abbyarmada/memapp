@@ -125,6 +125,8 @@ describe PaymentsController, :type => :controller do
    end
     describe "with valid params" do
       it "updates the requested payment" do
+        member = create(:member)
+        privilege = create(:privilege)
         payment = create(:payment)
         # Assuming there are no other Payment in the database, this
         # specifies that the Payment created on the previous line

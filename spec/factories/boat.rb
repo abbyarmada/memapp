@@ -1,7 +1,7 @@
 FactoryGirl.define do
   require 'faker'
   factory :boat do |f|
-    # f.association :member
+     #member
      f.member_id 1
      f.boat_name "Good Ship Hopeless"
      f.boat_type "Cruiser"

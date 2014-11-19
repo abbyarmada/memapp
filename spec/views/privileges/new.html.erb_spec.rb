@@ -3,9 +3,9 @@ require 'rails_helper'
 describe "privileges/new", :type => :view do
   before(:each) do
     assign(:privilege, Privilege.new(
-      :member_class => "MyString",
+      :member_class => "T",
       :name => "MyString",
-      :bar_billies => "MyString",
+      :bar_billies => "Y",
       :car_park => 1,
       :votes => 1,
       :bar_reference => 1,

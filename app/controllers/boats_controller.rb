@@ -30,7 +30,6 @@ class BoatsController < ApplicationController
   end
   def update
     @boat = Boat.find(params[:id])
-    @member_id = @boat.member_id
     respond_to do |format|
       if @boat.update_attributes(params[:boat])
         format.html { redirect_to person_path(@boat.owner)  + '#tabs-5' }

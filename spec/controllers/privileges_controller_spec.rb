@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe PrivilegesController do
+describe PrivilegesController, :type => :controller do
   before :each do
     login_user 
   end
@@ -37,7 +37,7 @@ describe PrivilegesController do
     it "assigns all privileges as @privileges" do
       privilege = create(:privilege)
       get :index, {}, valid_session
-      assigns(:privileges).should eq([privilege])
+      expect(assigns(:privileges)).to eq([privilege])
     end
   end
 
@@ -45,14 +45,14 @@ describe PrivilegesController do
     it "assigns the requested privilege as @privilege" do
       privilege = Privilege.create! valid_attributes
       get :show, {:id => privilege.to_param}, valid_session
-      assigns(:privilege).should eq(privilege)
+      expect(assigns(:privilege)).to eq(privilege)
     end
   end
 
   describe "GET new" do
     it "assigns a new privilege as @privilege" do
       get :new, {}, valid_session
-      assigns(:privilege).should be_a_new(Privilege)
+      expect(assigns(:privilege)).to be_a_new(Privilege)
     end
   end
 
@@ -60,7 +60,7 @@ describe PrivilegesController do
     it "assigns the requested privilege as @privilege" do
       privilege = Privilege.create! valid_attributes
       get :edit, {:id => privilege.to_param}, valid_session
-      assigns(:privilege).should eq(privilege)
+      expect(assigns(:privilege)).to eq(privilege)
     end
   end
 
@@ -74,29 +74,29 @@ describe PrivilegesController do
 
       it "assigns a newly created privilege as @privilege" do
         post :create, {:privilege => valid_attributes}, valid_session
-        assigns(:privilege).should be_a(Privilege)
-        assigns(:privilege).should be_persisted
+        expect(assigns(:privilege)).to be_a(Privilege)
+        expect(assigns(:privilege)).to be_persisted
       end
 
       it "redirects to the created privilege" do
         post :create, {:privilege => valid_attributes}, valid_session
-        response.should redirect_to(Privilege.last)
+        expect(response).to redirect_to(Privilege.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved privilege as @privilege" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Privilege.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Privilege).to receive(:save).and_return(false)
         post :create, {:privilege => {  }}, valid_session
-        assigns(:privilege).should be_a_new(Privilege)
+        expect(assigns(:privilege)).to be_a_new(Privilege)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Privilege.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Privilege).to receive(:save).and_return(false)
         post :create, {:privilege => {  }}, valid_session
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -109,20 +109,20 @@ describe PrivilegesController do
         # specifies that the Privilege created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Privilege.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
+        expect_any_instance_of(Privilege).to receive(:update_attributes).with({ "these" => "params" })
         put :update, {:id => privilege.to_param, :privilege => { "these" => "params" }}, valid_session
       end
 
       it "assigns the requested privilege as @privilege" do
         privilege = Privilege.create! valid_attributes
         put :update, {:id => privilege.to_param, :privilege => valid_attributes}, valid_session
-        assigns(:privilege).should eq(privilege)
+        expect(assigns(:privilege)).to eq(privilege)
       end
 
       it "redirects to the privilege" do
         privilege = Privilege.create! valid_attributes
         put :update, {:id => privilege.to_param, :privilege => valid_attributes}, valid_session
-        response.should redirect_to(privilege)
+        expect(response).to redirect_to(privilege)
       end
     end
 
@@ -130,17 +130,17 @@ describe PrivilegesController do
       it "assigns the privilege as @privilege" do
         privilege = Privilege.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Privilege.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Privilege).to receive(:save).and_return(false)
         put :update, {:id => privilege.to_param, :privilege => {  }}, valid_session
-        assigns(:privilege).should eq(privilege)
+        expect(assigns(:privilege)).to eq(privilege)
       end
 
       it "re-renders the 'edit' template" do
         privilege = Privilege.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Privilege.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Privilege).to receive(:save).and_return(false)
         put :update, {:id => privilege.to_param, :privilege => {  }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end

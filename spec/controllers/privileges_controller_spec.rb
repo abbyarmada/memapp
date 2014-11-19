@@ -18,8 +18,10 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe PrivilegesController, :type => :controller do
-
+describe PrivilegesController, :type => :controller do
+  before :each do
+    login_user 
+  end
   # This should return the minimal set of attributes required to create a valid
   # Privilege. As you add validations to Privilege, be sure to
   # adjust the attributes here as well.
@@ -89,12 +91,16 @@ RSpec.describe PrivilegesController, :type => :controller do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved privilege as @privilege" do
-        post :create, {:privilege => invalid_attributes}, valid_session
+        # Trigger the behavior that occurs when invalid params are submitted
+        allow_any_instance_of(Privilege).to receive(:save).and_return(false)
+        post :create, {:privilege => {  }}, valid_session
         expect(assigns(:privilege)).to be_a_new(Privilege)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:privilege => invalid_attributes}, valid_session
+        # Trigger the behavior that occurs when invalid params are submitted
+        allow_any_instance_of(Privilege).to receive(:save).and_return(false)
+        post :create, {:privilege => {  }}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -108,9 +114,12 @@ RSpec.describe PrivilegesController, :type => :controller do
 
       it "updates the requested privilege" do
         privilege = Privilege.create! valid_attributes
-        put :update, {:id => privilege.to_param, :privilege => new_attributes}, valid_session
-        privilege.reload
-        skip("Add assertions for updated state")
+        # Assuming there are no other privileges in the database, this
+        # specifies that the Privilege created on the previous line
+        # receives the :update_attributes message with whatever params are
+        # submitted in the request.
+        expect_any_instance_of(Privilege).to receive(:update_attributes).with({ "these" => "params" })
+        put :update, {:id => privilege.to_param, :privilege => { "these" => "params" }}, valid_session
       end
 
       it "assigns the requested privilege as @privilege" do
@@ -129,13 +138,17 @@ RSpec.describe PrivilegesController, :type => :controller do
     describe "with invalid params" do
       it "assigns the privilege as @privilege" do
         privilege = Privilege.create! valid_attributes
-        put :update, {:id => privilege.to_param, :privilege => invalid_attributes}, valid_session
+        # Trigger the behavior that occurs when invalid params are submitted
+        allow_any_instance_of(Privilege).to receive(:save).and_return(false)
+        put :update, {:id => privilege.to_param, :privilege => {  }}, valid_session
         expect(assigns(:privilege)).to eq(privilege)
       end
 
       it "re-renders the 'edit' template" do
         privilege = Privilege.create! valid_attributes
-        put :update, {:id => privilege.to_param, :privilege => invalid_attributes}, valid_session
+        # Trigger the behavior that occurs when invalid params are submitted
+        allow_any_instance_of(Privilege).to receive(:save).and_return(false)
+        put :update, {:id => privilege.to_param, :privilege => {  }}, valid_session
         expect(response).to render_template("edit")
       end
     end

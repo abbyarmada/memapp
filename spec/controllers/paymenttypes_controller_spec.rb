@@ -18,7 +18,7 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe PaymenttypesController do
+describe PaymenttypesController, :type => :controller do
   before :each do
     login_user 
   end
@@ -38,7 +38,7 @@ describe PaymenttypesController do
     it "assigns all paymenttypes as @paymenttypes" do
       paymenttype = Paymenttype.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:paymenttypes).should eq([paymenttype])
+      expect(assigns(:paymenttypes)).to eq([paymenttype])
     end
   end
 
@@ -46,14 +46,14 @@ describe PaymenttypesController do
     it "assigns the requested paymenttype as @paymenttype" do
       paymenttype = Paymenttype.create! valid_attributes
       get :show, {:id => paymenttype.to_param}, valid_session
-      assigns(:paymenttype).should eq(paymenttype)
+      expect(assigns(:paymenttype)).to eq(paymenttype)
     end
   end
 
   describe "GET new" do
     it "assigns a new paymenttype as @paymenttype" do
       get :new, {}, valid_session
-      assigns(:paymenttype).should be_a_new(Paymenttype)
+      expect(assigns(:paymenttype)).to be_a_new(Paymenttype)
     end
   end
 
@@ -61,7 +61,7 @@ describe PaymenttypesController do
     it "assigns the requested paymenttype as @paymenttype" do
       paymenttype = Paymenttype.create! valid_attributes
       get :edit, {:id => paymenttype.to_param}, valid_session
-      assigns(:paymenttype).should eq(paymenttype)
+      expect(assigns(:paymenttype)).to eq(paymenttype)
     end
   end
 
@@ -75,29 +75,29 @@ describe PaymenttypesController do
 
       it "assigns a newly created paymenttype as @paymenttype" do
         post :create, {:paymenttype => valid_attributes}, valid_session
-        assigns(:paymenttype).should be_a(Paymenttype)
-        assigns(:paymenttype).should be_persisted
+        expect(assigns(:paymenttype)).to be_a(Paymenttype)
+        expect(assigns(:paymenttype)).to be_persisted
       end
 
       it "redirects to the created paymenttype" do
         post :create, {:paymenttype => valid_attributes}, valid_session
-        response.should redirect_to(Paymenttype.last)
+        expect(response).to redirect_to(Paymenttype.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved paymenttype as @paymenttype" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Paymenttype.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Paymenttype).to receive(:save).and_return(false)
         post :create, {:paymenttype => { "name" => "invalid value" }}, valid_session
-        assigns(:paymenttype).should be_a_new(Paymenttype)
+        expect(assigns(:paymenttype)).to be_a_new(Paymenttype)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Paymenttype.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Paymenttype).to receive(:save).and_return(false)
         post :create, {:paymenttype => { "name" => "invalid value" }}, valid_session
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -110,20 +110,20 @@ describe PaymenttypesController do
         # specifies that the Paymenttype created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Paymenttype.any_instance.should_receive(:update_attributes).with({ "name" => "MyString" })
+        expect_any_instance_of(Paymenttype).to receive(:update_attributes).with({ "name" => "MyString" })
         put :update, {:id => paymenttype.to_param, :paymenttype => { "name" => "MyString" }}, valid_session
       end
 
       it "assigns the requested paymenttype as @paymenttype" do
         paymenttype = Paymenttype.create! valid_attributes
         put :update, {:id => paymenttype.to_param, :paymenttype => valid_attributes}, valid_session
-        assigns(:paymenttype).should eq(paymenttype)
+        expect(assigns(:paymenttype)).to eq(paymenttype)
       end
 
       it "redirects to the paymenttype" do
         paymenttype = Paymenttype.create! valid_attributes
         put :update, {:id => paymenttype.to_param, :paymenttype => valid_attributes}, valid_session
-        response.should redirect_to(paymenttype)
+        expect(response).to redirect_to(paymenttype)
       end
     end
 
@@ -131,17 +131,17 @@ describe PaymenttypesController do
       it "assigns the paymenttype as @paymenttype" do
         paymenttype = Paymenttype.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Paymenttype.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Paymenttype).to receive(:save).and_return(false)
         put :update, {:id => paymenttype.to_param, :paymenttype => { "name" => "invalid value" }}, valid_session
-        assigns(:paymenttype).should eq(paymenttype)
+        expect(assigns(:paymenttype)).to eq(paymenttype)
       end
 
       it "re-renders the 'edit' template" do
         paymenttype = Paymenttype.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Paymenttype.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Paymenttype).to receive(:save).and_return(false)
         put :update, {:id => paymenttype.to_param, :paymenttype => { "name" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -157,7 +157,7 @@ describe PaymenttypesController do
     it "redirects to the paymenttypes list" do
       paymenttype = Paymenttype.create! valid_attributes
       delete :destroy, {:id => paymenttype.to_param}, valid_session
-      response.should redirect_to(paymenttypes_url)
+      expect(response).to redirect_to(paymenttypes_url)
     end
   end
 

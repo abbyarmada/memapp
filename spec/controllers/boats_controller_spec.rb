@@ -56,7 +56,7 @@ describe BoatsController  do
   describe "GET new" do
     it "assigns a new boat as @boat" do
       get :new, {}, valid_session
-      assigns(:boat).should be_a_new(Boat)
+      expect(assigns(:boat)).to be_a_new(Boat)
     end
   end
 
@@ -64,7 +64,7 @@ describe BoatsController  do
     it "assigns the requested boat as @boat" do
       boat = create(:boat)
       get :edit, {:id => boat.to_param}
-      assigns(:boat).should eq(boat)
+      expect(assigns(:boat)).to eq(boat)
     end
   end
 
@@ -82,31 +82,31 @@ describe BoatsController  do
         #person = build(:person)
         #member = build(:member)
         boat = create(:boat)
-        boat.should be_a(Boat)
-        boat.should be_persisted
+        expect(boat).to be_a(Boat)
+        expect(boat).to be_persisted
       end
 
- #     it "redirects to the created boat" do
- #       person = create(:person)
- #       member = create(:member)
- #       boat = create(:boat)
- #       response.should redirect_to person_path(person.id)+'#tabs-5'
- #     end
+      it "redirects to the created boat" do
+        person = create(:person)
+        member = create(:member)
+        boat = create(:boat)
+        expect(response).to render_template :controller => "people" ,:action => "edit", :id => person.id 
+      end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved boat as @boat" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Boat.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Boat).to receive(:save).and_return(false)
         post :create, {:boat => { "member_id" => "invalid value" }}
-        assigns(:boat).should be_a_new(Boat)
+        expect(assigns(:boat)).to be_a_new(Boat)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Boat.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Boat).to receive(:save).and_return(false)
         post :create, {:boat => { "member_id" => "invalid value" }}
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -122,8 +122,8 @@ describe BoatsController  do
         # specifies that the Boat created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Boat.any_instance.should_receive(:update_attributes).with({ "member_id" => "1" })
-        put :update, {:id => boat.to_param, :boat => { "member_id"  => "1" } } 
+        expect_any_instance_of(Boat).to receive(:update_attributes).with({ "member_id" => "1" })
+        put :update, {:id => boat.to_param, :boat => { "member_id" => "1" }}
       end
 
       it "assigns the requested boat as @boat" do
@@ -131,7 +131,7 @@ describe BoatsController  do
         member = create(:member)
         boat = create(:boat)
         put :update , {:id => boat.id } 
-        assigns(:boat).should eq(boat)
+        expect(assigns(:boat)).to eq(boat)
       end
 
       it "redirects to the boat" do
@@ -139,7 +139,7 @@ describe BoatsController  do
         member = create(:member)
         boat = create(:boat)
         put :update, {:id => boat.id }
-        response.should redirect_to person_path(person.id)+'#tabs-5'
+        expect(response).to redirect_to edit_person_path(person.id)
       end
     end
 
@@ -149,17 +149,17 @@ describe BoatsController  do
         member = create(:member)
         boat = create(:boat)
         # Trigger the behavior that occurs when invalid params are submitted
-        Boat.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Boat).to receive(:save).and_return(false)
         put :update, {:id => boat.to_param, :boat => { "member_id" => "invalid value" }}
-        assigns(:boat).should eq(boat)
+        expect(assigns(:boat)).to eq(boat)
       end
 
       it "re-renders the 'edit' template" do
         boat = create(:boat)
         # Trigger the behavior that occurs when invalid params are submitted
-        Boat.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Boat).to receive(:save).and_return(false)
         put :update, {:id => boat.to_param, :boat => { "member_id" => "invalid value" }}
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -179,7 +179,7 @@ describe BoatsController  do
       member = create(:member)
       boat = create(:boat)
       delete :destroy, {:id => boat.to_param}
-       response.should redirect_to person_path(person.id)+'#tabs-5'
+       expect(response).to redirect_to edit_person_path(person.id)
     end
   end
 

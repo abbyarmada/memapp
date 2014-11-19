@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe PaymentsController do
+describe PaymentsController, :type => :controller do
   before :each do
     login_user 
   end
@@ -61,7 +61,7 @@ describe PaymentsController do
     it "assigns a new payment as @payment" do
       #get :new, {:member_id => 1}, valid_session
       payment = build(:payment)
-      payment.should be_a_new(Payment)
+      expect(payment).to be_a_new(Payment)
     end
   end
 
@@ -69,7 +69,7 @@ describe PaymentsController do
     it "assigns the requested payment as @payment" do
       payment = create(:payment)
       get :edit, {:id => payment.to_param}, valid_session
-      assigns(:payment).should eq(payment)
+      expect(assigns(:payment)).to eq(payment)
     end
   end
 
@@ -83,8 +83,8 @@ describe PaymentsController do
 
       it "assigns a newly created payment as @payment" do
         payment = create(:payment)
-        payment.should be_a(Payment)
-        payment.should be_persisted
+        expect(payment).to be_a(Payment)
+        expect(payment).to be_persisted
       end
 
    #   it "redirects to the created payment" do
@@ -96,9 +96,9 @@ describe PaymentsController do
     describe "with invalid params" do
       it "assigns a newly created but unsaved payment as @payment" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Payment.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Payment).to receive(:save).and_return(false)
         payment = build(:payment)
-        payment.should be_a_new(Payment)
+        expect(payment).to be_a_new(Payment)
       end
 
   #    it "re-renders the 'new' template" do
@@ -175,7 +175,7 @@ describe PaymentsController do
       person  = create(:person)
       member = create(:member) 
       delete :destroy, {:id => payment.to_param}  #, valid_session
-      response.should redirect_to :controller => :people, :action => :edit, :id => Person.main_person(payment.member.id)
+      expect(response).to redirect_to :controller => :people, :action => :edit, :id => Person.main_person(payment.member.id)
     end
   end
 

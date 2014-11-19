@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "boats/edit" do
+describe "boats/edit", :type => :view do
   before(:each) do
     build_stubbed(:member)
     build_stubbed(:person)

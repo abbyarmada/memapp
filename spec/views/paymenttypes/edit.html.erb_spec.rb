@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "paymenttypes/edit" do
+describe "paymenttypes/edit", :type => :view do
   before(:each) do
     @paymenttype = assign(:paymenttype, stub_model(Paymenttype,
       :name => "MyString"

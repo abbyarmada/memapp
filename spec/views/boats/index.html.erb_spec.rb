@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "boats/index" do
+describe "boats/index", :type => :view do
   before(:each) do
     create(:member)
     create(:person)

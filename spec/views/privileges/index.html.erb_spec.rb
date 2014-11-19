@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "privileges/index" do
+describe "privileges/index", :type => :view do
   before(:each) do
     assign(:privileges, [
       stub_model(Privilege),

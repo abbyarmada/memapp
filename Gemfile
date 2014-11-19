@@ -37,11 +37,12 @@ gem 'turbolinks'
 
 
 group :test, :development ,:preprod do
-  gem "rspec-rails", "~> 2.99.0"
+  gem "rspec-rails", "~> 3.0.0"
   gem "spring"
    gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'rspec-activemodel-mocks'
 end
 
 group :test do 

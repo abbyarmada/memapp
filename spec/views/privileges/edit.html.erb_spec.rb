@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "privileges/edit", :type => :view do
   before(:each) do
-    @privilege = assign(:privilege, stub_model(Privilege))
+    @privilege = build_stubbed(:privilege)
   end
 
   it "renders the edit privilege form" do

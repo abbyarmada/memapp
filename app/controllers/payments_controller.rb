@@ -1,7 +1,7 @@
 class PaymentsController < ApplicationController
   require 'csv'
  #verify :method => :post, :only => [ :destroy, :create, :update ]
-  after_filter :check_privilege_and_renewal_date, :only => [:update,:create]
+  after_filter :check_privilege_and_renewal_date, :only => [:update]
   after_filter :delete_checks,  :only => [:destroy]
   #=======================================
   def edit
@@ -9,7 +9,78 @@ class PaymentsController < ApplicationController
     @m = @payment.member
     @person = Person.main_person(@payment.member_id)
   end
+def update
+     @payment = Payment.find(params[:id])
+     @person = Person.main_person(@payment.member_id)
+     respond_to do |format|
+       if @payment.update_attributes(params[:payment])
+         format.html { redirect_to person_path(@person.id) }
+         if changed_privilege?
+           flash[:notice] = 'Payment Successfully Updated, Membership Class Updated.'
+         else
+           flash[:notice] = 'Payment Successfully Updated'
+         end
+       else
+         format.html { render :action => "edit" }
+       end
+     end
+   end
 
+
+   def new
+     @payment = Payment.new
+     @payment.member_id  = (params[:member_id])
+     @payment.privilege_id = @payment.member.privilege.id
+     @person = @payment.member.main_member
+     #default to Subscription renewal
+     @payment.paymenttype_id = 1
+     @payment.date_lodged = Time.now.to_date
+  end
+  def create
+    @payment = Payment.new(params[:payment])
+    respond_to do |format|
+      if @payment.save
+        flash[:notice] = 'payment was successfully created.'
+        format.html { redirect_to(payments_path) }
+      else
+        format.html { render :action => "new" }
+      end
+    end
+  end
+  def create2
+    @payment = Payment.new(params[:payment])
+    @member = @payment.member_id
+    @person = @payment.member.main_member
+    respond_to do |format|
+      if @payment.save
+       # if changed_privilege?
+       #   flash[:notice] = 'Payment Successfully Created, Membership Class Updated.'
+       # else
+       #   flash[:notice] = 'Payment Successfully Created'
+       # end
+        format.html { redirect_to person_path(@person.id) }
+      else
+       # flash[:error] = 'Error: Payment not created'
+        format.html { render :action => "new" }
+      end
+    end
+  end
+
+
+
+  def destroy
+    @payment = Payment.find(params[:id])
+    @person = @payment.member.main_member
+    respond_to do |format|
+      if  @payment.destroy
+        flash[:notice] = 'Payment was successfully deleted.'
+        format.html { redirect_to person_path(@person.id)  }
+      else
+        flash[:warning] = 'delete failed.'
+        format.html { redirect_to(person_path) }
+      end
+    end
+  end
   #=======================================
   def list_by_member_class
   #  this_yr_start = Time.now.year.to_s + "-01-01"
@@ -227,68 +298,7 @@ end
   
  
   #=======================================
-   def update
-     @payment = Payment.find(params[:id])
-     @person = Person.main_person(@payment.member_id)
-     respond_to do |format|
-       if @payment.update_attributes(params[:payment])
-         format.html { redirect_to person_path(@person.id) }
-         if changed_privilege?
-           flash[:notice] = 'Payment Successfully Updated, Membership Class Updated.'
-         else
-           flash[:notice] = 'Payment Successfully Updated'
-         end
-       else
-         format.html { render :action => "edit" }
-       end
-     end
-   end
-
-
-   def new
-     @payment = Payment.new
-     @payment.member_id  = (params[:member_id])
-     @payment.privilege_id = @payment.member.privilege.id
-     @person = @payment.member.main_member
-     #default to Subscription renewal
-     @payment.paymenttype_id = 1
-     @payment.date_lodged = Time.now.to_date
-  end
-
-  def create
-    @payment = Payment.new(params[:payment])
-    @member = @payment.member_id
-    @person = @payment.member.main_member
-    respond_to do |format|
-      if @payment.save
-        if changed_privilege?
-          flash[:notice] = 'Payment Successfully Created, Membership Class Updated.'
-        else
-          flash[:notice] = 'Payment Successfully Created'
-        end
-        format.html { redirect_to person_path(@person.id) }
-      else
-        flash[:error] = 'Error: Payment not created'
-        format.html { render :action => "new" }
-      end
-    end
-  end
-
-
-
-  def destroy
-    @payment = Payment.find(params[:id])
-    @person = @payment.member.main_member
-    respond_to do |format|
-      if  @payment.destroy
-        flash[:notice] = 'Payment was successfully deleted.'
-        format.html { redirect_to person_path(@person.id)  }
-      else
-        flash[:warning] = 'delete failed.'
-        format.html { redirect_to(person_path) }
-      end
-    end
-  end
+   
 
  def overduememberships
    @overdues = Member.overduesubs

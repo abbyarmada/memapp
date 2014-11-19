@@ -59,6 +59,8 @@ R3::Application.routes.draw do
 	    get 'comms_csv'
 	    get 'create_renewals'
 	    get 'renewal_email'
+      get 'cut'
+      post 'paste'
 	  end
 	end
 	

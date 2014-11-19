@@ -1,5 +1,6 @@
 class Privilege < ActiveRecord::Base
-  attr_accessible :bar_billies, :bar_reference, :boat_storage, :car_park, :member_class, :name, :votes
+  attr_accessible :bar_billies, :bar_reference, :boat_storage, :car_park, :member_class,
+  :name, :vote, :amount, :start_date, :end_date, :privilege_id
   has_many :members
   has_many :payments#, :through => :members
   has_many :people,:through => :members
@@ -11,7 +12,7 @@ class Privilege < ActiveRecord::Base
   #validates_length_of :member_class, :maximum => 1
 
   def self.types   
-    types = find :all    #, :order => "name"
+    types = find.all    #, :order => "name"
   end
 
   def self.billie_cutoff_date

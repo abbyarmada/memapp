@@ -9,6 +9,6 @@
     <%= f.input :member_id ,:as => :hidden %>
   <% end %>
   <%= f.actions do %>
-    <%= f.action :submit, :as => :button ,:button_html => { :class => "btn btn-primary", :disable_with => 'Wait...' } %>
+<%= f.action :submit, :as => :button ,:button_html => { :class => "btn btn-primary", :data_disable_with => 'Wait...' } %>
   <% end %>
 <% end %>

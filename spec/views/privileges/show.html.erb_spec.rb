@@ -5,7 +5,7 @@ describe "privileges/show", :type => :view do
     @privilege = assign(:privilege, Privilege.create!(
       :member_class => "Member Class",
       :name => "Name",
-      :bar_billies => "Bar Billies",
+      :bar_billies => "Y",
       :car_park => 1,
       :votes => 2,
       :bar_reference => 3,
@@ -15,12 +15,12 @@ describe "privileges/show", :type => :view do
 
   it "renders attributes in <p>" do
     render
-    expect(rendered).to match(/Member Class/)
+    expect(rendered).to match(/Member class/)
     expect(rendered).to match(/Name/)
-    expect(rendered).to match(/Bar Billies/)
-    expect(rendered).to match(/1/)
-    expect(rendered).to match(/2/)
-    expect(rendered).to match(/3/)
-    expect(rendered).to match(/4/)
+    expect(rendered).to match(/Bar billies/)
+    expect(rendered).to match(/Car park/)
+    expect(rendered).to match(/Votes/)
+    expect(rendered).to match(/Bar reference/)
+    expect(rendered).to match(/Boat storage/)
   end
 end

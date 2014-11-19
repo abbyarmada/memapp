@@ -3,7 +3,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :privilege # foreign key privilege_id
   
   validates_presence_of :amount,:privilege_id,:start_date,:end_date
-   
+  attr_accessible :amount,:privilege_id,:start_date,:end_date
  #def self.lastyear(privilege_id)
    # lastyear = (subscription.find :all, :conditions => [ 'privilege_id = ? and start_date <= ? and end_date >= ? ' , privilege_id ,1.year.ago.beginning_of_year ,1.year.ago.end_of_year ])
  # end

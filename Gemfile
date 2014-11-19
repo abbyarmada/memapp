@@ -33,14 +33,11 @@ gem 'coffee-rails' #, '~> 3.1.1'
 gem 'uglifier'     #, '>= 1.0.3'
 
 
-group :test, :development ,:preprod do
+group :test, :development  do
   gem "rspec-rails", "~> 3.0.0"
-  gem "spring"
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'database_cleaner'
-  gem 'rspec-activemodel-mocks'
-  gem 'spring-commands-rspec'
+  gem "spring"
   gem 'better_errors'
   gem 'binding_of_caller'#, :platforms=>[:mri_20]
 end
@@ -53,8 +50,10 @@ group :test do
   gem 'launchy'
   gem 'nokogiri'#, '>= 1.3.3'
   gem 'pg'
+  gem 'database_cleaner'
+  gem 'rspec-activemodel-mocks'
+  gem 'spring-commands-rspec'
 
-#  gem 'rspec-activemodel-mocks'
 end
 
 group :test,:production do

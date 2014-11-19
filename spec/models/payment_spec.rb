@@ -31,9 +31,9 @@ describe Payment, :type => :model do
   end
   
   #### instance tests ############ 
-  it "is invalid to have a duplicate paymenttype for renewals" do
+  it "is invalid to have a duplicate Renewal payment within a year" do
     create(:payment)
-    expect(build(:payment,privilege_id: 2 )).not_to be_valid
+    expect(build(:payment)).not_to be_valid
   end
    it "it is invalid to have a final paymenttype without a first payment for renewals" do
      expect(build(:payment, paymenttype_id: 5)).not_to be_valid

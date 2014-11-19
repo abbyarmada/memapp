@@ -74,29 +74,29 @@ describe SubscriptionsController do
 
      it "assigns a newly created subscription as @subscription" do
        post :create, {:subscription => valid_attributes}, valid_session
-       assigns(:subscription).should be_a(Subscription)
-       assigns(:subscription).should be_persisted
+       expect(assigns(:subscription)).to be_a(Subscription)
+       expect(assigns(:subscription)).to be_persisted
      end
 
       it "redirects to the subscriptions" do
         post :create, {:subscription => valid_attributes}, valid_session
-        response.should redirect_to(subscriptions_path)
+        expect(response).to redirect_to(subscriptions_path)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved subscription as @subscription" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Subscription.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Subscription).to receive(:save).and_return(false)
         post :create, {:subscription => { "amount" => "invalid value" }}, valid_session
-        assigns(:subscription).should be_a_new(Subscription)
+        expect(assigns(:subscription)).to be_a_new(Subscription)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Subscription.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Subscription).to receive(:save).and_return(false)
         post :create, {:subscription => { "amount" => "invalid value" }}, valid_session
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -109,20 +109,20 @@ describe SubscriptionsController do
         # specifies that the Subscription created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Subscription.any_instance.should_receive(:update_attributes).with({ "amount" => "1.5" })
+        expect_any_instance_of(Subscription).to receive(:update_attributes).with({ "amount" => "1.5" })
         put :update, {:id => subscription.to_param, :subscription => { "amount" => "1.5" }}, valid_session
       end
 
       it "assigns the requested subscription as @subscription" do
         subscription = Subscription.create! valid_attributes
         put :update, {:id => subscription.to_param, :subscription => valid_attributes}, valid_session
-        assigns(:subscription).should eq(subscription)
+        expect(assigns(:subscription)).to eq(subscription)
       end
 
       it "redirects to the subscriptions" do
         subscription = Subscription.create! valid_attributes
         put :update, {:id => subscription.to_param, :subscription => valid_attributes}, valid_session
-        response.should redirect_to(subscriptions_url)
+        expect(response).to redirect_to(subscriptions_url)
       end
     end
 
@@ -130,17 +130,17 @@ describe SubscriptionsController do
       it "assigns the subscription as @subscription" do
         subscription = Subscription.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Subscription.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Subscription).to receive(:save).and_return(false)
         put :update, {:id => subscription.to_param, :subscription => { "amount" => "invalid value" }}, valid_session
-        assigns(:subscription).should eq(subscription)
+        expect(assigns(:subscription)).to eq(subscription)
       end
 
       it "re-renders the 'edit' template" do
         subscription = Subscription.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Subscription.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Subscription).to receive(:save).and_return(false)
         put :update, {:id => subscription.to_param, :subscription => { "amount" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -156,7 +156,7 @@ describe SubscriptionsController do
     it "redirects to the subscriptions list" do
       subscription = Subscription.create! valid_attributes
       delete :destroy, {:id => subscription.to_param}, valid_session
-      response.should redirect_to(subscriptions_url)
+      expect(response).to redirect_to(subscriptions_url)
     end
   end
 

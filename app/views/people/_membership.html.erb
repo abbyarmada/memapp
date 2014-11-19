@@ -28,7 +28,8 @@
 	<%= form.input :city  %>
 	<%= form.input :county  %>
 	<%= form.input :postcode %>
-	<%= form.input :country , :priority_countries => ['Ireland','United Kingdom']%>
+	<% #= form.input :country , :priority_countries => ['Ireland','United Kingdom'] 
+  %>
 <% end %>
 
 <%= form.submit button_label if buttons %>

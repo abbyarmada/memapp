@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
 
   def index
-    @subscriptions = Subscription.find :all, :include => :privilege ,:order => "end_date desc"
+    @subscriptions = Subscription.all #, :include => :privilege ,:order => "end_date desc"
     respond_to do |format|
       format.html
     end

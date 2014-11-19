@@ -57,8 +57,11 @@ class Member < ActiveRecord::Base
                 :conditions => " bar_reference != 0 and (  renew_date >= '#{this_yr_start}' ) "
   end
 
-  def main_member
-    Person.where(:status => 'm', :member_id => id).first
+  def self.main_member
+    Person.where(:status => 'm' ).first
+  end
+   def main_member
+    Person.where(:status => 'm' ).first
   end
 
 

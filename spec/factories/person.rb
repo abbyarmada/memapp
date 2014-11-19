@@ -1,7 +1,7 @@
 FactoryGirl.define do
   require 'faker'
    factory :person do |f|
-   # f.association :member
+     #member
      f.member_id 1
      f.first_name  { Faker::Name.first_name }
      f.last_name { Faker::Name.last_name }

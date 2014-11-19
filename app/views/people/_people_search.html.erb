@@ -10,7 +10,7 @@
   <%= text_field_tag :searchfn, params[:searchfn], :placeholder => 'First Name'%> 
 
   <div class="form-group" id="2">	
-  <%= collection_select(:searchmp, :privilege_id, Privilege.types, :id,:name, options, :class =>"" ) %>
+  <%= collection_select(:searchmp, :privilege_id, Privilege.all, :id,:name, options, :class =>"" ) %>
     <div class="checkbox">
       <%= check_box_tag :past_members,true,params[:past_members] %><%= label_tag(:past_members, " Past Members") %> 
     </div >

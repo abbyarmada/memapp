@@ -120,15 +120,15 @@ describe BoatsController  do
         # specifies that the Boat created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Boat).to receive(:update_attributes).with({ "member_id" => "1" })
-        put :update, {:id => boat.to_param, :boat => { "member_id" => "1" }}
+        expect_any_instance_of(Boat).to receive(:update_attributes).with({ "member_id" => "2" })
+        put :update, {:id => boat.to_param, :boat => { "member_id" => "2" }}
       end
 
       it "assigns the requested boat as @boat" do
+       # member = create(:member)
         person = create(:person)
-        member = create(:member)
         boat = create(:boat)
-        put :update , {:id => boat.id } 
+        put :update , {:id => boat.id }
         expect(assigns(:boat)).to eq(boat)
       end
 

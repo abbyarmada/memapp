@@ -41,7 +41,7 @@ def update
     respond_to do |format|
       if @payment.save
         flash[:notice] = 'payment was successfully created.'
-        format.html { redirect_to(payments_path) }
+        format.html { redirect_to(@payment.member.main_member) }
       else
         format.html { render :action => "new" }
       end

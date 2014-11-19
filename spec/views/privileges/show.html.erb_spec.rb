@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "privileges/show", :type => :view do
   before(:each) do
     @privilege = assign(:privilege, Privilege.create!(
-      :member_class => "Member Class",
+      :member_class => "F",
       :name => "Name",
       :bar_billies => "Y",
       :car_park => 1,

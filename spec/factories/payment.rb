@@ -1,6 +1,7 @@
 FactoryGirl.define do
   require 'faker'
   factory :payment do |f|
+    #member
     f.privilege_id 1
     f.member_id 1
     f.amount 480

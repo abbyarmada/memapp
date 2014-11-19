@@ -1,7 +1,7 @@
 FactoryGirl.define do
   require 'faker'
 factory :member do |f|
-#     f.association :privilege
+     #privilege
      f.privilege_id 1
      f.proposed "John Doe"
      f.seconded "Jane Doe"

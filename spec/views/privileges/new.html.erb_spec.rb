@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "privileges/new", :type => :view do
+describe "privileges/new", :type => :view do
   before(:each) do
     assign(:privilege, Privilege.new(
       :member_class => "MyString",

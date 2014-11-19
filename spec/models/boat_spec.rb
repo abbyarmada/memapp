@@ -1,21 +1,21 @@
 require 'rails_helper'
 
-describe Boat do
+describe Boat, :type => :model do
   
     ########  VALIDATIONS    ######################## 
   it "has a vaild factory" do
     build(:person) 
     build(:member)
-    create(:boat).should be_valid
+    expect(create(:boat)).to be_valid
   end
   it "is invalid without type" do
     build(:person)
     build(:member)
-    build(:boat, boat_type: "").should_not be_valid
+    expect(build(:boat, boat_type: "")).not_to be_valid
   end
   it "is invalid without member_id" do 
    #  build(:person)
    # build(:member)
-     build(:boat, member_id: nil ).should_not be_valid
+     expect(build(:boat, member_id: nil )).not_to be_valid
   end
 end

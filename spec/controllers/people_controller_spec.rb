@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe PeopleController do
+describe PeopleController, :type => :controller do
   before :each do
     login_user 
   end

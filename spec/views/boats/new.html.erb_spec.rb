@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "boats/new" do
+describe "boats/new", :type => :view do
   before(:each) do
     create(:member)
     create(:person)

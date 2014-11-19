@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe User do
+describe User, :type => :model do
    it "has a vaild factory" do 
-     create(:user).should be_valid
+     expect(create(:user)).to be_valid
   end
 end

@@ -1,16 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "privileges/edit", :type => :view do
+describe "privileges/edit", :type => :view do
   before(:each) do
-    @privilege = assign(:privilege, Privilege.create!(
-      :member_class => "MyString",
-      :name => "MyString",
-      :bar_billies => "MyString",
-      :car_park => 1,
-      :votes => 1,
-      :bar_reference => 1,
-      :boat_storage => 1
-    ))
+    @privilege = build_stubbed(:privilege)
   end
 
   it "renders the edit privilege form" do

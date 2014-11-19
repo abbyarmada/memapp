@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "paymenttypes/index" do
+describe "paymenttypes/index", :type => :view do
   before(:each) do
     assign(:paymenttypes, [
       stub_model(Paymenttype,

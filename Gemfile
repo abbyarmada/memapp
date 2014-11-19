@@ -38,13 +38,13 @@ gem 'uglifier'     #, '>= 1.0.3'
 
 
 group :test, :development ,:preprod do
-  gem "rspec-rails"#, "~> 2.14.0"
+  gem "rspec-rails", "~> 3.0.0"
   gem "spring"
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
-  gem 'spring-commands-rspec'
   gem 'rspec-activemodel-mocks'
+  gem 'spring-commands-rspec'
   gem 'better_errors'
   gem 'binding_of_caller'#, :platforms=>[:mri_20]
 end

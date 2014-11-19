@@ -2,9 +2,13 @@
 // This file is automatically included by javascript_include_tag :defaults
 //= require_self
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
-//= require tabbercookie
-//= require tabber
-//= require autocomplete-rails
 //= require turbolinks
+//= require nprogress
+//= require nprogress-turbolinks
+//= require bootstrap
 //= require_tree .
+/* NProgress.start();
+    setTimeout(function() { NProgress.done(); $('.fade').removeClass('out'); }, 1000);
+*/

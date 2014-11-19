@@ -1,9 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Payment, :type => :model do
   
-  
-  ########  VALIDATIONS    ######################## 
+########  VALIDATIONS    ######################## 
   it "has a vaild factory" do 
     expect(create(:payment)).to be_valid
   end

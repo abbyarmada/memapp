@@ -1,34 +1,37 @@
-<br>
-  <div class="pagination"><%= will_paginate @people rescue nil %></div>
-    <table class="listing">
-    <tr><th>Last Name</th><th>First Name</th><th>Membership Class</th><th>Last Paid</th> <th>Member Unique Number</th><th>Bar Card Number</th><th>Action</th>
+ <%= pluralize(@people.total_entries ,'Members') %> Selected
+<table class="table table-striped table-responsive table-hover">
+  <thead>
+    <tr>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Membership Class</th>
+      <th>Last Paid</th>
+      <th>Member Unique Number</th>
+      <th>Bar Card Number</th>
+      <th>Action</th>
     </tr>
+  </thead>
+  <tbody>
+  <% @people.each do |person|  @person = person %>
+    <tr>
+      <td><%= link_to person.last_name, person_path(@person) %></td>
+      <td><%= person.first_name %></td>
+      <td><%= person.member.privilege.name %></td>
+      <td><%= person.member.renew_date.year rescue nil%></td>
+      <td><%= person.id %></td>
+      <td><%= ENV['BARCARD_PREFIX'] + '%05d' %  person.peoplebarcard.barcard_id  rescue nil %></td>
+      <td><%= link_to "pdf", person_path(:id => person.id,:format => 'pdf') ,:class => "pretty_button pdf_button" if @person.status == 'm' %>
+          <% if @person.email_address? && @person.member.email_renewal =='Y' && @person.status == 'm' %>
+             <%= link_to "Email", renewal_email_people_path(:id => person.id) ,:confirm => 'Confirm send renewal by Email?', :method => :get , :class => "pretty_button pdf_button"  %>
+          <% end %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 </div>
-
-<div id="table.listing">
-    
-<% @people.each do |person|  @person = person %>
-
-<tr class="<%= cycle('odd', 'even') %>">
-    
-<td><%= link_to person.last_name, :action => 'edit', :id => person.id %></td>
-<td><%= person.first_name %></td>
-<td><%= person.member.privilege.name %></td>
-<td><%= person.member.renew_date.year rescue nil%></td>
-<td><%= person.id %></td>
-  <td><%= ENV['BARCARD_PREFIX'] + '%05d' %  person.peoplebarcard.barcard_id  rescue nil %></td>
-<td><%= link_to "pdf", person_path(:id => person.id,:format => 'pdf') ,:class => "pretty_button pdf_button" if @person.status == 'm' %>
-<% if @person.email_address? && @person.member.email_renewal =='Y' && @person.status == 'm' %> 
-<%= link_to "Email", renewal_email_people_path(:id => person.id) ,:confirm => 'Confirm send renewal by Email?', :method => :get , :class => "pretty_button pdf_button"  %> 
-<% end %>
-</tr>
-<% end %>
-
-
-</table></div>
 <br/>
 
+
  <%= will_paginate @people %>
-<br>
 <h4> <%= pluralize(@people.total_entries ,'Members') %> Selected </h4>
 

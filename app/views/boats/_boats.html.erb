@@ -1,19 +1,13 @@
- <br> 
- <%= will_paginate @boats %>
- <br> 
+<br>
+  <%= will_paginate @boats %>
+<br>
 <table class="listing">
-<th>Surname</th> <th>First name</th>
-<th>boat name</th><th>type</th><th>class</th> <th>sail no</th><th> Pen Tag</th><th> Action</th>
-
-<% for boat in @boats 
-      x = boat.member.people.find_by_status('m')
-      y = boat.member
-
-%>
-        
-  <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= link_to x.last_name, :controller => 'people', :action => 'edit', :id => x.id %>  </td>
-    <td><%= x.first_name %>  </td>
+  <th>Surname</th> <th>First name</th>
+  <th>boat name</th><th>type</th><th>class</th> <th>sail no</th><th> Pen Tag</th><th> Action</th>
+<% @boats.each  do |boat| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to boat.owner.last_name, person_path(boat.owner.id)+'#tabs-5' %>  </td>
+      <td><%= boat.owner.first_name %>  </td>
     <td><%= boat.boat_name %>  </td>
     <td><%= boat.boat_type%>  </td>
     <td><%= boat.boat_class%>  </td>
@@ -22,11 +16,7 @@
     <% prompt ="Are you sure? - Don't delete Dinghies unless they have been removed from pen first " %>
     <td><%= link_to 'Delete', boat, :confirm => prompt, :method => :delete %></td>
   </tr>
-  
- 
- 
   <% end %>
 </table>
  <%= will_paginate @boats %>
- 
  <h4> <%= pluralize(@boats.total_entries ,'Boat') %> Selected </h4>

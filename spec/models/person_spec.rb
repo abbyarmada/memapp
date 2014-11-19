@@ -1,15 +1,16 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Person, :type => :model do
   #pending "add some examples to (or delete) #{__FILE__}"
-   before(:each) do
-    build_stubbed(:member)
-    build_stubbed(:privilege)
-  end
+   #before(:each) do
+   # build_stubbed(:member)
+  #  build_stubbed(:privilege)
+  #end
   ########  VALIDATIONS    ######################## 
   it "has a vaild factory" do 
     expect(create(:person)).to be_valid
   end
+  
   it "is invalid without first_name" do 
     expect(build(:person, first_name: nil)).not_to be_valid
   end

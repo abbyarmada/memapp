@@ -1,0 +1,17 @@
+<%= simple_form_for(@member) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+   
+    <%= f.input :street1 %>
+    <%= f.association :privilege,include_blank: false %>
+    <%= f.input :proposed %> 
+    <%= f.input :seconded %>
+    <%= f.input :year_joined %> 
+
+      </div>
+
+  <div class="form-actions">
+    <%= f.button :submit , :class => 'btn-primary' %>
+  </div>
+<% end %>

@@ -1,0 +1,18 @@
+<%= button_to 'New Person', new_person_path(:member_id => @person.member_id ) %>
+<% if session[:copypersonid] and @person.member_id != session[:copypersonmid] %>
+  <%= button_to "Paste copied person" , {:action => 'paste',:id => session[:copypersonid], :mid => @person.member_id } , :method => :put  %>
+<% end %>
+  <div id="tabs-3-1" class="tabs"> 
+	  <table>
+	  	<tr>
+	  <% @person.member.people.each do |person| @person = person %>
+	    <td>
+	    	<%= link_to @person.first_name + ' ' + @person.last_name , edit_person_path(@person.id) %> 
+	    	</td>
+	    
+        <td><%= button_to("cut",:action => :cut,:id => @person.id  )  %></td>
+	    <td><%= button_to 'Delete',@person ,:confirm => "Are you sure you want to delete this person?", :method => :delete , :id => @person.id %></td> 
+      </tr>
+      <% end %>
+      </table> 
+  </div> 

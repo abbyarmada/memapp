@@ -1,6 +1,14 @@
+GIT
+  remote: https://github.com/petercunning/formtastic-bootstrap
+  revision: a07bdd6a5fbb0a67e24af57aec8556e50fa40234
+  specs:
+    formtastic-bootstrap (3.0.0)
+      formtastic (>= 3.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
+<<<<<<< HEAD
     actionmailer (3.2.21)
       actionpack (= 3.2.21)
       mail (~> 2.5.4)
@@ -31,10 +39,53 @@ GEM
     addressable (2.3.6)
     arel (3.0.3)
     bcrypt (3.1.9)
+=======
+    actionmailer (4.0.12)
+      actionpack (= 4.0.12)
+      mail (~> 2.5, >= 2.5.4)
+    actionpack (4.0.12)
+      activesupport (= 4.0.12)
+      builder (~> 3.1.0)
+      erubis (~> 2.7.0)
+      rack (~> 1.5.2)
+      rack-test (~> 0.6.2)
+    actionpack-action_caching (1.1.1)
+      actionpack (>= 4.0.0, < 5.0)
+    actionpack-page_caching (1.0.2)
+      actionpack (>= 4.0.0, < 5)
+    activemodel (4.0.12)
+      activesupport (= 4.0.12)
+      builder (~> 3.1.0)
+    activerecord (4.0.12)
+      activemodel (= 4.0.12)
+      activerecord-deprecated_finders (~> 1.0.2)
+      activesupport (= 4.0.12)
+      arel (~> 4.0.0)
+    activerecord-deprecated_finders (1.0.3)
+    activesupport (4.0.12)
+      i18n (~> 0.6, >= 0.6.9)
+      minitest (~> 4.2)
+      multi_json (~> 1.3)
+      thread_safe (~> 0.1)
+      tzinfo (~> 0.3.37)
+    addressable (2.3.6)
+    arel (4.0.2)
+    bcrypt (3.1.9)
+    better_errors (2.0.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
+    bootstrap-generators (3.3.1)
+      railties (>= 3.1.0)
+    bootstrap-sass (3.3.1.0)
+      sass (~> 3.2)
+>>>>>>> rails4
     bugsnag (2.5.1)
       httparty (>= 0.6, < 1.0)
       multi_json (~> 1.0)
-    builder (3.0.4)
+    builder (3.1.4)
     capistrano (3.2.1)
       i18n
       rake (>= 10.0.0)
@@ -52,9 +103,9 @@ GEM
     cocaine (0.5.4)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.0)
-    coffee-rails (3.2.1)
+    coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
-      railties (~> 3.2.0.beta)
+      railties (>= 4.0.0, < 5.0)
     coffee-script (2.3.0)
       coffee-script-source
       execjs
@@ -62,6 +113,10 @@ GEM
     colorize (0.7.3)
     country-select (1.1.1)
     database_cleaner (1.3.0)
+<<<<<<< HEAD
+=======
+    debug_inspector (0.0.2)
+>>>>>>> rails4
     devise (3.4.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -99,10 +154,14 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.11)
-    journey (1.0.4)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-turbolinks (2.1.0)
+      railties (>= 3.1.0)
+      turbolinks
+    jquery-ui-rails (5.0.2)
+      railties (>= 3.2.16)
     json (1.8.1)
     kgio (2.9.2)
     launchy (2.4.3)
@@ -113,12 +172,17 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     lumberjack (1.0.9)
-    mail (2.5.4)
-      mime-types (~> 1.16)
-      treetop (~> 1.4.8)
+    mail (2.6.3)
+      mime-types (>= 1.16, < 3)
     method_source (0.8.2)
+<<<<<<< HEAD
     mime-types (1.25.1)
     mini_portile (0.6.1)
+=======
+    mime-types (2.4.3)
+    mini_portile (0.6.1)
+    minitest (4.7.5)
+>>>>>>> rails4
     multi_json (1.10.1)
     multi_xml (0.5.5)
     mysql2 (0.3.17)
@@ -127,15 +191,18 @@ GEM
     net-ssh (2.9.1)
     nokogiri (1.6.4.1)
       mini_portile (~> 0.6.0)
+<<<<<<< HEAD
+=======
+    nprogress-rails (0.1.6.3)
+>>>>>>> rails4
     orm_adapter (0.5.0)
-    paperclip (3.5.4)
+    paperclip (4.2.0)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
     pdf-core (0.4.0)
     pg (0.17.1)
-    polyglot (0.3.5)
     prawn (1.3.0)
       pdf-core (~> 0.4.0)
       ttfunk (~> 1.4.0)
@@ -143,19 +210,18 @@ GEM
     prawnto (0.1.1)
       prawn
       rails (>= 2.1)
+    protected_attributes (1.0.8)
+      activemodel (>= 4.0.1, < 5.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
     quiet_assets (1.0.3)
       railties (>= 3.1, < 5.0)
-    rack (1.4.5)
-    rack-cache (1.2)
-      rack (>= 0.4)
-    rack-ssl (1.3.4)
-      rack
+    rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
+<<<<<<< HEAD
     rails (3.2.21)
       actionmailer (= 3.2.21)
       actionpack (= 3.2.21)
@@ -166,36 +232,62 @@ GEM
       railties (= 3.2.21)
     rails3-jquery-autocomplete (1.0.14)
       rails (>= 3.0)
+=======
+    rails (4.0.12)
+      actionmailer (= 4.0.12)
+      actionpack (= 4.0.12)
+      activerecord (= 4.0.12)
+      activesupport (= 4.0.12)
+      bundler (>= 1.3.0, < 2.0)
+      railties (= 4.0.12)
+      sprockets-rails (~> 2.0)
+    rails-observers (0.1.2)
+      activemodel (~> 4.0)
+    rails4_upgrade (0.5.0)
+      bundler (>= 1.2.2)
+      terminal-table (>= 1.4.5)
+>>>>>>> rails4
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
     rails_serve_static_assets (0.0.2)
     rails_stdout_logging (0.0.3)
+<<<<<<< HEAD
     railties (3.2.21)
       actionpack (= 3.2.21)
       activesupport (= 3.2.21)
       rack-ssl (~> 1.3.2)
+=======
+    railties (4.0.12)
+      actionpack (= 4.0.12)
+      activesupport (= 4.0.12)
+>>>>>>> rails4
       rake (>= 0.8.7)
-      rdoc (~> 3.4)
-      thor (>= 0.14.6, < 2.0)
+      thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    rdoc (3.12.2)
-      json (~> 1.4)
     ref (1.0.5)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
+<<<<<<< HEAD
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
       rspec-mocks (~> 3.0.0)
+=======
+    rspec (3.1.0)
+      rspec-core (~> 3.1.0)
+      rspec-expectations (~> 3.1.0)
+      rspec-mocks (~> 3.1.0)
+>>>>>>> rails4
     rspec-activemodel-mocks (1.0.1)
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       rspec-mocks (>= 2.99, < 4.0)
+<<<<<<< HEAD
     rspec-core (3.0.4)
       rspec-support (~> 3.0.0)
     rspec-expectations (3.0.4)
@@ -220,15 +312,55 @@ GEM
     slop (3.6.0)
     spring (1.1.3)
     sprockets (2.2.3)
+=======
+    rspec-core (3.1.7)
+      rspec-support (~> 3.1.0)
+    rspec-expectations (3.1.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.1.0)
+    rspec-mocks (3.1.3)
+      rspec-support (~> 3.1.0)
+    rspec-rails (3.1.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.1.0)
+      rspec-expectations (~> 3.1.0)
+      rspec-mocks (~> 3.1.0)
+      rspec-support (~> 3.1.0)
+    rspec-support (3.1.2)
+    sass (3.2.19)
+    sass-rails (4.0.4)
+      railties (>= 4.0.0, < 5.0)
+      sass (~> 3.2.2)
+      sprockets (~> 2.8, < 2.12)
+      sprockets-rails (~> 2.0)
+    simple_form (3.1.0.rc2)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
+    slop (3.6.0)
+    spring (1.1.3)
+    spring-commands-rspec (1.0.2)
+      spring (>= 0.9.1)
+    sprockets (2.11.3)
+>>>>>>> rails4
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+<<<<<<< HEAD
+=======
+    sprockets-rails (2.2.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      sprockets (>= 2.8, < 4.0)
+>>>>>>> rails4
     sqlite3 (1.3.10)
     sshkit (1.5.1)
       colorize
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    terminal-table (1.4.5)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -237,9 +369,6 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
-    treetop (1.4.15)
-      polyglot
-      polyglot (>= 0.3.1)
     ttfunk (1.4.0)
     turbolinks (2.5.2)
       coffee-rails
@@ -261,6 +390,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack-action_caching
+  actionpack-page_caching
+  activerecord-deprecated_finders
+  better_errors
+  binding_of_caller
+  bootstrap-generators
+  bootstrap-sass
   bugsnag
   capistrano
   capybara
@@ -273,26 +409,39 @@ DEPENDENCIES
   factory_girl_rails
   faker
   formtastic
+  formtastic-bootstrap!
   gchartrb
   guard-rspec
   jquery-rails
+  jquery-turbolinks
+  jquery-ui-rails
   launchy
   mail
   mysql2
-  nokogiri (>= 1.3.3)
-  paperclip (~> 3.0)
+  nokogiri
+  nprogress-rails
+  paperclip
   pg
   prawn
   prawn-table
   prawnto
+  protected_attributes
   quiet_assets
-  rails (~> 3.2.0)
-  rails3-jquery-autocomplete
+  rails (~> 4.0.0)
+  rails-observers
+  rails4_upgrade
   rails_12factor
   rspec-activemodel-mocks
+<<<<<<< HEAD
   rspec-rails (~> 3.0.0)
   sass-rails
+=======
+  rspec-rails
+  sass-rails (~> 4.0.2)
+  simple_form (~> 3.1.0.rc2)
+>>>>>>> rails4
   spring
+  spring-commands-rspec
   sqlite3
   therubyracer
   turbolinks

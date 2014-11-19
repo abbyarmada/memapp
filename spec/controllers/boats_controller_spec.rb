@@ -18,20 +18,21 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe BoatsController do
+describe BoatsController  do
   before :each do
-    login_user 
+    login_user
   end
 
   # This should return the minimal set of attributes required to create a valid
   # Boat. As you add validations to Boat, be sure to
   # adjust the attributes here as well.
   #let(:valid_attributes) { { "member_id" => "1", "boat_type" => "Dinghy" } }
-  let (:valid_attributes) { boat = FactoryGirl.create :boat }
+  let (:valid_attributes) { attributes_for(:boat) }
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # BoatsController. Be sure to keep this updated too.
   let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
+  #let(:valid_session) {}
  
   
 
@@ -71,15 +72,15 @@ describe BoatsController do
     describe "with valid params" do
       it "creates a new Boat" do
         expect {
-          person = create(:person)
-          member = create(:member)
+          #person = create(:person)
+          #member = create(:member)
           boat = create(:boat)
         }.to change(Boat, :count).by(1)
       end
 
       it "assigns a newly created boat as @boat" do
-        person = build(:person)
-        member = build(:member)
+        #person = build(:person)
+        #member = build(:member)
         boat = create(:boat)
         expect(boat).to be_a(Boat)
         expect(boat).to be_persisted
@@ -116,7 +117,7 @@ describe BoatsController do
        person = create(:person)
        member = create(:member)
        boat = create(:boat)
-      
+
         # Assuming there are no other boats in the database, this
         # specifies that the Boat created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -173,7 +174,7 @@ describe BoatsController do
       }.to change(Boat, :count).by(-1)
     end
 
-    it "redirects to the person edit page" do
+    it "redirects to the person  page" do
       person = create(:person)
       member = create(:member)
       boat = create(:boat)

@@ -1,22 +1,41 @@
-<h1>Member Classes</h1>
-<table class="listing">
-<th>Class</th><th>Description</th><th>Bar Billies</th> <th>Car Park</th><th>Votes</th><th>Bar System Ref</th><th>Boat<br>storage</th>
-<th>Last Year</th><th>Subs<br>This Year</th><th>Next Year</th> <th> </th> 
-<% for privilege in @privileges %>
-  <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= privilege.member_class %>                    </td>
-    <td><%= privilege.name %>                            </td>
-    <td><%= privilege.bar_billies%>                      </td>
-    <td><%= privilege.car_park%>                         </td>
-    <td><%= privilege.votes%>                            </td>
-    <td><%= privilege.bar_reference%>                    </td>
-    <td><%= privilege.boat_storage? ? 'Y' : 'N'  %>      </td>
-    <td><%= privilege.subscriptions.lastyear(privilege.id)[0].amount rescue nil %></td>
-    <td><%= privilege.subscriptions.thisyear(privilege.id)[0].amount rescue nil %></td>
-    <td><%= privilege.subscriptions.nextyear(privilege.id)[0].amount rescue nil %></td>
-    <td><%= link_to 'Edit', edit_privilege_path(privilege) %> </td>
-  </tr>
-<% end %>
-</table>
-<br />
-<%= button_to 'New Membership Class', new_privilege_path %>
+<div class="page-header">
+  <%= link_to new_privilege_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Privilege
+  <% end %>
+  <h1>Listing privileges</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Member class</th>
+            <th>Name</th>
+            <th>Bar billies</th>
+            <th>Car park</th>
+            <th>Votes</th>
+            <th>Bar reference</th>
+            <th>Boat storage</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @privileges) do |privilege| %>
+            <td><%= privilege.member_class %></td>
+            <td><%= privilege.name %></td>
+            <td><%= privilege.bar_billies %></td>
+            <td><%= privilege.car_park %></td>
+            <td><%= privilege.votes %></td>
+            <td><%= privilege.bar_reference %></td>
+            <td><%= privilege.boat_storage %></td>
+            <td><%= link_to 'Show', privilege %></td>
+        <td><%= link_to 'Edit', edit_privilege_path(privilege) %></td>
+        <td><%= link_to 'Delete', privilege, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger' %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

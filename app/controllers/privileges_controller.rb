@@ -1,63 +1,38 @@
 class PrivilegesController < ApplicationController
-  # GET /privileges
-  # GET /privileges.json
+
   def index
     @privileges = Privilege.all
-
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @privileges }
+      format.html
     end
   end
 
-  # GET /privileges/1
-  # GET /privileges/1.json
   def show
     @privilege = Privilege.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @privilege }
-    end
   end
 
-  # GET /privileges/new
-  # GET /privileges/new.json
   def new
     @privilege = Privilege.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @privilege }
-    end
   end
 
-  # GET /privileges/1/edit
   def edit
     @privilege = Privilege.find(params[:id])
   end
 
-  # POST /privileges
-  # POST /privileges.json
   def create
     @privilege = Privilege.new(params[:privilege])
-
     respond_to do |format|
       if @privilege.save
-        format.html { redirect_to @privilege, notice: 'Member Class was successfully created.' }
-        format.json { render json: @privilege, status: :created, location: @privilege }
+        format.html { redirect_to privilege_path(@privilege.id) , notice: 'Member Class was successfully created.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @privilege.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PUT /privileges/1
-  # PUT /privileges/1.json
+
   def update
     @privilege = Privilege.find(params[:id])
-
     respond_to do |format|
       if @privilege.update_attributes(params[:privilege])
         format.html { redirect_to @privilege, notice: 'Member Class was successfully updated.' }

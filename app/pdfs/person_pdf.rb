@@ -431,7 +431,7 @@ end
   
   
    def pad
-       [
+    pad = [
        [  @person.salutation         ],
        [  @member.name_no            ] ,
        [  @member.street1            ] ,
@@ -568,8 +568,8 @@ def commspref
     [   
         person.first_name, 
         person.email_address,       
-        person.snd_txt,
-        person.snd_eml,
+        person.send_txt ? 'Y': 'N',
+        person.send_email? ? 'Y': 'N',
         person.txt_social.zero? ? ' ': 'Y',
         person.txt_crace.zero? ? ' ': 'Y',
         person.txt_cruiser_race_skipper.zero? ? ' ': 'Y',

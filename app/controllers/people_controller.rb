@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
 class PeopleController < ApplicationController
 
-  before_filter :check_search_form_reset, :only => [:index]
-  
- # autocomplete :member, :proposed, :scopes  => [:unique_proposers]
- # autocomplete :member, :seconded, :scopes  => [:unique_seconders]
+#  autocomplete :member, :proposed, :scopes  => [:unique_proposers]
+#  autocomplete :member, :seconded, :scopes  => [:unique_seconders]
   require 'csv'
-  
+ before_filter :check_search_form_reset, :only => [:index]
 
 #def autocomplete_ubication_name
 #    render json: Ubication.select("DISTINCT name as value").where("LOWER(name) like LOWER(?)", "%#{params[:term]}%")
 #  end
-  
+
 #def autocomplete_member_proposed
 #   Member.select('distinct proposed')#
 #end
 
 
 
-  def show 
+  def show
     @person = Person.find(params[:id])
+    @member = Member.find(@person.member_id) #required for membership form
     respond_to do |format|
+      format.html
       format.pdf do
          pdf = PersonPdf.new(@person)
          send_data pdf.render, filename: "#{@person.last_name}_#{@person.first_name}.pdf",
@@ -29,7 +29,7 @@ class PeopleController < ApplicationController
       end
     end
   end
-  
+
   def create_renewals
      last_yr_start = (Time.now.year - 1).to_s + "-01-01"
      @renews = Person.find :all, :include => [:member],
@@ -38,86 +38,64 @@ class PeopleController < ApplicationController
      #  respond_to do |format|
         # format.pdf
           pdf = PersonPdf.new(@person, view_context)
-          
           send_data pdf.render, filename: "#{@person.last_name}_#{@person.first_name}.pdf",
                             type: "application/pdf"
        # end
-       end 
+       end
   end
-   
+
   def index
     @people = Person.search(params)
     session[:search] = session[:jumpcurrent]
-    respond_to do |format|    
-      format.html 
+    respond_to do |format|
+      format.html
       format.js
     end
   end
-  
+
   def new
-    session[:listpath] = session[:jumpcurrent] unless nil?
-    @person = Person.new unless params[:person]
-    @person = params[:person] if params[:person]
-    @person.snd_txt = 'N'
-    @person.snd_eml = 'N'
-    @person.member_number = 0
-    
+    @person = Person.new(params[:person])
+    @person.member_id = params[:member_id]
     @barcard = Barcard.new
     @peoplebarcard = Peoplebarcard.new
     @peoplebarcard.person_id = @person.id
     @peoplebarcard.barcard_id = @barcard.id
-    
-    
-    @person.member_id = (params[:mid]).to_i
-    @mship  = (params[:mid])
-    @person.member_id = @mship
   end 
   
   
   def create
-    session[:listpath] = session[:jumpcurrent] unless nil?
     @person = Person.new(params[:person])
     @barcard = Barcard.new(params[:barcard])
     @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
-    
     respond_to do |format|
-      
       if @person.save
         if @person.status != 'g'
           @barcard.save
           @peoplebarcard.barcard_id = @barcard.id
           @peoplebarcard.person_id = @person.id
           @peoplebarcard.save
-        end  
+        end
         flash[:notice] = 'Person successfully created.'
-        format.html { redirect_to :controller =>'people', :action => 'edit',:id => @person.id   }
-        format.xml  { render :xml => @person, :status => :created, :location => @person }
+        format.html { redirect_to :controller =>'people', :action => 'show',:id => @person.id   }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
       end
     end
   end
-  
-  
   def edit
-    session[:wherefrom] = session[:jumpback]
-    session[:listpath] = session[:jumpcurrent]
-    # get the person details
     @person = Person.find(params[:id])
-    @pbc = @person.peoplebarcard
-    @member = @person.member
   end
+
   def update
     @person = Person.find(params[:id])
-    @member = @person.member
     respond_to do |format|
-      if @person.update_attributes(params[:person]) 
-        format.html {render :action => "edit" ,:id => @person.id }
-         flash[:notice] = 'Person was successfully updated.'
+      if @person.update_attributes(params[:person])
+        flash[:notice] = 'Person was successfully updated.'
+        format.html { redirect_to :controller =>'people', :action => "show" ,:id => @person.id }
       else
-      flash[:notice] = 'There was an issue that prevented this record from being saved.'  
-      format.html { render :action => "edit" ,:id => @person.id  }
+        flash[:error] = 'Person could not be updated due to an error.'
+        format.html { render :action => "edit" ,:id => @person.id }
+        # redirect_to  person_path(Person.main_person(@member.id))  + '#tabs-2'
       end
     end
   end
@@ -125,58 +103,52 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @main_member = Person.main_person(@person.member_id)
     if @person.status == 'm' 
-      redirect_to :back 
-      flash[:notice] = 'Cannot delete the Main Member.'
+      #redirect_to :back
+      flash[:error] = 'Cannot delete the Main Member.'
+      render :action => "show" ,:id => @person.id
     else
       @person.destroy
         flash[:notice] = 'Person Deleted.'
-        render :action => "edit" ,:id => @main_member.id 
+        render :action => "show" ,:id => @main_member.id
     end
   end
   def cut
     @person = Person.find(params[:id])
-     if @person.status == 'm' 
-        redirect_to :back 
+     if @person.status == 'm'
+        redirect_to :back
         flash[:notice] = 'Cannot Move the Main Member.'
     else
        session[:copypersonid] = @person.id
        session[:copypersonmid] = @person.member_id
-       redirect_to :back 
+       redirect_to :back
        flash[:notice] = 'Person Cut to memory, go to other membership and select paste.'
      end
   end
   def paste
     @person = Person.find(session[:copypersonid])
-    @person.member_id  = Member.find(params[:mid]).id
-    if @person.save 
+    @person.member_id  = params[:member_id]
+    if @person.save
       session[:copypersonid] = ''
       redirect_to :back
       flash[:notice] = 'Person Moved to this membership'
-      
     else
-      flash[:notice] = 'An Error occured while moving this person to the new  membership - check the member status'
-      redirect_to :controller =>'people', :action => 'edit',:id => @person.id   
+      flash[:notice] = 'An Error occured while moving this person to this membership'
     end
   end
- 
-  
- 
+
  def renewal_email
      @person = Person.find(params[:id])
      RenewalMailer.renewal_letter(@person).deliver
-     redirect_to :back  
-     flash[:notice] = 'Renewal sent via Email'
-    
+     redirect_to :back , :flash => { :success => "Renewal sent via Email" } 
   end
- 
- 
+
  def paid_up_extract_current
    date = (Time.now.year).to_s + "-01-01"
    filename = 'PaidupExtract.csv'
    type = 'Paidup'
    bar_interface2(date,filename,type)
  end
- 
+
  def paid_up_extract_last_year
    date = (Time.now.year - 1 ).to_s + "-01-01"
    filename = 'PaidupExtractLastYear.csv'
@@ -189,7 +161,7 @@ class PeopleController < ApplicationController
    type = 'Paidup'
    bar_interface2(date,filename,type)
  end
- 
+
  def paid_up_extract_three_year_ago
     date = (Time.now.year - 3 ).to_s + "-01-01"
    filename = 'PaidupExtractThreeYearsAgo.csv'
@@ -212,28 +184,28 @@ def paid_up_extract_five_year_ago
  end
 
 
- def bar_interface 
+ def bar_interface
    date = (Time.now.year - 1).to_s + "-01-01"
    filename = 'BarInterface.csv'
    type = 'Bar'
    bar_interface2(date,filename,type)
  end
- 
+
   def bar_interface2(date,filename,type)
 
-  if type == 'Bar'     
-      @people = Person.find :all, 
+  if type == 'Bar'
+      @people = Person.find :all,
                           :include =>[:member ,:peoplebarcard],
                           :conditions => " members.renew_date >= '#{date}'  ",
                           :order => "people.id,last_name,first_name"
   else
     enddate = date.slice(0,4) + "-12-31"
-    @people = Person.find :all, 
+    @people = Person.find :all,
                           :include =>[:member ,:peoplebarcard,:payments],
                           :conditions => " payments.paymenttype_id in (1,4,5) and payments.date_lodged >= '#{date}' and payments.date_lodged <= '#{enddate}'  ",
                           :order => "people.id,last_name,first_name"
   end
-  
+
 
 
     #if params[:commit] == 'Export CSV file' || 'Export CSV file2'
@@ -288,22 +260,21 @@ def paid_up_extract_five_year_ago
             renewedcurrentyear,p.member.renew_date.to_date.to_s,p.dob,occupation,
             p.home_phone,p.mobile_phone,p.email_address,social,racing,cruising,dinghy,junior,p.member.id,p.status ]
           end
-      end 
-          
+      end
      end #do csv
      send_data(extract,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => filename, :disposition => 'attachment', :encoding => 'utf8')
-      
-    #end #if 
+
+    #end #if
   end #def
 
   def g_chart_mem_summ
 
 #Start year is 2007
-    years = Time.now.year - 2006 + 1 
+    years = Time.now.year - 2006 + 1
     @types = []
-   
+
       years.times do |y|
-    
+
       yr_start = (Time.now.year - y).to_s + "-01-01"
       yr_end = (Time.now.year - y).to_s + "-12-31"
       
@@ -398,15 +369,15 @@ def paid_up_extract2
             p.member.county ,
             p.member.country,
             renewedcurrentyear,p.member.renew_date.to_date.to_s,p.dob,occupation,
-            p.home_phone,p.mobile_phone,p.email_address,p.status ]  
+            p.home_phone,p.mobile_phone,p.email_address,p.status ]
           end
         end #do extract
         send_data(extract,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'PaidUpMembers.csv', :disposition => 'attachment', :encoding => 'utf8')
       end
-    end #if 
+    end #if
   end #def
 
-  def check_search_form_reset
+def check_search_form_reset
     if params[:commit] == 'Reset'
        params[:search] = ""
        params[:searchfn] = ""
@@ -415,5 +386,5 @@ def paid_up_extract2
        params[:past_members] = false
      end
   end
-  
+
 end #class

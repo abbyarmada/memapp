@@ -21,7 +21,7 @@
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
     <%= f.actions do %>    
-      <%= f.action :submit, as:=> :input, :class => "btn btn-primary" %>
+      <%= f.action :submit, :as => :button , :button_html => {:class => "btn btn-primary" , :disable_with => 'Wait...' }%>
     <% end %> 
     </div>
   </div>

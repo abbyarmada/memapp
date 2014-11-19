@@ -1,21 +1,16 @@
+<%= simple_form_for(@subscription) do |f| %>
+  <%= f.error_notification %>
 
+  <div class="form-inputs">
+    <span class="input-group-addon">$</span>
+    <%= f.input :amount %>
+    <span class="input-group-addon">.00</span>
+    <%= f.input :start_date %>
+    <%= f.input :end_date %>
+    <%= f.association :privilege,include_blank: false %>
+  </div>
 
-
-
-<%= form_for(@subscription) do |f| %>
- <%= f.error_messages %>
-<table class ="listing">
-	<th>Field</th> <th> value</th> 
-	
-	 <tr>       <%= collection_select(:subscription, :privilege_id, Privilege.types, :id,:name, 
-                options ={:prompt => "-Select a Member Class "}, :class =>"")%> </tr> 
-	<tr>	<td>Start Date</td> <td><%= date_select :subscription , :start_date  %></td></tr>
-	<tr>	<td>End Date</td>   <td><%= date_select :subscription, :end_date  %></td></tr>
-	<tr>   <td>Amount </td><td><%= f.text_field :amount,  :size => 1 %></td></tr>
-</table>
-
-  	 <p>
-    <%= f.submit  %>
-  </p>
-  
+  <div class="form-actions">
+    <%= f.button :submit , :class => 'btn-primary' %>
+  </div>
 <% end %>

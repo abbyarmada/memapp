@@ -1,6 +1,6 @@
-<%= semantic_form_for @person do |form| %>
+<%= semantic_form_for @person do |form|   } %>
 	<%= form.inputs :name => "Personal Information" do %>
-	<%= form.input :first_name %>
+	<%= form.input :first_name , :input_html => { :class => "col-sm-10", :label_class =>  "col-sm-2"   } #%>
 	<%= form.input :last_name %>
 	<%= form.input :status, :as => :select , :collection => Person.status, :include_blank => false %>
 	<%= form.input :occupation %>

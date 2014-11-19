@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :paymenttype do
-    name "MyString"
+    name "Renewal"
   end
 end

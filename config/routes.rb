@@ -1,15 +1,21 @@
 R3::Application.routes.draw do
   
-  
+ 
+
+  resources :privileges
+
   devise_for :users
 
-  resources :boats
+  resources :boats do 
+    collection do
+    get 'create_csv'
+    end
+
+  end 
+
 
 
   resources :paymenttypes
-
-
-  resources :privileges
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -56,7 +62,6 @@ R3::Application.routes.draw do
 	  end
 	end
 	
-	resources :boats
 	resources :members do
 		collection do 
 		   get 'carpark_passes'
@@ -85,7 +90,7 @@ R3::Application.routes.draw do
   root :to => redirect('/users/sign_in')	
   #root :to => 'people#index'
 
-match '/:controller(/:action(/:id))'
+#match '/:controller(/:action(/:id))'
 
 
 end

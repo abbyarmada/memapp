@@ -1,14 +1,42 @@
+<div class="page-header">
+  <%= link_to new_boat_path(:member_id => @person.member_id) ,:class => 'btn  btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+  New Boat
+  <% end %>
+  <h1>Listing  Boats</h1>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Boat Name</th>
+        <th>Boat Type</th>
+        <th>Boat Class</th>
+        <th>Sail Number</th>
+        <th>pen Tag</th>
+        <th>Action</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= content_tag_for(:tr, @boats) do |boat| %>
+      <td><%= boat.boat_name%></td>
+      <td><%= boat.boat_type %></td>
+        <td><%= boat.boat_class %></td>
+      <td><%= boat.sail_number %></td>
+      <td><%= boat.pen_tag %></td>
+        <td><%= link_to 'Edit', edit_boat_path(boat), :class => 'btn btn-mini' %></td>
+        <td><%= link_to 'Delete', boat, :method => :delete,:html_options => { :class => 'btn btn-mini btn-danger'}  %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 
-<tr class="<%= cycle('odd', 'even') %>">
 
 
-	
-<td><%= link_to (@boat.boat_name.blank? ? "edit" : @boat.boat_name ) , { :controller => 'boats', :action => 'edit', :id => @boat.id, :pid => person_id }  %></td>
-<td><%= @boat.boat_type  %></td>
-<td><%= @boat.boat_class  %></td>
-<td><%= @boat.sail_number  %></td>
-<td><%= @boat.pen_tag  %></td>
-<td><%= link_to 'Delete', @boat, :confirm => 'Are you sure?', :method => :delete ,:id => @boat.id, :pid => person_id %></td>
 
-	
+
+
+

@@ -1,0 +1,52 @@
+<div class="col-md-1"></div>
+<div class="row">
+<div class="col-md-3 column">
+<%= semantic_form_for(@member, :html => {  :role => "form"} ) do |f| %>
+  <%= f.semantic_errors %>
+  <% if 1==0 %>
+    <ul>
+      <% @member.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>   
+  <%= f.inputs   :name => "Personal Details" do  %>
+    <%= f.semantic_fields_for :people , :name => "Personal Details"  do |f| %>  
+      <%= f.semantic_errors %>
+      <%= f.input :first_name   %>  
+      <%= f.input :last_name  %>
+      <%= f.input :status, :as => :select , :collection => Person.form_status(true), :include_blank => false , :required => true, :input_html => { :disabled => true } %>
+      <%= f.input :email_address, :as => :email  %>
+      <%= f.input :occupation, :required => false   %>
+      <%= f.input :dob, :as => :date_select ,:order => [:day, :month, :year] ,:include_blank => true , :start_year => Time.now.year - 100 ,:label => 'Date of Birth' , :required => false  %>
+      <%= f.input :member_id ,:as => :hidden  %>
+      <%= f.input :status ,:as => :hidden  %>
+    <% end %>
+  <% end %>
+</div> 
+<div class="col-md-3 column">
+  <%= f.inputs :name => "Membership Information"   do   %> 
+    <%= f.input :year_joined                     %>
+    <%= f.input :privilege, :include_blank => false , :label => "Membership Class" %>
+    <%= f.input :proposed %>
+    <%= f.input :seconded %>
+    <%= f.input :email_renewal , :as => :check_boxes      %>
+  <% end %>
+</div>
+<div class="col-md-3 column">
+  <%= f.inputs :name => "Address Information"  do   %> 
+    <%= f.input :name_no, :label => "House Name or Number"                      %>
+    <%= f.input :street1  %>
+    <%= f.input :street2      %>
+    <%= f.input :town         %>
+    <%= f.input :city         %>
+    <%= f.input :postcode      %>
+    <%= f.input :county      %>
+    <%= f.input :country, :priority_countries => ['Ireland','United Kingdom']    %>
+  <% end %>
+ </div>
+ </div>
+  <div class="col-sm-offset-6">
+  <%= f.actions %>
+</div>
+<% end %>

@@ -3,15 +3,6 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
-
 <h1>Boats </h1>
-<%#= form_tag :action => 'update'  do
-%>
-  <%# form_for(@boat) do |f|
-%>
-    <%= render :partial => "form", :locals => { :button_label => "Update", :boat => @boat } %>
-
-
-  <%# end %>
-<%# end %>
+    <%= render :partial => 'form'  %>
 

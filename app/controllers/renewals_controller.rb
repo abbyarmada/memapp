@@ -29,7 +29,7 @@ class RenewalsController < ApplicationController
   end
   
   def index
-    @renewals = Renewal.find(:all)
+    @renewals = Renewal.all
   end
   
   def show
@@ -71,3 +71,4 @@ class RenewalsController < ApplicationController
     redirect_to renewals_url
   end
 end
+ 

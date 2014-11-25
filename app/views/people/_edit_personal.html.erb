@@ -11,7 +11,7 @@
 	    	</td>
 	    
         <td><%= button_to("cut",:action => :cut,:id => @person.id  )  %></td>
-	    <td><%= button_to 'Delete',@person ,:confirm => "Are you sure you want to delete this person?", :method => :delete , :id => @person.id %></td> 
+	    <td><%= button_to 'Delete',@person ,data: { confirm: "Are you sure you want to delete this person?" } , :method => :delete , :id => @person.id %></td> 
       </tr>
       <% end %>
       </table> 

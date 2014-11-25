@@ -9,9 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= bootstrap-generators
- *= framework_and_overrides
  *= require jquery-ui/tabs
+ *= require jquery-ui/datepicker
  *= require nprogress
  *= require nprogress-bootstrap
  *= require_tree .

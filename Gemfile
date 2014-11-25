@@ -61,6 +61,7 @@ group :test do
   gem 'database_cleaner'
   gem 'rspec-activemodel-mocks'
   gem 'spring-commands-rspec'
+  gem 'codeclimate-test-reporter', require: nil
 
 end
 

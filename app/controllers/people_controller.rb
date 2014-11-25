@@ -1,19 +1,8 @@
 # -*- coding: utf-8 -*-
 class PeopleController < ApplicationController
 
-#  autocomplete :member, :proposed, :scopes  => [:unique_proposers]
-#  autocomplete :member, :seconded, :scopes  => [:unique_seconders]
   require 'csv'
  before_filter :check_search_form_reset, :only => [:index]
-
-#def autocomplete_ubication_name
-#    render json: Ubication.select("DISTINCT name as value").where("LOWER(name) like LOWER(?)", "%#{params[:term]}%")
-#  end
-
-#def autocomplete_member_proposed
-#   Member.select('distinct proposed')#
-#end
-
 
 
   def show

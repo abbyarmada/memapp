@@ -1,9 +1,0 @@
-<%= form.inputs :name => "Personal Information"  do %> 
-<%= form.input :first_name ,:for => :people, :name => "People" %>
-  <%= form.input :last_name ,:for => :people, :name => "People" %>
-  <%= form.input :status, :as => :select , :collection => Person.form_status(true), :include_blank => false , :required => true, :input_html => { :disabled => true } , :for => :people, :name => "People" %>
-  <%= form.input :email_address, :as => :email, :for => :person %>
-  <%= form.input :occupation, :required => false , :for => :person %>
-  <%= form.input :dob, :as => :date_select ,:order => [:day, :month, :year] ,:include_blank => true , :start_year => Time.now.year - 100 ,:label => 'Date of Birth' , :required => false , :for => :people, :name => "People" %>
-  <%= form.input :member_id ,:as => :hidden , :for => :people, :name => "People" %>
-<% end %>

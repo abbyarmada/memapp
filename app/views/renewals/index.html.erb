@@ -12,7 +12,7 @@ click the link to submit job to create all the renewal documents.
 <tr>
   <td><br /><br /><%= print.requested_at.to_s(:long) rescue nil %> </td>
   <td><br /><br /><%= print.delivered_at.to_s(:long) rescue nil %> </td>	
-<td><br /><br /><%= link_to "Generate Print Renewals", generate_pdfs_renewal_path(print), :confirm => 'Are you sure?', :method => :post ,:class => "pretty_button" %></td>
+<td><br /><br /><%= link_to "Generate Print Renewals", generate_pdfs_renewal_path(print), data: { confirm: 'Are you sure?'} , :method => :post ,:class => "pretty_button" %></td>
 <td><br /><br /> 	
 	<% unless print.requested_at > print.delivered_at %>
 	<%= link_to "Download Renewal zip file", download_zip_renewals_path ,:class => "pretty_button"%>	
@@ -24,7 +24,7 @@ click the link to submit job to create all the renewal documents.
 <tr>
 <td><br /><br /><%= email.requested_at.to_s(:long) %><br />  </td>
 <td><br /><br /><%= email.delivered_at.to_s(:long) %> </td>	
-<td><br /><br /><%= link_to "Email Renewals", generate_emails_renewal_path(email), :confirm => 'Are you sure?', :method => :post ,:class => "pretty_button" %></td>
+<td><br /><br /><%= link_to "Email Renewals", generate_emails_renewal_path(email), data: { confirm: 'Are you sure?'} , :method => :post ,:class => "pretty_button" %></td>
 <td> 	<br /><br />
 	
 </td>

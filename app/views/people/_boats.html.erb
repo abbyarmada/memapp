@@ -20,14 +20,14 @@
       </tr>
     </thead>
     <tbody>
-      <%= content_tag_for(:tr, @boats) do |boat| %>
+      <%= content_tag_for(:tr, @boats ) do |boat| %>
       <td><%= boat.boat_name%></td>
       <td><%= boat.boat_type %></td>
         <td><%= boat.boat_class %></td>
       <td><%= boat.sail_number %></td>
       <td><%= boat.pen_tag %></td>
-        <td><%= link_to 'Edit', edit_boat_path(boat), :class => 'btn btn-mini' %></td>
-        <td><%= link_to 'Delete', boat, :method => :delete,:html_options => { :class => 'btn btn-mini btn-danger'}  %></td>
+      <td><%= link_to 'Edit', edit_boat_path(boat), :class => 'btn btn-mini' %></td>
+      <td><%= link_to 'Delete', boat, :method => :delete,:html_options => { :class => 'btn btn-mini btn-danger'}  %></td>
       <% end %>
     </tbody>
   </table>

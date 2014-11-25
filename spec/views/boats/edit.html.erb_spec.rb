@@ -2,10 +2,12 @@ require 'rails_helper'
 
 describe "boats/edit", :type => :view do
   before(:each) do
-    create(:member)
-    create(:person)
+   
     create(:privilege)
-    @boat = create(:boat)  
+    @boat = create(:boat)
+    @boat.member = create(:member)
+    @boat.member.people[0] = create(:person)
+    @person = @boat.member.people[0]
   end
 
   it "renders the edit boat form" do

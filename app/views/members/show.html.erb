@@ -7,23 +7,56 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h1>Show Member</h1>
+  <h1>Show member</h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt>Street1:</dt>
-  <dd><%= @member.Street1 %></dd>
-
-  <dt>Member Class:</dt>
-  <dd><%= @member.privilege %></dd>
-
   <dt>Proposed:</dt>
   <dd><%= @member.proposed %></dd>
 
   <dt>Seconded:</dt>
   <dd><%= @member.seconded %></dd>
 
-   <dt>Year Joined:</dt>
+  <dt>Year joined:</dt>
   <dd><%= @member.year_joined %></dd>
+  
+<dt>Status:</dt>
+  <dd><%= @member.status %></dd>
+
+  <dt>Occupation:</dt>
+  <dd><%= @member.occupation %></dd>
+
+  <dt>Renew date:</dt>
+  <dd><%= @member.renew_date %></dd>
+
+  <dt>Privilege:</dt>
+  <dd><%= @member.privilege_id %></dd>
+
+  <dt>Name no:</dt>
+  <dd><%= @member.name_no %></dd>
+
+  <dt>Street1:</dt>
+  <dd><%= @member.street1 %></dd>
+
+  <dt>Street2:</dt>
+  <dd><%= @member.street2 %></dd>
+
+  <dt>Town:</dt>
+  <dd><%= @member.town %></dd>
+
+  <dt>City:</dt>
+  <dd><%= @member.city %></dd>
+
+  <dt>Postcode:</dt>
+  <dd><%= @member.postcode %></dd>
+
+  <dt>County:</dt>
+  <dd><%= @member.county %></dd>
+
+  <dt>Country:</dt>
+  <dd><%= @member.country %></dd>
+
+  <dt>Email renewal:</dt>
+  <dd><%= @member.email_renewal %></dd>
 
 </dl>

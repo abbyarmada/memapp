@@ -1,6 +1,4 @@
 //= require jquery-ui/tabs
-// require jquery.ui.datepicker
-/*
 
 
 /* $('.tabs').tabs({

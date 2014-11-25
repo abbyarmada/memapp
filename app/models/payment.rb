@@ -3,7 +3,6 @@ class Payment < ActiveRecord::Base
   belongs_to :privilege
   belongs_to :paymenttype
   belongs_to :payment_method
-  belongs_to :person
   validates_presence_of :amount,:privilege_id,:payment_method_id,:paymenttype_id,:member_id
   validates_presence_of :date_lodged, :allow_nil => false
   validates :amount, numericality: true
@@ -21,13 +20,47 @@ class Payment < ActiveRecord::Base
   
   scope :renewal, -> { where('paymenttype_id in (1,4 ) ')   }
   scope :current_year, -> {  where('date_lodged >= ? ', Time.now.beginning_of_year)  }
+  #scope :year, -> date_lodged {  where('date_lodged >= ? ', date_lodged )  }
   scope :member, -> { where('member_id = ?', member_id )}
-  scope :first_payment, -> { where('paymenttype_id = 4' )   }
+  scope :first_payment, ->  date_lodged { where('paymenttype_id = ? and date_lodged >= ? ' ,'4',date_lodged.beginning_of_year )   }
+  scope :by_year, -> date_lodged { where(date_lodged: date_lodged.beginning_of_year..date_lodged )}
+  scope :by_date_range, -> start_date,end_date { where(date_lodged: start_date..end_date )}
+  scope :membership_renewal_payments, -> {where('paymenttype_id in (1,4) ')}
+  scope :all_membership_payments, -> {where('paymenttype_id in (1,4,5) ')}
+  scope :real_membership_renewals, -> {where('member_class not in (?,?,?,?)','X','Y','E','T')  }
+  scope :year_total , -> start_date, end_date {
+    all_membership_payments.
+      joins(:privilege,:paymenttype).
+      by_date_range(start_date,end_date)
+    }
+  scope :members_year_total , -> start_date, end_date {
+    membership_renewal_payments.
+      joins(:privilege,:paymenttype).
+      by_date_range(start_date,end_date)
+    }
+
+  scope :yttypes , -> start_date, end_date {
+    Payment.
+      year_total(start_date,end_date).
+     # select(year(date_lodged))
+    select( "extract(year from date_lodged) as year, member_class, COUNT(*) as tot,SUM(amount) as money, privileges.name" ).
+      group('privileges.member_class, privileges.name, year' )
+    }
+    
+  scope :rttypes, -> start_date, end_date {
+  Payment.
+      members_year_total(start_date, end_date).
+      select( "extract(year from date_lodged) ,member_class, COUNT(*) as paytot,COUNT(*) as paytot ,SUM(amount) as paysmoney, privileges.name" ).
+      group('privileges.member_class, privileges.name, year' )
+    }
 
 
- 
 
-def renewal_payment?
+  
+  def main_member
+    member.main_member
+  end
+  def renewal_payment?
      paymenttype_id  == 1 or paymenttype_id == 4
   end
 
@@ -42,24 +75,24 @@ def renewal_payment?
   end
 
   def payment_type_unique_for_year
-  #Payment types 1 and 4 must not be duplicated in one year, this will cause problems with counts. 
-  #if self.paymenttype_id == 1 or self.paymenttype_id == 4 
-    if renewal_payment?  
+  #Payment types 1 and 4 must not be duplicated in one year, this will cause problems with counts.
+  #if self.paymenttype_id == 1 or self.paymenttype_id == 4
+    if renewal_payment? & !final_payment?
       if num_duplicates > 0
         errors.add( :paymenttype_id, 'Please check the Subscription type, you cannot have two Subscription payments in one year')
       end
     end
   end
 
-  def num_duplicates 
-    num_duplicates = renewals.count  
+  def num_duplicates
+    num_duplicates = renewals.by_year(date_lodged).count
   end
 
   def renewals
-    if id == nil 
-       self.class.where('member_id = ? ',member_id).renewal.current_year
+    if id == nil
+       self.class.where('member_id = ? ',member_id).renewal
     else
-      self.class.where('id <> ?  and member_id = ? ', id, member_id).renewal.current_year
+      self.class.where('id <> ?  and member_id = ? ', id, member_id).renewal
     end
   end
 
@@ -71,7 +104,7 @@ def renewal_payment?
   end
 
   def first_payments
-    self.class.where('member_id = ? ',member_id).current_year.first_payment
+    Payment.first_payment(date_lodged).where('member_id = ? ',member_id)
   end
 
   def self.types
@@ -84,10 +117,12 @@ def renewal_payment?
    cardname = types[pay_type]
  end
 
+  def self.countpays_for_year(date)
+    Payment.by_year(date).membership_renewal_payments.real_membership_renewals.joins(:privilege).group('name, member_class').order('member_class ASC').count
+  end
 
-
-def self.g_chart_mems(endmonth,endday)
-#require 'google_chart'
+  def self.g_chart_mems(endmonth,endday)
+  #require 'google_chart'
 
  endmonth =   Time.now.month.to_s if endmonth.blank?
  endday =     Time.now.day.to_s if endday.blank?
@@ -96,11 +131,8 @@ def self.g_chart_mems(endmonth,endday)
     @types = []
       years.times do |y|
       yr_start = (Time.now.year - y).to_s + "-01-01"
-      yr_end = (Time.now.year - y).to_s + "." + endmonth + "." + endday
-      @types[y] = Payment.count  :all,
-                             :joins => "inner join privileges ON privileges.id = payments.privilege_id",
-                            :conditions => "date_lodged >= '#{yr_start}' AND date_lodged <= '#{yr_end}' and member_class not in ('X','Y','E','T' ) and payments.paymenttype_id in ('1','4') ",
-        :group => 'name, member_class' ,:order => 'member_class ASC '
+        yr_end = ((Time.now.year - y).to_s + "." + endmonth + "." + endday).to_date
+        @types[y] = countpays_for_year(yr_end)
     end
     classes = []
     years.times do |t|

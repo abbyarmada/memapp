@@ -29,9 +29,10 @@ describe Person, :type => :model do
     create(:person,  status: 'p', member_id: 1)
     expect(build(:person,  status: 'p', member_id: 1)).not_to be_valid
   end
-  #it "is invalid to have any status member without a main member within a single membership" do
-  #  expect(create(:person,  status: 'p', member_id: 1)).not_to be_valid
-  #end
+  it "is invalid to have any status member without a main member within a single membership" do
+    skip ("pending person spec")
+    expect(create(:person,  status: 'p', member_id: 1)).not_to be_valid
+  end
   #### instance tests ############ 
   it "returns a Person's full name as a string" do
     person = create(:person, first_name: "John", last_name: "Doe")
@@ -75,4 +76,10 @@ describe Person, :type => :model do
     person = create(:person, first_name: "Jane", last_name: "Does", status: 'p', member_id: 1)
     expect(person.salutation).not_to eq("Jane & Jane Does")
   end
+  it "returns a Memberships main person  " do
+    person = create(:person, status: 'm', member_id: 1)
+    create(:person, status: 'p', member_id: 1)
+    expect(person.main_member).to eq(person)
+  end
+  
 end

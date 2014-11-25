@@ -12,7 +12,12 @@ gem 'gchartrb', :require => 'google_chart'
 gem 'prawn'
 gem 'prawn-table'
 gem 'prawnto'
-gem 'country-select'
+
+#gem 'country_select', github: 'stefanpenner/country_select'
+#Store the country name in the data base rather than country code.. forked Country Select.
+gem 'country_select', github: 'petercunning/country_select'
+
+
 #gem 'formtastic' ,'~> 2.3.0.rc2'
 gem 'formtastic'#, '~> 3.0.0'
 #gem 'formtastic-bootstrap', :git => 'https://github.com/jtomaszewski/formtastic-bootstrap.git'
@@ -40,6 +45,9 @@ group :test, :development  do
   gem "spring"
   gem 'better_errors'
   gem 'binding_of_caller'#, :platforms=>[:mri_20]
+  # Use debugger
+  gem 'debugger', group: [:development, :test]
+
 end
 
 group :test do

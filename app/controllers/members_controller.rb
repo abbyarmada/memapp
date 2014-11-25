@@ -1,95 +1,57 @@
 class MembersController < ApplicationController
-  require 'csv'
-  
- 
+  before_action :set_member, only: [:show, :edit, :update, :destroy]
+
+  respond_to :html
+
   def index
-      @members = Member.find :all #, :include => :privilege ,:order => ""
-    respond_to do |format|
-      format.html
-    end
-  end #
-  
-  
+    @members = Member.all
+    respond_with(@members)
+  end
+
   def show
-    @member = Member.find(params[:id])
-  end # show
-  
- 
-  
- 
+    respond_with(@member)
+  end
+
   def new
-    @member  = Member.new
-    #@member.people.build
+    @member = Member.new
+    respond_with(@member)
+  end
 
-    @member.year_joined = Time.now.year.to_s
-    @member.renew_date = Time.now
-    @member.country = 'Ireland'
-    #@member.people[0].member_id = params[:id]
-    #@member.people[0].status  = 'm'
-    #Set to Applicant
-    @member.privilege = Privilege.find_by_name "Applicant"
-  
-  end # new
-  
+  def edit
+  end
+
   def create
-   # Member.transaction do 
-    @member = Member.new(params[:member])
-    #@person = Person.new(params[:person])
-   # @person = @member.people.build(person_params)
-   # @person.status = 'm'
-     
-
-    #@member.people[0].member_id = params[:id]
-    #@person.member_id = @member.id 
-    @member.update_attributes(:renew_date => Time.now)
-    if @member.save 
-      #@person.member_id = @member.id 
-      #@person.save 
-     # @barcard = Barcard.new(params[:barcard])
-    #  @barcard.update_attributes(params[:barcard])
-     # @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
-    #  @peoplebarcard.person_id = @person.id 
-    #  @peoplebarcard.barcard_id = @barcard.id 
-   #   @peoplebarcard.save
-    end 
-     respond_to do |format|
-       if @member.save  #&& @barcard.save && @peoplebarcard.save
-         flash[:notice] = 'Member Successfully Created.'
-         format.html { redirect_to member_path(@member)  }
-       else
-         flash[:warn] = "Please correct the #{ helpers.pluralize(@member.errors.count  ,"error")  } hilighted below" 
-         format.html { render :action => "new" }
-       end
-    end
+    @member = Member.new(member_params)
+    @member.save
+    respond_with(@member)
   end
- 
+
   def update
-     @member = Member.find(params[:id])
-     respond_to do |format | 
-       if @member.update_attributes(params[:member])
-         flash[:notice] = "Successfully updated Member."
-         format.html { redirect_to(members_path) }
-         # redirect_to  person_path(Person.main_person(@member.id))  + '#tabs-2'
-       else
-         #flash[:error] = "Member cannot be saved"
-         #redirect_to  person_path(Person.main_person(@member.id)) + '#tabs-2' 
-         format.html { render :action => "edit" }
-       end
-     end 
+    @member.update(member_params)
+    respond_with(@member)
   end
-  
-  def edit 
-     @member = Member.find(params[:id])
-    # redirect_to person_path(Person.main_person(@member.id))  + '#tabs-2' 
-  end
-  
-  
- 
-  
- def carpark_passes
 
-   
-   @mems = Member.current_and_internal_members.parking_members.all #:all
+  def destroy
+    @member.destroy
+    respond_with(@member)
+  end
+
+  def carpark_passes
+    process_carpark_passes
+  end
+
+  private
+    def set_member
+      @member = Member.find(params[:id])
+    end
+
+    def member_params
+      params.require(:member).permit(:address1, :address2, :address3, :address4, :proposed, :seconded, :year_joined, :occupation, :renew_date, :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, :country, :email_renewal)
+    end
+
+  def process_carpark_passes
+
+    @mems = Member.current_members.parking_members #.all #:all
  
  
    
@@ -125,34 +87,21 @@ class MembersController < ApplicationController
      end
     @carpark = @carparks.sort
  
-    if params[:commit] == 'Export CSV file'
-     # 
-     report = CSV.generate do |csv|
-     
-       csv <<  ['Last Name', 'First Name', 'Email', 'Mobile', 'Mem Class', 'Renewed date', 'Car Park No','Salutation','House Name/No', 'Address1','Address2', 'Town','City', 'Postcode','County']
-       i = 0   
-       @carpark.each do |p|
-         csv << [p[i + 0], p[i + 1], p[i + 2], p[i + 3], p[i + 4], p[i + 5], p[i + 6], p[i + 7],p[i + 8],p[i + 9],p[i + 10],p[i + 11],p[i + 12],p[i + 13],p[i + 14]   ]  
-         i = i + 15
-         end
-     end
+   if params[:commit] == 'Export CSV file'
+      report = CSV.generate do |csv|
+      csv <<  ['Last Name', 'First Name', 'Email', 'Mobile', 'Mem Class', 'Renewed date', 'Car Park No','Salutation','House Name/No', 'Address1','Address2', 'Town','City', 'Postcode','County']
+      i = 0
+      @carpark.each do |p|
+         csv << [p[i + 0], p[i + 1], p[i + 2], p[i + 3], p[i + 4], p[i + 5], p[i + 6], p[i + 7],p[i + 8],p[i + 9],p[i + 10],p[i + 11],p[i + 12],p[i + 13],p[i + 14]   ]
+        i = i + 15
+      end
+   end
 
  send_data(report,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'CarParkPasses.csv', :disposition => 'attachment', :encoding => 'utf8')
 
   end
  end
-  
-  def helpers
-    ActionController::Base.helpers
-  end
-  
-  
-
-  private
-
-  
 
 
 
- 
-end # class
+end

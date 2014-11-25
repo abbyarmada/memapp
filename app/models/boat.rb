@@ -1,6 +1,5 @@
 class Boat < ActiveRecord::Base
   belongs_to  :member
-  has_many :people ,:through => :members
 
   validates_presence_of :boat_class, :boat_type,:member_id
   validates_inclusion_of :boat_type, in: %W(Dinghy Cruiser Motor Windsurfer), :message => "must be Dinghy, Windsurfer, Cruiser or Motor"
@@ -28,7 +27,7 @@ class Boat < ActiveRecord::Base
   end
   
   def owner
-    Member.main_member
+    member.main_member
   end
 
 end

@@ -13,10 +13,10 @@
   <%= form.inputs do %>
 
   <div class="span2">
-  <%= form.input :home_phone   , :input_html => { :size => 40 }     , :as => :phone   %>
-  <%= form.input :mobile_phone  , :input_html => { :size => 40 }    , :as => :phone   %>
+  <%= form.input :home_phone  %>
+  <%= form.input :mobile_phone  , :as => :phone   %>
     <div class="checkbox"><%= form.input :send_txt         , :as => :boolean %></div>
-  <%= form.input :email_address, :input_html => { :size => 40 }  , :as => :email   %>
+  <%= form.input :email_address,  :as => :email   %>
     <div class="checkbox"><%=  form.input :send_email       , :as => :boolean %> </div>
   </div>
 
@@ -43,6 +43,6 @@
   <% end %>
 
 	<%= form.actions do %>
-      <%= form.action :submit, :label => 'Update ' +  @person.first_name,  :button_html => { :class => "btn btn-primary", :disable_with => 'Wait...' }  %>
+      <%= form.action :submit, :label => 'Update ' +  @person.first_name,  :button_html => { :class => "btn btn-primary" }  %>
 	<% end %>
 <% end %>

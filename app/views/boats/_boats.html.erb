@@ -11,7 +11,7 @@
     <td><%= boat.sail_number%>  </td>
 	 <td><%= boat.pen_tag %>  </td>
     <% prompt ="Are you sure? - Don't delete Dinghies unless they have been removed from pen first " %>
-    <td><%= link_to 'Delete', boat, :confirm => prompt, :method => :delete %></td>
+      <td><%= link_to 'Delete', boat, data: { confirm: prompt} , :method => :delete %></td>
   </tr>
   <% end %>
 </table>

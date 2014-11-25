@@ -4,11 +4,9 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require jquery-ui/datepicker
 //= require turbolinks
 //= require nprogress
 //= require nprogress-turbolinks
-//= require bootstrap
+//= require bootstrap-sprockets
 //= require_tree .
-/* NProgress.start();
-    setTimeout(function() { NProgress.done(); $('.fade').removeClass('out'); }, 1000);
-*/

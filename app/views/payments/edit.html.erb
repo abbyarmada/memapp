@@ -1,3 +1,8 @@
 <h1>Edit Payment</h1>
-<%= render :partial => 'payment' %>
-<%= render :partial => 'shared/button_cancel' %>
+<%= link_to person_path(@payment.member.main_member), :class => 'btn btn-default' do %>
+  <span class="glyphicon glyphicon-list-alt"></span>
+   Back
+<% end %>
+
+<%= render :partial => 'form' %>
+

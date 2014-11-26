@@ -70,6 +70,8 @@ GEM
       xpath (~> 2.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    childprocess (0.5.5)
+      ffi (~> 1.0, >= 1.0.11)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.4)
@@ -123,6 +125,11 @@ GEM
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
+    guard-bundler (2.0.0)
+      bundler (~> 1.0)
+      guard (~> 2.2)
+    guard-rails (0.7.0)
+      guard (~> 2.0)
     guard-rspec (4.3.1)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
@@ -131,6 +138,7 @@ GEM
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    hub (1.12.2)
     i18n (0.6.11)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
@@ -207,6 +215,7 @@ GEM
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
+    rails_layout (1.0.24)
     rails_serve_static_assets (0.0.2)
     rails_stdout_logging (0.0.3)
     railties (4.0.12)
@@ -216,6 +225,8 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.3.2)
+    rb-fchange (0.0.6)
+      ffi
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -246,12 +257,18 @@ GEM
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
     rspec-support (3.0.4)
+    rubyzip (1.1.6)
     sass (3.2.19)
     sass-rails (4.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 2.12)
       sprockets-rails (~> 2.0)
+    selenium-webdriver (2.44.0)
+      childprocess (~> 0.5)
+      multi_json (~> 1.0)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     simple_form (3.1.0.rc2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -295,6 +312,7 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
+    websocket (1.2.1)
     will_paginate (3.0.7)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -318,13 +336,15 @@ DEPENDENCIES
   debugger
   devise
   execjs
-  factory_girl
   factory_girl_rails
   faker
   formtastic
   formtastic-bootstrap!
   gchartrb
+  guard-bundler
+  guard-rails
   guard-rspec
+  hub
   jquery-rails
   jquery-turbolinks
   jquery-ui-rails
@@ -344,9 +364,14 @@ DEPENDENCIES
   rails-observers
   rails4_upgrade
   rails_12factor
+  rails_layout
+  rb-fchange
+  rb-fsevent
+  rb-inotify
   rspec-activemodel-mocks
   rspec-rails (~> 3.0.0)
   sass-rails (~> 4.0.2)
+  selenium-webdriver
   simple_form (~> 3.1.0.rc2)
   spring
   spring-commands-rspec

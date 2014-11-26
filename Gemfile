@@ -32,36 +32,48 @@ gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
 gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'nprogress-rails'
-gem 'quiet_assets'
 gem 'sass-rails', '~> 4.0.2'# '~> 3.1.5'
 gem 'coffee-rails' #, '~> 3.1.1'
 gem 'uglifier'     #, '>= 1.0.3'
 
 
-group :test, :development  do
-  gem "rspec-rails", "~> 3.0.0"
-  gem 'factory_girl'
-  gem 'factory_girl_rails'
-  gem "spring"
-  gem 'better_errors'
-  gem 'binding_of_caller'#, :platforms=>[:mri_20]
-  # Use debugger
-  gem 'debugger', group: [:development, :test]
 
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller', :platforms=>[:mri_20]
+  gem 'guard-bundler'
+  gem 'guard-rails'
+  gem 'guard-rspec'
+  gem 'quiet_assets'
+  gem 'hub', :require=>nil
+  gem 'rails_layout'
+  gem 'rb-fchange', :require=>false
+  gem 'rb-fsevent', :require=>false
+  gem 'rb-inotify', :require=>false
+  gem 'spring-commands-rspec'
+  
+end
+
+group :test, :development  do
+  gem 'pg'
+  gem "rspec-rails", "~> 3.0.0"
+  #gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'debugger'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/sprin
+  gem 'spring'
 end
 
 group :test do
   gem "sqlite3"
   gem 'faker'
   gem 'capybara'
-  gem 'guard-rspec'
   gem 'launchy'
   gem 'nokogiri'#, '>= 1.3.3'
-  gem 'pg'
   gem 'database_cleaner'
   gem 'rspec-activemodel-mocks'
-  gem 'spring-commands-rspec'
-
+  gem 'selenium-webdriver'
 end
 
 group :test,:production do
@@ -81,4 +93,10 @@ gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
+
+
+
+
+
+
 

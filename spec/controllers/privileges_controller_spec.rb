@@ -19,9 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 describe PrivilegesController, :type => :controller do
-  before :each do
-    login_user 
-  end
+  login_user
   # This should return the minimal set of attributes required to create a valid
   # Privilege. As you add validations to Privilege, be sure to
   # adjust the attributes here as well.

@@ -2,14 +2,13 @@ require 'rails_helper'
 
 describe "boats/edit", :type => :view do
   before(:each) do
-   
-    create(:privilege)
-    @boat = create(:boat)
-    @boat.member = create(:member)
-    @boat.member.people[0] = create(:person)
-    @person = @boat.member.people[0]
+    create(:member,id: 1)
+    create(:person,member_id: 1 , first_name: 'John', last_name: 'Doe')
+    @boat = assign(:boat, stub_model(Boat,
+      :boat_name => 'Test Boat',
+      :member_id => 1
+    ))
   end
-
   it "renders the edit boat form" do
     render
 

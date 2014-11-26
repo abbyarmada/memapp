@@ -19,9 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 describe SubscriptionsController do
-  before :each do
-    login_user 
-  end
+  login_user
   # This should return the minimal set of attributes required to create a valid
   # Subscription. As you add validations to Subscription, be sure to
   # adjust the attributes here as well.
@@ -33,36 +31,36 @@ describe SubscriptionsController do
   #let(:valid_session) { {} }
   let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
 
-#  describe "GET index" do
-#    it "assigns all subscriptions as @subscriptions" do
-#      subscription = Subscription.create! valid_attributes
-#      get :index, {}, valid_session
-#      assigns(:subscriptions).should eq([subscription])
-#    end
-#end
+  describe "GET index" do
+    it "assigns all subscriptions as @subscriptions" do
+      subscription = Subscription.create! valid_attributes
+      get :index, {}, valid_session
+      expect(assigns(:subscriptions)).to eq([subscription])
+    end
+  end
 
-#  describe "GET show" do
-#    it "assigns the requested subscription as @subscription" do
-#      subscription = Subscription.create! valid_attributes
-#      get :show, {:id => subscription.to_param}, valid_session
-#      assigns(:subscription).should eq(subscription)
-#    end
-#  end
+  describe "GET show" do
+    it "assigns the requested subscription as @subscription" do
+      subscription = Subscription.create! valid_attributes
+      get :show, {:id => subscription.to_param}, valid_session
+      expect(assigns(:subscription)).to eq(subscription)
+    end
+  end
 
-#  describe "GET new" do
-#    it "assigns a new subscription as @subscription" do
-#      get :new, { }, valid_session
-#      assigns(:subscription).should be_a_new(Subscription)
-#    end
-#  end
+  describe "GET new" do
+    it "assigns a new subscription as @subscription" do
+      get :new, { }, valid_session
+      expect(assigns(:subscription)).to be_a_new(Subscription)
+    end
+  end
 
-#  describe "GET edit" do
-#    it "assigns the requested subscription as @subscription" do
-#      subscription = Subscription.create! valid_attributes
-#      get :edit, {:id => subscription.to_param}, valid_session
-#      assigns(:subscription).should eq(subscription)
-#    end
-#  end
+  describe "GET edit" do
+    it "assigns the requested subscription as @subscription" do
+      subscription = Subscription.create! valid_attributes
+      get :edit, {:id => subscription.to_param}, valid_session
+      expect(assigns(:subscription)).to eq(subscription)
+    end
+  end
 
   describe "POST create" do
     describe "with valid params" do

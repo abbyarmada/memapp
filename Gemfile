@@ -52,7 +52,7 @@ group :development do
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
   gem 'spring-commands-rspec'
-  
+  gem 'debugger'  
 end
 
 group :test, :development  do
@@ -60,7 +60,6 @@ group :test, :development  do
   gem "rspec-rails", "~> 3.0.0"
   #gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'debugger'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/sprin
   gem 'spring'
 end

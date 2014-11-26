@@ -74,6 +74,7 @@ group :test do
   gem 'database_cleaner'
   gem 'rspec-activemodel-mocks'
   gem 'selenium-webdriver'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 group :test,:production do

@@ -19,9 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe MembersController, :type => :controller do
-  before :each do
-    login_user
-  end
+  login_user
   # This should return the minimal set of attributes required to create a valid
   # Member. As you add validations to Member, be sure to
   # adjust the attributes here as well.
@@ -30,14 +28,13 @@ RSpec.describe MembersController, :type => :controller do
   }
 
   let(:invalid_attributes) {
-    #attributes_for(:invalid_member)
     attributes_for(:member,proposed: "")
   }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # MembersController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
 
   describe "GET index" do
     it "assigns all members as @members" do
@@ -105,17 +102,15 @@ RSpec.describe MembersController, :type => :controller do
 
   describe "PUT update" do
     describe "with valid params" do
-      let(:new_attributes) {
-       # skip("Add a hash of attributes valid for your model")
-        {"email_renewal" => "Y"}
-      }
-
       it "updates the requested member" do
-        skip" Update Member"
+        #skip" Update Member"
         member = Member.create! valid_attributes
-        put :update, {:id => member.to_param, :member => new_attributes}, valid_session
-        member.reload
-        expect_any_instance_of(Member).to receive(:update_attributes).with({ "email_renewal" => "Y" })
+        #member = create(:member)
+       # put :update, {:id => member.to_param, :member => new_attributes}, valid_session
+       # member.reload
+       # expect_any_instance_of(Member).to receive(:update_attributes).with({ "email_renewal" => "Y" })
+        expect_any_instance_of(Member).to receive(:update).with({ "name_no" => "1.5" })
+        put :update, {:id => member.to_param, :member => { "name_no" => "1.5" }}, valid_session
       end
 
       it "assigns the requested member as @member" do

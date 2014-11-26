@@ -1,5 +1,7 @@
 R3::Application.routes.draw do
 
+  resources :renewals
+
   resources :members do
 		collection do
 		  get 'carpark_passes'

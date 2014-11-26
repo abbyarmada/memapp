@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "subscriptions/index" do
   before(:each) do
-    create(:privilege)
+    create(:privilege,id: 1)
     assign(:subscriptions, [
       build_stubbed(Subscription,
        :amount => 1.5,

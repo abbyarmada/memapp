@@ -1,5 +1,3 @@
-<% title "Renewals" %>
-<br />
 <h2> Generate the PDF documents</h2>
 <br />
 click the link to submit job to create all the renewal documents.
@@ -11,11 +9,11 @@ click the link to submit job to create all the renewal documents.
 	<th> Generate last requested on:</th><th>Generate last completed on:</th><th>Action </th>
 <tr>
   <td><br /><br /><%= print.requested_at.to_s(:long) rescue nil %> </td>
-  <td><br /><br /><%= print.delivered_at.to_s(:long) rescue nil %> </td>	
+  <td><br /><br /><%= print.delivered_at.to_s(:long) rescue nil %> </td>
 <td><br /><br /><%= link_to "Generate Print Renewals", generate_pdfs_renewal_path(print), data: { confirm: 'Are you sure?'} , :method => :post ,:class => "pretty_button" %></td>
-<td><br /><br /> 	
+<td><br /><br />
 	<% unless print.requested_at > print.delivered_at %>
-	<%= link_to "Download Renewal zip file", download_zip_renewals_path ,:class => "pretty_button"%>	
+	<%= link_to "Download Renewal zip file", download_zip_renewals_path ,:class => "pretty_button"%>
 	<% end %>
 </td>
 </tr>
@@ -26,8 +24,7 @@ click the link to submit job to create all the renewal documents.
 <td><br /><br /><%= email.delivered_at.to_s(:long) %> </td>	
 <td><br /><br /><%= link_to "Email Renewals", generate_emails_renewal_path(email), data: { confirm: 'Are you sure?'} , :method => :post ,:class => "pretty_button" %></td>
 <td> 	<br /><br />
-	
 </td>
 </tr>
-    </table> 
+    </table>
   </div>

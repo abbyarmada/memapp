@@ -19,10 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 describe BoatsController  do
-  #before :each do
-    login_user
-  #end
-
+  login_user
   # This should return the minimal set of attributes required to create a valid
   # Boat. As you add validations to Boat, be sure to
   # adjust the attributes here as well.

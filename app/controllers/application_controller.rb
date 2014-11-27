@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
  
   helper :all # include all helpers, all the time
  
-before_filter :detect_iphone_request
-
+  before_filter :detect_iphone_request
+  protect_from_forgery
 
 def call_rake(task, options = {})
   puts "Running rake...!"

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   before_filter :authenticate_user!  #, except: [:index, :show]
- 
+  protect_from_forgery 
   helper :all # include all helpers, all the time
 
   def call_rake(task, options = {})

@@ -54,7 +54,7 @@ group :test do
   gem 'nokogiri', '>= 1.3.3'
   #gem 'zeus'
   gem 'pg'
-
+  gem "codeclimate-test-reporter",  require: nil
 #  gem 'rspec-activemodel-mocks'
 end
 

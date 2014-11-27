@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20141121090103) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "barcards", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -184,8 +187,8 @@ ActiveRecord::Schema.define(version: 20141121090103) do
     t.integer  "txt_test",                 limit: 2, default: 0,     null: false
     t.integer  "txt_op_co",                          default: 0,     null: false
     t.string   "occupation"
-    t.boolean  "send_txt",                           default: false, null: false
-    t.boolean  "send_email",                         default: false, null: false
+    t.boolean  "send_txt",                           default: false
+    t.boolean  "send_email",                         default: false
   end
 
   add_index "people", ["member_id"], name: "PeoMembers", using: :btree
@@ -228,6 +231,19 @@ ActiveRecord::Schema.define(version: 20141121090103) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "privilege_id", null: false
+  end
+
+  create_table "transactions", force: true do |t|
+    t.integer  "member_id"
+    t.decimal  "amount"
+    t.datetime "date_lodged"
+    t.string   "pay_type"
+    t.string   "comment"
+    t.integer  "privilege_id"
+    t.integer  "paymenttype_id"
+    t.integer  "payment_method_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: true do |t|

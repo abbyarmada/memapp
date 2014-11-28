@@ -44,7 +44,7 @@ class BoatsController < ApplicationController
     @boat = Boat.find(params[:id])
     @boat.destroy
     respond_to do |format|
-      format.html { redirect_to person_path(@boat.owner)  + '#tabs-5' }
+     format.html { redirect_to person_path(@boat.owner)  + '#tabs-5' }
     end
   end
 

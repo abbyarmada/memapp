@@ -30,23 +30,16 @@ describe BoatsController  do
   # BoatsController. Be sure to keep this updated too.
   let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
   #let(:valid_session) {}
- 
+  before(:each) do 
+     member = create(:member, :people => [  create(:person) ] )
+      boat = create(:boat , :member => member )
+  end
   
-
-
 #  describe "GET index" do
 #    it "assigns all boats as @boats" do
-#      boat = create(:boat) 
-#      get :index, {}
-#      assigns(:boats).should eq([boat])
-#    end
-#  end
-
-#  describe "GET show" do
-#    it "assigns the requested boat as @boat" do
-#      boat = create(:boat)
-#      get :show, {:id => boat.to_param}
-#      assigns(:boat).should eq(boat)
+#      boat = Boat.create! valid_attributes
+#      get :index, {}, valid_session
+#      expect(assigns(:boats)).to eq([boat])
 #    end
 #  end
 
@@ -69,23 +62,19 @@ describe BoatsController  do
     describe "with valid params" do
       it "creates a new Boat" do
         expect {
-          #person = create(:person)
-          #member = create(:member)
-          boat = create(:boat)
+       member = create(:member, :people => [  create(:person) ] )
+        boat = create(:boat , :member => member )#person = create(:person)
         }.to change(Boat, :count).by(1)
       end
 
       it "assigns a newly created boat as @boat" do
-        #person = build(:person)
-        #member = build(:member)
-        boat = create(:boat)
         expect(boat).to be_a(Boat)
         expect(boat).to be_persisted
       end
 
       it "redirects to the created boat" do
-        boat = create(:boat)
-        skip "(expect(response).to render_template([]))"
+    #    member = create(:member, :people => [  create(:person) ] )
+    #    boat = create(:boat , :member => member )#person = create(:person)
       end
     end
 
@@ -109,12 +98,8 @@ describe BoatsController  do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested boat" do
-       #person = create(:person)
-        member = create(:member)
-        person = create(:person)
-        boat = create(:boat)
-        skip"boat update"
-
+        member = create(:member, :people => [  create(:person) ] )
+        boat = create(:boat , :member => member )#person = create(:person)
         # Assuming there are no other boats in the database, this
         # specifies that the Boat created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -124,12 +109,10 @@ describe BoatsController  do
       end
 
       it "assigns the requested boat as @boat" do
-       # member = create(:member)
-          skip"boat update"
-       # person = create(:person)
-       # boat = create(:boat)
-       # put :update , {:id => boat.id }
-       # expect(assigns(:boat)).to eq(boat)
+        member = create(:member, :people => [  create(:person) ] )
+        boat = create(:boat , :member => member )
+        put :update , {:id => boat.id }
+        expect(assigns(:boat)).to eq(boat)
       end
 
       it "redirects to the boat" do
@@ -143,9 +126,8 @@ describe BoatsController  do
 
     describe "with invalid params" do
       it "assigns the boat as @boat" do
-        person = create(:person)
-        member = create(:member)
-        boat = create(:boat)
+        member = create(:member, :people => [  create(:person) ] )
+        boat = create(:boat , :member => member )
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Boat).to receive(:save).and_return(false)
         put :update, {:id => boat.to_param, :boat => { "member_id" => "invalid value" }}
@@ -153,7 +135,8 @@ describe BoatsController  do
       end
 
       it "re-renders the 'edit' template" do
-        boat = create(:boat)
+          member = create(:member, :people => [  create(:person) ] )
+        boat = create(:boat , :member => member )
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Boat).to receive(:save).and_return(false)
         put :update, {:id => boat.to_param, :boat => { "member_id" => "invalid value" }}
@@ -163,24 +146,22 @@ describe BoatsController  do
   end
 
   describe "DELETE destroy" do
-      skip"delete boat"
-    it "destroys the requested boat" do
-      skip"delete boat"
-      #   person = create(:person)
-   #   member = create(:member)
-   #   boat = create(:boat)
-   #   expect {
-   #     delete :destroy, {:id => boat.to_param}
-   #   }.to change(Boat, :count).by(-1)
+    it "destroys the requested boat" ,:skip => true do
+      member = create(:member, :people => [  create(:person) ] )
+      boat = create(:boat , :member => member )
+      expect {
+        delete :destroy, {:id => boat.to_param}
+      }.to change(Boat, :count).by(-1)
     end
 
     it "redirects to the person  page" do
-      skip" expect(response).to redirect_to edit_person_path(person.id)"
-      person = create(:person)
-      member = create(:member)
-      boat = create(:boat)
+      member = create(:member, :people => [  create(:person) ] )
+      boat = create(:boat , :member => member )
+      puts boat.member.id
+      puts boat.owner.id
+      #boat = create(:boat_with_member_and_main_person)
+      expect(response).to render person_path(boat.owner.id)
       delete :destroy, {:id => boat.to_param}
-     
     end
   end
 

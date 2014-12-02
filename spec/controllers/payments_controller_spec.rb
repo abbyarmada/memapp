@@ -24,10 +24,10 @@ describe PaymentsController, :type => :controller do
   # Payment. As you add validations to Payment, be sure to
   # adjust the attributes here as well.
   #let(:valid_attributes) { {:member_class => 'T',:name => 'Test Class', :bar_billies => 'Y' ,:car_park => 0 ,:votes => 0,:bar_reference => 0 ,:boat_storage => 1 } }
-  
+
 #  let(:valid_attributes) { {:member_id => 1,:amount => 480, :date_lodged => Time.now ,:comment => "testing" ,:privilege_id => 1 ,:paymenttype_id => 1 ,:payment_method_id => 1 }   }
   let (:valid_attributes) { attributes_for(:payment) }
-  
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # PaymentsController. Be sure to keep this updated too.
@@ -84,16 +84,24 @@ describe PaymentsController, :type => :controller do
         expect(payment).to be_a(Payment)
         expect(payment).to be_persisted
       end
-
       it "redirects to the created payment" do
-        privilege = create(:privilege)
-        person = create(:person)
-        member = create(:member)
-        paymenttype = create(:paymenttype)
-        create(:payment)
-        #response.should redirect_to(Payment.last)
-        skip"expect(response).to redirect_to(person_path(person.id))"
-        #response.should redirect_to person_path(Payment.last.member.main_member)
+        member = create(:member, :people => [  create(:person) ] )
+        post :create,{:payment => build(:payment , :member => member).attributes }, valid_session
+        expect(response).to redirect_to(person_path(member.main_member))
+      end
+      it "updates the Renewed Date" do
+        member = create(:member,renew_date: '01.01.2012', :people => [  create(:person) ] )
+        post :create,{:payment => build(:payment , :member => member).attributes }, valid_session
+        member.reload
+        expect(assigns(:payment).date_lodged).to eq(member.renew_date)
+      end
+      it "updates the Privilege id" do
+        member = create(:member, :people => [  create(:person) ] )
+        #payment = create(:payment,privilege_id: 2, :member => member )
+        post :create,{:payment => build(:payment,privilege_id: 2 , :member => member).attributes }, valid_session
+        member.reload
+        payment = Payment.last
+        expect(payment.privilege_id).to eq(member.privilege_id)
       end
     end
 
@@ -107,67 +115,64 @@ describe PaymentsController, :type => :controller do
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        skip" Create Payment"
+        #skip" Create Payment"
+        member = create(:member, :people => [  create(:person) ] )
         allow_any_instance_of(Payment).to receive(:save).and_return(false)
-        post :create, {:payment => { "amount" => "invalid value" }}, valid_session
+        post :create, {:payment => { "amount" => nil }}
         expect(response).to render_template("new")
       end
     end
   end
 
  describe "PUT update" do
-   #skip" Update Payment"
-   before :each do
-  #   @privilege   = create(:privilege)
-  #   @person      = create(:person)
-#     @member      = create(:member)
- #    @paymenttype = create(:paymenttype)
-   end
     describe "with valid params" do
-      skip "Update payment"
       it "updates the requested payment" do
-        skip" Update Payment"
-       # puts "HERE" + payment.privilege_id.to_s
-        privilege = create(:privilege)
-        member = create(:member)
-        person = create(:person)
-        payment = create(:payment)
         # Assuming there are no other Payment in the database, this
         # specifies that the Payment created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        
-        put :update, {:id => payment.to_param, :payment => { "these" => "params" }}
+        member = create(:member, :people => [  create(:person) ] )
+        payment = create(:payment , :member => member )
         expect_any_instance_of(Payment).to receive(:update_attributes).with({ "these" => "params" })
+        put :update, {:id => payment.to_param, :payment => { "these" => "params" }}
       end
       it "assigns the requested payment as @payment" do
-        skip "Update payment"
-        payment = create(:payment)
+        member = create(:member, :people => [  create(:person) ] )
+        payment = create(:payment , :member => member )
         put :update , {:id => payment.id }
         expect(assigns(:payment)).to eq(payment)
       end
 
       it "redirects to the person view" do
-        skip "Update payment"
-        payment = create(:payment)
+        member = create(:member, :people => [  create(:person) ] )
+        payment = create(:payment , :member => member )
         put :update, {:id => payment.id }
-        #response.should redirect_to(payment)
-        skip"expect(response).to redirect_to person_path(person.id)"
+        expect(response).to redirect_to person_path(payment.member.main_member)
       end
-
-      describe "with invalid params" do
-        skip "Update payment"
-        it "assigns the payment as @payment" do
-          skip "Update payment"
-          payment = create(:payment)
-          # Trigger the behavior that occurs when invalid params are submitted
-          allow_any_instance_of(Payment).to receive(:save).and_return(false)
-          put :update, {:id => payment.to_param, :payment => {  }}
-          expect(assigns(:payment)).to eq(payment)
-        end
+      it "updates the Renewed Date" do
+        member = create(:member,renew_date: '01.01.2012', :people => [  create(:person) ] )
+        payment =      create(:payment, :member => member)
+        put :update, {id: payment.id, date_lodged: "01.01.2014" }
+        member.reload
+        expect(member.renew_date).to eq(payment.date_lodged)
       end
-      it "re-renders the 'show' person template" do
-        skip "Update payment"
+      it "updates the Privilege id" do
+        member = create(:member,privilege_id: 1, :people => [  create(:person) ] )
+        payment = create(:payment, date_lodged: "01.01.2014", :member => member )
+        put :update, {:id => payment.id, privilege_id: 2 }
+        member.reload
+        expect(member.privilege_id).to eq(payment.privilege_id)
+      end
+    end
+    describe "with invalid params" do
+      it "assigns the payment as @payment" do
+        payment = create(:payment)
+        # Trigger the behavior that occurs when invalid params are submitted
+        allow_any_instance_of(Payment).to receive(:save).and_return(false)
+        put :update, {:id => payment.to_param, :payment => {  }}
+        expect(assigns(:payment)).to eq(payment)
+      end
+      it "re-renders the 'edit' payment template" do
         payment = create(:payment)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Payment).to receive(:save).and_return(false)
@@ -175,41 +180,30 @@ describe PaymentsController, :type => :controller do
         expect(response).to render_template("edit")
       end
     end
-  end
-
+ end
   describe "DELETE destroy" do
-    skip "Delete payment"
-    before :each do
-     @privilege   = create(:privilege)
-     @person      = create(:person)
-     @member      = create(:member)
-     @paymenttype = create(:paymenttype)
-   end
     it "destroys the requested payment" do
-     skip "Delete payment"
-      payment = create(:payment)
+      member = create(:member, :people => [  create(:person) ] )
+      payment = create(:payment,:member => member)
       expect {
         delete :destroy, {:id => payment.to_param }
       }.to change(Payment, :count).by(-1)
     end
     it "resets the Renewed Date" do
-     skip "Delete payment"
-    #  paymenttype = create(:paymenttype)
-    #  priorpayment = create(:payment, :date_lodged => "01.01.2013" )
-    #  payment = create(:payment)
-    #  expect {
-    #    delete :destroy, {:id => payment.to_param }
-    #  }.to payment.member.renew_date.should eq(priorpayment.date_lodged)
+      member = create(:member,renew_date: '01.01.2012', :people => [  create(:person) ] )
+      priorpayment = create(:payment, date_lodged: "01.01.2013", :member => member )
+      payment =      create(:payment, date_lodged: "01.01.2014", :member => member)
+      delete :destroy, {:id => payment.to_param }
+      member.reload
+      expect(member.renew_date).to eq(priorpayment.date_lodged)
     end
     it "resets the Membership Class" do
-    skip "Delete payment"
-     # paymenttype = create(:paymenttype)
-     # priorpayment = create(:payment, :date_lodged => "01.01.2013" ,:privilege_id => 2)
-     # payment = create(:payment)
-     # person  = create(:person)
-     # member = create(:member) 
-     # delete :destroy, {:id => payment.to_param}  #, valid_session
-     # expect(response).to redirect_to person_path(person.id)
+      member = create(:member, privilege_id: 1, :people => [  create(:person) ] )
+      priorpayment = create(:payment, date_lodged: "01.01.2013", privilege_id: 2, :member => member )
+      payment =      create(:payment, date_lodged: "01.01.2014",privilege_id: 3, :member => member)
+      delete :destroy, {:id => payment.to_param }
+      member.reload
+      expect(member.privilege_id).to eq(priorpayment.privilege_id)
     end
   end
 

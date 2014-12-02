@@ -4,6 +4,7 @@ class SubscriptionsController < ApplicationController
     @subscriptions = Subscription.all #, :include => :privilege ,:order => "end_date desc"
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
@@ -11,6 +12,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
@@ -29,8 +31,10 @@ class SubscriptionsController < ApplicationController
       if @subscription.save
         flash[:notice] = 'Subscription was successfully created.'
         format.html { redirect_to(subscriptions_path) }
+        format.js
       else
         format.html { render :action => "new" }
+        format.js
       end
     end
   end
@@ -53,8 +57,10 @@ class SubscriptionsController < ApplicationController
       if  @subscription.destroy
         flash[:notice] = 'Subscription was successfully deleted.'
         format.html { redirect_to(subscriptions_path) }
+        format.js
       else
         format.html { redirect_to(subscriptions_path) }
+        format.js
       end
     end
   end

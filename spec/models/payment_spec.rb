@@ -42,10 +42,10 @@ describe Payment, :type => :model do
     create(:payment, paymenttype_id: 4)
     expect(build(:payment, paymenttype_id: 5)).to be_valid
   end
-  #it "Can return main members person_id"  do
-  #   member = create(:member)
-  #   person = create(:person)
-  #   payment = create(:payment)
-  #   expect(payment.main_member.id).to eq(person.id)
-  #end
+  it "Can determine the prior renewal payment details" do
+    create(:payment,date_lodged: '2001-01-01')
+    payment = create(:payment,date_lodged: '2002-01-01')
+    expect(payment.prior_renewal_payment.date_lodged).to eq('2001-01-01')
+  end
+
 end

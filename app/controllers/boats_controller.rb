@@ -17,7 +17,6 @@ class BoatsController < ApplicationController
 
   def create
     @boat = Boat.new(params[:boat])
-    @boat.member_id = params[:member_id]
     respond_to do |format|
       if @boat.save
         flash[:notice] = 'Boat was successfully created.'
@@ -50,7 +49,6 @@ class BoatsController < ApplicationController
 
   def create_csv
     @boats = Boat.members_boats
-    if params[:commit] == 'Export CSV file'
       extract = CSV.generate do |csv|
         csv << [ 'Last Name', 'First Name', 'Boat Name', 'boat Type', 'boat class', 'Sail No.','Pen Tag','Home Phone', 'Mobile', 'Email','address','renewal', 'Member Class']
         @boats.each do |b|
@@ -60,7 +58,6 @@ class BoatsController < ApplicationController
         end
       end
     send_data(extract,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'boats.csv', :disposition => 'attachment', :encoding => 'utf8')
-    end
   end
 
 end

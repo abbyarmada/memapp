@@ -19,7 +19,7 @@ class Person < ActiveRecord::Base
   validates :status, uniqueness: { scope:  :member_id } ,   :if => Proc.new {|person| Person.status == 'm'  }
   validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists"    } , :if => Proc.new {|person| person.status == 'm' }
   validates :status, uniqueness: {scope: :member_id, message: "Partner Member already Exists" },  :if => Proc.new {|person| person.status == 'p' }
-  #validate :main_member_exists?, :message=>"Must have a main member",  on: :update 
+ # validate :main_member_exists? ,on: :update
   validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member does not Exist" }, :if => Proc.new {|person| person.status != 'm' }
 
   def self.search(params)
@@ -33,12 +33,9 @@ class Person < ActiveRecord::Base
 people = people.includes(:peoplebarcard,:privilege).paginate(:per_page => 30, :page => params[:page])
   end
 
-
-
-
  # def main_member_exists?
- #   main_member_count = self.class.count(:conditions => ["member_id = ? and status = ? ", self.member_id, 'm']) 
- #     if main_member_count != 1  
+ #   main_member_count = self.where("member_id = ? and status = ? ", self.member_id, 'm').count
+ #    if main_member_count != 1
  #     errors.add(:status, "Must have a main member")
  #   end
  # end

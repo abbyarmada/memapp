@@ -3,6 +3,7 @@ class Payment < ActiveRecord::Base
   belongs_to :privilege
   belongs_to :paymenttype
   belongs_to :payment_method
+  belongs_to :person
   validates_presence_of :amount,:privilege_id,:payment_method_id,:paymenttype_id,:member_id
   validates_presence_of :date_lodged, :allow_nil => false
   validates :amount, numericality: true
@@ -138,7 +139,11 @@ class Payment < ActiveRecord::Base
     years.times do |t|
        classes = (@types[t].keys | classes).sort
     end
+    # puts "Classes:"
+    #puts classes
     keys = Hash[*classes.collect {|v| [classes.index(v) ,v.to_s] }.flatten.uniq ].sort
+    #puts "KEYS:"
+    #puts keys
     color_code = ['0000ff','ff0000','008000','FFd700','FFa500']
     yr_end = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date
     chart = GoogleChart::LineChart.new("600x200", "Membership Trends, Year To " + yr_end.strftime('%B %d') , false)
@@ -155,7 +160,6 @@ class Payment < ActiveRecord::Base
   chart.axis :y, :range => [0,100], :font_size => 10, :alignment => :center
   chart.axis :x, :labels =>lab2, :font_size => 10, :alignment => :center
   chart.show_legend = true
-  puts chart.to_url
   @line_graph = chart.to_url
 
 end
@@ -164,6 +168,87 @@ def year
   self.date_lodged.strftime('%Y')
 end
 
+  def self.g_chart_mems2(endmonth,endday)
+  #require 'google_chart'
+
+ endmonth =   Time.now.month.to_s if endmonth.blank?
+ endday =     Time.now.day.to_s if endday.blank?
+
+    years = 5
+    @types = []
+      years.times do |y|
+      yr_start = (Time.now.year - y).to_s + "-01-01"
+        yr_end = ((Time.now.year - y).to_s + "." + endmonth + "." + endday).to_date
+        @types[y] = countpays_for_year(yr_end)
+    end
+    classes = []
+    years.times do |t|
+       classes = (@types[t].keys | classes).sort
+    end
+    keys = Hash[*classes.collect {|v| [classes.index(v) ,v.to_s] }.flatten.uniq ].sort
+    puts keys
+    color_code = ['0000ff','ff0000','008000','FFd700','FFa500']
+    yr_end = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date
+    chart = GoogleChart::LineChart.new("600x200", "Membership Trends, Year To " + yr_end.strftime('%B %d') , false)
+    years.times do |x|
+      chart.shape_marker :circle, :color => color_code[x], :data_set_index => x, :data_point_index => -1, :pixel_size => 10
+      chart.data((Time.now.year - x), keys.collect {|k,v| @types[x][v].nil? ? 0 : @types[x][v] }, color_code[x] )
+    end
+  lab2 = []
+    x = 0
+    classes.each do |v|
+       lab2 << [v]
+    end
+    labels = Hash[*lab2.collect {|v| [lab2,v.to_s] }.flatten]
+  chart.axis :y, :range => [0,100], :font_size => 10, :alignment => :center
+  chart.axis :x, :labels =>lab2, :font_size => 10, :alignment => :center
+  chart.show_legend = true
+  @line_graph = chart.to_url
+
+  end
 
 
+
+  def check_renewal_date
+    if (date_lodged.year == Time.now.year)  &&  renewal_payment?
+      self.member.renew_date = date_lodged
+      self.member.status = 'Active'
+      self.member.save
+    end
+  end
+
+  def renewal_payment?
+    paymenttype_id  == 1 or paymenttype_id == 4
+  end
+
+  def changed_privilege?
+    self.member.privilege_id != privilege_id
+  end
+  def update_member_privilege
+    self.member.privilege_id = privilege_id
+    self.member.save
+  end
+  def prior_renewal_payment
+    renewal_paymenttypes = [1,4]
+    Payment.where(:paymenttype_id => renewal_paymenttypes,:member_id => member_id).where('id != ?',id).order(:date_lodged).last
+  end
+
+  def delete_checks
+    msg = ''
+      if renewal_payment?
+        if prior_renewal_payment
+          self.member.renew_date = prior_renewal_payment.date_lodged
+          msg = 'Payment Deleted - Resetting Membership Renewal Date to last Renewal Date'
+          self.member.save
+          if prior_renewal_payment.privilege_id != self.member.privilege_id
+            self.member.privilege_id =  self.prior_renewal_payment.privilege_id
+            msg = 'Payment Deleted - Resetting Membership Renewal Date and Membership Class'
+            self.member.save
+          end
+        end
+      end
+    return msg
+  end
+
+#####
 end

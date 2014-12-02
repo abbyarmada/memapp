@@ -30,13 +30,14 @@ describe BoatsController  do
   # BoatsController. Be sure to keep this updated too.
   let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
   #let(:valid_session) {}
-  before(:each) do 
-     member = create(:member, :people => [  create(:person) ] )
-      boat = create(:boat , :member => member )
-  end
-  
+#  before(:each) do
+    # member = create(:member, :people => [  create(:person) ] )
+     # boat = create(:boat , :member => member )
+# end
+
 #  describe "GET index" do
 #    it "assigns all boats as @boats" do
+#      skip "getting active record relation..."
 #      boat = Boat.create! valid_attributes
 #      get :index, {}, valid_session
 #      expect(assigns(:boats)).to eq([boat])
@@ -63,18 +64,21 @@ describe BoatsController  do
       it "creates a new Boat" do
         expect {
        member = create(:member, :people => [  create(:person) ] )
-        boat = create(:boat , :member => member )#person = create(:person)
+        boat = create(:boat , :member => member )
         }.to change(Boat, :count).by(1)
       end
 
       it "assigns a newly created boat as @boat" do
-        expect(boat).to be_a(Boat)
-        expect(boat).to be_persisted
+        member = create(:member, :people => [  create(:person) ] )
+        post :create,{:boat => build(:boat , :member => member).attributes }, valid_session
+        expect(assigns(:boat)).to be_a(Boat)
+        expect(assigns(:boat)).to be_persisted
       end
 
       it "redirects to the created boat" do
-    #    member = create(:member, :people => [  create(:person) ] )
-    #    boat = create(:boat , :member => member )#person = create(:person)
+        member = create(:member, :people => [  create(:person) ] )
+        post :create,{:boat => build(:boat , :member => member).attributes }, valid_session
+        expect(response).to redirect_to person_path(assigns(:boat).owner) + '#tabs-5'
       end
     end
 
@@ -99,7 +103,7 @@ describe BoatsController  do
     describe "with valid params" do
       it "updates the requested boat" do
         member = create(:member, :people => [  create(:person) ] )
-        boat = create(:boat , :member => member )#person = create(:person)
+        boat = create(:boat , :member => member )
         # Assuming there are no other boats in the database, this
         # specifies that the Boat created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -107,23 +111,19 @@ describe BoatsController  do
         expect_any_instance_of(Boat).to receive(:update_attributes).with({ "boat_name" => "Ship" })
         put :update, {:id => boat.to_param, :boat => { "boat_name" => "Ship" }}
       end
-
       it "assigns the requested boat as @boat" do
         member = create(:member, :people => [  create(:person) ] )
         boat = create(:boat , :member => member )
         put :update , {:id => boat.id }
         expect(assigns(:boat)).to eq(boat)
       end
-
-      it "redirects to the boat" do
-      #  person = create(:person)
-      #  member = create(:member)
-      #  boat = create(:boat)
-      #  put :update, {:id => boat.id }
-        skip"expect(response).to redirect_to edit_person_path(person.id)"
-      end
+     it "redirects to the list boats page on the person view path" do
+       member = create(:member, :people => [  create(:person) ] )
+       boat = create(:boat , :member => member )
+       put :update , {:id => boat.id }
+       expect(response).to redirect_to person_path(assigns(:boat).owner) + '#tabs-5'
+     end
     end
-
     describe "with invalid params" do
       it "assigns the boat as @boat" do
         member = create(:member, :people => [  create(:person) ] )
@@ -133,36 +133,31 @@ describe BoatsController  do
         put :update, {:id => boat.to_param, :boat => { "member_id" => "invalid value" }}
         expect(assigns(:boat)).to eq(boat)
       end
-
       it "re-renders the 'edit' template" do
-          member = create(:member, :people => [  create(:person) ] )
+        member = create(:member, :people => [  create(:person) ] )
         boat = create(:boat , :member => member )
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Boat).to receive(:save).and_return(false)
-        put :update, {:id => boat.to_param, :boat => { "member_id" => "invalid value" }}
+        put :update, {:id => boat.to_param, :boat => { "member_id" => "invalid value" }}, valid_session
         expect(response).to render_template("edit")
       end
     end
   end
-
   describe "DELETE destroy" do
-    it "destroys the requested boat" ,:skip => true do
+    it "destroys the requested boat"  do
       member = create(:member, :people => [  create(:person) ] )
       boat = create(:boat , :member => member )
       expect {
         delete :destroy, {:id => boat.to_param}
       }.to change(Boat, :count).by(-1)
     end
-
     it "redirects to the person  page" do
       member = create(:member, :people => [  create(:person) ] )
       boat = create(:boat , :member => member )
-      puts boat.member.id
-      puts boat.owner.id
       #boat = create(:boat_with_member_and_main_person)
-      expect(response).to render person_path(boat.owner.id)
-      delete :destroy, {:id => boat.to_param}
+      #expect(response).to eq(200) #redirect_to person_path(boat.owner) + '#tabs-5'
+      delete :destroy, {:id => boat.to_param}, valid_session
+      expect(response).to redirect_to(person_path(boat.owner) + '#tabs-5')
     end
   end
-
 end

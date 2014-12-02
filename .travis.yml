@@ -23,8 +23,8 @@ before_script:
   - cp config/database.$DB.yml config/database.yml
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
   - mysql -e 'create database memapp_$RAILS_ENV'
-  - psql -c 'create database memapp_$RAILS_ENV' -U postgres
-  - touch 'db/$RAILS_ENV.sqlite3'
+#  - psql -c 'create database memapp_$RAILS_ENV' -U postgres
+#  - touch 'db/$RAILS_ENV.sqlite3'
 
 after_script:
   - ruby script/travis/bundle_cache.rb

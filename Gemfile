@@ -5,7 +5,7 @@ gem  'mail'
 gem "paperclip"#, "~> 3.0"
 gem "execjs"
 gem 'therubyracer', :platforms => :ruby
-gem 'capistrano'
+#gem 'capistrano'
 gem 'devise'
 gem 'will_paginate'
 gem 'gchartrb', :require => 'google_chart'

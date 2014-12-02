@@ -1,22 +1,19 @@
 class PaymentsController < ApplicationController
   require 'csv'
- #verify :method => :post, :only => [ :destroy, :create, :update ]
-  after_filter :check_privilege_and_renewal_date, :only => [:create,:update]
-  after_filter :delete_checks,  :only => [:destroy]
+
   #=======================================
   def edit
     @payment = Payment.find(params[:id])
-    @m = @payment.member
-    @person = Person.main_person(@payment.member_id)
   end
+  
 def update
      @payment = Payment.find(params[:id])
-     @person = Person.main_person(@payment.member_id)
-     @member = @person.member
      respond_to do |format|
        if @payment.update_attributes(params[:payment])
-         format.html { redirect_to person_path(@person.id) }
-         if changed_privilege?
+         @payment.check_renewal_date
+         format.html { redirect_to person_path(@payment.main_member) }
+         if @payment.changed_privilege?
+           @payment.update_member_privilege
            flash[:notice] = 'Payment Successfully Updated, Membership Class Updated.'
          else
            flash[:notice] = 'Payment Successfully Updated'
@@ -38,48 +35,34 @@ def update
   end
   def create
     @payment = Payment.new(params[:payment])
-     @person = Person.main_person(@payment.member_id)
-     @member = @person.member
     respond_to do |format|
-      if @payment.save
-        flash[:notice] = 'payment was successfully created.'
-        format.html { redirect_to(@payment.member.main_member) }
+      if @payment.update_attributes(params[:payment])
+        @payment.check_renewal_date
+        format.html { redirect_to person_path(@payment.main_member) }
+        if @payment.changed_privilege?
+          @payment.update_member_privilege
+          flash[:notice] = 'Payment Successfully Processed -  Membership Class Updated'
+        else
+           flash[:notice] = 'Payment Successfully Processed'
+        end
       else
         format.html { render :action => "new" }
       end
     end
   end
-  def create2
-    @payment = Payment.new(params[:payment])
-    @member = @payment.member_id
-    @person = @payment.member.main_member
-    respond_to do |format|
-      if @payment.save
-       # if changed_privilege?
-       #   flash[:notice] = 'Payment Successfully Created, Membership Class Updated.'
-       # else
-       #   flash[:notice] = 'Payment Successfully Created'
-       # end
-        format.html { redirect_to person_path(@person.id) }
-      else
-       # flash[:error] = 'Error: Payment not created'
-        format.html { render :action => "new" }
-      end
-    end
-  end
-
 
 
   def destroy
     @payment = Payment.find(params[:id])
-    @person = @payment.main_member
     respond_to do |format|
       if  @payment.destroy
+        #set the default flash notice
         flash[:notice] = 'Payment was successfully deleted.'
+        flash[:notice] =  @payment.delete_checks unless  @payment.delete_checks.blank?
         format.html { redirect_to person_path(@payment.main_member)  }
       else
         flash[:warning] = 'delete failed.'
-        format.html { redirect_to(person_path(@person.id)) }
+        format.html { redirect_to(person_path(@payment.main_member)) }
       end
     end
   end
@@ -96,25 +79,17 @@ def update
       select("count(*) as count, sum(payments.amount) as total_amount, privileges.name as privilege_name, paymenttypes.name as payname, date_lodged").
       group([:date_lodged,:privilege_id,'privileges.name, paymenttypes.name']).
       joins(:privilege,:paymenttype)
-
      @totals_years = @totals.group_by{ |t| t.date_lodged.beginning_of_year }
-
-#    @counts = Payment.count(:group => [:date_lodged,:privilege_id])
-   # @payments = Payment.group()
-
-      #group_by{ |t| t.date_lodged.beginning_of_year }
-
-     endmonth =   Time.now.month.to_s
-      endday =     Time.now.day.to_s
+    #@counts = Payment.count(:group => [:date_lodged,:privilege_id])
+    #@payments = Payment.group()
+    #group_by{ |t| t.date_lodged.beginning_of_year }
+    endmonth =   Time.now.month.to_s
+    endday =     Time.now.day.to_s
     @chart_to_date = Payment.g_chart_mems(endmonth,endday)
     puts Payment.g_chart_mems(endmonth,endday)
-  
-  
-  
-  
   end
 
-  
+
 def tot_by_member_class
 
     @years = 5
@@ -136,14 +111,14 @@ def tot_by_member_class
     end
     @end_month = endmonth.to_i
     #@years.times do |y|
-  start_date = Time.now.years_ago(5).beginning_of_year
-  end_date = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date 
-  @typestd =  Payment.yttypes( start_date,end_date).merge(Payment.rttypes( start_date,end_date))
+  #start_date = Time.now.years_ago(5).beginning_of_year
+  #end_date = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date 
+  #@typestd =  Payment.yttypes( start_date,end_date).merge(Payment.rttypes( start_date,end_date))
     #  @yeartotaltd = Payment.year_total( start_date,end_date).select( "COUNT(*) as tot, SUM(amount) as money")
     #  @memtotaltd  = Payment.members_year_total( start_date,end_date).select( "COUNT(*) as count"   )
-  start_date =  Time.now.years_ago(5).beginning_of_year
-  end_date   =  Time.now.end_of_year
-      @types = Payment.yttypes( start_date,end_date ).merge(Payment.rttypes( start_date,end_date ))
+  #start_date =  Time.now.years_ago(5).beginning_of_year
+  #end_date   =  Time.now.end_of_year
+   #   @types = Payment.yttypes( start_date,end_date ).merge(Payment.rttypes( start_date,end_date ))
       #TODO - do I need the left outer join in  below 2 statements ? 
      # @yeartotal = Payment.year_total( start_date,end_date ).select( "COUNT(*) as tot, SUM(amount) as money")
      # @memtotalyear = Payment.members_year_total( start_date,end_date ).select( "COUNT(*) as count"   )
@@ -152,23 +127,13 @@ def tot_by_member_class
 end
 
   def listytd
-    
-    dt_strt = (Time.now.year-1).to_s + "-12-31"
-    
-    @payments = Payment.all :select => 'payment_type,amount,privileges.name,people.last_name,people.first_name ', :include => [{:member => :people},:privilege], 
-   
-    :conditions => "date_lodged > '#{dt_strt}' and status = 'm'  " , :order => 'date_lodged' 
-    session[:listpath] = session[:jumpcurrent]
+    @payments = Payment.current_year.includes(:member,:privilege,:payment_method,:paymenttype)
     respond_to do |format|
       format.html
-      format.xml { render :xml=>@payments } 
-      
+      format.xml { render :xml=>@payments }
     end
   end
-  
- 
-  #=======================================
-   
+
 
  def overduememberships
    @overdues = Member.overduesubs
@@ -212,17 +177,12 @@ end
 
 
 def receipts_breakdown
-    
     #Start year is 2007
-    
-    @years = Time.now.year - 2006 + 1 
-    
+    @years = Time.now.year - 2006 + 1
     @month = ''
-    
-    
     @paytypestd = []
     @paytypestotaltd = []
-    
+
     if params[:commit] == 'Go'
       if params[:date][:month].to_i == 0
         @month =   Time.now.month.to_s
@@ -230,32 +190,27 @@ def receipts_breakdown
       end
       @month =   params[:date][:month].to_s
       endday =     "31"
-   else 
+   else
       @month =   Time.now.month.to_s
       endday =     Time.now.day.to_s
-     
     end
-  
+
     @years.times do |y|
-      
-          
       date_start = (Time.now.year - y).to_s + "." + @month + ".01"
       date_end =   (Time.now.year - y).to_s + "." + @month + "." + endday
-      
-     @paytypestd[y]  = Payment.find :all, 
-                          :select => "month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions,  pay_type, sum(amount) as sum",
-                          :joins => "inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id", 
-                          :conditions => "date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ",
-                          :group => "pay_type, month, monthname",
-                          :order => "month, pay_type"
-  
-   
-     @paytypestotaltd[y]  = Payment.find :all, 
-                          :select => "month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions, sum(amount) as sum",
-                          :joins => "inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id", 
-                          :conditions => "date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ",
-                          :group => "month, monthname",
-                          :order => "month, pay_type"
+     @paytypestd[y]  = Payment.
+                          select("month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions,  pay_type, sum(amount) as sum").
+                          joins("inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id").
+        where("date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ").
+                          group("pay_type, month, monthname").
+                          order("month, pay_type")
+
+     @paytypestotaltd[y]  = Payment.
+                          select("month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions, sum(amount) as sum").
+                          joins("inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id").
+                          where("date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ").
+                          group("month, monthname").
+                          order("month, pay_type")
 
 
      end
@@ -312,61 +267,16 @@ def auto_renew_life_honorary
           @payment.paymenttype_id = 1
           @payment.comment ="Auto Renewed by System"
           @payment.save
-        
-          if @payment.save 
+
+          if @payment.save
             renew.renew_date = @payment.date_lodged
             @renew.save
             flash[:notice] = 'Members Renewed'
            else
                flash[:notice] = 'Error'
            end
-        end   
-    end
-
-private 
-
-  def check_privilege_and_renewal_date
-     @person = Person.main_person(@payment.member_id)
-     @member = @person.member
-    if (@payment.date_lodged.year == Time.now.year)  &&  renewal_payment?
-      @person.member.privilege_id = @payment.privilege_id if changed_privilege?
-      @person.member.renew_date = @payment.date_lodged
-      @person.member.status = 'Active'
-      @person.member.save
-    end
-  end
-def renewal_payment?
-  @payment.paymenttype_id  == 1 or @payment.paymenttype_id == 4
-  end
-
-  def changed_privilege?
-    #2 != 1
-    @payment.member.privilege != @payment.privilege
-  end
-
-  def delete_checks
-    if prior_renewal_payment
-      @prior_renewal_payment = prior_renewal_payment
-      if renewal_payment?
-        if @prior_renewal_payment
-          @person.member.renew_date = @prior_renewal_payment.date_lodged
-          flash[:notice] = 'Payment Deleted - Resetting Membership Renewal Date to last Renewal Date'
-          @person.member.save
         end
-        if @prior_renewal_payment.privilege_id != @person.member.privilege_id
-          @person.member.privilege_id =  @prior_renewal_payment.privilege_id
-          flash[:notice] = 'Payment Deleted - Resetting Membership Renewal Date and Membership Class'
-          @person.member.save
-        end
-      end
     end
-  end
-
-  def prior_renewal_payment
-    renewal_paymenttypes = [1,4]
-    Payment.where(:paymenttype_id => renewal_paymenttypes).order(:date_lodged).last
-  end
-
 
 end
 

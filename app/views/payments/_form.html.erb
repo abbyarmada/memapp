@@ -4,7 +4,7 @@
   <%= f.association :paymenttype ,:label =>  "Payment Type" ,:include_blank => false %>
   <%= f.input :amount %>
   <%= f.association :privilege ,:label => "Member Class" ,:include_blank => false %>
-  <%= f.association :payment_method  %>
+  <%= f.association :payment_method ,:include_blank => false %>
   <%= f.input :date_lodged ,:as => :date ,:order => [:day, :month, :year] ,:include_blank => false %>
   <%= f.input :comment %>
   <div class="form-actions">

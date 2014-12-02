@@ -12,8 +12,8 @@ rvm:
 env:
   matrix:
   - DB=mysql
-  - DB=sqlite
-  - DB=postgresql
+#  - DB=sqlite
+#  - DB=postgresql
   global:
     - RAILS_ENV=test
     - secure: f6Ic+u+L4ZgXA43CH+SnEOcJX1loBMnnBI2J0hWEKFUSLiJk9SFQjypX1FAEsxH8WaTZBO4cyfe/PKR8+vW45ytTJmk2T7filqqHftpbRrB6wK56MaQZU9sKyZvbA+nqh8QASPhn7KI6m/na26xe8RnHWf7OBwt+1602q/emOzY=
@@ -36,7 +36,7 @@ script: "bundle exec rake db:create db:test:load spec"
 
 
 after_failure:
-#- "mysql -e 'show databases;'"
+- "mysql -e 'show databases;'"
 - "cat ./config/database.yml"
 - "echo $RAILS_ENV"
 - "bundle exec rake --version"

@@ -18,10 +18,14 @@ class Member < ActiveRecord::Base
   scope :past_members,     -> {where(status:  'Inactive')}
   scope :internal_members, -> {where('privilege_id in (?,?)', 'X','Y' ) }
   scope :parking_members,  -> {current_members.joins(:privilege).where('car_park > 0') }
+  scope :not_renewed,      -> {where('renew_date  >= ? and renew_date < ?',
+    1.year.ago.beginning_of_year,Time.now.beginning_of_year )}
 
   def main_member
     people[0].main_member
   end
-
+  def self.overduesubs
+    not_renewed.joins(:people).where("people.status = 'm' ")
+  end
 
 end

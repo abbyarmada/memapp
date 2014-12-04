@@ -74,7 +74,10 @@ class PaymentsController < ApplicationController
   def list_by_member_class
   #  this_yr_start = Time.now.year.to_s + "-01-01"
     this_yr_start = Time.now.beginning_of_year
-    @payments = Payment.find :all,  :include => :privilege ,:conditions => "paymenttype_id in ('1','4','5') and  date_lodged > '#{this_yr_start}'", :order => 'privileges.name, date_lodged'
+    @payments = Payment.all.
+      includes(:privilege).
+      where("paymenttype_id in ('1','4','5') and  date_lodged > ? ", this_yr_start).
+      order('privileges.name, date_lodged')
   end
 
   #=======================================
@@ -205,14 +208,14 @@ def receipts_breakdown
      @paytypestd[y]  = Payment.
                           select("month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions,  pay_type, sum(amount) as sum").
                           joins("inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id").
-        where("date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ").
+        where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ", date_start, date_end ).
                           group("pay_type, month, monthname").
                           order("month, pay_type")
 
      @paytypestotaltd[y]  = Payment.
                           select("month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions, sum(amount) as sum").
                           joins("inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id").
-                          where("date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ").
+                          where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ", date_start, date_end ).
                           group("month, monthname").
                           order("month, pay_type")
 

@@ -20,8 +20,10 @@ class PeopleController < ApplicationController
 
   def create_renewals
      last_yr_start = (Time.now.year - 1).to_s + "-01-01"
-     @renews = Person.find :all, :include => [:member],
-     :conditions =>  "people.status = 'm' and ( members.renew_date  >= '#{last_yr_start}' or members.year_joined = Year(CURDATE())  ) AND privilege_id = 5"
+     @renews = Person.all.
+      includes(:member).
+      where("people.status = 'm' and ( members.renew_date  >= ? or members.year_joined = Year(CURDATE())  ) AND privilege_id = 5", last_yr_start)
+
      @renews.each do |person| @person = person
      #  respond_to do |format|
         # format.pdf
@@ -180,16 +182,15 @@ def paid_up_extract_five_year_ago
   def bar_interface2(date,filename,type)
 
   if type == 'Bar'
-      @people = Person.find :all,
-                          :include =>[:member ,:peoplebarcard],
-                          :conditions => " members.renew_date >= '#{date}'  ",
-                          :order => "people.id,last_name,first_name"
+      @people = Person.all.
+        includes(:member ,:peoplebarcard).
+        where("members.renew_date >= ? ", date).
+        order("people.id,last_name,first_name")
   else
     enddate = date.slice(0,4) + "-12-31"
-    @people = Person.find :all,
-                          :include =>[:member ,:peoplebarcard,:payments],
-                          :conditions => " payments.paymenttype_id in (1,4,5) and payments.date_lodged >= '#{date}' and payments.date_lodged <= '#{enddate}'  ",
-                          :order => "people.id,last_name,first_name"
+    @people = Person.all.includes(:member ,:peoplebarcard,:payments).
+      where(" payments.paymenttype_id in (1,4,5) and payments.date_lodged >= ? and payments.date_lodged <= ?  ", date, enddate ).
+      order("people.id,last_name,first_name")
   end
 
 
@@ -269,7 +270,7 @@ def paid_up_extract_five_year_ago
                              :joins => "inner join privileges ON privileges.id = payments.privilege_id", 
                             :conditions => "date_lodged >= '#{yr_start}' AND date_lodged <= '#{yr_end}' and member_class not in ('X','Y','E','R','H','T','L','V','A' )",  
                             :group => 'class_desc' ,:order => 'member_class ASC'
-    
+        #TODO remove the SQL injection issue above
     end
   
   chart = []
@@ -306,7 +307,7 @@ def paid_up_extract2
                         :conditions => "members.renew_date >= '#{this_yr_start}'  " #,
                         #:joins => "inner join privileges ON privileges.id = members.privilege_id",
                        # :order => "people.id,last_name,first_name"
-                        
+  #TODO remove the sql injection above 
     if params[:commit] == 'Export CSV file'
        extract = CSV.generate do |csv|
         # header row

@@ -100,13 +100,13 @@ people = people.paginate(:per_page => 30, :page => params[:page])
  #   "person/edit/" + self.id.to_s
  # end
 
-  def self.peoplecount
-    this_yr_start = Time.now.year.to_s + "-01-01"
-
-    @peoplecount = Person.count :include => [:member ],
-                :joins => " inner join privileges on members.privilege_id = privileges.id ",
-                :conditions => " (  renew_date >= '#{this_yr_start}' ) and privileges.bar_reference > 0 "
-  end
+  #def self.peoplecount
+  #  this_yr_start = Time.now.year.to_s + "-01-01"#
+#
+#    @peoplecount = Person.count :include => [:member ],
+#                :joins => " inner join privileges on members.privilege_id = privileges.id ",
+#                :conditions => " (  renew_date >= '#{this_yr_start}' ) and privileges.bar_reference > 0 "
+#  end
 
   def self.proposers
 

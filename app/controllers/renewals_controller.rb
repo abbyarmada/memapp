@@ -1,10 +1,10 @@
 class RenewalsController < ApplicationController
   
-  before_action :set_model, only: [:show, :edit, :update, :destroy,:generate_pdfs,:generate_emails]
-  respond_to :html
+  #before_action :set_model, only: [:generate_pdfs,:generate_emails]
+  respond_to :html, :zip
   
   def generate_pdfs
-   # @renewal = Renewal.find(params[:id])
+    @renewal = Renewal.find(params[:id])
     @renewal.generate_requested
 #    puts "calling rake from controller"
     call_rake :create_renewal_pdfs, :renewal_id => 1
@@ -17,7 +17,7 @@ class RenewalsController < ApplicationController
   end
   
   def generate_emails
-   # @renewal = Renewal.find(params[:id])
+    @renewal = Renewal.find(params[:id])
     @renewal.generate_requested
     call_rake :create_renewal_emails, :renewal_id => 2
     flash[:notice] = "Emails are being generated and sent in the background."
@@ -26,7 +26,7 @@ class RenewalsController < ApplicationController
   
   def download_zip
      path = Rails.root.join("tmp","renewals","Renewals_For_Printing.zip")
-#     puts "path=" +path.to_s
+     puts "path=" +path.to_s
      File.open(path,'rb') do |f|
         send_data f.read, :type => 'application/zip',:filename => 'Renewals_For_Printing.zip', :disposition => 'attachment', :encoding => 'utf8'
      end
@@ -53,7 +53,7 @@ class RenewalsController < ApplicationController
       render :action => 'new'
     end
   end
-  
+ 
   def edit
    
   end
@@ -64,7 +64,7 @@ class RenewalsController < ApplicationController
       respond_with(@renewal)
     end
   end
-  
+ 
   def destroy
     @renewal.destroy
     flash[:notice] = "Successfully destroyed Renewal."

@@ -28,7 +28,7 @@ describe PrivilegesController, :type => :controller do
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    attributes_for(:privilege,name: nil)
   }
 
   # This should return the minimal set of values that should be in the session
@@ -91,14 +91,14 @@ describe PrivilegesController, :type => :controller do
       it "assigns a newly created but unsaved privilege as @privilege" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Privilege).to receive(:save).and_return(false)
-        post :create, {:privilege => {  }}, valid_session
+        post :create, {:privilege => invalid_attributes } , valid_session
         expect(assigns(:privilege)).to be_a_new(Privilege)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(Privilege).to receive(:save).and_return(false)
-        post :create, {:privilege => {  }}, valid_session
+        #allow_any_instance_of(Privilege).to receive(:save).and_return(false)
+        post :create, {:privilege => invalid_attributes }, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -107,17 +107,15 @@ describe PrivilegesController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { 'name' => 'Updated_Family'}
       }
 
       it "updates the requested privilege" do
         privilege = Privilege.create! valid_attributes
-        # Assuming there are no other privileges in the database, this
-        # specifies that the Privilege created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        expect_any_instance_of(Privilege).to receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => privilege.to_param, :privilege => { "these" => "params" }}, valid_session
+       # expect_any_instance_of(Paymenttype).to receive(:update).with(new_attributes)
+        put :update, {:id => privilege.to_param, :privilege =>  new_attributes }, valid_session
+        privilege.reload
+        expect(assigns(:privilege).name).to eq('Updated_Family')
       end
 
       it "assigns the requested privilege as @privilege" do
@@ -138,7 +136,7 @@ describe PrivilegesController, :type => :controller do
         privilege = Privilege.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Privilege).to receive(:save).and_return(false)
-        put :update, {:id => privilege.to_param, :privilege => {  }}, valid_session
+        put :update, {:id => privilege.to_param, :privilege => invalid_attributes }, valid_session
         expect(assigns(:privilege)).to eq(privilege)
       end
 
@@ -146,7 +144,7 @@ describe PrivilegesController, :type => :controller do
         privilege = Privilege.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Privilege).to receive(:save).and_return(false)
-        put :update, {:id => privilege.to_param, :privilege => {  }}, valid_session
+        put :update, {:id => privilege.to_param, :privilege => invalid_attributes }, valid_session
         expect(response).to render_template("edit")
       end
     end

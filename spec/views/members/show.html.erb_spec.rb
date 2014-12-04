@@ -7,7 +7,7 @@ RSpec.describe "members/show", :type => :view do
 
   it "renders attributes in <p>" do
     render
-    skip("Members Show")
+    #skip("Members Show")
     expect(rendered).to match(/Proposed/)
     expect(rendered).to match(/Seconded/)
     expect(rendered).to match(/Name No/)

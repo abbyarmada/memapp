@@ -7,7 +7,6 @@ RSpec.describe "members/edit", :type => :view do
 
   it "renders the edit member form" do
     render
- skip("Members Show")
 
     assert_select "form[action=?][method=?]", member_path(@member), "post" do
 
@@ -31,7 +30,7 @@ RSpec.describe "members/edit", :type => :view do
 
       assert_select "input#member_email_renewal[name=?]", "member[email_renewal]"
 
-      assert_select "select#status[name=?]", "member[status]"
+      assert_select "select#member_status[name=?]", "member[status]"
     end
   end
 end

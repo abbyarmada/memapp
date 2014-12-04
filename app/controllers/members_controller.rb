@@ -46,7 +46,7 @@ class MembersController < ApplicationController
     end
 
     def member_params
-      params.require(:member).permit(:address1, :address2, :address3, :address4, :proposed, :seconded, :year_joined, :occupation, :renew_date, :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, :country, :email_renewal)
+      params.require(:member).permit(:proposed, :seconded, :year_joined, :renew_date, :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, :country, :email_renewal)
     end
 
   def process_carpark_passes

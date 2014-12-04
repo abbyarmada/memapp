@@ -25,6 +25,7 @@ describe SubscriptionsController do
   # adjust the attributes here as well.
   #let(:valid_attributes) { { "amount" => "1.5" } }
   let(:valid_attributes) { attributes_for(:subscription) }
+    let(:invalid_attributes) { attributes_for(:subscription,amount: nil ) }
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # SubscriptionsController. Be sure to keep this updated too.
@@ -76,24 +77,23 @@ describe SubscriptionsController do
        expect(assigns(:subscription)).to be_persisted
      end
 
-      it "redirects to the subscriptions" do
+      it "redirects to the subscription" do
         post :create, {:subscription => valid_attributes}, valid_session
-        expect(response).to redirect_to(subscriptions_path)
+        expect(response).to redirect_to(Subscription.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved subscription as @subscription" do
+        #skip"WTF?"
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Subscription).to receive(:save).and_return(false)
-        post :create, {:subscription => { "amount" => "invalid value" }}, valid_session
+        post :create, {:subscription => invalid_attributes }, valid_session
         expect(assigns(:subscription)).to be_a_new(Subscription)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(Subscription).to receive(:save).and_return(false)
-        post :create, {:subscription => { "amount" => "invalid value" }}, valid_session
+        post :create, {:subscription =>  invalid_attributes }, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -107,7 +107,7 @@ describe SubscriptionsController do
         # specifies that the Subscription created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Subscription).to receive(:update_attributes).with({ "amount" => "1.5" })
+        expect_any_instance_of(Subscription).to receive(:update).with({ "amount" => "1.5" })
         put :update, {:id => subscription.to_param, :subscription => { "amount" => "1.5" }}, valid_session
       end
 
@@ -120,7 +120,7 @@ describe SubscriptionsController do
       it "redirects to the subscriptions" do
         subscription = Subscription.create! valid_attributes
         put :update, {:id => subscription.to_param, :subscription => valid_attributes}, valid_session
-        expect(response).to redirect_to(subscriptions_url)
+        expect(response).to redirect_to(subscription)
       end
     end
 
@@ -129,15 +129,14 @@ describe SubscriptionsController do
         subscription = Subscription.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Subscription).to receive(:save).and_return(false)
-        put :update, {:id => subscription.to_param, :subscription => { "amount" => "invalid value" }}, valid_session
+        put :update, {:id => subscription.to_param, :subscription =>  invalid_attributes }, valid_session
         expect(assigns(:subscription)).to eq(subscription)
       end
 
       it "re-renders the 'edit' template" do
         subscription = Subscription.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(Subscription).to receive(:save).and_return(false)
-        put :update, {:id => subscription.to_param, :subscription => { "amount" => "invalid value" }}, valid_session
+        put :update, {:id => subscription.to_param, :subscription => invalid_attributes }, valid_session
         expect(response).to render_template("edit")
       end
     end

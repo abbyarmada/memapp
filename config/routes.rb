@@ -1,5 +1,7 @@
 R3::Application.routes.draw do
 
+  resources :cars
+
   resources :renewals
 
   resources :members do

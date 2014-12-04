@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 class PeopleController < ApplicationController
 
   require 'csv'
- before_filter :check_search_form_reset, :only => [:index]
-
+ before_action :check_search_form_reset, :only => [:index]
+  before_action :set_model, only: [:show, :edit, :update, :destroy, :cut, :renewal_email]
+  respond_to :html, :pdf
 
   def show
-    @person = Person.find(params[:id])
     @member = Member.find(@person.member_id) #required for membership form
     respond_to do |format|
       format.html
@@ -43,8 +42,8 @@ class PeopleController < ApplicationController
   end
 
   def new
-    @person = Person.new(params[:person])
-    @person.member_id = params[:member_id]
+    @person = Person.new(person_params)
+    @person.member_id = person_params[:member_id]
     @barcard = Barcard.new
     @peoplebarcard = Peoplebarcard.new
     @peoplebarcard.person_id = @person.id
@@ -53,8 +52,8 @@ class PeopleController < ApplicationController
   
   
   def create
-    @person = Person.new(params[:person])
-    @barcard = Barcard.new(params[:barcard])
+    @person = Person.new(person_params)
+    @barcard = Barcard.new(person_params[:barcard])
     @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
     respond_to do |format|
       if @person.save
@@ -72,15 +71,15 @@ class PeopleController < ApplicationController
     end
   end
   def edit
-    @person = Person.find(params[:id])
+    
   end
 
   def update
-    @person = Person.find(params[:id])
+    @person.update(person_params)
     respond_to do |format|
-      if @person.update_attributes(params[:person])
+      if @person.save
         flash[:notice] = 'Person was successfully updated.'
-        format.html { redirect_to :controller =>'people', :action => "show" ,:id => @person.id }
+        format.html { redirect_to person_path + '#tabs-3' }
       else
         flash[:error] = 'Person could not be updated due to an error.'
         format.html { render :action => "edit" ,:id => @person.id }
@@ -89,7 +88,7 @@ class PeopleController < ApplicationController
     end
   end
   def destroy
-    @person = Person.find(params[:id])
+    
     @main_member = Person.main_person(@person.member_id)
     if @person.status == 'm' 
       #redirect_to :back
@@ -102,7 +101,6 @@ class PeopleController < ApplicationController
     end
   end
   def cut
-    @person = Person.find(params[:id])
      if @person.status == 'm'
         redirect_to :back
         flash[:notice] = 'Cannot Move the Main Member.'
@@ -126,7 +124,6 @@ class PeopleController < ApplicationController
   end
 
  def renewal_email
-     @person = Person.find(params[:id])
      RenewalMailer.renewal_letter(@person).deliver
      redirect_to :back , :flash => { :success => "Renewal sent via Email" } 
   end
@@ -366,7 +363,7 @@ def paid_up_extract2
     end #if
   end #def
 
-def check_search_form_reset
+  def check_search_form_reset
     if params[:commit] == 'Reset'
        params[:search] = ""
        params[:searchfn] = ""
@@ -375,5 +372,27 @@ def check_search_form_reset
        params[:past_members] = false
      end
   end
+
+  def set_model
+    @person = Person.find(params[:id])
+  end
+
+def person_params
+      params.require(:person).
+      permit(
+        :member_id,
+        :first_name,:last_name,:status,
+        :home_phone,:mobile_phone,:email_address,
+        :comm_prefs,:snd_txt,:snd_eml,
+        :dob,
+        :txt_bridge,:txt_social,:txt_crace,:txt_cruiser_race_skipper,:txt_cruising,
+        :txt_cruiser_skipper,:txt_dinghy_sailing,:txt_junior,:txt_test,:txt_op_co,
+        :occupation,
+        :send_txt,:send_email
+        )
+   # params.require(:barcard).
+   #   permit(:id)
+  end
+
 
 end #class

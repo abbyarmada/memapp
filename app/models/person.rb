@@ -7,11 +7,10 @@ class Person < ActiveRecord::Base
   has_many :boats, :through => :member
   has_one :barcard, :through => :peoplebarcard
 
-  attr_accessible :id,:member_id,:first_name,:last_name,:status,:child_dob,:home_phone,:mobile_phone,:email_address,:comm_prefs,:snd_txt,:snd_eml,:dob,:member_number ,:txt_bridge , :txt_social, :txt_crace,
-  :txt_cruiser_race_skipper, :txt_cruising, :txt_cruiser_skipper, :txt_dinghy_sailing, :txt_junior, :txt_test, :txt_op_co, :occupation , :send_txt, :send_email
+ # attr_accessible :id,:member_id,:first_name,:last_name,:status,:child_dob,:home_phone,:mobile_phone,:email_address,:comm_prefs,:snd_txt,:snd_eml,:dob,:member_number ,:txt_bridge , :txt_social, :txt_crace, :txt_cruiser_race_skipper, :txt_cruising, :txt_cruiser_skipper, :txt_dinghy_sailing, :txt_junior, :txt_test, :txt_op_co, :occupation , :send_txt, :send_email
 
-  scope :current, -> { joins(:member).merge(Member.current_members)  }
-  scope :past,    -> { joins(:member).merge(Member.past_members)  }
+  scope :current, -> { joins(:member,:privilege).merge(Member.current_members)  }
+  scope :past,    -> { joins(:member,:privilege).merge(Member.past_members)  }
   validates_presence_of :last_name, :first_name,:status, :member_id
   validates_presence_of :email_address, :if => Proc.new {|person| person.send_email? } ,:message => "Please correct the Email address"
   validates_presence_of :mobile_phone , :if => Proc.new {|person| person.send_txt? }
@@ -30,7 +29,7 @@ class Person < ActiveRecord::Base
     people = people.where('first_name like :input' , { :input => "%#{params[:searchfn]}%"}) unless params[:searchfn].blank?
     people = people.where(" people.status = 'm'" ) if params[:group]
     people = people.where('members.privilege_id = :input' ,{ :input => "#{params[:searchmp][:privilege_id]}"})  if params[:searchmp] && !params[:searchmp][:privilege_id].blank?
-people = people.includes(:peoplebarcard,:privilege).paginate(:per_page => 30, :page => params[:page])
+people = people.paginate(:per_page => 30, :page => params[:page])
   end
 
  # def main_member_exists?

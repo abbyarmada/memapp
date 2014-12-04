@@ -1,4 +1,6 @@
 class BoatsController < ApplicationController
+  before_action :set_model, only: [:show, :edit, :update, :destroy]
+  respond_to :html
   require 'csv'
 
   def index
@@ -12,26 +14,24 @@ class BoatsController < ApplicationController
   end
 
   def edit
-    @boat = Boat.find(params[:id])
+
   end
 
   def create
-    @boat = Boat.new(params[:boat])
-    respond_to do |format|
+    @boat = Boat.new(boat_params)
+    respond_with(@boat, :location => person_path(@boat.owner) + '#tabs-5') do |format|
       if @boat.save
         flash[:notice] = 'Boat was successfully created.'
-          format.html { redirect_to person_path(@boat.owner) + '#tabs-5' }
       else
         format.html { render :action => "new" }
-        flash[:error] = 'Boat was not successfully created.'
       end
     end
   end
+
   def update
-    @boat = Boat.find(params[:id])
-    respond_to do |format|
-      if @boat.update_attributes(params[:boat])
-        format.html { redirect_to person_path(@boat.owner)  + '#tabs-5' }
+    @boat.update(boat_params)
+    respond_with(@boat, :location => person_path(@boat.owner) + '#tabs-5') do |format|
+      if @boat.save
         flash[:notice] = 'Boat was successfully updated.'
       else
         format.html { render :action => "edit" }
@@ -40,11 +40,17 @@ class BoatsController < ApplicationController
   end
 
   def destroy
+    flash[:notice] = 'Boat was successfully deleted.' if @boat.destroy
+     respond_with(@boat, :location => person_path(@boat.owner) + '#tabs-5')
+  end
+ private
+
+  def set_model
     @boat = Boat.find(params[:id])
-    @boat.destroy
-    respond_to do |format|
-     format.html { redirect_to person_path(@boat.owner)  + '#tabs-5' }
-    end
+  end
+
+  def boat_params
+    params.require(:boat).permit(:member_id,:boat_name,:boat_type,:boat_class,:sail_number,:pen_tag)
   end
 
   def create_csv

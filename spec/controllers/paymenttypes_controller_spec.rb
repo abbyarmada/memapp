@@ -24,6 +24,7 @@ describe PaymenttypesController, :type => :controller do
   # Paymenttype. As you add validations to Paymenttype, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) { attributes_for(:paymenttype) }
+  let(:invalid_attributes) { attributes_for(:paymenttype,name: nil) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -54,7 +55,6 @@ describe PaymenttypesController, :type => :controller do
       expect(assigns(:paymenttype)).to be_a_new(Paymenttype)
     end
   end
-
   describe "GET edit" do
     it "assigns the requested paymenttype as @paymenttype" do
       paymenttype = Paymenttype.create! valid_attributes
@@ -85,16 +85,11 @@ describe PaymenttypesController, :type => :controller do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved paymenttype as @paymenttype" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(Paymenttype).to receive(:save).and_return(false)
-        post :create, {:paymenttype => { "name" => "invalid value" }}, valid_session
+        post :create, {:paymenttype => invalid_attributes }, valid_session
         expect(assigns(:paymenttype)).to be_a_new(Paymenttype)
       end
-
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(Paymenttype).to receive(:save).and_return(false)
-        post :create, {:paymenttype => { "name" => "invalid value" }}, valid_session
+        post :create, {:paymenttype =>  invalid_attributes }, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -108,7 +103,7 @@ describe PaymenttypesController, :type => :controller do
         # specifies that the Paymenttype created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Paymenttype).to receive(:update_attributes).with({ "name" => "MyString" })
+        expect_any_instance_of(Paymenttype).to receive(:update).with({ "name" => "MyString" })
         put :update, {:id => paymenttype.to_param, :paymenttype => { "name" => "MyString" }}, valid_session
       end
 
@@ -130,7 +125,7 @@ describe PaymenttypesController, :type => :controller do
         paymenttype = Paymenttype.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Paymenttype).to receive(:save).and_return(false)
-        put :update, {:id => paymenttype.to_param, :paymenttype => { "name" => "invalid value" }}, valid_session
+        put :update, {:id => paymenttype.to_param, :paymenttype => invalid_attributes }, valid_session
         expect(assigns(:paymenttype)).to eq(paymenttype)
       end
 
@@ -138,7 +133,7 @@ describe PaymenttypesController, :type => :controller do
         paymenttype = Paymenttype.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Paymenttype).to receive(:save).and_return(false)
-        put :update, {:id => paymenttype.to_param, :paymenttype => { "name" => "invalid value" }}, valid_session
+        put :update, {:id => paymenttype.to_param, :paymenttype => invalid_attributes }, valid_session
         expect(response).to render_template("edit")
       end
     end

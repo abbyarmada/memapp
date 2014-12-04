@@ -15,7 +15,7 @@ class Payment < ActiveRecord::Base
   validate :payment_final_and_first  , :unless => Proc.new {|payment| payment.date_lodged.nil?   } , :if => :final_payment?
   validate :check_unknown_payment_method
 
-  attr_accessible :privilege_id , :amount, :date_lodged, :pay_type, :comment, :paymenttype_id, :member_id,:payment_method_id
+  #attr_accessible :privilege_id , :amount, :date_lodged, :pay_type, :comment, :paymenttype_id, :member_id,:payment_method_id
 
   #scope :previous_renewals, -> { where([' (id <> ? or id <> 0 ) AND member_id = ?  AND date_lodged >= ? and paymenttype_id in (1,4)' , self.id, self.member_id, self.date_lodged.beginning_of_year  ] )  }
   

@@ -6,8 +6,6 @@ class Member < ActiveRecord::Base
   has_many :peoplebarcards ,:through => :people
   has_many :loyaltycards, :through => :people
 
-  #until strong parameters implemented accross all models..
-  attr_accessible :address1, :address2, :address3, :address4, :proposed, :seconded, :year_joined, :occupation, :renew_date, :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, :country, :email_renewal
 
   validates_presence_of :privilege_id,:proposed,:seconded,:year_joined
   validates_presence_of :street1, :message => "Please correct the members address data :- Street1 should not be blank" ,:except => :delete

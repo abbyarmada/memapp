@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121090103) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20141203111040) do
 
   create_table "barcards", force: true do |t|
     t.datetime "created_at"
@@ -33,6 +30,17 @@ ActiveRecord::Schema.define(version: 20141121090103) do
   end
 
   add_index "boats", ["member_id"], name: "BoatsMembers", using: :btree
+
+  create_table "cars", force: true do |t|
+    t.integer  "member_id"
+    t.string   "boat_name"
+    t.string   "boat_type"
+    t.string   "boat_class"
+    t.string   "sail_number"
+    t.string   "pen_tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "loyaltycards", force: true do |t|
     t.string   "Member_Title",            limit: 16
@@ -235,15 +243,15 @@ ActiveRecord::Schema.define(version: 20141121090103) do
 
   create_table "transactions", force: true do |t|
     t.integer  "member_id"
-    t.decimal  "amount"
+    t.decimal  "amount",            precision: 10, scale: 0
     t.datetime "date_lodged"
     t.string   "pay_type"
     t.string   "comment"
     t.integer  "privilege_id"
     t.integer  "paymenttype_id"
     t.integer  "payment_method_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
   create_table "users", force: true do |t|

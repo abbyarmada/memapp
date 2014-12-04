@@ -192,10 +192,6 @@ def paid_up_extract_five_year_ago
       where(" payments.paymenttype_id in (1,4,5) and payments.date_lodged >= ? and payments.date_lodged <= ?  ", date, enddate ).
       order("people.id,last_name,first_name")
   end
-
-
-
-    #if params[:commit] == 'Export CSV file' || 'Export CSV file2'
       extract = CSV.generate do |csv|
         # header row
       csv << ['BarBillies','MemClass','CardNo','LastName','FirstName','MemNumber',
@@ -254,115 +250,8 @@ def paid_up_extract_five_year_ago
     #end #if
   end #def
 
-  def g_chart_mem_summ
-
-#Start year is 2007
-    years = Time.now.year - 2006 + 1
-    @types = []
-
-      years.times do |y|
-
-      yr_start = (Time.now.year - y).to_s + "-01-01"
-      yr_end = (Time.now.year - y).to_s + "-12-31"
-      
-      @types[y] = Payment.count  :all,
-                              #:select => ' count(*)',
-                             :joins => "inner join privileges ON privileges.id = payments.privilege_id", 
-                            :conditions => "date_lodged >= '#{yr_start}' AND date_lodged <= '#{yr_end}' and member_class not in ('X','Y','E','R','H','T','L','V','A' )",  
-                            :group => 'class_desc' ,:order => 'member_class ASC'
-        #TODO remove the SQL injection issue above
-    end
-  
-  chart = []
-  @chart = []
-  color_code = ['0000ff','ff0000','008000','FFd700','A97838','5D7CBA']
-  years.times do |y|
-    
-    chart[y] = GoogleChart::PieChart.new("400x200", "Membership Trends " + (Time.now.year - y).to_s, true)
-    arr = @types[y].to_a
-    @types[y].to_a.size.times do |x|
-      chart[y].data arr[x][0], arr[x][1], color_code[x]
-    end
-
-  #chart[y].show_labels = true
-  chart[y].show_legend = false
-  @chart[y] = chart[y].to_url
-  
-   end
-end
 
 
-def paid_up_extract2
-    
-    
-    this_yr_start = (Time.now.year ).to_s + "-01-01"
-    
-    #@people = Person.find :all, 
-    #                    :include =>[:member,:privilege],
-    #                    :joins => "inner join privileges ON privileges.id = members.privilege_id", 
-    #                    :conditions => " ( members.renew_date >= '#{this_yr_start}' or ( members.renew_date = null and members.year_joined = #{Time.now.year} ) )and member_class not in ('X','Y','T','E')  "
-    #
-    @people = Person.find :all, 
-                        :joins =>[:member ,:peoplebarcard,:privilege],
-                        :conditions => "members.renew_date >= '#{this_yr_start}'  " #,
-                        #:joins => "inner join privileges ON privileges.id = members.privilege_id",
-                       # :order => "people.id,last_name,first_name"
-  #TODO remove the sql injection above 
-    if params[:commit] == 'Export CSV file'
-       extract = CSV.generate do |csv|
-        # header row
-        csv << ['BarBillies','MemClass','MemberShipNo','CardNo','LastName','FirstName','MemNumber',
-     'Salutation','HouseNameNo','StreetAddr','StreetAddr2','Town','City','PostCode','County','Country',
-     'RenewedCurrentYear','RenewedDate','DoB','occupation',
-     'HomePhone', 'Mobile','Email','Mem_type' ]
-        @people.each do |p|
-          privilege = Privilege.find_by_id p.member.privilege_id
-          barreference = privilege.name
-          occupation = ""
-          renewedcurrentyear = ""
-          housenameno = ""
-          city = ""
-          town =""
-          postcode = ""
-          county = ""
-          country = ""
-          #bar billies, based on member class  defaulted to N, set to Y if member class allows
-          # and membership renewed. 
-          # new members do not get bar billies.
-          bar_billies = 'N'
-          renewedcurrentyear  = 'N'
-          if p.member.renew_date.year == Time.now.year 
-            renewedcurrentyear  = 'Y'
-            if p.status == "m" && p.member.renew_date < Privilege.billie_cutoff_date
-              bar_billies = privilege.bar_billies
-            end
-          end
-          occupation = p.member.occupation if p.status == 'm' 
-          @cp = p.comm_prefs.upcase if p.comm_prefs
-          social = "X" if /SO/.match(@cp)
-          cruising = "X" if /CR/.match(@cp)
-          racing = "X"  if /RA/.match(@cp)
-          dinghy = "X" unless p.txt_dinghy_sailing == 0
-          junior = "X" if /JU/.match(@cp)
-          if p.status == "m" 
-            csv << [bar_billies,barreference, p.member_id ,ENV['BARCARD_PREFIX'] + '%05d' % p.peoplebarcard.barcard_id.to_s ,p.last_name,p.first_name,p.id, 
-            p.salutation,   
-            p.member.name_no,
-            p.member.street1 ,
-            p.member.street2 ,
-            p.member.town ,
-            p.member.city,
-            p.member.postcode,
-            p.member.county ,
-            p.member.country,
-            renewedcurrentyear,p.member.renew_date.to_date.to_s,p.dob,occupation,
-            p.home_phone,p.mobile_phone,p.email_address,p.status ]
-          end
-        end #do extract
-        send_data(extract,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'PaidUpMembers.csv', :disposition => 'attachment', :encoding => 'utf8')
-      end
-    end #if
-  end #def
 
   def check_search_form_reset
     if params[:commit] == 'Reset'
@@ -391,8 +280,6 @@ def person_params
         :occupation,
         :send_txt,:send_email
         )
-   # params.require(:barcard).
-   #   permit(:id)
   end
 
 

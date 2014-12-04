@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
-  before_filter :authenticate_user!  #, except: [:index, :show]
-  protect_from_forgery 
+  before_filter :authenticate_user!
+  protect_from_forgery
   helper :all # include all helpers, all the time
 
   def call_rake(task, options = {})
@@ -18,16 +18,6 @@ class ApplicationController < ActionController::Base
   def jumpback
     session[:jumpback] = session[:jumpcurrent] unless session[:jumpback] == session[:jumpcurrent]
     session[:jumpcurrent] = request.fullpath
-  end  
-
-  def rescue_action_in_public(exception)
-    case exception
-     when ::ActionController::RedirectBackError
-       jumpto = session[:jumpback] || {:controller => "people"}
-       redirect_to jumpto
-     else
-       super
-     end
   end
 
 end

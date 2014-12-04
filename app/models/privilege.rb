@@ -1,6 +1,6 @@
 class Privilege < ActiveRecord::Base
-  attr_accessible :bar_billies, :bar_reference, :boat_storage, :car_park, :member_class,
-  :name, :vote, :amount, :start_date, :end_date, :privilege_id
+  #attr_accessible :bar_billies, :bar_reference, :boat_storage, :car_park, :member_class,
+ # :name, :vote, :amount, :start_date, :end_date, :privilege_id
   has_many :members
   has_many :payments, :through => :members
   has_many :people,:through => :members

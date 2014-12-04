@@ -1,4 +1,6 @@
 class PrivilegesController < ApplicationController
+  before_action :set_model, only: [:show, :edit, :update, :destroy]
+  respond_to :html
 
   def index
     @privileges = Privilege.all
@@ -8,7 +10,7 @@ class PrivilegesController < ApplicationController
   end
 
   def show
-    @privilege = Privilege.find(params[:id])
+   
   end
 
   def new
@@ -16,25 +18,20 @@ class PrivilegesController < ApplicationController
   end
 
   def edit
-    @privilege = Privilege.find(params[:id])
+   
   end
 
   def create
-    @privilege = Privilege.new(params[:privilege])
-    respond_to do |format|
-      if @privilege.save
-        format.html { redirect_to privilege_path(@privilege.id) , notice: 'Member Class was successfully created.' }
-      else
-        format.html { render action: "new" }
-      end
-    end
+    @privilege = Privilege.new(privilege_params)
+    flash[:notice] = 'Member Class was successfully created.' if @privilege.save
+    respond_with(@privilege)
   end
 
 
   def update
-    @privilege = Privilege.find(params[:id])
+   
     respond_to do |format|
-      if @privilege.update_attributes(params[:privilege])
+      if @privilege.update(privilege_params)
         format.html { redirect_to @privilege, notice: 'Member Class was successfully updated.' }
         format.json { head :ok }
       else
@@ -44,15 +41,19 @@ class PrivilegesController < ApplicationController
     end
   end
 
-  # DELETE /privileges/1
-  # DELETE /privileges/1.json
-#  def destroy
-#    @privilege = Privilege.find(params[:id])
-#    @privilege.destroy###
+ #def destroy
+ #  @privilege.destroy
+ #  respond_with(@privilege)
+ #end
 
-#    respond_to do |format|
-#      format.html { redirect_to privileges_url }
-#      format.json { head :ok }
-#    end
-#  end
+ private
+  def set_model
+    @privilege = Privilege.find(params[:id])
+  end
+
+  def privilege_params
+    params.require(:privilege).
+      permit(:member_class,:name,:bar_billies,:car_park,:votes,:bar_reference,:boat_storage)
+  end
+
 end

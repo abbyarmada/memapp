@@ -1,0 +1,32 @@
+<div class="page-header">
+  <%= link_to cars_path, :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_car_path(@car), :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show car</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Member:</dt>
+  <dd><%= @car.member_id %></dd>
+
+  <dt>Boat name:</dt>
+  <dd><%= @car.boat_name %></dd>
+
+  <dt>Boat type:</dt>
+  <dd><%= @car.boat_type %></dd>
+
+  <dt>Boat class:</dt>
+  <dd><%= @car.boat_class %></dd>
+
+  <dt>Sail number:</dt>
+  <dd><%= @car.sail_number %></dd>
+
+  <dt>Pen tag:</dt>
+  <dd><%= @car.pen_tag %></dd>
+
+</dl>

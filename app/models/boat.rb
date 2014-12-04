@@ -3,7 +3,7 @@ class Boat < ActiveRecord::Base
 
   validates_presence_of :boat_class, :boat_type,:member_id
   validates_inclusion_of :boat_type, in: %W(Dinghy Cruiser Motor Windsurfer), :message => "must be Dinghy, Windsurfer, Cruiser or Motor"
-  attr_accessible :boat_class, :boat_type, :boat_name ,:sail_number, :pen_tag, :member_id
+ # attr_accessible :boat_class, :boat_type, :boat_name ,:sail_number, :pen_tag, :member_id
 
   scope :penboats, -> { where( ['boat_type = ? or boat_type = ? ','Dinghy','Windsurfer'] ) }
 

@@ -25,6 +25,14 @@ describe BoatsController  do
   # adjust the attributes here as well.
   #let(:valid_attributes) { { "member_id" => "1", "boat_type" => "Dinghy" } }
   let (:valid_attributes) { attributes_for(:boat) }
+  let (:valid_boat_member_attributes)  {
+    attributes_for(:boat)
+    attributes_for(:member)
+    }
+  let (:invalid_boat_member_attributes)  {
+    attributes_for(:boat,:boat_type => "Inflatable")
+    attributes_for(:member)
+    }
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # BoatsController. Be sure to keep this updated too.
@@ -86,14 +94,18 @@ describe BoatsController  do
       it "assigns a newly created but unsaved boat as @boat" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Boat).to receive(:save).and_return(false)
-        post :create, {:boat => { "member_id" => "invalid value" }}
+        member = create(:member, :people => [  create(:person) ] )
+        post :create,{:boat => build(:boat ,:member_id =>  "invalid value" , :member => member).attributes }, valid_session
+        #post :create, {:boat => { "member_id" => "invalid value" }}
         expect(assigns(:boat)).to be_a_new(Boat)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Boat).to receive(:save).and_return(false)
-        post :create, {:boat => { "member_id" => "invalid value" }}
+        #post :create, {:boat => { "member_id" => "invalid value" }}
+        member = create(:member, :people => [  create(:person) ] )
+        post :create,{:boat => build(:boat ,:member_id =>  "invalid value" , :member => member).attributes }, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -108,19 +120,20 @@ describe BoatsController  do
         # specifies that the Boat created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Boat).to receive(:update_attributes).with({ "boat_name" => "Ship" })
+        expect_any_instance_of(Boat).to receive(:update).with({ "boat_name" => "Ship" })
         put :update, {:id => boat.to_param, :boat => { "boat_name" => "Ship" }}
       end
       it "assigns the requested boat as @boat" do
         member = create(:member, :people => [  create(:person) ] )
         boat = create(:boat , :member => member )
-        put :update , {:id => boat.id }
+        put :update , {:id => boat.to_param,  :boat => valid_boat_member_attributes }
         expect(assigns(:boat)).to eq(boat)
       end
+
      it "redirects to the list boats page on the person view path" do
        member = create(:member, :people => [  create(:person) ] )
        boat = create(:boat , :member => member )
-       put :update , {:id => boat.id }
+       put :update , {:id => boat.to_param , :boat => valid_boat_member_attributes }
        expect(response).to redirect_to person_path(assigns(:boat).owner) + '#tabs-5'
      end
     end
@@ -130,7 +143,7 @@ describe BoatsController  do
         boat = create(:boat , :member => member )
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Boat).to receive(:save).and_return(false)
-        put :update, {:id => boat.to_param, :boat => { "member_id" => "invalid value" }}
+        put :update, {:id => boat.to_param, :boat => invalid_boat_member_attributes }
         expect(assigns(:boat)).to eq(boat)
       end
       it "re-renders the 'edit' template" do
@@ -138,7 +151,7 @@ describe BoatsController  do
         boat = create(:boat , :member => member )
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Boat).to receive(:save).and_return(false)
-        put :update, {:id => boat.to_param, :boat => { "member_id" => "invalid value" }}, valid_session
+        put :update, {:id => boat.to_param, :boat => invalid_boat_member_attributes }, valid_session
         expect(response).to render_template("edit")
       end
     end

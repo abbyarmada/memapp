@@ -24,8 +24,9 @@ describe PrivilegesController do
   # This should return the minimal set of attributes required to create a valid
   # Privilege. As you add validations to Privilege, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {:member_class => 'T',:name => 'Test Class', :bar_billies => 'Y' ,:car_park => 0 ,:votes => 0,:bar_reference => 0 ,:boat_storage => 1 } }
-  #let(:validattributes) { FactoryGirl.attributesfor(:privilege) }
+  #let(:valid_attributes) { {:member_class => 'T',:name => 'Test Class', :bar_billies => 'Y' ,:car_park => 0 ,:votes => 0,:bar_reference => 0 ,:boat_storage => 1 } }
+  
+  let(:valid_attributes) { attributesfor(:privilege) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in

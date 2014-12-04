@@ -1,58 +1,42 @@
 class SubscriptionsController < ApplicationController
-
+  before_action :set_model, only: [:show, :edit, :update, :destroy]
+  respond_to :html
   def index
-    @subscriptions = Subscription.all #, :include => :privilege ,:order => "end_date desc"
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    @subscriptions = Subscription.all
+     respond_with(@subscriptions)
   end
 
   def new
     @subscription = Subscription.new
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   def show
-    @subscription = Subscription.find(params[:id])
+   respond_with(@member)
   end
 
   def edit
-    @subscription = Subscription.find(params[:id])
+
   end
 
 
   def create
-    @subscription = Subscription.new(params[:subscription])
-    respond_to do |format|
+    @subscription = Subscription.new(subscription_params)
       if @subscription.save
         flash[:notice] = 'Subscription was successfully created.'
-        format.html { redirect_to(subscriptions_path) }
-        format.js
-      else
-        format.html { render :action => "new" }
-        format.js
       end
-    end
+     respond_with(@subscription)
   end
 
+
   def update
-    @subscription = Subscription.find(params[:id])
-    respond_to do |format|
-      if @subscription.update_attributes(params[:subscription])
+      if @subscription.update(subscription_params)
         flash[:notice] = 'Member Class was successfully updated.'
-        format.html { redirect_to(subscriptions_path) }
-      else
-        format.html { render :action => "edit" }
       end
-    end
+    respond_with(@subscription)
   end
 
   def destroy
-    @subscription = Subscription.find(params[:id])
+  
     respond_to do |format|
       if  @subscription.destroy
         flash[:notice] = 'Subscription was successfully deleted.'
@@ -63,6 +47,16 @@ class SubscriptionsController < ApplicationController
         format.js
       end
     end
+  end
+  
+  private
+  def set_model
+    @subscription = Subscription.find(params[:id])
+  end
+
+  def subscription_params
+    params.require(:subscription).
+      permit(:amount,:start_date,:end_date,:privilege_id)
   end
 
 end

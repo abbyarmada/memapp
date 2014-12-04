@@ -29,6 +29,10 @@ gem 'simple_form', '~> 3.1.0.rc2' #, github: 'plataformatec/simple_form'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
+#gem 'bootstrap-datepicker-rails'
+gem 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git',  \
+    :branch => 'master', :submodules => true
+gem 'momentjs-rails', '>=2.7', :github => 'derekprior/momentjs-rails'
 gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'nprogress-rails'
@@ -52,7 +56,7 @@ group :development do
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
   gem 'spring-commands-rspec'
-  gem 'debugger'  
+  #gem 'debugger'
 end
 
 group :test, :development  do
@@ -88,7 +92,7 @@ end
 
 #rails 4 upgrade gems
 gem 'rails4_upgrade'
-gem 'protected_attributes'
+#gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'

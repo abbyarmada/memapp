@@ -1,7 +1,29 @@
+// control the screen sizes
+$screen-xs-min: 300px;
+$screen-sm-min: 400px;
+$screen-md-min: 800px;
+$screen-lg-min: 1200px;
+
+// this tells which screen size to use to start breaking on
+// will tell navbar when to collapse
+$grid-float-breakpoint: $screen-md-min;
 // import the CSS framework
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
+
+body {
+	padding-top:60px;
+}
+
+
+@media (max-width: 100px) {
+    .navbar-header {
+        float: none;
+    }
+}
+  
 // make all images responsive by default
 img {
   @extend .img-responsive;
@@ -38,7 +60,7 @@ main {
   background-color: #eee;
   padding-bottom: 80px;
   width: 100%;
-  margin-top: 51px; // accommodate the navbar
+  margin-top: 10px; // accommodate the navbar
   }
 section {
   @extend .row;

@@ -13,7 +13,8 @@ click the link to submit job to create all the renewal documents.
 <td><br /><br /><%= link_to "Generate Print Renewals", generate_pdfs_renewal_path(print), data: { confirm: 'Are you sure?'} , :method => :post ,:class => "pretty_button" %></td>
 <td><br /><br />
 	<% unless print.requested_at > print.delivered_at %>
-	<%= link_to "Download Renewal zip file", download_zip_renewals_path ,:class => "pretty_button"%>
+	<%= link_to "Download Renewal zip file", download_zip_renewals_path %>
+  <%= link_to "Bar Interface" , bar_interface_people_path %>
 	<% end %>
 </td>
 </tr>

@@ -1,20 +1,15 @@
 R3::Application.routes.draw do
 
-  resources :cars
-
-  resources :renewals
 
   resources :members do
 		collection do
 		  get 'carpark_passes'
-		  get 'update_renewed_from_payments'
 		end
  	end
 
   resources :privileges
 
   devise_for :users
-
   resources :boats do
     collection do
     get 'create_csv'

@@ -26,7 +26,7 @@ RSpec.describe RenewalsController, :type => :controller do
   let(:valid_attributes) { attributes_for(:renewal, subject: 'testing') }
   #let(:valid_attributes) { { "subject" => "1.5" } }
   let(:invalid_attributes) { attributes_for(:renewal,subject: nil )   }
-  
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # RenewalsController. Be sure to keep this updated too.
@@ -34,130 +34,12 @@ RSpec.describe RenewalsController, :type => :controller do
 
   describe "GET index" do
     it "assigns all renewals as @renewals" do
-     # renewal = Renewal.create! valid_attributes
-      renewal = create(:renewal)
+      renewal = Renewal.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:renewals)).to eq([renewal])
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested renewal as @renewal" do
-      renewal = create(:renewal)
-      #renewal = Renewal.create! valid_attributes
-      get :show, {:id => renewal.to_param}, valid_session
-      expect(assigns(:renewal)).to eq(renewal)
-    end
-  end
 
-  describe "GET new" do
-    it "assigns a new renewal as @renewal" do
-      get :new, {}, valid_session
-      expect(assigns(:renewal)).to be_a_new(Renewal)
-    end
-  end
-
- # describe "GET edit" do
- #   it "assigns the requested renewal as @renewal" do
- #      skip "not used"
- #     renewal = Renewal.create! valid_attributes
- #     get :edit, {:id => renewal.to_param}, valid_session
- #     expect(assigns(:renewal)).to eq(renewal)
- #   end
- # end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Renewal" do
-        expect {
-    #      post :create, {:renewal => valid_attributes}, valid_session
-           create(:renewal)
-        }.to change(Renewal, :count).by(1)
-      end
-
-  #    it "assigns a newly created renewal as @renewal" do
-  #      create(:renewal)
-  #      expect(assigns(:renewal)).to be_a(Renewal)
-  #      expect(assigns(:renewal)).to be_persisted
-  #    end
-
-  #    it "redirects to the created renewal" do
-  #      create(:renewal)
-  #      expect(response).to redirect_to(Renewal.last)
-  #    end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved renewal as @renewal" do
-        post :create, {:renewal => invalid_attributes}, valid_session
-        expect(assigns(:renewal)).to be_a_new(Renewal)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, {:renewal => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      let(:new_attributes) {
-        { :subject => 'TEST2' }
-      }
-
-  #    it "updates the requested renewal" do
-  #      renewal = Renewal.create! valid_attributes
-  #      put :update, {:id => renewal.to_param, :renewal => new_attributes}, valid_session
-  #      renewal.reload
-  #      skip "Edit page not required"
-  #    end
-
-      it "assigns the requested renewal as @renewal" do
-        renewal = Renewal.create! valid_attributes
-        put :update, {:id => renewal.to_param, :renewal => valid_attributes}, valid_session
-        expect(assigns(:renewal)).to eq(renewal)
-      end
-
-      it "redirects to the renewal" do
-        renewal = Renewal.create! valid_attributes
-        put :update, {:id => renewal.to_param, :renewal => valid_attributes}, valid_session
-        expect(response).to redirect_to(renewal)
-      end
-    end
-
-    describe "with invalid params" do
-   #   it "assigns the renewal as @renewal" do
-   #     skip "Edit page not required"
-   #     renewal = Renewal.create! valid_attributes
-   #     put :update, {:id => renewal.to_param, :renewal => invalid_attributes}, valid_session
-   #     expect(assigns(:renewal)).to eq(renewal)
-   #   end
-
-   #   it "re-renders the 'edit' template" do
-   #     renewal = create(:renewal)
-   #     #renewal = Renewal.create! valid_attributes
-   #     put :update, {:id => renewal.to_param, :renewal => invalid_attributes}, valid_session
-   #     expect(response).to render_template("edit")
-   #   end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested renewal" do
-      renewal = create(:renewal)
-        #renewal = Renewal.create! valid_attributes
-      expect {
-        delete :destroy, {:id => renewal.to_param}, valid_session
-      }.to change(Renewal, :count).by(-1)
-    end
-
-    it "redirects to the renewals list" do
-      renewal = create(:renewal)
-        #renewal = Renewal.create! valid_attributes
-      delete :destroy, {:id => renewal.to_param}, valid_session
-      expect(response).to redirect_to(renewals_url)
-    end
-  end
 
 end

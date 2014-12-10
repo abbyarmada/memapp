@@ -1,9 +1,8 @@
 class SubscriptionsController < ApplicationController
   before_action :set_model, only: [:show, :edit, :update, :destroy]
-  respond_to :html
+
   def index
     @subscriptions = Subscription.all
-     respond_with(@subscriptions)
   end
 
   def new
@@ -11,11 +10,9 @@ class SubscriptionsController < ApplicationController
   end
 
   def show
-   respond_with(@member)
   end
 
   def edit
-
   end
 
 
@@ -32,11 +29,11 @@ class SubscriptionsController < ApplicationController
       if @subscription.update(subscription_params)
         flash[:notice] = 'Member Class was successfully updated.'
       end
-    respond_with(@subscription)
+   
   end
 
   def destroy
-  
+
     respond_to do |format|
       if  @subscription.destroy
         flash[:notice] = 'Subscription was successfully deleted.'

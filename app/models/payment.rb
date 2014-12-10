@@ -76,8 +76,7 @@ class Payment < ActiveRecord::Base
   end
 
   def payment_type_unique_for_year
-  #Payment types 1 and 4 must not be duplicated in one year, this will cause problems with counts.
-  #if self.paymenttype_id == 1 or self.paymenttype_id == 4
+  #Payment types 1 and 4 must not be duplicated in one year
     if renewal_payment? & !final_payment?
       if num_duplicates > 0
         errors.add( :paymenttype_id, 'Please check the Subscription type, you cannot have two Subscription payments in one year')

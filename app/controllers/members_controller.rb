@@ -1,20 +1,18 @@
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
-
   def index
     @members = Member.all
-    respond_with(@members)
   end
 
   def show
-    respond_with(@member)
   end
 
   def new
     @member = Member.new
-    respond_with(@member)
+    @member.people.build
+    @member.year_joined = Time.now.year
+    @member.privilege = Privilege.find_by_name "Applicant"
   end
 
   def edit
@@ -22,32 +20,44 @@ class MembersController < ApplicationController
 
   def create
     @member = Member.new(member_params)
-    @member.save
-    respond_with(@member)
+    respond_to do |format|
+      if @member.save
+        @member.complete_new_member_process
+        format.html { redirect_to @member, notice: 'Member was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @member }
+      else
+        format.html { render action: 'new', notice: 'Member was not created - fix errors .' }
+        format.json { render json: @member.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
-    @member.update(member_params)
-    respond_with(@member)
+    respond_to do |format|
+      if @member.update(member_params)
+        format.html { redirect_to @member, notice: 'Member was successfully updated.' }
+       format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @member.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
     @member.destroy
-    respond_with(@member)
+    respond_to do |format|
+      format.html { redirect_to members_url ,notice: 'Member was successfully deleted.'}
+      format.json { head :no_content }
+    end
   end
+
 
   def carpark_passes
     process_carpark_passes
   end
 
   private
-    def set_member
-      @member = Member.find(params[:id])
-    end
-
-    def member_params
-      params.require(:member).permit(:proposed, :seconded, :year_joined, :renew_date, :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, :country, :email_renewal)
-    end
 
   def process_carpark_passes
     @mems = Member.current_members.parking_members  #.all #:all
@@ -91,6 +101,12 @@ class MembersController < ApplicationController
     send_data(report,:type => 'text/csv; charset=iso-8859-1; header=present',
       :filename => 'CarParkPasses.csv', :disposition => 'attachment', :encoding => 'utf8')
   end
+def set_member
+      @member = Member.find(params[:id])
+    end
 
+    def member_params
+      params.require(:member).permit(:proposed, :seconded, :year_joined, :renew_date, :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, :country, :email_renewal,:status,people_attributes: [:id,:first_name,:last_name,:status,:member_id] )
+    end
 
 end

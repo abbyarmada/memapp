@@ -6,6 +6,8 @@ class Member < ActiveRecord::Base
   has_many :peoplebarcards ,:through => :people
   has_many :loyaltycards, :through => :people
 
+  accepts_nested_attributes_for :people
+  validates_associated :people
 
   validates_presence_of :privilege_id,:proposed,:seconded,:year_joined
   validates_presence_of :street1, :message => "Please correct the members address data :- Street1 should not be blank" ,:except => :delete
@@ -27,5 +29,8 @@ class Member < ActiveRecord::Base
   def self.overduesubs
     not_renewed.joins(:people).where("people.status = 'm' ")
   end
-
+  def complete_new_member_process
+    main_member.complete_new_person_process
+  end
+  
 end

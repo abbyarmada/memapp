@@ -29,6 +29,7 @@ gem 'simple_form', '~> 3.1.0.rc2' #, github: 'plataformatec/simple_form'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
+gem 'autoprefixer-rails'
 #gem 'bootstrap-datepicker-rails'
 gem 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git',  \
     :branch => 'master', :submodules => true
@@ -91,12 +92,12 @@ group :production do
 end
 
 #rails 4 upgrade gems
-gem 'rails4_upgrade'
+#gem 'rails4_upgrade'
 #gem 'protected_attributes'
-gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
-gem 'activerecord-deprecated_finders'
+#gem 'rails-observers'
+#gem 'actionpack-page_caching'
+#gem 'actionpack-action_caching'
+#gem 'activerecord-deprecated_finders'
 
 
 

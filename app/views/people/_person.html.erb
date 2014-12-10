@@ -1,11 +1,3 @@
-<%= simple_form_for@person, :namespace => @person.id , html: { class: 'form-horizontal' },
-  wrapper: :horizontal_form,
-  wrapper_mappings: {
-  check_boxes: :horizontal_radio_and_checkboxes,
-  radio_buttons: :horizontal_radio_and_checkboxes,
-  file: :horizontal_file_input,
-  boolean: :horizontal_radio_and_checkboxes
-} do |f|  %>
   <div class="row">
     <div class="col-md-6">
       <div class="panel panel-info">
@@ -62,9 +54,3 @@
       </div>
     </div>
   </div>
-
-
-<div class="form-actions">
-  <%= f.button :submit  %>
-</div>
-<% end %>

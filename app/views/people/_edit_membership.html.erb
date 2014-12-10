@@ -1,3 +1,7 @@
-<%= semantic_form_for(@person.member, :namespace => @person.id) do |form|  %>
-  <%= render :partial => 'membership' , :locals => { :form => form ,:form2 => false, :buttons => true ,:button_label => 'update Membership'  }  %>
+<%= simple_form_for(@person.member) do |form|  %>
+  <%= render :partial => 'membership' , :locals => { :form => form } %>
+ <div class="form-actions">
+    <%= form.button :submit , :class => 'btn-primary' %>
+  </div>
+
 <% end %>

@@ -1,37 +1,16 @@
-<%= semantic_form_for @member do |form| %>
- <% if @member.errors.any? %>
-    <div class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <h4><%= pluralize(@member.errors.count, "error") %> prohibited this person from being saved:</h4>
-           <ul>
-      <% @member.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form.association :privilege %>
+<%= form.input :email_renewal %>
+<%= form.input :occupation %>
+<%= form.input :year_joined %>
+<%= form.input :renew_date  %>
+<%= form.input :proposed %>
+<%= form.input :seconded %>
+<%= form.input :name_no , :label => 'House Name or Number'%>
+<%= form.input :street1 , :label => 'Street Address Line 1'%>
+<%= form.input :street2 , :label => 'Street Address Line 2'%>
+<%= form.input :town  %>
+<%= form.input :city  %>
+<%= form.input :county  %>
+<%= form.input :postcode %>
+<%= form.input :country , :priority_countries => ['Ireland','United Kingdom']  %>
 
-<%= form.inputs :name => "Membership Information" do %>
-	<%= form.input :privilege, :include_blank => false %>
-	<%= form.input :email_renewal,   :as => :boolean %>
-	<%= form.input :occupation %>
-	<%= form.input :year_joined %>
-	<%= form.input :renew_date, :as => :date_select ,:order => [:day, :month, :year]  %>
-	<%= form.input :proposed %>
-	<%= form.input :seconded %>
-<% end %>
-<%= form.inputs :name => "Address Details" do %>
-	<%= form.input :name_no , :label => 'House Name or Number'%>
-	<%= form.input :street1 , :label => 'Street Address Line 1'%>
-	<%= form.input :street2 , :label => 'Street Address Line 2'%>
-	<%= form.input :town  %>
-	<%= form.input :city  %>
-	<%= form.input :county  %>
-	<%= form.input :postcode %>
-	<% #= form.input :country , :priority_countries => ['Ireland','United Kingdom'] 
-  %>
-<% end %>
-
-<%= form.submit button_label if buttons %>
-
-<% end %>

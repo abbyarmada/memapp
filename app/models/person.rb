@@ -7,11 +7,10 @@ class Person < ActiveRecord::Base
   has_many :boats, :through => :member
   has_one :barcard, :through => :peoplebarcard
 
- # attr_accessible :id,:member_id,:first_name,:last_name,:status,:child_dob,:home_phone,:mobile_phone,:email_address,:comm_prefs,:snd_txt,:snd_eml,:dob,:member_number ,:txt_bridge , :txt_social, :txt_crace, :txt_cruiser_race_skipper, :txt_cruising, :txt_cruiser_skipper, :txt_dinghy_sailing, :txt_junior, :txt_test, :txt_op_co, :occupation , :send_txt, :send_email
-
   scope :current, -> { joins(:member,:privilege).merge(Member.current_members)  }
   scope :past,    -> { joins(:member,:privilege).merge(Member.past_members)  }
-  validates_presence_of :last_name, :first_name,:status, :member_id
+  validates_presence_of :last_name, :first_name,:status
+  #, :member
   validates_presence_of :email_address, :if => Proc.new {|person| person.send_email? } ,:message => "Please correct the Email address"
   validates_presence_of :mobile_phone , :if => Proc.new {|person| person.send_txt? }
   validates_format_of :email_address, :if => Proc.new {|person| person.snd_eml == "Y" }, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
@@ -71,7 +70,7 @@ people = people.paginate(:per_page => 30, :page => params[:page])
     if new_member
       {"Main Member" => "m", "Child of main member" => "ch" , "Partner of main member" => "p", "Parent/Guardian of Cadet Member" => "g"}
      else
-      {"Child of main member" => "ch" , "Partner of main member" => "p", "Parent/Guardian of Cadet Member" => "g"} 
+      {"Child of main member" => "ch" , "Partner of main member" => "p", "Parent/Guardian of Cadet Member" => "g"}
     end
   end
   def status_name
@@ -139,9 +138,20 @@ people = people.paginate(:per_page => 30, :page => params[:page])
     end
   end
 
-def age
+  def age
   ((Date.today - dob) / 365).to_i rescue nil
   end
+  def complete_new_person_process
+    if status != 'g'
+      barcard = Barcard.new
+      barcard.save
+      peoplebarcard = Peoplebarcard.new(:person_id=> id, :barcard_id => barcard.id)
+      peoplebarcard.save
+    end
+  end
+
 
 end
+
+
 

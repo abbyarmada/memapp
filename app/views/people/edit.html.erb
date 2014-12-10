@@ -1,4 +1,15 @@
+<div class="page-header">
+  <%= link_to person_path(@person.main_member) + "#tabs-3" , :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+</div>
 <h1>Editing Person</h1>
-  <%= render :partial => 'person'  %> 
+<%= simple_form_for @person do |f| %>
+  <%= render :partial => 'person', :locals => {:f => f }  %>
 
-<%= link_to 'Back', person_path(@person.main_member) + "#tabs-3" %>
+ <div class="form-actions">
+    <%= f.button :submit , :class => 'btn btn-primary' %>
+  </div>
+
+<% end %>

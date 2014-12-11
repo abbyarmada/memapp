@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
-  after_action :complete_new_member_process, only: [:create]
+  
 
   def index
     @members = Member.all
@@ -23,6 +23,7 @@ class MembersController < ApplicationController
     @member = Member.new(member_params)
     respond_to do |format|
       if @member.save
+        @member.complete_new_member_process
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
         format.json { render action: 'show', status: :created, location: @member }
       else
@@ -102,9 +103,7 @@ class MembersController < ApplicationController
       :filename => 'CarParkPasses.csv', :disposition => 'attachment', :encoding => 'utf8')
   end
 
-   def complete_new_member_process
-     @member.main_member.complete_new_person_process
-  end
+   
   def set_member
     @member = Member.find(params[:id])
   end

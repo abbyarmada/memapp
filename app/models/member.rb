@@ -30,7 +30,7 @@ class Member < ActiveRecord::Base
     not_renewed.joins(:people).where("people.status = 'm' ")
   end
   def complete_new_member_process
-    complete_new_person_process
+     main_member.complete_new_person_process
   end
-  
+
 end

@@ -13,7 +13,7 @@ describe Boat, :type => :model do
      expect(build(:boat, member_id: nil )).not_to be_valid
   end
 ###########   Associations  ###########################
-  it "is can determine the main member" ,:focus => true do
+  it "is can determine the main member"  do
     person = create(:person)
     member = build_stubbed(:member, :people => [ person ] )
     boat = create(:boat , :member => member )

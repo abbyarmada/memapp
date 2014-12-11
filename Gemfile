@@ -63,7 +63,6 @@ end
 group :test, :development  do
   gem 'pg'
   gem "rspec-rails", "~> 3.0.0"
-  #gem 'factory_girl'
   gem 'factory_girl_rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/sprin
   gem 'spring'

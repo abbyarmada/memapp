@@ -10,7 +10,6 @@ class PrivilegesController < ApplicationController
   end
 
   def show
-   
   end
 
   def new
@@ -18,18 +17,21 @@ class PrivilegesController < ApplicationController
   end
 
   def edit
-   
-  end
 
+  end
   def create
     @privilege = Privilege.new(privilege_params)
-    flash[:notice] = 'Member Class was successfully created.' if @privilege.save
-    respond_with(@privilege)
+    respond_to do |format|
+      if @privilege.save
+        format.html { redirect_to @privilege, notice: 'Member class was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @privilege }
+      else
+        format.html { render action: 'new', notice: 'Member class was not created - fix errors .' }
+        format.json { render json: @privilege.errors, status: :unprocessable_entity }
+      end
+    end
   end
-
-
   def update
-   
     respond_to do |format|
       if @privilege.update(privilege_params)
         format.html { redirect_to @privilege, notice: 'Member Class was successfully updated.' }

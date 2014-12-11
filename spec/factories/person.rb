@@ -1,14 +1,13 @@
 FactoryGirl.define do
-  require 'faker'
    factory :person do |f|
      #member
      f.member_id 1
-     f.first_name  { Faker::Name.first_name }
-     f.last_name { Faker::Name.last_name }
+     f.first_name 'John'
+     f.last_name 'Doe'
      f.status 'm'
      f.child_dob ''
      f.home_phone '01-845-1234'
-     f.email_address { Faker::Internet.email }
+     f.email_address 'john.doe@testmail.com'
      f.comm_prefs ''
      f.snd_txt 'y'
      f.snd_eml 'y'

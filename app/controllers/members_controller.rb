@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
+  after_action :complete_new_member_process, only: [:create]
 
   def index
     @members = Member.all
@@ -22,7 +23,6 @@ class MembersController < ApplicationController
     @member = Member.new(member_params)
     respond_to do |format|
       if @member.save
-        @member.complete_new_member_process
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
         format.json { render action: 'show', status: :created, location: @member }
       else
@@ -101,12 +101,16 @@ class MembersController < ApplicationController
     send_data(report,:type => 'text/csv; charset=iso-8859-1; header=present',
       :filename => 'CarParkPasses.csv', :disposition => 'attachment', :encoding => 'utf8')
   end
-def set_member
-      @member = Member.find(params[:id])
-    end
 
-    def member_params
-      params.require(:member).permit(:proposed, :seconded, :year_joined, :renew_date, :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, :country, :email_renewal,:status,people_attributes: [:id,:first_name,:last_name,:status,:member_id] )
-    end
+   def complete_new_member_process
+     @member.main_member.complete_new_person_process
+  end
+  def set_member
+    @member = Member.find(params[:id])
+  end
+
+  def member_params
+    params.require(:member).permit(:proposed, :seconded, :year_joined, :renew_date, :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, :country, :email_renewal,:status,people_attributes: [:id,:first_name,:last_name,:status,:member_id, :occupation, :dob, :home_phone, :mobile_phone, :email_address, :send_txt, :send_email, :txt_cruising, :txt_cruiser_skipper, :txt_crace, :txt_cruiser_race_skipper, :txt_dinghy_sailing, :txt_junior, :txt_op_co, :txt_social, :txt_bridge, :txt_test] )
+  end
 
 end

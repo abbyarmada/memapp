@@ -26,9 +26,15 @@ RSpec.describe MembersController, :type => :controller do
   let(:valid_attributes) {
      attributes_for(:member)
   }
+  let(:valid_attributes_with_main_person) {
+     attributes_for(:member,:people_attributes => [attributes_for(:person)])
+  }
 
   let(:invalid_attributes) {
     attributes_for(:member,proposed: "")
+  }
+  let(:invalid_attributes_with_main_person) {
+    attributes_for(:member,proposed: "",:people_attributes => [attributes_for(:person)])
   }
 
   # This should return the minimal set of values that should be in the session
@@ -66,35 +72,39 @@ RSpec.describe MembersController, :type => :controller do
       expect(assigns(:member)).to eq(member)
     end
   end
-
+  ###member = create(:member, :people => [  create(:person) ] )
+  ###post :create,{:payment => build(:payment , :member => member).attributes }, valid_session
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Member" do
         expect {
-          post :create, {:member => valid_attributes}, valid_session
+           post :create, {:member => valid_attributes_with_main_person }, valid_session
         }.to change(Member, :count).by(1)
       end
 
       it "assigns a newly created member as @member" do
-        post :create, {:member => valid_attributes}, valid_session
+        post :create, {:member => valid_attributes_with_main_person}, valid_session
         expect(assigns(:member)).to be_a(Member)
         expect(assigns(:member)).to be_persisted
       end
 
       it "redirects to the created member" do
-        post :create, {:member => valid_attributes}, valid_session
+        post :create, {:member => valid_attributes_with_main_person}, valid_session
         expect(response).to redirect_to(Member.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved member as @member" do
-        post :create, {:member => invalid_attributes}, valid_session
+        #expect_any_instance_of(Member).to receive(:complete_new_member_process).and_return(true)
+        expect_any_instance_of(Member).to receive(:complete_new_member_process)
+        post :create, {:member => invalid_attributes_with_main_person}, valid_session
         expect(assigns(:member)).to be_a_new(Member)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:member => invalid_attributes}, valid_session
+        #Member.any_instance.stub(:complete_new_member_process)
+        post :create, {:member => invalid_attributes_with_main_person}, valid_session
         expect(response).to render_template("new")
       end
     end

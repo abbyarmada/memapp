@@ -10,12 +10,12 @@ class Person < ActiveRecord::Base
   scope :current, -> { joins(:member,:privilege).merge(Member.current_members)  }
   scope :past,    -> { joins(:member,:privilege).merge(Member.past_members)  }
   validates_presence_of :last_name, :first_name,:status
-  #, :member
+  #TODO validates_presence_of :member - causes problems wth nested attributes
   validates_presence_of :email_address, :if => Proc.new {|person| person.send_email? } ,:message => "Please correct the Email address"
   validates_presence_of :mobile_phone , :if => Proc.new {|person| person.send_txt? }
   validates_format_of :email_address, :if => Proc.new {|person| person.snd_eml == "Y" }, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  validates :status, uniqueness: { scope:  :member_id } ,   :if => Proc.new {|person| Person.status == 'm'  }
-  validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists"    } , :if => Proc.new {|person| person.status == 'm' }
+  validates :status, uniqueness: { scope:  :member_id } ,   :if => Proc.new {|person| person.status == 'm' && !member_id.nil? }
+  validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists"    } , :if => Proc.new {|person| person.status == 'm' && !person.member_id.nil? }
   validates :status, uniqueness: {scope: :member_id, message: "Partner Member already Exists" },  :if => Proc.new {|person| person.status == 'p' }
  # validate :main_member_exists? ,on: :update
   validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member does not Exist" }, :if => Proc.new {|person| person.status != 'm' }
@@ -50,9 +50,8 @@ people = people.paginate(:per_page => 30, :page => params[:page])
     partner = Person.where(:status => 'p',:member_id => mid ).first
   end
 
-  def self.main_person?
-    if Person.status = "m"
-    end
+  def main_person?
+    status == "m"
   end
 
   def main_member
@@ -145,7 +144,7 @@ people = people.paginate(:per_page => 30, :page => params[:page])
     if status != 'g'
       barcard = Barcard.new
       barcard.save
-      peoplebarcard = Peoplebarcard.new(:person_id=> id, :barcard_id => barcard.id)
+      peoplebarcard = Peoplebarcard.new(:person_id => id, :barcard_id => barcard.id)
       peoplebarcard.save
     end
   end

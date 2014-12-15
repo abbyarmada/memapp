@@ -1,6 +1,6 @@
 class PrivilegesController < ApplicationController
   before_action :set_model, only: [:show, :edit, :update, :destroy]
-  respond_to :html
+
 
   def index
     @privileges = Privilege.all

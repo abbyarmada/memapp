@@ -12,6 +12,9 @@ class Privilege < ActiveRecord::Base
   validates_length_of :member_class, :maximum => 1
   scope :real_member, -> {where(:bar_reference => 1 ) }
 
+  before_save { |privilege|  privilege.member_class.upcase! }
+
+
   def self.billie_cutoff_date
     billie_cutoff_date = (Time.now.year.to_s + "-03-01").to_time
   end

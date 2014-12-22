@@ -8,7 +8,7 @@ class Boat < ActiveRecord::Base
   scope :dinghy, { :conditions => ['boat_type = ? ','Dinghy'] } 
   scope :windsurfer, { :conditions => ['boat_type = ? ','Windsurfer'] } 
   scope :laser , { :conditions => ['boat_class LIKE ? ','Laser%'] }
-  scope :topaz , { :conditions  => ['boat_class LIKE ? ','Topaz Uno Plus%'] }
+  scope :topaz , { :conditions  => ['boat_class LIKE ? ','%Topaz%'] }
   scope :oppi , { :conditions  => ['boat_class LIKE ? ','Opti%'] }
   scope :other, { :conditions  => ['boat_class NOT IN ( ?,?,? )', 'Optimist','Topaz Uno Plus', 'Laser' ] }
   scope :members_boats,lambda { { :joins => [{:member=> [:privilege,:people]} ], :conditions => [ " ( renew_date >= ? and status = 'm')  ",Time.now.prev_year.beginning_of_year ], :order => ("last_name,first_name") }}

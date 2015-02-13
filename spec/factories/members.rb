@@ -15,6 +15,7 @@ FactoryGirl.define do
     county "County"
     country "Country"
     email_renewal "Y"
+	active 1
     factory :member_with_main_person do
       after(:create) do |member|
         create(:person, status: 'm',member: member)

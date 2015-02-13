@@ -31,8 +31,8 @@ gem 'jquery-ui-rails'
 gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
 gem 'autoprefixer-rails'
 #gem 'bootstrap-datepicker-rails'
-gem 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git',  \
-    :branch => 'master', :submodules => true
+#gem 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git',  \
+#    :branch => 'master', :submodules => true
 gem 'momentjs-rails', '>=2.7', :github => 'derekprior/momentjs-rails'
 gem 'jquery-turbolinks'
 gem 'turbolinks'
@@ -61,7 +61,7 @@ group :development do
 end
 
 group :test, :development  do
-  gem 'pg'
+#  gem 'pg'
   gem "rspec-rails", "~> 3.0.0"
   gem 'factory_girl_rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/sprin

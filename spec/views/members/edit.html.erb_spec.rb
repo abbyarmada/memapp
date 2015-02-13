@@ -12,7 +12,6 @@ RSpec.describe "members/edit", :type => :view do
 
       assert_select "input#member_proposed[name=?]", "member[proposed]"
       assert_select "input#member_seconded[name=?]", "member[seconded]"
-      assert_select "input#member_year_joined[name=?]", "member[year_joined]"
       assert_select "select#member_privilege_id[name=?]", "member[privilege_id]"
       assert_select "input#member_name_no[name=?]", "member[name_no]"
       assert_select "input#member_street1[name=?]", "member[street1]"
@@ -28,9 +27,9 @@ RSpec.describe "members/edit", :type => :view do
 
       assert_select "select#member_country[name=?]", "member[country]"
 
-      assert_select "input#member_email_renewal[name=?]", "member[email_renewal]"
+      assert_select "radio#member_email_renewal[name=?]", "member[email_renewal]"
 
-      assert_select "select#member_status[name=?]", "member[status]"
+
     end
   end
 end

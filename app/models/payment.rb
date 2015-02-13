@@ -211,7 +211,7 @@ end
   def check_renewal_date
     if (date_lodged.year == Time.now.year)  &&  renewal_payment?
       self.member.renew_date = date_lodged
-      self.member.status = 'Active'
+      self.member.active = 1
       self.member.save
     end
   end

@@ -1,5 +1,5 @@
 <div class="page-header">
-  <%= link_to members_path, :class => 'btn btn-default' do %>
+  <%= link_to people_path, :class => 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
@@ -21,7 +21,7 @@
   <dd><%= @member.year_joined %></dd>
   
 <dt>Status:</dt>
-  <dd><%= @member.status %></dd>
+  <dd><%= @member.active %></dd>
 
   <dt>Occupation:</dt>
   <dd><%= @member.occupation %></dd>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203111040) do
+ActiveRecord::Schema.define(version: 20141121090103) do
 
   create_table "barcards", force: true do |t|
     t.datetime "created_at"
@@ -30,17 +30,6 @@ ActiveRecord::Schema.define(version: 20141203111040) do
   end
 
   add_index "boats", ["member_id"], name: "BoatsMembers", using: :btree
-
-  create_table "cars", force: true do |t|
-    t.integer  "member_id"
-    t.string   "boat_name"
-    t.string   "boat_type"
-    t.string   "boat_class"
-    t.string   "sail_number"
-    t.string   "pen_tag"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "loyaltycards", force: true do |t|
     t.string   "Member_Title",            limit: 16
@@ -121,7 +110,7 @@ ActiveRecord::Schema.define(version: 20141203111040) do
     t.integer  "year_joined"
     t.string   "occupation"
     t.datetime "renew_date"
-    t.integer  "privilege_id",                               null: false
+    t.integer  "privilege_id",                          null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name_no"
@@ -132,13 +121,13 @@ ActiveRecord::Schema.define(version: 20141203111040) do
     t.string   "postcode"
     t.string   "county"
     t.string   "country"
-    t.string   "email_renewal", limit: 1, default: "N",      null: false
-    t.string   "status",                  default: "Active", null: false
+    t.string   "email_renewal", limit: 1, default: "N", null: false
+    t.integer  "active",        limit: 1, default: 1,   null: false
   end
 
+  add_index "members", ["active"], name: "index_members_on_status", using: :btree
   add_index "members", ["privilege_id"], name: "priv", using: :btree
   add_index "members", ["renew_date"], name: "MemRenew", using: :btree
-  add_index "members", ["status"], name: "index_members_on_status", using: :btree
 
   create_table "payment_methods", force: true do |t|
     t.string   "name",       limit: 40, null: false
@@ -195,8 +184,8 @@ ActiveRecord::Schema.define(version: 20141203111040) do
     t.integer  "txt_test",                 limit: 2, default: 0,     null: false
     t.integer  "txt_op_co",                          default: 0,     null: false
     t.string   "occupation"
-    t.boolean  "send_txt",                           default: false
-    t.boolean  "send_email",                         default: false
+    t.boolean  "send_txt",                           default: false, null: false
+    t.boolean  "send_email",                         default: false, null: false
   end
 
   add_index "people", ["member_id"], name: "PeoMembers", using: :btree
@@ -239,19 +228,6 @@ ActiveRecord::Schema.define(version: 20141203111040) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "privilege_id", null: false
-  end
-
-  create_table "transactions", force: true do |t|
-    t.integer  "member_id"
-    t.decimal  "amount",            precision: 10, scale: 0
-    t.datetime "date_lodged"
-    t.string   "pay_type"
-    t.string   "comment"
-    t.integer  "privilege_id"
-    t.integer  "paymenttype_id"
-    t.integer  "payment_method_id"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
   end
 
   create_table "users", force: true do |t|

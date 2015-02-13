@@ -14,6 +14,7 @@ class MembersController < ApplicationController
     @member.people.build
     @member.year_joined = Time.now.year
     @member.privilege = Privilege.find_by_name "Applicant"
+	@member.active = true
   end
 
   def edit
@@ -109,7 +110,13 @@ class MembersController < ApplicationController
   end
 
   def member_params
-    params.require(:member).permit(:proposed, :seconded, :year_joined, :renew_date, :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, :country, :email_renewal,:status,people_attributes: [:id,:first_name,:last_name,:status,:member_id, :occupation, :dob, :home_phone, :mobile_phone, :email_address, :send_txt, :send_email, :txt_cruising, :txt_cruiser_skipper, :txt_crace, :txt_cruiser_race_skipper, :txt_dinghy_sailing, :txt_junior, :txt_op_co, :txt_social, :txt_bridge, :txt_test] )
+    params.require(:member).permit(:proposed, :seconded, :year_joined, :renew_date, 
+	  :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, 
+	  :country, :email_renewal,:active,
+	  people_attributes: [:id,:first_name,:last_name,:status,:member_id, 
+	    :occupation, :dob, :home_phone, :mobile_phone, :email_address, :send_txt, 
+	    :send_email, :txt_cruising, :txt_cruiser_skipper, :txt_crace, :txt_cruiser_race_skipper, 
+	    :txt_dinghy_sailing, :txt_junior, :txt_op_co, :txt_social, :txt_bridge, :txt_test ] )
   end
 
 end

@@ -1,14 +1,10 @@
 class RenewalsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:generate_pdfs]
+  #skip_before_filter :verify_authenticity_token, :only => [:generate_pdfs]
   def generate_pdfs
     @renewal = Renewal.find(params[:id])
     @renewal.generate_requested
-#    puts "calling rake from controller"
+    puts "calling rake from controller"
     call_rake :create_renewal_pdfs, :renewal_id => 1
-#    task = 'create_renewal_pdfs'
-#    args = 'rewnewal_id=1'
-#    system "/usr/bin/rake #{task}  --trace 2>&1 >> #{Rails.root}/log/rake.log &"
-
     flash[:notice] = "Generating PDF Documents... Please wait... refresh page and the time below will be updated.. when completed - can be up to 10 minutes."
     redirect_to renewals_url
   end

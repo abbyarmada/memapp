@@ -1,5 +1,5 @@
 class RenewalsController < ApplicationController
-  #skip_before_filter :verify_authenticity_token, :only => [:generate_pdfs]
+  skip_before_filter :verify_authenticity_token, :only => [:generate_pdfs]
   def generate_pdfs
     @renewal = Renewal.find(params[:id])
     @renewal.generate_requested

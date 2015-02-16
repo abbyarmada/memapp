@@ -16,7 +16,7 @@ def call_rake(task, options = {})
   #if RbConfig::CONFIG['target_os'] = 'mingw32' 
   #   system " start C:\\Ruby193\\bin\\rake #{task} #{args.join(' ')} >> #{Rails.root}/log/rake.log 2>&1 &"
   # else
-     system "rake #{task} #{args.join(' ')}  >> #{Rails.root}/log/rake.log 2>&1 &" 
+  system "heroku run rake #{task} #{args.join(' ')}  >> #{Rails.root}/log/rake.log 2>&1 &" 
   #end
 end
 

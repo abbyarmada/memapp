@@ -7,6 +7,9 @@ task :create_renewal_pdfs => :environment do
   #renewal.generate_requested
   puts Time.now
 
+  Dir.mkdir("tmp") unless Dir.exists?("tmp")
+  Dir.mkdir("tmp/renewals") unless Dir.exists?("tmp/renewals")
+
 # Delete previous PDF's
   file_path = Rails.root.join("tmp","renewals")
   Dir.foreach(file_path){|file| File.delete(file_path+file) if (/^.*.pdf$/).match(file)} if File.exist?(file_path)

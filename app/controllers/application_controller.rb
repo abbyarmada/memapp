@@ -13,7 +13,7 @@ def call_rake(task, options = {})
   puts "Running rake...!"
   options[:rails_env] ||= Rails.env
   args = options.map { |n, v| "#{n.to_s.upcase}='#{v}'" }
-  system "rake #{task} #{args.join(' ')}"
+  system "rake #{task} #{args.join(' ')} & "
 end
 
 #  --rakefile #{Rails.root}/Rakefile 

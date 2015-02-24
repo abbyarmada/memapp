@@ -1,7 +1,6 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :paymenttype do
-    name "MyString"
+    name "Renewal"
   end
 end

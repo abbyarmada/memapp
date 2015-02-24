@@ -1,0 +1,16 @@
+<%= simple_form_for(@car) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :member_id %>
+    <%= f.input :boat_name %>
+    <%= f.input :boat_type %>
+    <%= f.input :boat_class %>
+    <%= f.input :sail_number %>
+    <%= f.input :pen_tag %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

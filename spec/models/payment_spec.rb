@@ -1,9 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Payment, :type => :model do
   
-  
-  ########  VALIDATIONS    ######################## 
+########  VALIDATIONS    ######################## 
   it "has a vaild factory" do 
     expect(create(:payment)).to be_valid
   end
@@ -32,9 +31,9 @@ describe Payment, :type => :model do
   end
   
   #### instance tests ############ 
-  it "is invalid to have a duplicate paymenttype for renewals" do
+  it "is invalid to have a duplicate Renewal payment within a year" do
     create(:payment)
-    expect(build(:payment,privilege_id: 2 )).not_to be_valid
+    expect(build(:payment)).not_to be_valid
   end
    it "it is invalid to have a final paymenttype without a first payment for renewals" do
      expect(build(:payment, paymenttype_id: 5)).not_to be_valid
@@ -43,4 +42,10 @@ describe Payment, :type => :model do
     create(:payment, paymenttype_id: 4)
     expect(build(:payment, paymenttype_id: 5)).to be_valid
   end
+  it "Can determine the prior renewal payment details" do
+    create(:payment,date_lodged: '2001-01-01')
+    payment = create(:payment,date_lodged: '2002-01-01')
+    expect(payment.prior_renewal_payment.date_lodged).to eq('2001-01-01')
+  end
+
 end

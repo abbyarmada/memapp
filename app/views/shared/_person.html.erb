@@ -1,13 +1,25 @@
-<%= form.inputs :name => "Personal Information" do %>
-<%= form.input :first_name %>
-<%= form.input :last_name %>
-<%= form.input :status, :as => :select , :collection => Person.status, :include_blank => false %>
-<%= form.input :occupation %>
-<%= form.input :dob, :as => :date_select ,:order => [:day, :month, :year] ,:include_blank => true , :start_year => Time.now.year - 100 ,:label => 'Date of Birth' %>
-<% if @person.dob  %>
-  <li><label>Age: </label><%= person.age	%> </li>
+<%= form.inputs :name => "Personal Information" ,:class => "form-horizontal" do %>
+ <% if @person.errors.any?  %>
+  <  <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h4><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:
+      </h4>
+           <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><#%= msg %>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.input :first_name %>
+  <%= form.input :last_name %>
+  <%= form.input :status, :as => :select , :collection => Person.form_status(new_member), :include_blank => false , :required => true, :input_html => { :disabled => new_member } %>
+  <%= form.input :email_address, :as => :email %>
+  <%= form.input :occupation, :required => false %>
+  <%= form.input :dob, :as => :date_select ,:order => [:day, :month, :year] ,:include_blank => true , :start_year => Time.now.year - 100 ,:label => 'Date of Birth' , :required => false%>
+  <%= form.input :member_id ,:as => :hidden %>
 <% end %>
-
-<%= form.input :member_id ,:as => :hidden %>
+<%= form.actions do %>
+  <%= form.action :submit, :as => :button , :label => button_label, :button_html => { :class => "btn btn-primary", :disable_with => 'Wait...' }  if buttons %>
 <% end %>
-<%= form.submit button_label if buttons %>

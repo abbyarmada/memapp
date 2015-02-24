@@ -1,0 +1,39 @@
+<div class="page-header">
+  <%= link_to new_car_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Car
+  <% end %>
+  <h1>Listing cars</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Member</th>
+            <th>Boat name</th>
+            <th>Boat type</th>
+            <th>Boat class</th>
+            <th>Sail number</th>
+            <th>Pen tag</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @cars) do |car| %>
+            <td><%= car.member_id %></td>
+            <td><%= car.boat_name %></td>
+            <td><%= car.boat_type %></td>
+            <td><%= car.boat_class %></td>
+            <td><%= car.sail_number %></td>
+            <td><%= car.pen_tag %></td>
+            <td><%= link_to 'Show', car %></td>
+        <td><%= link_to 'Edit', edit_car_path(car) %></td>
+        <td><%= link_to 'Delete', car, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger' %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     puts "Running rake...!"
     options[:rails_env] ||= Rails.env
     args = options.map { |n, v| "#{n.to_s.upcase}='#{v}'" }
-    system "bin/rake #{task} #{args.join(' ')}  >> #{Rails.root}/log/rake.log 2>&1 &" 
+    system "rake #{task} #{args.join(' ')} & "
   end
 
 

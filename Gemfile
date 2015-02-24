@@ -7,6 +7,11 @@ gem "execjs"
 gem 'therubyracer', :platforms => :ruby
 #gem 'capistrano'
 gem 'devise'
+#gem 'zipruby'
+
+#gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQL Server 5.5"'#
+#gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'
+
 gem 'will_paginate'
 gem 'gchartrb', :require => 'google_chart'
 gem 'prawn'

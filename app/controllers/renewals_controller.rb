@@ -1,16 +1,16 @@
 class RenewalsController < ApplicationController
-  
+
+  skip_before_filter :verify_authenticity_token, :only => [:generate_pdfs]
+
   #before_action :set_model, only: [:generate_pdfs,:generate_emails]
   respond_to :html, :zip
-  
+
   def generate_pdfs
     @renewal = Renewal.find(params[:id])
     @renewal.generate_requested
 #    puts "calling rake from controller"
     call_rake :create_renewal_pdfs, :renewal_id => 1
-    task = 'create_renewal_pdfs'
-    args = 'rewnewal_id=1'
-     system "/usr/bin/rake #{task}  --trace 2>&1 >> #{Rails.root}/log/rake.log &"
+#    system "/usr/bin/rake #{task}  --trace 2>&1 >> #{Rails.root}/log/rake.log &"
 
     flash[:notice] = "Generating PDF Documents... Please wait... refresh page and the time below will be updated.. when completed - can be up to 10 minutes."
     redirect_to renewals_url
@@ -26,7 +26,7 @@ class RenewalsController < ApplicationController
   
   def download_zip
      path = Rails.root.join("tmp","renewals","Renewals_For_Printing.zip")
-     puts "path=" +path.to_s
+#     puts "path=" +path.to_s
      File.open(path,'rb') do |f|
         send_data f.read, :type => 'application/zip',:filename => 'Renewals_For_Printing.zip', :disposition => 'attachment', :encoding => 'utf8'
      end

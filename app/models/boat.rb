@@ -22,6 +22,7 @@ class Boat < ActiveRecord::Base
   scope :members_boats, ->  { where('members.renew_date >= ? and people.status = \'m\'  '  , Time.now.prev_year.beginning_of_year).joins(:member => [:privilege,:people]) }
 
 
+
   def self.types
     {'Dinghy' => 'Dinghy','Cruiser' => 'Cruiser', 'Motor' => 'Motor' , 'Windsurfer' => 'Windsurfer'}
   end

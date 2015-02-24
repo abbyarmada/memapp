@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 20141121090103) do
   end
 
   create_table "people", force: true do |t|
-    t.integer  "member_id",                                          null: false
+    t.integer  "member_id",                                      null: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "status"
@@ -173,19 +173,19 @@ ActiveRecord::Schema.define(version: 20141121090103) do
     t.integer  "member_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "txt_bridge",                         default: 0,     null: false
-    t.integer  "txt_social",                         default: 0,     null: false
-    t.integer  "txt_crace",                          default: 0,     null: false
-    t.integer  "txt_cruiser_race_skipper",           default: 0,     null: false
-    t.integer  "txt_cruising",                       default: 0,     null: false
-    t.integer  "txt_cruiser_skipper",                default: 0,     null: false
-    t.integer  "txt_dinghy_sailing",                 default: 0,     null: false
-    t.integer  "txt_junior",                         default: 0,     null: false
-    t.integer  "txt_test",                 limit: 2, default: 0,     null: false
-    t.integer  "txt_op_co",                          default: 0,     null: false
+    t.integer  "txt_bridge",               limit: 1, default: 0, null: false
+    t.integer  "txt_social",               limit: 1, default: 0, null: false
+    t.integer  "txt_crace",                limit: 1, default: 0, null: false
+    t.integer  "txt_cruiser_race_skipper", limit: 1, default: 0, null: false
+    t.integer  "txt_cruising",             limit: 1, default: 0, null: false
+    t.integer  "txt_cruiser_skipper",      limit: 1, default: 0, null: false
+    t.integer  "txt_dinghy_sailing",       limit: 1, default: 0, null: false
+    t.integer  "txt_junior",               limit: 1, default: 0, null: false
+    t.integer  "txt_test",                 limit: 1, default: 0, null: false
+    t.integer  "txt_op_co",                limit: 1, default: 0, null: false
     t.string   "occupation"
-    t.boolean  "send_txt",                           default: false, null: false
-    t.boolean  "send_email",                         default: false, null: false
+    t.integer  "send_txt",                 limit: 1, default: 0, null: false
+    t.integer  "send_email",               limit: 1, default: 0, null: false
   end
 
   add_index "people", ["member_id"], name: "PeoMembers", using: :btree

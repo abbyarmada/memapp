@@ -1,51 +1,41 @@
 <%= simple_form_for(@member) do |f| %>
-
   <%= f.error_notification %>
   <div class="row">
-  
-  <%= f.simple_fields_for :people do |builder| %>
-<% if builder.object.status == 'm' || @member.new_record? %>
-<%= render :partial => 'people/person', :locals => {:f => builder }  %>
-  <% end %>
-<% end %>
-  
+    <%= f.simple_fields_for :people do |builder| %>
+      <% if builder.object.status == 'm' || @member.new_record? %>
+        <%= render :partial => 'people/person', :locals => {:f => builder }  %>
+      <% end %>
+    <% end %>
     <div class="col-md-6">
       <div class="form-inputs">
         <%= f.input :proposed %>
         <%= f.input :seconded %>
         <%= f.association :privilege, label: "Member Class" %>
-
-       
       </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-inputs">
+        <%= f.input :email_renewal, :as => :radio_buttons %>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="form-inputs">
-          <%= f.input :email_renewal, :as => :radio_buttons %>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-inputs">
+        <%= f.input :name_no %>
+        <%= f.input :street1 %>
+        <%= f.input :street2 %>
+        <%= f.input :town %>
+        <%= f.input :city %>
+        <%= f.input :postcode %>
+        <%= f.input :county %>
+        <%= f.input :country,  priority: ['IE', 'GB']  %>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="form-inputs">
-          <%= f.input :name_no %>
-          <%= f.input :street1 %>
-          <%= f.input :street2 %>
-          <%= f.input :town %>
-          <%= f.input :city %>
-          <%= f.input :postcode %>
-          <%= f.input :county %>
-          <%= f.input :country,  priority: ['IE', 'GB']  %>
-        </div>
-      </div>
   </div>  <!--row -->
-<br>
- end %>
-
-
-
+  <br>
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

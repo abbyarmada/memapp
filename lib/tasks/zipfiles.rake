@@ -1,19 +1,22 @@
 desc "Zip files"
 task :zipfiles => :environment do
 require 'rake/packagetask'
+
 file_path = Rails.root.join("tmp","renewals")
-puts file_path
-puts "running...zipfiles"
-puts "Current dir: #{File.expand_path(".")}"
+zip_file_name = 'Renewals_For_Printing.zip'
+file_name_with_path = "#{file_path}/#{zip_file_name}"
 
-#   Rake::PackageTask.new("zipfiles", "1.2.3") do |p|
-#      p.need_zip = true
-#      puts "class:" + p.class.to_s
-#     # p.zip_command ='"C:\Program Files\WinZip\WINZIP64.EXE" -a zipfiles'
-#      p.package_files.include("tmp/renewals/*.pdf")
-#    end
-
-system("rm -rf #{file_path}/Renewals_For_Printing.zip") 
-system("zip -qj #{file_path}/Renewals_For_Printing.zip #{file_path}/*.pdf")
-
+File.delete(file_name_with_path) if File.exist?(file_name_with_path)
+  begin
+    Zip::Archive.open(file_name_with_path, Zip::CREATE) do |ar|
+      #ar.add_dir(file_path.to_s)
+      Dir.glob(file_path.join("*")).each do |path|
+        if File.directory?(path)
+          ar.add_dir(path)
+        else
+          ar.add_file(path) # add_file(<entry name>, <source path>)
+        end
+      end
+    end
+  end
 end

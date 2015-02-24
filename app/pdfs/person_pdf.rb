@@ -333,9 +333,9 @@ end
 move_down(2) 
 
  if RbConfig::CONFIG['target_os'] = 'mingw32' 
-    payment = Rails.root + "app/assets/images/Renew2013.png" 
+    payment = Rails.root + "app/assets/images/Renew2014.JPG" 
  else
-    payment = 'images/Renew2013.png'
+    payment = 'images/Renew2014.JPG'
  end
  
     image(payment, :at => [0,cursor],:height => 350, :position => :center, :border => 2)
@@ -461,25 +461,25 @@ def cart
 
     if num_pentags > 0
         @person.member.boats.windsurfer.other.each do |penboats|
-    cart << ["Pen Fees ", "#{penboats.boat_type}","#{penboats.boat_class}"," = ", "#{number_to_euro(50)}"]
-    cart_totals << [20]
+    cart << ["Pen Fees ", "#{penboats.boat_type}","#{penboats.boat_class}"," = ", "#{number_to_euro(40)}"]
+    cart_totals << [40]
     end
 
     @person.member.boats.dinghy.other.each do |penboats|
     cart << ["Pen Fees ", "#{penboats.boat_type}","#{penboats.boat_class}"," = ", "#{number_to_euro(60)}"]
-    cart_totals << [50]
+    cart_totals << [60]
     end
     @person.member.boats.dinghy.topaz.each do |penboats|
     cart << ["Pen Fees ", "#{penboats.boat_type}","#{penboats.boat_class}"," = ", "#{number_to_euro(40)}"]
-    cart_totals << [30]
+    cart_totals << [40]
     end
     @person.member.boats.dinghy.laser.each do |penboats|
     cart << ["Pen Fees ", "#{penboats.boat_type}","#{penboats.boat_class}"," = ", "#{number_to_euro(50)}"]
-    cart_totals << [40]
+    cart_totals << [50]
     end
     @person.member.boats.dinghy.oppi.each do |penboats|
     cart << ["Pen Fees ", "#{penboats.boat_type}","#{penboats.boat_class}"," = ", "#{number_to_euro(30)}"]
-    cart_totals << [20]
+    cart_totals << [30]
     end
   end 
     

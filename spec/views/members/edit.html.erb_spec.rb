@@ -27,7 +27,7 @@ RSpec.describe "members/edit", :type => :view do
 
       assert_select "select#member_country[name=?]", "member[country]"
 
-      assert_select "radio#member_email_renewal[name=?]", "member[email_renewal]"
+      assert_select "input#member_email_renewal_true[name=?]", "member[email_renewal]"
 
 
     end

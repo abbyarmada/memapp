@@ -13,11 +13,7 @@ def call_rake(task, options = {})
   puts "Running rake...!"
   options[:rails_env] ||= Rails.env
   args = options.map { |n, v| "#{n.to_s.upcase}='#{v}'" }
-  #if RbConfig::CONFIG['target_os'] = 'mingw32' 
-  #   system " start C:\\Ruby193\\bin\\rake #{task} #{args.join(' ')} >> #{Rails.root}/log/rake.log 2>&1 &"
-  # else
-     system "rake #{task} #{args.join(' ')}  >> #{Rails.root}/log/rake.log 2>&1 &" 
-  #end
+  system "rake #{task} #{args.join(' ')} & "
 end
 
 #  --rakefile #{Rails.root}/Rakefile 

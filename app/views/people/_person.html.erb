@@ -10,7 +10,6 @@
                   :include_blank => false  %>
             <%= f.input :occupation, :required => false ,placeholder: 'Occupation' %>
             <%= f.input :dob, :label =>'Date of Birth', :as => :date_picker,input_html: {'data_date_startview' => 2 }  %>
-            
           </div>
         </div>
       </div>
@@ -19,16 +18,18 @@
       <div class="panel panel-info">
         <div class="panel-heading">Contact Details</div>
         <div class="panel-body">
-          <%= f.input :home_phone  , :as => :string   %>
-          <%= f.input :mobile_phone  , :as => :string   %>
+          <%= f.input :home_phone  , :as => :string , placeholder: '35318451234'  %>
+          <%= f.input :mobile_phone  , :as => :string , placeholder: '3538x12345678'   %>
           <%= f.input :email_address,  :as => :email  , placeholder: 'Email' %>
-          <%= f.input :send_txt , as: :boolean %>
-          <%= f.input :send_email , as: :boolean  %>
+        </div>
+        <div class="panel-body">
+          <%= f.input :send_txt , as: :boolean ,:label => "Send SMS Messages"       %>
+          <%= f.input :send_email , as: :boolean, :label => "Send Email Messages"         %>
         </div>
       </div>
     </div>
   </div>
-  <div class="row"> 
+  <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
       <div class="panel panel-info">

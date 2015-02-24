@@ -1,9 +1,14 @@
 class RenewalsController < ApplicationController
+
   skip_before_filter :verify_authenticity_token, :only => [:generate_pdfs]
+
+  #before_action :set_model, only: [:generate_pdfs,:generate_emails]
+  respond_to :html, :zip
+
   def generate_pdfs
     @renewal = Renewal.find(params[:id])
     @renewal.generate_requested
-    puts "calling rake from controller"
+#    puts "calling rake from controller"
     call_rake :create_renewal_pdfs, :renewal_id => 1
 #    system "/usr/bin/rake #{task}  --trace 2>&1 >> #{Rails.root}/log/rake.log &"
 
@@ -28,11 +33,11 @@ class RenewalsController < ApplicationController
   end
   
   def index
-    @renewals = Renewal.find(:all)
+    @renewals = Renewal.all
   end
   
   def show
-    @renewal = Renewal.find(params[:id])
+   
   end
   
   def new
@@ -40,7 +45,7 @@ class RenewalsController < ApplicationController
   end
   
   def create
-    @renewal = Renewal.new(params[:renewal])
+    @renewal = Renewal.new(renewal_params)
     if @renewal.save
       flash[:notice] = "Successfully created Renewal."
       redirect_to @renewal
@@ -48,25 +53,33 @@ class RenewalsController < ApplicationController
       render :action => 'new'
     end
   end
-  
+ 
   def edit
-    @Renewal = Renewal.find(params[:id])
+   
   end
   
   def update
-    @renewal = Renewal.find(params[:id])
-    if @renewal.update_attributes(params[:renewal])
+    if @renewal.update(renewal_params)
       flash[:notice] = "Successfully updated Renewal."
-      redirect_to @renewal
-    else
-      render :action => 'edit'
+      respond_with(@renewal)
     end
   end
-  
+ 
   def destroy
-    @renewal = Renewal.find(params[:id])
     @renewal.destroy
     flash[:notice] = "Successfully destroyed Renewal."
     redirect_to renewals_url
   end
+
+  private
+  def set_model
+    @renewal = Renewal.find(params[:id])
+  end
+
+  def renewal_params
+    params.require(:renewal).
+      permit(:subject,:content,:delivered_at,:requested_at)
+  end
+
 end
+ 

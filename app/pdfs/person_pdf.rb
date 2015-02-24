@@ -2,27 +2,25 @@
 class PersonPdf < Prawn::Document
 include ActionView::Helpers::NumberHelper
 require 'prawn/table'
-  
-  def initialize(person) 
+  def initialize(person)
     super(:page_size => "A4")
     #full_width = 525
     @person = person
     @member = @person.member
     @pbc = @person.peoplebarcard
-    
+
     top = cursor
-   
-   
+
     bounding_box([420,top], :width => 100) do (
       move_down(01)
       logo
       move_down(80)
-      address_txt  
-      
-   ) 
+      address_txt
+
+   )
    end
-   
-   move_down(20) 
+
+   move_down(20)
    column1_end = cursor
 
 
@@ -431,7 +429,7 @@ end
   
   
    def pad
-       [
+    pad = [
        [  @person.salutation         ],
        [  @member.name_no            ] ,
        [  @member.street1            ] ,
@@ -565,8 +563,8 @@ def commspref
     [   
         person.first_name, 
         person.email_address,       
-        person.snd_txt,
-        person.snd_eml,
+        person.send_txt ? 'Y': 'N',
+        person.send_email? ? 'Y': 'N',
         person.txt_social.zero? ? ' ': 'Y',
         person.txt_crace.zero? ? ' ': 'Y',
         person.txt_cruiser_race_skipper.zero? ? ' ': 'Y',
@@ -624,22 +622,6 @@ end
       number_to_currency(item, :unit => "€", :separator => ".", :delimiter => ",", :format => "%n %u")
   end
 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
 end
 
 

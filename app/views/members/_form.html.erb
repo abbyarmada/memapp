@@ -1,0 +1,70 @@
+<%= simple_form_for(@member) do |f| %>
+
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-inputs">
+         <%= f.input :proposed %>
+        <%= f.input :seconded %>
+        <%= f.association :privilege, label: "Member Class" %>
+         
+        <%= f.input :status, as: :select  %> 
+       <!--  #FIXME update the displayed values to Active/Inactive -->
+      
+      </div>
+    </div>
+      <div class="col-md-6">
+        <div class="form-inputs">
+          <%= f.input :year_joined %>
+          <div class="integer required col-sm-3 control-label">
+            <%= f.label :renew_date %>
+            <div class="col-md-6">
+              
+                 <%= f.text_field :renew_date %>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-inputs">
+          <%= f.input :email_renewal %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-inputs">
+          <%= f.input :name_no %>
+          <%= f.input :street1 %>
+          <%= f.input :street2 %>
+          <%= f.input :town %>
+          <%= f.input :city %>
+          <%= f.input :postcode %>
+          <%= f.input :county %>
+          <%= f.input :country,  priority: ['IE', 'GB']  %>
+        </div>
+      </div>
+  </div>  <!--row -->
+<br>
+<%= f.simple_fields_for :people do |builder| %>
+<% if builder.object.status == 'm' || @member.new_record? %>
+<%= render :partial => 'people/person', :locals => {:f => builder }  %>
+  <% end %>
+<% end %>
+
+
+
+
+
+
+<%#= @member.people.first do |person|  @person = person %>
+  <%#= render :partial => 'people/person', :locals => { :@person => person } %>
+<%# end %>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

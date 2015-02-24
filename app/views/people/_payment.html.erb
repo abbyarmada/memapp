@@ -1,11 +1,38 @@
-<%= form_for(@payment) do %>
-<tr class="<%= cycle('odd', 'even') %>">
-<td><%= link_to @payment.paymenttype.name ,edit_payment_path(:id => @payment.id, :pid => @pid, :mid =>@mid) %>  </td>
-<td><%= @payment.date_lodged.year   %></td>
-<td><%= @payment.amount     %>  </td>
-<td><%= @payment.privilege.name  rescue nil   %>  </td>
-<td><%= @payment.date_lodged.to_date %>  </td>
-<td><%= @payment.payment_method.name rescue nil    %>  </td>
-<td><%= link_to 'Delete', @payment, :action => :destroy, :confirm => "Are you sure you want to delete this payment?" ,:method => :delete   %></td>
-</tr>
-<% end %>
+<div id="payment_index_page">
+<div class="page-header">
+  <%= link_to new_payment_path(:member_id => @person.member_id) ,:class => 'btn  btn-primary', id: 'new_payment', remote: true do %>
+    <span class="glyphicon glyphicon-plus"></span>
+  New Payment
+  <% end %>
+  <h1>Listing  Payments</h1>
+</div>
+<div class="table-responsive" >
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Year</th>
+        <th>Amount</th>
+        <th>Membership Class</th>
+        <th>Date</th>
+        <th>Payment Method</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= content_tag_for(:tr, @payments) do |payment| %>
+        <td><%= payment.paymenttype.name%></td>
+        <td><%= payment.date_lodged.year %></td>
+        <td><%= payment.amount %></td>
+        <td><%= payment.privilege.name %></td>
+        <td><%= payment.date_lodged.to_date %></td>
+        <td><%= payment.payment_method.name %></td>
+      <td><%= link_to 'Edit', edit_payment_path(payment), :class => 'btn btn-default' %></td>
+      <td><%= link_to 'Delete', payment, :method => :delete, data: {
+  confirm: "Are you sure you want to delete this payment?" }, :class => 'btn btn-danger',remote: true  %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

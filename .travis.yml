@@ -1,4 +1,4 @@
-# Speed up travis builds: https://gist.github.com/ArturT/5792488
+# Speed up travis builds see : https://gist.github.com/ArturT/5792488
 
 bundler_args: --without development --path=~/.bundle
 language: ruby

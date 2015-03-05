@@ -63,6 +63,7 @@ group :development do
   gem 'rb-inotify', :require=>false
   gem 'spring-commands-rspec'
   #gem 'debugger'
+  gem 'travis'
 end
 
 group :test, :development  do

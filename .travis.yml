@@ -1,3 +1,5 @@
+# Speed up travis builds: https://gist.github.com/ArturT/5792488
+
 bundler_args: --without development --path=~/.bundle
 language: ruby
 cache: bundler
@@ -16,7 +18,7 @@ env:
 #  - DB=postgresql
   global:
     - RAILS_ENV=test
-    - secure: f6Ic+u+L4ZgXA43CH+SnEOcJX1loBMnnBI2J0hWEKFUSLiJk9SFQjypX1FAEsxH8WaTZBO4cyfe/PKR8+vW45ytTJmk2T7filqqHftpbRrB6wK56MaQZU9sKyZvbA+nqh8QASPhn7KI6m/na26xe8RnHWf7OBwt+1602q/emOzY=
+    - secure: Wk3Sl0mcOYADwa9J7dtt+lnWiGftVD0sNr04raa/IybH8+D/j1DHbrD+MmmkJgSNIje/bn8zOmPYkhn++8ynTOhqlAUDaHv/RWQdy89N9QhzOME9fEHTiswYWKu1sy3wvZT9OeKN2n+W4qVUnmY01VN+vdR/duqjtvmY9Bxr5yU=
 
 # - cp config/database.travis.yml config/database.yml
 before_script:

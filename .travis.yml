@@ -1,4 +1,5 @@
 # Speed up travis builds see : https://gist.github.com/ArturT/5792488
+# encrypt the ftp login see: http://docs.travis-ci.com/user/encryption-keys/
 
 bundler_args: --without development --path=~/.bundle
 language: ruby

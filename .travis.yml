@@ -29,6 +29,10 @@ before_script:
 after_script:
   - ruby script/travis/bundle_cache.rb
 
+addons:
+  code_climate:
+     repo_token: 58ea4eeba73061c6684c99921ccfa25702de631d221130cbc68a3ae32c91067c
+
 notifications:
   email: true
   

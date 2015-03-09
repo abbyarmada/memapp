@@ -4,6 +4,11 @@ require 'spec_helper'
 require "codeclimate-test-reporter"
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+
+# Add this to load Capybara integration:
+require 'capybara/rspec'
+require 'capybara/rails'
+
 CodeClimate::TestReporter.start
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -42,4 +47,7 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  #capybara
+  config.include Capybara::DSL
 end

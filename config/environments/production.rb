@@ -19,7 +19,7 @@ R3::Application.configure do
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
   # temp fix for noise in log files
-  config.action_dispatch.rack_cache[:verbose] = false
+  #config.action_dispatch.rack_cache[:verbose] = false
   
   # For nginx:
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
@@ -91,7 +91,7 @@ config.active_support.deprecation = :notify
 config.log_formatter = ::Logger::Formatter.new
  
 # Do not dump schema after migrations.
-config.active_record.dump_schema_after_migration = false
+#config.active_record.dump_schema_after_migration = false
 
 
 end

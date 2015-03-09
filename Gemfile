@@ -72,18 +72,21 @@ group :test, :development  do
   gem 'factory_girl_rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/sprin
   gem 'spring'
+  gem 'capybara'
+  gem 'cucumber-rails', require: nil
+  gem 'cucumber', require: nil
 end
 
 group :test do
   gem "sqlite3"
   gem 'faker'
-  gem 'capybara'
   gem 'launchy'
   gem 'nokogiri'#, '>= 1.3.3'
   gem 'database_cleaner'
   gem 'rspec-activemodel-mocks'
   gem 'selenium-webdriver'
   gem 'codeclimate-test-reporter', require: nil
+  gem 'poltergeist'
 end
 
 group :test,:production do

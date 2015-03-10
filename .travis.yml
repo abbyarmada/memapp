@@ -33,8 +33,10 @@ after_script:
   - ruby script/travis/bundle_cache.rb
 
 addons:
-  code_climate:
-     repo_token: 58ea4eeba73061c6684c99921ccfa25702de631d221130cbc68a3ae32c91067c
+  - code_climate:
+      - repo_token:
+        - secure: XF1pHDHcZMdsMuW4mTtmyz4Qx0TlMeg0XL1NhUkWniQo4d++Zim74oi47Av2kHtJ8x9JX8k9QVQaNkUFxUJo3w8V2CpPQHp6I6RyJhp04s4jECnF10j92hMeDboTs89mh8tF0lTLwHGgqTac3IFvoIK6iwoqGKkZ8zhiF41NyaA=
+
 
 notifications:
   email: true

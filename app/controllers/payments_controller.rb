@@ -29,13 +29,13 @@ class PaymentsController < ApplicationController
   end
 
 
-   def new
-     @payment = Payment.new
-     @payment.member_id  = (params[:member_id])
-     @payment.privilege_id = @payment.member.privilege.id
-     #default to Subscription renewal
-     @payment.paymenttype_id = 1
-     @payment.date_lodged = Time.now.to_date
+  def new
+    @payment = Payment.new
+    @payment.member_id  = (params[:member_id])
+    @payment.privilege_id = @payment.member.privilege.id
+    #default to Subscription renewal
+    @payment.paymenttype_id = 1
+    @payment.date_lodged = Time.now.to_date
   end
   def create
     @payment = Payment.new(payment_params)
@@ -114,7 +114,7 @@ def tot_by_member_class
       if params[:date][:month].to_i >  0
         endmonth =   params[:date][:month].to_s
         endday = (Time.now.year.to_s + '-' + endmonth + '-01').to_date.end_of_month.day.to_s
-       end
+      end
     end
     @end_month = endmonth.to_i
     #@years.times do |y|
@@ -159,31 +159,24 @@ end
 
 
   def overdue_csv
-  
   @overdue = Member.overduesubs
-  
   report = StringIO.new
   CSV::Writer.generate(report,',') do |title|
 
-  title << ['First Name', 'Last Name', 'Home Phone', 'Mobile', 'Email','Address1','Address2','Address3','Address4', 'Member Class', 'Age', 'last Payment date']
+  title << ['First Name', 'Last Name', 'Home Phone', 'Mobile', 'Email','Address1','Address2','Address3','Address4',
+    'Member Class', 'Age', 'last Payment date']
     @overdue.each do |c|
-      title << [c.people[0].first_name, c.people[0].last_name, c.people[0].home_phone, c.people[0].mobile_phone, c.people[0].email_addr, c.address1,c.address2,c.address3,c.address4,c.privilege.name ,c.people[0].age,  c.renew_date.to_date]
+      title << [c.people[0].first_name, c.people[0].last_name, c.people[0].home_phone, c.people[0].mobile_phone,
+        c.people[0].email_addr, c.address1,c.address2,c.address3,c.address4,c.privilege.name ,
+        c.people[0].age,c.renew_date.to_date]
     end
-
   end
   report.rewind
-  send_data(report.read,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'overduemembers.csv', :disposition => 'attachment', :encoding => 'utf8')
+  send_data(report.read,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'overduemembers.csv',
+    :disposition => 'attachment', :encoding => 'utf8')
+  end
 
-
-
-end
-
-
- 
-  
-
-
-def receipts_breakdown
+  def receipts_breakdown
     #Start year is 2007
     @years = Time.now.year - 2006 + 1
     @month = ''
@@ -218,12 +211,10 @@ def receipts_breakdown
                           where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ", date_start, date_end ).
                           group("month, monthname").
                           order("month, pay_type")
-
-
      end
-end
+  end
 
-def drill_pay
+  def drill_pay
     #@drill = []
     date_start = Date.new(params[:year].to_i,params[:month].to_i,'01'.to_i).to_date
     date_end = date_start.end_of_month
@@ -247,44 +238,43 @@ def drill_pay
          format.xml
          format.json
     end
+  end
 
-end
-
-def auto_renew_life_honorary
-      @renews = Member.memclass(5,6)
-      @renews.each do |renew|
-          @payment = Payment.new
-          @payment.member_id  = renew.id
-          @payment.amount = 0
-          @payment.date_lodged = 1.year.from_now.beginning_of_year
-          #renew.renew_date = @payment.date_lodged
-          #@renew.save
-          @payment.privilege_id = renew.privilege.id
-          @pid = Person.main_person(renew.id)
-          #default to Subscription renewal
-          @payment.pay_type = 'NP'
-          @payment.paymenttype_id = 1
-          @payment.comment ="Auto Renewed by System"
-          @payment.save
-
-          if @payment.save
-            renew.renew_date = @payment.date_lodged
-            @renew.save
-            flash[:notice] = 'Members Renewed'
-           else
-               flash[:notice] = 'Error'
-           end
-        end
+  def auto_renew_life_honorary
+    @renews = Member.memclass(5,6)
+    @renews.each do |renew|
+      @payment = Payment.new
+      @payment.member_id  = renew.id
+      @payment.amount = 0
+      @payment.date_lodged = 1.year.from_now.beginning_of_year
+      #renew.renew_date = @payment.date_lodged
+      #@renew.save
+      @payment.privilege_id = renew.privilege.id
+      @pid = Person.main_person(renew.id)
+      #default to Subscription renewal
+      @payment.pay_type = 'NP'
+      @payment.paymenttype_id = 1
+      @payment.comment ="Auto Renewed by System"
+      @payment.save
+      if @payment.save
+        renew.renew_date = @payment.date_lodged
+        @renew.save
+        flash[:notice] = 'Members Renewed'
+       else
+         flash[:notice] = 'Error'
+       end
     end
+  end
+
   private
   def set_model
     @payment = Payment.find(params[:id])
   end
 
-def payment_params
-  params.require(:payment).permit(:member_id,:amount,:date_lodged,:pay_type,:comment,:privilege_id,:paymenttype_id,:payment_method_id)
+  def payment_params
+  params.require(:payment).permit(:member_id,:amount,:date_lodged,:pay_type,:comment,
+    :privilege_id,:paymenttype_id,:payment_method_id)
   end
-
 
 end
 

@@ -72,7 +72,7 @@ describe BoatsController  do
       it "creates a new Boat" do
         expect {
        member = create(:member, :people => [  create(:person) ] )
-        boat = create(:boat , :member => member )
+       create(:boat , :member => member )
         }.to change(Boat, :count).by(1)
       end
 

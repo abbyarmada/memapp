@@ -4,10 +4,10 @@ class PaymentsController < ApplicationController
   require 'csv'
 
   def edit
-   
+
   end
   def show
-  
+
   end
 
   def update

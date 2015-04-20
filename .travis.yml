@@ -12,8 +12,8 @@ rvm:
 env:
   matrix:
   - DB=mysql
-  - DB=sqlite
-  - DB=postgresql
+#  - DB=sqlite
+#  - DB=postgresql
   global:
     - RAILS_ENV=test
     - secure: f6Ic+u+L4ZgXA43CH+SnEOcJX1loBMnnBI2J0hWEKFUSLiJk9SFQjypX1FAEsxH8WaTZBO4cyfe/PKR8+vW45ytTJmk2T7filqqHftpbRrB6wK56MaQZU9sKyZvbA+nqh8QASPhn7KI6m/na26xe8RnHWf7OBwt+1602q/emOzY=
@@ -23,8 +23,8 @@ before_script:
   - cp config/database.$DB.yml config/database.yml
   - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
   - mysql -e 'create database memapp_$RAILS_ENV'
-  - psql -c 'create database memapp_$RAILS_ENV' -U postgres
-  - touch 'db/$RAILS_ENV.sqlite3'
+#  - psql -c 'create database memapp_$RAILS_ENV' -U postgres
+#  - touch 'db/$RAILS_ENV.sqlite3'
 
 after_script:
   - ruby script/travis/bundle_cache.rb

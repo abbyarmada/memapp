@@ -37,12 +37,12 @@ class MembersController < ApplicationController
   def create
    # Member.transaction do 
     @member = Member.new(params[:member])
-    @member.update_attributes!(params[:member])
-    @member.update_attributes!(:renew_date => Time.now)
+    @member.update_attributes(params[:member])
+    @member.update_attributes(:renew_date => Time.now)
     @person = Person.new(params[:member][:person])
-    @person.update_attributes!(:member_id => @member.id, :status => 'm')
+    @person.update_attributes(:member_id => @member.id, :status => 'm')
     @barcard = Barcard.new(params[:barcard])
-    @barcard.update_attributes!(params[:barcard])
+    @barcard.update_attributes(params[:barcard])
      @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
      @peoplebarcard.person_id = @person.id
      @peoplebarcard.barcard_id = @barcard.id

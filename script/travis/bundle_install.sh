@@ -2,7 +2,7 @@
 # script/travis/bundle_install.sh
  
 ARCHITECTURE=`uname -m`
-FILE_NAME="cache-$ARCHITECTURE.tgz"
+FILE_NAME="$TRAVIS_BRANCH-$ARCHITECTURE.tgz"
  
 cd ~
 wget -O "remote_$FILE_NAME" "ftp://$CI_FTP_URL/$FILE_NAME" && tar -xf "remote_$FILE_NAME" 

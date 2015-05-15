@@ -5,8 +5,7 @@ require "digest"
 require "net/ftp"
  
 architecture = `uname -m`.strip
- 
-file_name = ENV["TRAVIS_BRANCH"] + "-#{architecture}.tgz"
+file_name = ENV["TRAVIS_BRANCH"] + "-#{architecture}.tgz" 
 file_path = File.expand_path("~/#{file_name}")
 lock_file = File.join(File.expand_path(ENV["TRAVIS_BUILD_DIR"]), "Gemfile.lock")
 digest_filename = "#{file_name}.sha2"

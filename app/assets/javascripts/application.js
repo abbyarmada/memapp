@@ -7,9 +7,10 @@
 //= require turbolinks
 //= require nprogress
 //= require nprogress-turbolinks
-//= require bootstrap-sprockets
 //= require moment
-//= require bootstrap-datetimepicker
+
+//= require bootstrap/dist/js/bootstrap
+
 //= require pickers
 //= require_tree .
 

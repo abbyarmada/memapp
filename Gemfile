@@ -33,7 +33,7 @@ gem 'formtastic-bootstrap' ,:git => 'https://github.com/petercunning/formtastic-
 gem 'simple_form', '~> 3.1.0.rc2' #, github: 'plataformatec/simple_form'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
+#gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
 gem 'autoprefixer-rails'
 #gem 'bootstrap-datepicker-rails'
 #gem 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git',  \
@@ -42,11 +42,13 @@ gem 'momentjs-rails', '>=2.7', :github => 'derekprior/momentjs-rails'
 gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'nprogress-rails'
-gem 'sass-rails', '~> 4.0.2'# '~> 3.1.5'
+gem 'sass-rails'#, '~> 4.0.2'# '~> 3.1.5'
 gem 'coffee-rails' #, '~> 3.1.1'
 gem 'uglifier'     #, '>= 1.0.3'
 
 
+gem 'less-rails'
+gem 'railsstrap'
 
 
 group :development do

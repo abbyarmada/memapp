@@ -1,6 +1,6 @@
 # Speed up travis builds see : https://gist.github.com/ArturT/5792488
 # encrypt the ftp login see: http://docs.travis-ci.com/user/encryption-keys/
-travis encrypt CI_FTP_URL="ftp-app.example.com" CI_FTP_HOST="ftp.example.com" CI_FTP_USER="YOUR_FTP_USER" CI_FTP_PASS="YOUR_FTP_PASSWORD"
+# travis encrypt CI_FTP_URL="ftp-app.example.com" CI_FTP_HOST="ftp.example.com" CI_FTP_USER="YOUR_FTP_USER" CI_FTP_PASS="YOUR_FTP_PASSWORD"
 
 
 bundler_args: --without development --path=~/.bundle

@@ -234,6 +234,7 @@ config/secrets.yml
 config/database.yml
 config/initializers/dev_mail.rb
 config/initializers/constants.rb
+/public/assets/**
 ## Environment normalisation:
 /.bundle
 /vendor/bundle

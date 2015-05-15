@@ -1,11 +1,8 @@
-<h1>Boats </h1>
-<%= form_tag :action => 'update', :pid => @pid  do %>
-  <%= form_for(@boat) do |f| %>
-    <%= render :partial => "form", :locals => { :button_label => "Update", :boat => @boat, :pid => @pid  } %> 
-    <%= link_to 'Back', :controller => 'people', :action => 'edit', :id => Person.main_person(@boat.member_id) %>
+<div class="page-header">
+  <%= link_to person_path(@boat.owner) + '#tabs-5', :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
   <% end %>
-<% end %>
-
-
-
+<h1>Boats </h1>
+    <%= render :partial => 'form'  %>
 

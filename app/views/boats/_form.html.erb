@@ -1,11 +1,14 @@
-<%= form_for(@boat) do |f| %>
-  <table class ="listing">
-	  <th>Field</th> <th> value</th> 
-	  <tr>	<td>Boat Name</td><td><%= f.text_field :boat_name  %></td></tr>
-	  <tr>	<td>Boat Type</td><td><%= collection_select( :boat, :boat_type, Boat.types,:first ,:last ,{:prompt => true}  ) %></td></tr> 
-	  <tr>	<td>Boat Class</td><td><%= f.text_field :boat_class   %>  </td></tr>
-	  <tr>	<td>Sail Number</td><td><%= f.text_field :sail_number   %></td></tr>
-	  <tr>  <td>Pen Tag</td><td><%= f.text_field :pen_tag   %>        </td></tr>
-  </table>
-  <p><%= f.submit button_label %></p>
+<%= simple_form_for(@boat ) do |form| %>
+<div class="form-inputs">
+  <%= form.input :member_id, :as => :hidden %>
+  <%= form.input :boat_name %>
+  <%= form.input :boat_type , :as => :select, :collection => Boat.types  %>
+  <%= form.input :boat_class  %>
+  <%= form.input :sail_number %>
+  <%= form.input :pen_tag  %>
+</div>
+<div class="form-actions">
+  <%= form.button :submit  %>
+</div>
 <% end %>
+

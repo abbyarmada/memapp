@@ -1,0 +1,22 @@
+
+<%= "Totals by M Type" %><br/>
+
+
+
+Total 2008 Membership
+<table>
+
+<th>Lodged</th>  <th>Number</th> <th>Tot Value</th>
+
+<%@tot2008.each do |p| %>
+   <tr>
+     
+     <td> <%= p.date_lodged.to_date%></td>
+    
+    <td> <%= p.tot%></td>
+    <td> <%= p.money%></td>
+  </tr>
+<% end %>
+
+
+</table>

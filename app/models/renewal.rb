@@ -1,6 +1,4 @@
 class Renewal < ActiveRecord::Base
-  #validates_presence_of :subject
-  validates :subject, presence: true
   def generate_completed
     update_attribute(:delivered_at, Time.now)
   end

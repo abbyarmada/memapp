@@ -1,48 +1,51 @@
-<%= semantic_form_for @person , :namespace => @person.id do |form| %>
-   <% if @person.errors.any? %>
-    <div class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <h4><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h4>
-           <ul>
-      <% @person.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <%= form.inputs do %>
 
-  <div class="span2">
-  <%= form.input :home_phone  %>
-  <%= form.input :mobile_phone  , :as => :phone   %>
-    <div class="checkbox"><%= form.input :send_txt         , :as => :boolean %></div>
-  <%= form.input :email_address,  :as => :email   %>
-    <div class="checkbox"><%=  form.input :send_email       , :as => :boolean %> </div>
-  </div>
+<fieldset> 
+            <legend>Subscribe to Texts and Emails</legend> 
+    
+                 <table class=""> 
+                <tr> 
+                    <td><%= submit_tag "Update" %>  </td> 
+                </tr>
+            </table> 
+ 
+ 
+         <p><b> <%=@person.first_name%> <%=@person.last_name %> </b></p>
+         <table class="listing">
+            <th> </th> <th>send messages</th>
+            
+            <tr> <td> 
+             <%= text_field :person, :home_phone   %><label> Home </label></td><td> </td></tr>
+             <tr><td>  <%= text_field :person, :mobile_phone %><label> mobile</label> </td>
+                  <td> <%= radio_button(:person, :snd_txt, "Y")  %><label for="person_snd_txt_y">Yes</label>
+                  <%= radio_button(:person, :snd_txt, "N")  %><label for="person_snd_txt_n">No</label> </td></tr>
+             <tr><td> <%= text_field :person, :email_address %><label> Email</label></td> 
+                  <td> <%= radio_button(:person, :snd_eml, "Y")  %><label for="person_snd_eml_y">Yes</label>
+                  <%= radio_button(:person, :snd_eml, "N")  %><label for="person_snd_eml_n">No</label> </td></tr>
+            </table> 
+             
+     
+         
+   <table>  
+        <tr> 
+            <td> <%= check_box(:person, :txt_social)  %><label> Social</label> </td>
+            <td> <%= check_box(:person, :txt_crace)  %><label> Cruiser Racing</label> </td>
+            <td> <%= check_box(:person, :txt_cruiser_race_skipper)  %><label> Cruiser Racing Skippers</label> </td>
+        </tr>   
+        <tr>     
+            <td> <%= check_box(:person, :txt_cruising)  %><label> Cruising</label> </td>
+            <td> <%= check_box(:person, :txt_cruiser_skipper)  %><label> Cruising Skippers</label> </td>
+            <td> <%= check_box(:person, :txt_dinghy_sailing)  %><label> Dinghy Sailing</label> </td>
+        </tr>     
+        <tr>     
+            <td> <%= check_box(:person, :txt_junior)  %><label> Junior Sailing</label> </td>
+            <td> <%= check_box(:person, :txt_bridge)  %><label> Bridge</label> </td>
+            <td> <%= check_box(:person, :txt_test)  %><label> Test messages</label> </td>
+            <td> <%= check_box(:person, :txt_op_co)  %><label> Optimist Coaching </label> </td>
+
+        </tr>     
+
+    </table> 
 
 
 
-  <% end %>
-  <%= form.inputs do %>
-  <div class="row">
-  <div class="span3">
-  	<div class="checkbox-inline"><%= form.input :txt_crace                   , :label => "Cruiser Racing"          , :as => :boolean %></div>
-  	<div class="checkbox-inline"><%= form.input :txt_cruiser_race_skipper    , :label => "Cruiser Racing Skippers" , :as => :boolean %></div>
-  	<div class="checkbox-inline"><%= form.input :txt_cruising                , :label => "Cruising"                , :as => :boolean %></div>
-  	<div class="checkbox-inline"><%= form.input :txt_cruiser_skipper         , :label => "Cruising Skippers"       , :as => :boolean %></div>
-  	<div class="checkbox-inline"><%= form.input :txt_dinghy_sailing          , :label => "Dinghy Sailing"          , :as => :boolean %></div>
-  </div>
-  <div class="span3">
-  	<div class="checkbox-inline"><%= form.input :txt_junior                  , :label => "Juniors"                 , :as => :boolean %></div>
-  	<div class="checkbox-inline"><%= form.input :txt_op_co                   , :label => "Optimist Coaching"       , :as => :boolean %></div>
-  	<div class="checkbox-inline"><%= form.input :txt_social                  , :label => "Social"                  , :as => :boolean %></div>
-  	<div class="checkbox-inline"><%= form.input :txt_bridge                  , :label => "Bridge"                  , :as => :boolean %></div>
-  	<div class="checkbox-inline"><%= form.input :txt_test                    , :label => "Test Messages"           , :as => :boolean %></div>
-  </div>
-  </div>
-  <% end %>
-
-	<%= form.actions do %>
-      <%= form.action :submit, :label => 'Update ' +  @person.first_name,  :button_html => { :class => "btn btn-primary" }  %>
-	<% end %>
-<% end %>
+</fieldset>

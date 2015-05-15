@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe "Privileges", :type => :request do
   before :each do
@@ -6,6 +6,7 @@ describe "Privileges", :type => :request do
   end
   describe "GET /privileges" do
     it "works! (now write some real specs)" do
+      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
       get privileges_path
       expect(response.status).to be(200)
     end

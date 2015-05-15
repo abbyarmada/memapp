@@ -1,11 +1,22 @@
-<div class="page-header">
-  <%= link_to people_path, :class => 'btn btn-default' do %>
-    <span class="glyphicon glyphicon-list-alt"></span>
-    Back
-  <% end %>
-  <h1>New member</h1>
-</div>
-
-<%= render 'form' %>
 
 
+<%= semantic_form_for(@member) do |form| %>
+<%#= form.error_messages 
+%>
+<%= error_messages_for  @person 
+%>
+<%#=  errors.full_messages 
+%>
+
+<%= form.semantic_fields_for :person do |person| %> 
+ 
+<%= person.input :member_id ,:as => :hidden %>
+ <%= person.inputs :first_name, :last_name, :name => "Person" %>
+<% end %>
+ 
+ 
+<%= render :partial => 'shared/new_membership' , :locals => { :form => form , :buttons => true ,:button_label => 'Create Membership'  }  %>
+
+
+<% end %>
+  		

@@ -1,18 +1,31 @@
+
+
+
+
 <% @person = Person.find(@peoplebarcard.person_id) %>
 <%= form_for(@peoplebarcard) do |f| %>
 <table class ="listing">
 	<th>Last Name</th> <th> First Name</th><th>Barcard Prefix</th> <th> Current Barcard Suffix</th> 
-	<tr>
-	  <td><%= @peoplebarcard.person.last_name            %></td>
-	  <td><%= @peoplebarcard.person.first_name           %></td>
-	  <td><%= '36812'  %> </td> 
-	  <td><%= "%05d" % @person.peoplebarcard.barcard_id  %></td>
+	<tr><td><%= @person.last_name %></td>
+	<td> <%= @person.first_name %></td>
+	<td><%= '36812'  %> </td> 
+	<td> <%= "%05d" % @person.peoplebarcard.barcard_id %></td>
 	</tr>
 </table>
 <br>
 <br>
+
 <p> Change to barcard Suffix: 
-<%= collection_select(:peoplebarcard, :barcard_id, Peoplebarcard.familybarcards(@person.member_id),:barcard_id,:selectlist, options ={:prompt => "-Select a Barcard to replace current"}, :class =>" ") %>
+
+<%
+    
+     @familybarcards = Peoplebarcard.find :all, 
+            :select => "peoplebarcards.*, concat(lpad(peoplebarcards.barcard_id,5,'0'),' - ',people.first_name,' ' ,people.last_name) as selectlist ",
+			:include =>[:person] , :joins => "inner join people on peoplebarcards.person_id = people.id ", 
+			:conditions =>  "member_id = '#{@person.member_id}'   "%>
+
+<%= collection_select(:peoplebarcard, :barcard_id, @familybarcards,:barcard_id,:selectlist, options ={:prompt => "-Select a Barcard to replace current"}, :class =>" ") %>
+
 </p>
   	 <p>
   	 	<br>

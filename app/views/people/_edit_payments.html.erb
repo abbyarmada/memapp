@@ -1,4 +1,0 @@
-<%= form_for(@person) do |f| %>
-  <% @payments =  (@person.payments.sort do |b,a| a.date_lodged <=> b.date_lodged end)   %>
-    <%= render  'payment' %>
-  <% end %>

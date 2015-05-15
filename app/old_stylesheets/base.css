@@ -1,0 +1,432 @@
+
+.personbox{
+	float :left;
+}
+
+.memberbox{
+	/* float :left; */
+	/* margin: 0px 0px 0px 20px; */
+}
+
+.familybox{
+	float :left; 
+	/* margin: 0 0 0px 20px; */
+
+}
+
+.boatbox{
+	
+}
+
+.largetext{
+	font-size: xx-large;
+}
+
+.footer {
+background-color: #dee7ec;
+border-top: 1px solid #8cacbb;
+border-bottom: 1px solid #8cacbb;
+float: none;
+line-height: 1.2em;
+margin: 2em 0em 1em 0em;
+padding: 0.5em 0em 1em 0em;
+text-align: center;
+}
+.footer p {
+margin: 0.25em 0;
+}
+.footer a {
+text-decoration: none;
+color: #436976;
+border: none;
+}
+.footer a:visited {
+color: #436976;
+}
+.footer a:hover {
+text-decoration: underline;
+}
+
+
+
+.visualClear {
+display: block;
+clear: both;
+}
+
+
+
+
+
+
+/* scaffold.css */
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+div.uploadStatus {
+  margin: 5px;
+}
+
+div.progressBar {
+  margin: 5px;
+}
+
+div.progressBar div.border {
+  background-color: #fff;
+  border: 1px solid grey;
+  width: 100%;
+}
+
+div.progressBar div.background {
+  background-color: #333;
+  height: 18px;
+  width: 0%;
+}
+
+/* - base.css - */
+body {
+font: 69% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+background-color: White;
+color: Black;
+margin: 0;
+padding: 0;
+}
+.banner {
+	background-color: white;
+	height: 10em;
+}
+
+ .columns {
+ 	background-color: #fff;
+/*	border-collapse: collapse;
+	border-spacing: 0; */
+}	
+ 
+.leftside {
+/*	background-image: url("assets/rails.png"); */
+ 	background-color: #fff;
+	color: black;
+	float: left;
+	width: 20%;
+	margin-left: 02em;
+	vertical-align: top;
+	margin-right: 02em;
+ }
+
+.main {
+ 	background-color: white;
+	vertical-align: top;
+	width: 50%;
+	float: left; 
+ }
+.rightside {
+ 	background-color: #fff;
+	color: black;
+	float: right;
+	width: 15%;
+	vertical-align: top;
+	margin-left: 0em;
+	vertical-align: top;
+	margin-right: 00em;
+ }
+ 
+table {
+font-size: 100%;
+}
+a {
+color: #436976;
+background-color: transparent;
+}
+img {
+border: none;
+vertical-align: middle;
+}
+p {
+margin: 0 0 0.75em 0;
+line-height: 1.5em;
+}
+p img {
+border: none;
+margin: 0;
+}
+hr {
+border: 0;
+height: 1px;
+color: #8cacbb;
+background-color: #8cacbb;
+margin: 0.5em 0 1em 0;
+}
+h1, h2, h3, h4, h5, h6 {
+color: Black;
+font-family: "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+margin: 0.75em 0 0.25em 0;
+}
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+color: Black ! important;
+text-decoration: none;
+}
+h1 {
+font-size: 160%;
+margin: 0 0 2em 0;
+}
+h2 {
+font-size: 150%;
+}
+h3 {
+font-size: 125%;
+border-bottom: none;
+font-weight: bold;
+}
+h4 {
+font-size: 110%;
+border-bottom: none;
+font-weight: bold;
+}
+h5 {
+font-size: 100%;
+border-bottom: none;
+font-weight: bold;
+}
+h6 {
+font-size: 90%;
+border-bottom: none;
+font-weight: bold;
+}
+ul {
+line-height: 1.5em;
+padding: 0;
+}
+/*ol {
+//#line-height: 1.5em;
+//#padding: 0;
+//#}
+*/
+/* li {
+margin-bottom: 0.5em;
+}
+*/ 
+
+dt {
+font-weight: bold;
+}
+dd {
+line-height: 1.5em;
+margin-bottom: 1em;
+}
+abbr, acronym, .explain {
+border-bottom: 1px dotted Black;
+color: Black;
+background-color: transparent;
+cursor: help;
+}
+abbr .explain {
+border-bottom: none;
+}
+q {
+font-family: Baskerville, Georgia, serif;
+font-style: italic;
+font-size: 120%;
+}
+blockquote {
+padding-left: 0.5em;
+margin-left: 0;
+border-left: 4px solid #8cacbb;
+color: #76797c;
+}
+code, tt {
+font-family: Monaco, "Courier New", Courier, monospace;
+font-size: 120%;
+color: Black;
+background-color: #dee7ec;
+padding: 0 0.1em;
+}
+pre {
+font-family: Monaco, "Courier New", Courier, monospace;
+font-size: 100%;
+padding: 1em;
+border: 1px solid #8cacbb;
+color: Black;
+background-color: #dee7ec;
+overflow: auto;
+}
+ins {
+color: green;
+text-decoration: none;
+}
+del {
+color: red;
+text-decoration: line-through;
+}
+table.listing,
+.stx table {
+/* */
+border-collapse: collapse;
+border-left: 1px solid #8cacbb;
+border-bottom: 1px solid #8cacbb;
+font-size: 90%;
+margin: 1em 0em 1em 0em;
+}
+table.listing th,
+.stx table th {
+background: #dee7ec;
+border-top: 1px solid #8cacbb;
+border-bottom: 1px solid #8cacbb;
+border-right: 1px solid #8cacbb;
+font-weight: bold;
+padding: 0.25em 0.5em;
+text-transform: none;
+}
+table.listing .top {
+border-left: 1px solid White;
+border-top: 1px solid White ! important;
+border-right: 1px solid White ! important;
+text-align: right ! important;
+padding: 0em 0em 1em 0em;
+}
+table.listing .listingCheckbox {
+text-align: center;
+}
+table.listing td,
+.stx table td {
+border-right: 1px solid #8cacbb;
+padding: 0.25em 0.5em;
+}
+table.listing a {
+text-decoration: none;
+}
+table.listing a:hover {
+text-decoration: underline;
+}
+table.listing img {
+vertical-align: middle;
+}
+table.listing td a label,
+.stx table td a label {
+cursor: pointer;
+}
+table.listing .even {
+background-color: #eef3f5;
+}
+table.listing .odd {
+background-color: transparent;
+}
+table.listing .caption {
+caption-side: bottom; 
+width: auto;
+text-align: left 
+}
+
+
+
+
+/* */
+table.vertical {
+background-color: White;
+}
+table.vertical th {
+padding: 0.5em;
+}
+table.vertical td {
+border-top: 1px solid #8cacbb;
+padding: 0.5em;
+}
+/* */
+table.grid td {
+border: 1px solid #8cacbb;
+padding: 0.5em;
+}
+/* */
+table.plain,
+table.plain td,
+table.plain th {
+border: 1px solid #ccc;
+padding: 0.5em;
+border-collapse: collapse;
+}
+
+
+/* Dynamic Drive: CSS Left and Right Frames Layout */
+
+
+#framecontentLeft, #framecontentRight{
+position: absolute; 
+top: 0; 
+left: 0; 
+width: 200px; /*Width of left frame div*/
+height: 100%;
+overflow: scroll; /*Disable scrollbars. Set to "scroll" to enable*/
+background-color: white;
+color: grey;
+}
+
+#framecontentRight{
+left: auto;
+right: 0; 
+width: 150px; /*Width of right frame div*/
+overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+background-color: white;
+color: grey;
+}
+
+#maincontent{
+position: fixed; 
+top: 0;
+left: 200px; /*Set left value to WidthOfLeftFrameDiv*/
+right: 150px; /*Set right value to WidthOfRightFrameDiv*/
+bottom: 0;
+overflow: auto; 
+background: #fff;
+}
+
+.innertube{
+margin: 15px; /*Margins for inner DIV inside each DIV (to provide padding)*/
+}
+
+* html body{ /*IE6 hack*/
+padding: 0 150px 0 200px; /*Set value to (0 WidthOfRightFrameDiv 0 WidthOfLeftFrameDiv)*/
+}
+
+* html #maincontent{ /*IE6 hack*/
+height: 100%; 
+width: 100%; 
+}
+

@@ -9,9 +9,9 @@
  @commspref  = @person.member.people.map do |person|
     [   
         person.first_name, 
-        person.email_address,       
-        person.send_txt.zero? ? ' ': 'Y',
-        person.send_eml.zero? ? ' ': 'Y',
+        person.email_addr,       
+        person.snd_txt,
+        person.snd_eml,
         person.txt_social.zero? ? ' ': 'Y',
         person.txt_crace.zero? ? ' ': 'Y',
         person.txt_cruiser_race_skipper.zero? ? ' ': 'Y',

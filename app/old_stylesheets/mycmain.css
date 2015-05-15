@@ -1,0 +1,46 @@
+
+
+.memberbox{
+	float :none;
+	/* margin: 0px 0px 0px 20px; */
+}
+
+.largetext{
+	font-size: xx-large;
+}
+
+.footer {
+background-color: #dee7ec;
+border-top: 1px solid #8cacbb;
+border-bottom: 1px solid #8cacbb;
+float: none;
+line-height: 1.2em;
+margin: 2em 0em 1em 0em;
+padding: 0.5em 0em 1em 0em;
+text-align: center;
+}
+.footer p {
+margin: 0.25em 0;
+}
+.footer a {
+text-decoration: none;
+color: #436976;
+border: none;
+}
+.footer a:visited {
+color: #436976;
+}
+.footer a:hover {
+text-decoration: underline;
+}
+
+
+
+.visualClear {
+display: block;
+clear: both;
+}
+
+
+
+

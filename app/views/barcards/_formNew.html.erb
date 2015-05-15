@@ -1,13 +1,24 @@
-<%= form_for(@peoplebarcard) do |f| %>
+
+
+
+
+<% @mid = (params[:mid])%>
+<% @pid = (params[:pid])
+@person = Person.find(params[:pid])
+
+
+%>
+<%= form_for(@barcard) do |f| %>
 <table class ="listing">
 	<th>Last Name</th> <th> First Name</th><th> Current Barcard</th> 
-	<tr>
-	  <td><%= @peoplebarcard.person.last_name %></td>
-	  <td> <%= @peoplebarcard.person.first_name %></td>
-	  <td><%= '36812' + "%05d" % @person.peoplebarcard.barcard_id rescue nil%></td>
-	</tr>
+	<tr><td><%= @person.last_name %></td>
+	<td> <%= @person.first_name %></td>
+	<td><%= '36812' + "%05d" % @person.peoplebarcard.barcard_id rescue nil%></td></tr>
+	
 </table>
+
   	 <p>
     <%= f.submit button_label %>
   </p>
+  
 <% end %>

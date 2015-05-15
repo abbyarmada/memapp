@@ -1,9 +1,6 @@
-<div class="page-header">
-  <%= link_to paymenttypes_path, :class => 'btn btn-default' do %>
-    <span class="glyphicon glyphicon-list-alt"></span>
-    Back
-  <% end %>
-  <h1>New paymenttype</h1>
-</div>
-
-<%= render 'form' %>
+<h1>New paymenttype</h1>
+<%= form_for(@paymenttype) do |f| %>
+<%= f.text_field :name %>    
+  <p><%= f.submit 'Create' %></p>
+<% end %>
+<%= link_to 'Back', paymenttypes_path %>

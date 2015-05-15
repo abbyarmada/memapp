@@ -1,37 +1,66 @@
 class BoatsController < ApplicationController
-  before_action :set_model, only: [:show, :edit, :update, :destroy]
-  respond_to :html
   require 'csv'
-
+  
   def index
-     @boats = Boat.members_boats.paginate(:per_page => 30, :page => params[:page])
+     @boats = Boat.members_boats.paginate(:per_page => 30, :page => params[:page])  
+     #@boats = Boat.members_boats
+     #@boats = @boats.paginate(:per_page => 30, :page => params[:page])  
      session[:listpath] = session[:jumpcurrent] unless nil?
   end
 
+
+def create_csv
+  
+  @boats = Boat.members_boats
+  
+  if params[:commit] == 'Export CSV file'
+    
+    extract = CSV.generate do |csv|
+    csv << [ 'Last Name', 'First Name', 'Boat Name', 'boat Type', 'boat class', 'Sail No.','Pen Tag','Home Phone', 'Mobile', 'Email','address','renewal', 'Member Class']
+      @boats.each do |b|
+         x = b.member.people.find_by_status('m')
+         y = b.member
+        csv << [x.last_name, x.first_name,b.boat_name, b.boat_type, b.boat_class, b.sail_number,b.pen_tag, x.home_phone, x.mobile_phone, x.email_address, y.address1, y.renew_date.to_date,y.privilege.name ]
+      end 
+    end
+    send_data(extract,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'boats.csv', :disposition => 'attachment', :encoding => 'utf8')
+  end
+end
+
   def new
     @boat = Boat.new
-    @boat.member_id = params[:member_id]
   end
 
   def edit
-
+    @boat = Boat.find(params[:id])
   end
 
   def create
-    @boat = Boat.new(boat_params)
-    respond_with(@boat, :location => person_path(@boat.owner) + '#tabs-5') do |format|
+    @boat = Boat.new(params[:boat])
+    @boat.member_id = (params[:mid])
+    main_person = Person.main_person(@boat.member_id)
+    respond_to do |format|
       if @boat.save
-        flash[:notice] = 'Boat was successfully created.'
+        format.html { redirect_to :controller => "people" ,:action => "edit", :id => main_person.id }
+        flash[:notice] = 'Boat was successfully updated.'
       else
         format.html { render :action => "new" }
       end
+     # if @boat.save
+       # flash[:notice] = 'Boat was successfully created.'
+     #   redirect_to edit_person_path(main_person.id) 
+     # else
+     #   render :action => "new" 
+     # end
     end
   end
 
   def update
-    @boat.update(boat_params)
-    respond_with(@boat, :location => person_path(@boat.owner) + '#tabs-5') do |format|
-      if @boat.save
+    @boat = Boat.find(params[:id])
+    main_person = Person.main_person(@boat.member_id)
+    respond_to do |format|
+      if @boat.update_attributes(params[:boat])
+        format.html { redirect_to edit_person_path(main_person) }
         flash[:notice] = 'Boat was successfully updated.'
       else
         format.html { render :action => "edit" }
@@ -40,30 +69,12 @@ class BoatsController < ApplicationController
   end
 
   def destroy
-    flash[:notice] = 'Boat was successfully deleted.' if @boat.destroy
-     respond_with(@boat, :location => person_path(@boat.owner) + '#tabs-5')
-  end
- private
-
-  def set_model
     @boat = Boat.find(params[:id])
+    main_person = Person.main_person(@boat.member_id)
+    @boat.destroy
+    respond_to do |format|
+      format.html   {redirect_to edit_person_path(main_person) }
+      format.xml  { head :ok }
+    end
   end
-
-  def boat_params
-    params.require(:boat).permit(:member_id,:boat_name,:boat_type,:boat_class,:sail_number,:pen_tag)
-  end
-
-  def create_csv
-    @boats = Boat.members_boats
-      extract = CSV.generate do |csv|
-        csv << [ 'Last Name', 'First Name', 'Boat Name', 'boat Type', 'boat class', 'Sail No.','Pen Tag','Home Phone', 'Mobile', 'Email','address','renewal', 'Member Class']
-        @boats.each do |b|
-          x = b.owner
-          y = b.member
-          csv << [x.last_name, x.first_name,b.boat_name, b.boat_type, b.boat_class, b.sail_number,b.pen_tag, x.home_phone, x.mobile_phone, x.email_address, y.address1, y.renew_date.to_date,y.privilege.name ]
-        end
-      end
-    send_data(extract,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'boats.csv', :disposition => 'attachment', :encoding => 'utf8')
-  end
-
 end

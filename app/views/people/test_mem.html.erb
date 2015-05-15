@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>Untitled Document</title>
+	</head>
+	<body>
+		
+		
+	<h5>Test Mem <br> </h5><br/>
+
+ 
+ 
+<table class="listing">
+ <th>Surname</th> <th>First Name</th> <th>Home Phone</th> <th>Mobile </th> <th>email</th> <th>Membership Type</th>
+ <th>Last Payment</th> <th>Car Park ID</th>
+
+	
+ <% @m1.each do |p| 
+ 
+  lpd=p.payments.find :first, :order => "date_lodged DESC" 
+  
+	
+    p1 = p.people 
+
+    p1.each do |q|
+
+  %>  
+
+<tr class="<%= cycle('odd', 'even') %>">
+
+
+<td> </td>
+<td><%= lpd.bar_billies.upcase %>  		</td>
+<td><%= lpd.mtype %>  		</td> 		
+<td><%= q.last_name  %>  		</td> 
+<td><%= q.first_name  %>  		</td> 		
+<td><%= q.member_number %></td>				
+<td><%= p.address1 %></td>
+<td><%= p.address2 %></td>
+<td><%= p.address3 %></td>
+<td><%= p.address4 %></td>
+<td><%= lpd.date_lodged.to_date  %></td>
+
+</tr>		
+		<% end %>
+	<% end %>
+
+	</body>
+</html>

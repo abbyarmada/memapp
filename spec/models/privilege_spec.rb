@@ -1,6 +1,7 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe Privilege, :type => :model do
+  #pending "add some examples to (or delete) #{__FILE__}"
   
   ########  VALIDATIONS    ######################## 
   it "has a vaild factory" do 

@@ -1,35 +1,5 @@
-<div class="page-header">
-  <%= link_to privileges_path, :class => 'btn btn-default' do %>
-    <span class="glyphicon glyphicon-list-alt"></span>
-    Back
-  <% end %>
-  <%= link_to edit_privilege_path(@privilege), :class => 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-pencil"></span>
-    Edit
-  <% end %>
-  <h1>Show privilege</h1>
-</div>
+<p id="notice"><%= notice %></p>
 
-<dl class="dl-horizontal">
-  <dt>Member class:</dt>
-  <dd><%= @privilege.member_class %></dd>
 
-  <dt>Name:</dt>
-  <dd><%= @privilege.name %></dd>
-
-  <dt>Bar billies:</dt>
-  <dd><%= @privilege.bar_billies %></dd>
-
-  <dt>Car park:</dt>
-  <dd><%= @privilege.car_park %></dd>
-
-  <dt>Votes:</dt>
-  <dd><%= @privilege.votes %></dd>
-
-  <dt>Bar reference:</dt>
-  <dd><%= @privilege.bar_reference %></dd>
-
-  <dt>Boat storage:</dt>
-  <dd><%= @privilege.boat_storage %></dd>
-
-</dl>
+<%= link_to 'Edit', edit_privilege_path(@privilege) %> |
+<%= link_to 'Back', privileges_path %>

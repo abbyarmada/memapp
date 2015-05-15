@@ -1,0 +1,13 @@
+<h1>New person</h1>
+<% @pid = (params[:pid])%>
+
+
+<%= form_tag :action => 'create' do %> 
+
+  		<%= render :partial => 'form' %>
+
+    <%= submit_tag "Create" %>
+<%= link_to 'Back', :back  %>
+<% end %>
+
+ 

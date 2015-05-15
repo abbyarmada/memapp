@@ -1,0 +1,128 @@
+<div class="page">
+    <div class="page_top" >
+        
+        <div class="left_top" >
+          <%= image_tag("/images/MYC50_200.jpg") %>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+        </div>
+
+        <div class="right_top" >
+          <span class= "myc_name">Malahide Yacht Club</span><br />
+          St James' Terrace, &nbsp;Malahide, &nbsp;Co. Dublin<br />
+          <br />
+          Celebrating 50 years of sailing<br />
+          <br />
+          <span class="myc_phone">Phone: (01) 845 3372   Web: www.myc.ie</span><br />
+          <br />
+          <span class="myc_date"><%= Time.now.to_date%></span><br />
+          <br />
+        </div>
+       
+ </div>
+     <br class="clear" />
+    <div class="main" >
+          <br />
+          <br />
+          Dear <%= @dear %>,<br />
+          <br />
+          Your MYC Diary for <%= @this_year%> is enclosed.<br />
+          <% if @npermits == 2 %>
+            Your parking permits are printed below. Please cut them out and place them on
+          your windscreen(s) using the enclosed plastic wallets.<br />
+          <% end %>
+          <% if @npermits == 1%>
+            Your parking permit is printed below. Please cut it out and place it on
+          your windscreen using the enclosed plastic wallet.<br />
+          <% end %>
+          <% if @nbv == 2 %>
+            Your bar billies are printed below. These must be used before the end of September
+          <%= @this_year%>.<br />
+          <% end %>
+          <% if @nbv == 1 %>
+            Your bar billy is printed below. It must be used before the end of September
+          <%= @this_year%>.<br />
+          <% end %>
+          <br />
+          With best wishes for <%= @this_year %><br />
+          <br />
+          Robin McKay<br />
+          Membership Secretary<br />
+          <br />
+    </div>
+    <div class="cutouts" >
+      
+        <div class="left_col" >
+        <% @nbv.times do %>
+                <table class="bar_billy">
+                    
+                        <tr>
+                          <td class="bb_left">
+                            <br />
+                            <%= image_tag("/images/MYC50_130.jpg") %><br />
+                            <br />
+                            Member<br />
+                            <%= @p.first_name + " " + @p.last_name %><br />
+                            <br />
+                            <span class="notvalid">
+                              not valid after <%= @end_bv %>
+                            <br /><br />
+                            </span>
+                            </td>
+
+                            <td class="bb_right">
+                              <br />
+                              <span class="vlarge" >
+                                Bar Voucher<br />
+                                2008<br />
+                                <br />
+                                €7.50
+                                </span>
+
+                            </td>
+                        </tr>
+                    </table>
+                
+                <br />
+        <% end %>
+
+
+        </div>
+        <div class="right_col" >
+          <% @npermits.times do %>
+            <table class="park_permit">
+                 
+                        <tr>
+                          <td class="pp_left">
+                            <br />
+                            <%= image_tag("/images/MYC50_130.jpg") %>
+                            <br />
+                            <br />
+                            &nbsp;Member Number<br />
+                            &nbsp;&nbsp;&nbsp;<%= @m.member_num %><br />
+                            <br />
+                            <br />
+                          </td>
+
+                            <td class="pp_right">
+                              <br />
+                              <span class="vlarge" >
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MEMBER<br />
+                                2008<br />
+                              </span>
+                              <br />
+                              valid until <%= @end_pp %>
+                            </td>
+                        </tr>
+                    </table>
+                
+             <br />
+           <% end %>
+        </div>
+        <br class="clear" />
+
+</div>
+<%= @tryprince %>

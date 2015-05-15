@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe "paymenttypes/show", :type => :view do
   before(:each) do

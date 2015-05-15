@@ -1,0 +1,18 @@
+<%= form_for(@p) do %>
+<tr class="<%= cycle('odd', 'even') %>">
+	<td><%= link_to @p.first_name, :action => 'edit', :id => @p.id  %></td>
+	<td><%= @p.last_name  %></td>
+	<td><%= @p.mobile_phone  %></td>
+	<td><%= @p.email_addr  %></td>
+	<td><%=  
+			if @p.adult?
+					"18+"
+			else
+				@p.age	
+			end
+	%></td>
+	<td><%= @p.comm_prefs  %></td>
+	<td><%= link_to 'Delete',@p ,:confirm => "Are you sure you want to delete this person?", :method => :delete , :id => @p.id %><br> 
+	<%= link_to 'Cut'  ,  :action => 'cut'  , :id => @p.id %><br>
+</tr>
+<% end %>

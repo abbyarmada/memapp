@@ -5,6 +5,7 @@
 *.pydevproject
 .project
 .metadata
+bin/
 tmp/
 *.tmp
 *.bak
@@ -234,7 +235,6 @@ config/secrets.yml
 config/database.yml
 config/initializers/dev_mail.rb
 config/initializers/constants.rb
-/public/assets/**
 ## Environment normalisation:
 /.bundle
 /vendor/bundle
@@ -270,4 +270,3 @@ deploy.rb
 config/initializers/constants.rb
 tmp/email_renewals/config/initializers/dev_mail.rb
 .env.env
-.env

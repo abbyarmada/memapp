@@ -1,0 +1,19 @@
+
+
+<ul title="Home" selected="true">
+    <li><%= link_to 'Members' ,url_for('#people')%></li>
+    <li><%= link_to 'Logout', root_path, :method => :delete, :target => '_self' %></li>
+      <li><%= link_to 'Boats' ,url_for('#boats')%></li>
+</ul>
+ 
+
+<ul id="people"  >  
+    <% for person in @people do %>
+	   <li> <%= link_to person.last_name + ', ' + person.first_name ,:controller => 'people', :action => 'edit', :id => person.id , :target => :blank %></li>
+	   
+      
+	   <% end %>
+	   
+	   <li><a href="/people/?page=2" target="_replace">Get More People...</a></li>
+
+</ul>

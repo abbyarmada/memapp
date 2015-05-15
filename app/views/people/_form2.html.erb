@@ -1,0 +1,49 @@
+<%= semantic_form_for @member do |form| %>
+	<%= form.inputs :name => "Membership Information" do %>
+	<%= form.input :privilege, :as => :select, :label_method => :class_desc , :include_blank => false %>
+	<%= form.input :email_renewal, :as => :radio , :collection => [["Yes",'Y'], ["No","N"]]%>   
+	<%= form.input :occupation %>
+	<%= form.input :year_joined %>
+	<%#= form.input :proposed %>
+	<%#= form.input :seconded %>
+	<%= form.input :renew_date, :as => :date ,:order => [:day, :month, :year]  %> 
+	<%= form.input :proposed , :as => :autocompleted ,:url => autocomplete_member_proposed_people_path 	%>
+	<%= form.input :seconded , :as => :autocompleted ,:url => autocomplete_member_seconded_people_path 	%>
+	
+	<%#= form.autocompleted_input :seconded, :url => autocomplete_member_seconded_members_path, :label => "Seconded" 
+	%>
+	<%#= form.input :proposed, :as => :autocomplete, :url => autocomplete_member_proposed_people_path 
+	%> 
+<% end %>
+
+<%= form.inputs :name => "Address Details" do %>
+	<%= form.input :name_no , :label => 'House Name or Number'%>
+	<%= form.input :street1 , :label => 'Street Address Line 1'%>
+	<%= form.input :street2 , :label => 'Street Address Line 2'%>
+	<%= form.input :town  %>
+	<%= form.input :city  %>
+	<%= form.input :county  %>
+	<%= form.input :postcode %>
+	<%= form.input :country %>
+<% end %>
+ 
+	<%= form.buttons do %>
+	<%= form.commit_button %>
+
+<% end %>
+
+<% end %> 
+
+<fieldset>
+    <legend>Old Address Data </legend> 
+
+   <ul id="formlist"> 
+   
+   <li>  <%= @member.address1 %></li>
+   <li> <label> </label><%= @member.address2 %> </li>
+   <li> <label> </label><%= @member.address3 %> </li>
+    <li> <label> </label><%= @member.address4 %> </li>  
+   </ul>
+        
+   
+</fieldset>

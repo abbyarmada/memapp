@@ -1,0 +1,92 @@
+
+<div id="edit" class="panel" title="Edit Member"> 
+
+<%= error_messages_for 'person' %>
+
+
+<tr>
+<td>First name</td>
+<td><%= text_field 'person', 'first_name'  %></td>
+</tr>
+
+
+<tr>
+<td>Last name</td>
+<td><%= text_field 'person', 'last_name'  %></td>
+</tr>
+
+<tr>
+    <td>Status</td>
+    
+        <td><%= select("person" ,"status", Person.status )   %></td>
+</tr>
+
+
+<tr>
+<td></td><td>(m, p, ch)</td>
+</tr>
+
+<tr>
+<td>Date of Birth</td>
+<td><%= date_select('person', 'DOB',:include_blank => true,:start_year => Time.now.year - 100)  %></td>
+</tr>
+
+<tr>    
+<td> Age: </td> <td> <%= @person.age %> </td>
+</tr><tr>
+
+<td>Home phone</td>
+<td><%= text_field 'person', 'home_phone'  %></td>
+</tr><tr>
+
+<td>Mobile phone</td>
+<td><%= text_field 'person', 'mobile_phone'  %></td>
+</tr>
+
+<tr>
+<td>Send Text Messages ?</td>
+<td> <%= radio_button(:person, :snd_txt, "Y")  %><label for="person_snd_txt_y">Yes</label> 
+     <%= radio_button(:person, :snd_txt, "N")  %><label for="person_snd_txt_n">No</label>  </td>
+</tr>
+
+<tr>
+<td>Email addr</td>
+<td><%= text_field 'person', 'email_addr'  %></td>
+</tr>
+
+
+
+<tr>
+<td>Send Email Messages ?</td>
+<td> <%= radio_button(:person, :snd_eml, "Y")  %><label for="person_snd_eml_y">Yes</label> 
+     <%= radio_button(:person, :snd_eml, "N") %><label for="person_snd_eml_n">No</label>  </td>
+</tr>
+
+<tr>
+<td>Comm prefs</td>
+<td><%= text_field 'person', 'comm_prefs'  %></td>
+</tr><tr>
+
+<td></td><td>(SO RA RB CR CB DI JU)</td>
+</tr><tr>
+<td></td><td>( -- or leave blank)</td>
+</tr>
+<tr></tr>
+<td></td>
+<td><%= hidden_field 'person', 'member_number'  %></td>
+</tr><tr>
+<td>Member Unique Number:</td>
+<td><%= @person.member_number  %></td>
+</tr><tr>
+
+</tr><tr>
+<td>Belongs to Membership:</td>
+<td> <%= @person.member_id %></td>
+<%= hidden_field 'person', 'member_id' rescue nil%>
+</tr>
+
+<tr>
+
+</tr><tr>
+</div>
+

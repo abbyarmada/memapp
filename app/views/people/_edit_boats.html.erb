@@ -1,9 +1,0 @@
-<%= form_for(@person) do |f| %> 
-<%#= link_to "New Boat", new_boat_path(:member_id => @person.member_id) , :class => "btn btn-primary" %>
-
- 
-    <%# @person.member.boats do   %>
-  <% @boats = @person.member.boats %> 
-	  <%= render :partial => 'boats' , :locals => {:person_id => @person.id , :boats => @boats } %> 
-
-<% end %>

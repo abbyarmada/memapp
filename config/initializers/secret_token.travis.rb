@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-R3::Application.config.secret_key_base = 'travis_secret_token_for_travis_testing_only'
+R3::Application.config.secret_token = 'travis_secret_token_for_travis_testing_only'

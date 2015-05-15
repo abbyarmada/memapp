@@ -1,22 +1,2 @@
-<%= link_to  "Back to Search Listing", url_for(session[:search]) ,:class => "btn btn-primary" ,data: { disable_with: 'Wait...' } %>
-</br></br>
-<div class="span10">
-<div id="tabs" class="tabs">
-	<ul>
-		<li><a href="#tabs-1">Payment</a> </li>
-		<li><a href="#tabs-2">Membership</a> </li>
-		<li><a href="#tabs-3">Personal</a> </li>
-		<li><a href="#tabs-4">Communications</a> </li>
-		<li><a href="#tabs-5">Boats</a> </li>
-		<li><a href="#tabs-6">Barcards</a> </li>
-	</ul>
-	<div id="tabs-1" title="Payments">       <%= render :partial => 'edit_payments' %>          </div>
-	<div id="tabs-2" title="Membership">     <%= render :partial => 'edit_membership' %>        </div> 
-	<div id="tabs-3" title="Personal">       <%= render :partial => 'edit_personal' %>          </div>
-	<div id="tabs-4" title="Communication">  <%= render :partial => 'edit_communication' %>     </div>
-	<div id="tabs-5" title="Boats">          <%= render :partial => 'edit_boats' %>             </div> 
-	<div id="tabs-6" title="Barcards" >      <%= render :partial => 'tab_barcard' %>            </div>
-</div>
-</div>
 
 

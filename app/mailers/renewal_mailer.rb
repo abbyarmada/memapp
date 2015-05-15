@@ -1,5 +1,5 @@
 class RenewalMailer < ActionMailer::Base
-  default :from => "renewals@myc.ie"
+  default :from => "sms@myc.ie"
    #has_attached_file :pdf_file
   
   def renewal_letter(person)

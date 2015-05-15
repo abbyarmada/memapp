@@ -1,3 +1,5 @@
+
+
 module ActiveRecord::Validations::ClassMethods
   def validates_associated(*attr_names)
     configuration = { :on => :save }

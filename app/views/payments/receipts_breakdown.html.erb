@@ -1,15 +1,28 @@
 
+<head> 
+<script language="Javascript1.2">
+  <!--
+  function printpage() {
+  this.print();
+  }
+  //-->
+</script>
+
+
+</head>
+
 <h1> Payments Summary </h1><br/>
 <br />
 <div class="noprint">
-  <%= form_tag( {:action => 'receipts_breakdown'} , :method => "get" ) do %>
+<%= form_tag :action => 'receipts_breakdown' do %>
 
 <b>Select Month for Month End Figures:</b>
 
+ 
 <%=select_month(@endmonth.to_i, :prompt => 'Choose month',:include_blank => true) %>
 <%= submit_tag 'Go' %><br/>
 <br>
-
+<%= link_to_function("Print this Page", "javascript:print()") %>
 </div>
 
 

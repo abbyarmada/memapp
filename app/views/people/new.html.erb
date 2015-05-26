@@ -1,5 +1,22 @@
 <h1>New person</h1>
-  <%= render :partial => 'person'  %>
+<% member_id = params[:member_id] %>
+<% member_id = params[:member_id] %>
+<% @person = Person.main_person(member_id) %>
+<%= link_to person_path(@person) + '#tabs-3', :class => 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
 
-<%= button_to 'Back', person_path(Person.main_person(@person.member_id)), :method => :get %>
+<%= simple_form_for(@person) do |f| %>
 
+  <%= f.error_notification %>
+
+  <div class="row">
+
+    <%= render :partial => 'person', :locals => {:f => f  }  %>
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+<% end %>
+
+</div>

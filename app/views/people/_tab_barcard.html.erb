@@ -1,23 +1,47 @@
-<div id="tabs-5-1" class="tabs"> 
-	<ul>
-		<% y = 0 %> 
+<div class="page-header">
+
+  <div id="tabs-5-1" class="tabs">
+	  <ul id="tabs" class="nav nav-tabs">
+	    <% y = 0 %>
 	    <% @person.member.people.each do |person| @person = person %>
-	    <li><a href=<%= "#tab-5-1-" + (y+=1).to_s %> > <%=@person.first_name%> <%=@person.last_name%> </a></li>
-		<% end %> 
-	</ul>
- 	   <% y = 0 %> 
-        <% @person.member.people.each do |person| @person = person %>
-        <div id="<%= "tab-5-1-" + (y+=1).to_s %>"
-		<table>
-	<%= form_for(@person) do |f| %>
-		<table class="listing">
-		<th>Barcard Number suffix</th><th>Balance</th><th>Action</th>
-		<%= render :partial => 'barcard' rescue nil  %>  
-		</table> 
-	<% end %>
-	<%= form_tag :controller => 'barcards', :action => 'new', :mid => @person.member.id, :pid => @person.id, :method => 'post' do %>
-		<%= submit_tag 'New Barcard' %>
-	<% end %>
+	      <li>
+				  <a href=<%= "#tab-5-1-" + (y+=1).to_s %> > <span class="glyphicon glyphicon-glass"></span>
+					  <%=@person.first_name%> <%=@person.last_name%> </a>
+			  </li>
+	    <% end %>
+	  </ul>
+	  <% y = 0 %>
+	  <% @person.member.people.each do |person| @person = person %>
+	    <div id="<%= "tab-5-1-" + (y+=1).to_s %>"
+	      <%= form_for(@person) do |f| %>
+	        <div class="table-responsive" >
+		      	<table class="table table-striped table-bordered table-hover">
+			      	<thead>
+						  	<tr>
+							  	<th>Barcard Number suffix</th><th>Balance</th><th>Action</th>
+						  	</tr>
+					  	</thead>
+			  			<tbody>
+					  		<tr>
+							  	<td><%= link_to  "%05d" % @person.peoplebarcard.barcard.id, edit_peoplebarcard_path(@person.peoplebarcard.id,:person_id => @person.id) %> </td>
+							  	<td><%= number_to_currency( (@person.loyaltycard.Current_Points).to_f / 100, :unit => "€") rescue nil  %> </td>
+							  	<td><%= link_to 'Delete', peoplebarcard_path(@person.peoplebarcard.id) ,
+								  	data: { confirm: "Are you sure you want to delete this Barcard ?"} , :method => :delete,
+								  	:class => 'btn btn-xs btn-danger',remote: true %>
+							  	</td>
+						  	</tr>
+				   		</tbody>
+			  		</table>
+					</div>
+	  		<% end %>
+			</div>
+		<% end %>
+    <%= form_tag :controller => 'barcards', :action => 'new', :mid => @person.member.id, :pid => @person.id   do %>
+      <%= submit_tag 'New Barcard' %>
+    <% end %>
+    <%= link_to new_barcard_path(:mid => @person.member_id, :pid => @person.id), method: :get ,:class => 'btn  btn-primary' do %>
+      <span class="glyphicon glyphicon-plus"></span>
+    New Barcard
+    <% end %>
 	</div>
-<% end %>
 </div>

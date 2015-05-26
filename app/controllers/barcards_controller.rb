@@ -1,21 +1,24 @@
 class BarcardsController < ApplicationController
    before_action :set_model, only: [:show, :edit, :update, :destroy]
+   respond_to :html
 
   def show
-    respond_with(@member)
+    @barcards = Barcard.all
   end
   def index
-    @barcards = Barcard.all
-    respond_with(@barcards)
+    show
   end
+
   def new
     @barcard = Barcard.new
-    respond_with(@barcard)
+    @peoplebarcard = Peoplebarcard.new
+    respond_to do |format|
+     format.html  # new.html.erb
+   end
   end
 
   def destroy
     @barcard.destroy
-    respond_with(@barcard)
   end
 
   def edit
@@ -26,7 +29,7 @@ class BarcardsController < ApplicationController
     pid = params[:pid]
     mid = params[:mid]
     respond_to do |format|
-      if @barcard.update(member_params)
+      if @barcard.update(barcard_params)
         flash[:notice] = 'Barcard was successfully updated.'
         format.html {redirect_to :back }
       else
@@ -37,7 +40,7 @@ class BarcardsController < ApplicationController
 
   def create
     pid = params[:pid]
-    @barcard = Barcard.new(barcard_params)
+    @barcard = Barcard.new
     @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
     # find the current personbarcard
     @currentbc = Peoplebarcard.find_by_person_id pid

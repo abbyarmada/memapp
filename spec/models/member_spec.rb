@@ -27,7 +27,6 @@ RSpec.describe Member, :type => :model do
     member = create(:member)
     person = create(:person, status: 'm',first_name: 'John',member: member,id:1)
     partner = create(:person, status: 'p',first_name: 'Jane',member: member)
-
     expect(member.main_member.id).to eq(1)
   end
 

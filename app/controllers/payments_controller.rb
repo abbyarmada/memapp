@@ -16,11 +16,13 @@ class PaymentsController < ApplicationController
       if @payment.save
         @payment.check_renewal_date
         format.html { redirect_to person_path(@payment.main_member) }
+        format.js
         if @payment.changed_privilege?
           @payment.update_member_privilege
           flash[:notice] = 'Payment Successfully Updated, Membership Class Updated.'
         else
           flash[:notice] = 'Payment Successfully Updated'
+          format.js
         end
       else
         format.html { render :action => "edit" }
@@ -37,6 +39,7 @@ class PaymentsController < ApplicationController
     @payment.paymenttype_id = 1
     @payment.date_lodged = Time.now.to_date
   end
+  
   def create
     @payment = Payment.new(payment_params)
     respond_with(@payment, :location => person_path(@payment.main_member) + '#tabs-1') do |format|
@@ -45,11 +48,14 @@ class PaymentsController < ApplicationController
         if @payment.changed_privilege?
           @payment.update_member_privilege
           flash[:notice] = 'Payment Successfully Processed -  Membership Class Updated'
+          format.js
         else
            flash[:notice] = 'Payment Successfully Processed'
+           format.js
         end
       else
         format.html { render :action => "new" }
+        format.js
       end
      end
   end
@@ -57,18 +63,30 @@ class PaymentsController < ApplicationController
 
 
   def destroy
-
     respond_to do |format|
       if  @payment.destroy
         #set the default flash notice
         flash[:notice] = 'Payment was successfully deleted.'
         flash[:notice] =  @payment.delete_checks unless  @payment.delete_checks.blank?
         format.html { redirect_to person_path(@payment.main_member)  }
+         format.js
       else
         flash[:warning] = 'delete failed.'
         format.html { redirect_to(person_path(@payment.main_member)) }
+        format.js
       end
     end
+
+#new 
+#    respond_with(@payment, :location => person_path(@payment.main_member) + '#tabs-1') do |format|
+#    if  @payment.destroy
+        #set the default flash notice
+#        flash[:notice] = 'Payment was successfully deleted.'
+#        flash[:notice] =  @payment.delete_checks unless  @payment.delete_checks.blank?
+ #   end
+  #  end
+
+
   end
   #=======================================
   def list_by_member_class
@@ -119,14 +137,14 @@ def tot_by_member_class
     @end_month = endmonth.to_i
     #@years.times do |y|
   #start_date = Time.now.years_ago(5).beginning_of_year
-  #end_date = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date 
+  #end_date = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date
   #@typestd =  Payment.yttypes( start_date,end_date).merge(Payment.rttypes( start_date,end_date))
     #  @yeartotaltd = Payment.year_total( start_date,end_date).select( "COUNT(*) as tot, SUM(amount) as money")
     #  @memtotaltd  = Payment.members_year_total( start_date,end_date).select( "COUNT(*) as count"   )
   #start_date =  Time.now.years_ago(5).beginning_of_year
   #end_date   =  Time.now.end_of_year
    #   @types = Payment.yttypes( start_date,end_date ).merge(Payment.rttypes( start_date,end_date ))
-      #TODO - do I need the left outer join in  below 2 statements ? 
+      #TODO - do I need the left outer join in  below 2 statements ?
      # @yeartotal = Payment.year_total( start_date,end_date ).select( "COUNT(*) as tot, SUM(amount) as money")
      # @memtotalyear = Payment.members_year_total( start_date,end_date ).select( "COUNT(*) as count"   )
    #end
@@ -144,7 +162,7 @@ end
 
  def overduememberships
    @overdues = Member.overduesubs
-   if params[:commit] == 'Export CSV file'
+   #if params[:commit] == 'Export CSV file'
      extract = CSV.generate do |csv|
        csv << ['First Name', 'Last Name', 'Home Phone', 'Mobile', 'Email','name_no','Street1','Street2','Town','City', 'Postcode','County','Country','Member Class', 'Age', 'last Payment date']
        @overdues.each do |c|
@@ -152,7 +170,7 @@ end
        end
      end
     send_data(extract,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'overduemembers.csv', :disposition => 'attachment', :encoding => 'utf8')
-   end
+   #end
  end
 
 
@@ -228,7 +246,7 @@ end
 
      #@paytypestotaltd[y]  = Payment.find :all,
      #                     :select => "month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions, sum(amount) as sum",
-     #                     :joins => "inner join privileges ON privileges.id = payments.privilege_id", 
+     #                     :joins => "inner join privileges ON privileges.id = payments.privilege_id",
      #                     :conditions => "date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') ",
      #                     :group => "month, monthname",
      #                     :order => "month, pay_type"
@@ -277,4 +295,3 @@ end
   end
 
 end
-

@@ -1,16 +1,35 @@
-<%= form.association :privilege %>
-<%= form.input :email_renewal %>
-<%= form.input :occupation %>
-<%= form.input :year_joined %>
-<%= form.input :renew_date  %>
-<%= form.input :proposed %>
-<%= form.input :seconded %>
-<%= form.input :name_no , :label => 'House Name or Number'%>
-<%= form.input :street1 , :label => 'Street Address Line 1'%>
-<%= form.input :street2 , :label => 'Street Address Line 2'%>
-<%= form.input :town  %>
-<%= form.input :city  %>
-<%= form.input :county  %>
-<%= form.input :postcode %>
-<%= form.input :country , :priority_countries => ['Ireland','United Kingdom']  %>
 
+<div class="col-sm-6">
+  <div class="panel panel-info">
+    <div class="panel-heading">Membership Details</div>
+    <div class="panel-body">
+      <div class="form-inputs">
+        <%= f.input :proposed %>
+        <%= f.input :seconded %>
+        <%= f.input :year_joined %>
+        <%= f.association :privilege, label: "Member Class" %>
+        <div class="panel-body">
+          <%= f.input :email_renewal, :as => :boolean  %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="panel panel-info">
+    <div class="panel-heading">Address Details</div>
+    <div class="panel-body">
+      <div class="form-inputs">
+        <%= f.input :name_no %>
+        <%= f.input :street1 %>
+        <%= f.input :street2 %>
+        <%= f.input :town %>
+        <%= f.input :city %>
+        <%= f.input :postcode %>
+        <%= f.input :county %>
+        <%= f.input :country,  priority: ['IE', 'GB']  %>
+      </div>
+    </div>
+</div>
+</div>

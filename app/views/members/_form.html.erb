@@ -2,14 +2,17 @@
 
 <% if @member.errors.any? %>
   <div id="error_explanation">
+    <% if 2 == 1 %>
    <div class="alert alert-error">
      The form contains <%= pluralize(@member.errors.count, "error") %>.
    </div>
+
   <ul>
     <% @member.errors.full_messages.each do |msg| %>
     <li>* <%= msg %></li>
    <% end %>
  </ul>
+ <% end %>
 </div>
 <% end %>
 
@@ -20,38 +23,45 @@
         <%= render :partial => 'people/person', :locals => {:f => builder }  %>
       <% end %>
     <% end %>
-    <div class="col-md-6">
-      <div class="form-inputs">
-        <%= f.input :proposed %>
-        <%= f.input :seconded %>
-        <%= f.input :year_joined %>
-        <%= f.association :privilege, label: "Member Class" %>
+
+    <div class="col-sm-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">Membership Details</div>
+        <div class="panel-body">
+          <div class="form-inputs">
+            <%= f.input :proposed %>
+            <%= f.input :seconded %>
+            <%= f.input :year_joined %>
+            <%= f.association :privilege, label: "Member Class" %>
+            <div class="panel-body">
+              <%= f.input :email_renewal, :as => :boolean  %>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">Address Details</div>
+        <div class="panel-body">
+          <div class="form-inputs">
+            <%= f.input :name_no %>
+            <%= f.input :street1 %>
+            <%= f.input :street2 %>
+            <%= f.input :town %>
+            <%= f.input :city %>
+            <%= f.input :postcode %>
+            <%= f.input :county %>
+            <%= f.input :country,  priority: ['IE', 'GB']  %>
+          </div>
+        </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="form-inputs">
-        <%= f.input :email_renewal, :as => :boolean  %>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="form-inputs">
-        <%= f.input :name_no %>
-        <%= f.input :street1 %>
-        <%= f.input :street2 %>
-        <%= f.input :town %>
-        <%= f.input :city %>
-        <%= f.input :postcode %>
-        <%= f.input :county %>
-        <%= f.input :country,  priority: ['IE', 'GB']  %>
-      </div>
-    </div>
   </div>  <!--row -->
   <br>
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+<br>

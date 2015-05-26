@@ -1,18 +1,36 @@
-<%= button_to 'New Person', new_person_path(:member_id => @person.member_id ) %>
+<div class="page-header">
+  <%= link_to new_person_path(:member_id => @person.member_id) ,:class => 'btn  btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+  New Person
+  <% end %>
+</div>
+
 <% if session[:copypersonid] and @person.member_id != session[:copypersonmid] %>
-  <%= button_to "Paste copied person" , {:action => 'paste',:id => session[:copypersonid], :mid => @person.member_id } , :method => :put  %>
+  <%= link_to "Paste copied person" , {:id => session[:copypersonid], :member_id => @person.member_id ,:action => 'paste'} , :method => :post  %>
 <% end %>
-  <div id="tabs-3-1" class="tabs"> 
-	  <table>
-	  	<tr>
-	  <% @person.member.people.each do |person| @person = person %>
-	    <td>
-	    	<%= link_to @person.first_name + ' ' + @person.last_name , edit_person_path(@person.id) %> 
-	    	</td>
-	    
-        <td><%= button_to("cut",:action => :cut,:id => @person.id  )  %></td>
-	    <td><%= button_to 'Delete',@person ,data: { confirm: "Are you sure you want to delete this person?" } , :method => :delete , :id => @person.id %></td> 
-      </tr>
-      <% end %>
-      </table> 
-  </div> 
+  <div id="tabs-3-1" class="tabs">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= content_tag_for(:tr, @person.member.people ) do |person| %>
+          <td><%= person.last_name %></td>
+          <td><%= person.first_name %></td>
+          <td><%= person.status %></td>
+          <td><%= link_to 'Edit', edit_person_path(person), :class => 'btn btn-xs btn-default' %></td>
+          <td><%= link_to "cut", cut_people_path(:id => person.id) , :class => 'btn btn-xs btn-default' %> </td>
+          <td><%= link_to 'Delete', person, method: :delete, data: { confirm: "Are you sure you want to delete this person" }, :class => 'btn btn-xs btn-danger' %></td>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

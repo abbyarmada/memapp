@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
-  
+
 
   def index
     @members = Member.all
@@ -33,15 +33,14 @@ class MembersController < ApplicationController
       end
     end
   end
-
+  
   def update
     respond_to do |format|
       if @member.update(member_params)
-        format.html { redirect_to @member, notice: 'Member was successfully updated.' }
-       format.json { head :no_content }
+        format.html { redirect_to @member.main_member, notice: 'Member was successfully updated.' }
       else
         format.html { render action: 'edit' }
-        format.json { render json: @member.errors, status: :unprocessable_entity }
+
       end
     end
   end
@@ -77,7 +76,7 @@ class MembersController < ApplicationController
         @cp << p.mobile_phone
         @cp << p.member.privilege.name
         @cp << p.member.renew_date.to_date
-        @cp << p.member.id.to_s + Time.now.year.to_s.slice(2,2) + i.to_s    
+        @cp << p.member.id.to_s + Time.now.year.to_s.slice(2,2) + i.to_s
         @cp << p.salutation
         @cp << p.member.name_no
         @cp << p.member.street1
@@ -91,7 +90,7 @@ class MembersController < ApplicationController
     end
     @carpark = @carparks.sort
     report = CSV.generate do |csv|
-      csv <<  ['Last Name', 'First Name', 'Email', 'Mobile', 'Mem Class', 'Renewed date', 
+      csv <<  ['Last Name', 'First Name', 'Email', 'Mobile', 'Mem Class', 'Renewed date',
         'Car Park No','Salutation','House Name/No', 'Address1','Address2', 'Town','City', 'Postcode','County']
       i = 0
       @carpark.each do |p|
@@ -104,18 +103,18 @@ class MembersController < ApplicationController
       :filename => 'CarParkPasses.csv', :disposition => 'attachment', :encoding => 'utf8')
   end
 
-   
+
   def set_member
     @member = Member.find(params[:id])
   end
 
   def member_params
-    params.require(:member).permit(:proposed, :seconded, :year_joined, :renew_date, 
-	  :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county, 
+    params.require(:member).permit(:proposed, :seconded, :year_joined, :renew_date,
+	  :privilege_id, :name_no, :street1, :street2, :town, :city, :postcode, :county,
 	  :country, :email_renewal,:active,
-	  people_attributes: [:id,:first_name,:last_name,:status,:member_id, 
-	    :occupation, :dob, :home_phone, :mobile_phone, :email_address, :send_txt, 
-	    :send_email, :txt_cruising, :txt_cruiser_skipper, :txt_crace, :txt_cruiser_race_skipper, 
+	  people_attributes: [:id,:first_name,:last_name,:status,:member_id,
+	    :occupation, :dob, :home_phone, :mobile_phone, :email_address, :send_txt,
+	    :send_email, :txt_cruising, :txt_cruiser_skipper, :txt_crace, :txt_cruiser_race_skipper,
 	    :txt_dinghy_sailing, :txt_junior, :txt_op_co, :txt_social, :txt_bridge, :txt_test ] )
   end
 

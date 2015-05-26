@@ -5,6 +5,8 @@
  *= require 'bootstrap'
  *= require 'railsstrap'
  *= require 'fontawesome'
+ *= require 'nprogress'
+ *= require 'nprogress-bootstrap'
  *= require_self
  *= require_tree .
 */

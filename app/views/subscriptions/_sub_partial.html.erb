@@ -3,5 +3,5 @@
 <td><%= subscription.end_date %></td>
 <td><%= subscription.privilege.name %></td>
 <td><%= link_to 'Show', subscription , :class => 'btn btn-default'  %></td>
-<td><%= link_to 'Edit', edit_subscription_path(subscription) , :class => 'btn btn-default' %></td>
-<td><%= link_to 'Delete', subscription, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %></td>
+<td><%= link_to 'Edit', edit_subscription_path(subscription) , :class => 'btn btn-xs btn-default' %></td>
+<td><%= link_to 'Delete', subscription, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-xs btn-danger' %></td>

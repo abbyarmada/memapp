@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   protect_from_forgery
   helper :all # include all helpers, all the time
+  after_filter :discard_flash_if_xhr
 
   def call_rake(task, options = {})
     puts "Running rake...!"
@@ -19,5 +20,10 @@ class ApplicationController < ActionController::Base
     session[:jumpback] = session[:jumpcurrent] unless session[:jumpback] == session[:jumpcurrent]
     session[:jumpcurrent] = request.fullpath
   end
+  
+  def discard_flash_if_xhr
+    flash.discard if request.xhr?
+  end
 
 end
+

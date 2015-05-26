@@ -1,9 +1,9 @@
 <%= form_for(@peoplebarcard) do |f| %>
 <table class ="listing">
-	<th>Last Name</th> <th> First Name</th><th> Current Barcard</th> 
+	<th>Last Name</th> <th> First Name</th><th> Current Barcard</th>
 	<tr>
-	  <td><%= @peoplebarcard.person.last_name %></td>
-	  <td> <%= @peoplebarcard.person.first_name %></td>
+	  <td><%= @peoplebarcard.person.last_name rescue nil %></td>
+	  <td><%= @peoplebarcard.person.first_name rescue nil %></td>
 	  <td><%= '36812' + "%05d" % @person.peoplebarcard.barcard_id rescue nil%></td>
 	</tr>
 </table>

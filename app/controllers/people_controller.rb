@@ -1,8 +1,8 @@
 class PeopleController < ApplicationController
 
   require 'csv'
- before_action :check_search_form_reset, :only => [:index]
-  before_action :set_model, only: [:show, :edit, :update, :destroy, :cut, :renewal_email]
+  before_action :check_search_form_reset, :only => [:index]
+  before_action :set_model, only: [:show, :edit, :update, :destroy,:cut, :renewal_email]
   respond_to :html, :pdf
 
   def show
@@ -44,15 +44,15 @@ class PeopleController < ApplicationController
   end
 
   def new
-    @person = Person.new(person_params)
-    @person.member_id = person_params[:member_id]
+    @person = Person.new #(person_params)
+    @person.member_id = params[:member_id]
     @barcard = Barcard.new
     @peoplebarcard = Peoplebarcard.new
     @peoplebarcard.person_id = @person.id
     @peoplebarcard.barcard_id = @barcard.id
-  end 
-  
-  
+  end
+
+
   def create
     @person = Person.new(person_params)
     @barcard = Barcard.new(person_params[:barcard])
@@ -73,7 +73,7 @@ class PeopleController < ApplicationController
     end
   end
   def edit
-    
+
   end
 
   def update
@@ -90,9 +90,9 @@ class PeopleController < ApplicationController
     end
   end
   def destroy
-    
+
     @main_member = Person.main_person(@person.member_id)
-    if @person.status == 'm' 
+    if @person.status == 'm'
       #redirect_to :back
       flash[:error] = 'Cannot delete the Main Member.'
       render :action => "show" ,:id => @person.id
@@ -127,7 +127,7 @@ class PeopleController < ApplicationController
 
  def renewal_email
      RenewalMailer.renewal_letter(@person).deliver
-     redirect_to :back , :flash => { :success => "Renewal sent via Email" } 
+     redirect_to :back , :flash => { :success => "Renewal sent via Email" }
   end
 
  def paid_up_extract_current
@@ -156,7 +156,7 @@ class PeopleController < ApplicationController
    type = 'Paidup'
    bar_interface2(date,filename,type)
  end
- 
+
  def paid_up_extract_four_year_ago
     date = (Time.now.year - 4 ).to_s + "-01-01"
    filename = 'PaidupExtractFourYearsAgo.csv'
@@ -206,18 +206,18 @@ def paid_up_extract_five_year_ago
           salutation = ""
           renewedcurrentyear = ""
           #bar billies, based on member class  defaulted to N, set to Y if member class allows
-          # and membership renewed. 
+          # and membership renewed.
           # new members do not get bar billies.
           bar_billies = 'N'
           renewedcurrentyear  = 'N'
-          if p.member.renew_date.year == Time.now.year 
+          if p.member.renew_date.year == Time.now.year
             renewedcurrentyear  = 'Y'
             if p.status == "m" && p.member.renew_date < Privilege.billie_cutoff_date
               bar_billies = p.privilege.bar_billies
             end
           end
           occupation = ""
-          if p.status == 'm' 
+          if p.status == 'm'
             occupation = p.member.occupation
           end
           social = "X" unless p.txt_social == 0
@@ -230,7 +230,7 @@ def paid_up_extract_five_year_ago
 
         barcard = (ENV['BARCARD_PREFIX'] + '%05d' % barcd).to_s if  p.peoplebarcard.barcard_id rescue nil
           if barreference != 0 and p.status != 'g'
-            csv << [bar_billies,barreference, barcard ,p.last_name,p.first_name,p.id, 
+            csv << [bar_billies,barreference, barcard ,p.last_name,p.first_name,p.id,
             p.salutation,
             p.member.name_no,
             p.member.street1 ,

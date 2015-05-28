@@ -23,8 +23,8 @@
     <tbody>
       <%= content_tag_for(:tr, @subscriptions) do |subscription| %>
             <td><%= subscription.amount %></td>
-            <td><%= subscription.start_date %></td>
-            <td><%= subscription.end_date %></td>
+            <td><%= subscription.start_date.to_formatted_s(:short) %></td>
+            <td><%= subscription.end_date.to_formatted_s(:short) %></td>
             <td><%= subscription.privilege.name %></td>
             <td><%= link_to 'Show', subscription , :class => 'btn btn-xs btn-default'  %></td>
       <td><%= link_to 'Edit', edit_subscription_path(subscription) , :class => 'btn btn-xs btn-default' %></td>

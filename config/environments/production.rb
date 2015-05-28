@@ -20,7 +20,7 @@ R3::Application.configure do
 
   # temp fix for noise in log files
   #config.action_dispatch.rack_cache[:verbose] = false
-  
+
   # For nginx:
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
 
@@ -38,14 +38,8 @@ R3::Application.configure do
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
-  
-  if RbConfig::CONFIG['target_os'] = 'mingw32' 
-    config.serve_static_assets = true
-  else 
-    config.serve_static_assets = false
-  end
 
-  
+
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
@@ -54,7 +48,7 @@ R3::Application.configure do
 
   # Enable threaded mode
   # config.threadsafe!
-  
+
   # Compress JavaScripts and CSS
   config.assets.compress = true
   config.assets.js_compressor = :uglifier
@@ -64,16 +58,16 @@ R3::Application.configure do
 
 # Don't fallback to assets pipeline if a precompiled asset is missed
 config.assets.compile = false
- 
+
 # Generate digests for assets URLs
 config.assets.digest = true
- 
+
 # Defaults to Rails.root.join("public/assets")
 # config.assets.manifest = YOUR_PATH
- 
+
 # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
 # config.assets.precompile += %w( search.js )
- 
+
 # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
 # config.force_ssl = true
 
@@ -89,7 +83,7 @@ config.active_support.deprecation = :notify
 
 # Use default logging formatter so that PID and timestamp are not suppressed.
 config.log_formatter = ::Logger::Formatter.new
- 
+
 # Do not dump schema after migrations.
 #config.active_record.dump_schema_after_migration = false
 

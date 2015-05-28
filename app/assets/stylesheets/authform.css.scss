@@ -30,15 +30,15 @@
 }
 
 .authform #error_explanation:not(:empty) {
-  @extend .alert-box;
-  @extend .alert;
+  @extend .alert-box !optional;
+  @extend .alert !optional;
 }
 .authform #error_explanation h2 {
   font-size: rem-calc(16);
   color: white;
 }
 .button-xs {
-  @extend .button;
-  @extend .radius;
-  @extend .tiny;
+  @extend .button !optional;
+  @extend .radius !optional;
+  @extend .tiny !optional;
 }

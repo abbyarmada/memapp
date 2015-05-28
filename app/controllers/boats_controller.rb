@@ -43,15 +43,6 @@ class BoatsController < ApplicationController
     flash[:notice] = 'Boat was successfully deleted.' if @boat.destroy
      respond_with(@boat, :location => person_path(@boat.owner) + '#tabs-5')
   end
- private
-
-  def set_model
-    @boat = Boat.find(params[:id])
-  end
-
-  def boat_params
-    params.require(:boat).permit(:member_id,:boat_name,:boat_type,:boat_class,:sail_number,:pen_tag)
-  end
 
   def create_csv
     @boats = Boat.members_boats
@@ -65,5 +56,22 @@ class BoatsController < ApplicationController
       end
     send_data(extract,:type => 'text/csv; charset=iso-8859-1; header=present',:filename => 'boats.csv', :disposition => 'attachment', :encoding => 'utf8')
   end
+
+
+
+
+
+
+ private
+
+  def set_model
+    @boat = Boat.find(params[:id])
+  end
+
+  def boat_params
+    params.require(:boat).permit(:member_id,:boat_name,:boat_type,:boat_class,:sail_number,:pen_tag)
+  end
+
+
 
 end

@@ -53,7 +53,7 @@ class BarcardsController < ApplicationController
           @currentbc.destroy
         end
         flash[:notice] = 'Barcard was successfully created.'
-        format.html {redirect_to  :controller => 'people', :action => 'edit', :id => pid }
+        format.html { redirect_to person_path( :id =>   @peoplebarcard.person_id ) + '#tabs-6' }
       else
         format.html { render :action => "new" }
       end

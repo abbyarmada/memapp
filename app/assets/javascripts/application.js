@@ -2,22 +2,33 @@
 // This file is automatically included by javascript_include_tag :defaults
 //= require_self
 //= require jquery
+//= require jquery.turbolinks
+//= require jquery_ujs
+
+//= require turbolinks
+
+
+
 //= require nprogress
 //= require nprogress-turbolinks
 //= require nprogress-ajax
-//= require jquery.turbolinks
-//= require jquery_ujs
+
+
+//* require bootstrap/dist/js/bootstrap
+//= require bootstrap-sprockets
+
+
 //= require moment
-//= require bootstrap/dist/js/bootstrap
-//= require jquery-ui/datepicker
+//= require bootstrap-datetimepicker
 //= require pickers
-//= require turbolinks
+
 //= require_tree .
 
 // for decade view in datepicker.. need to set options.. startView: 2
-$(function (){
+/* $(function (){
      $("[data-behaviour~='datepicker']").datepicker({
         format: 'yyyy-mm-dd',
         autoclose: true,
         startView:2});
       });
+*/

@@ -36,9 +36,6 @@
 	  		<% end %>
 			</div>
 		<% end %>
-    <%= form_tag :controller => 'barcards', :action => 'new', :mid => @person.member.id, :pid => @person.id   do %>
-      <%= submit_tag 'New Barcard' %>
-    <% end %>
     <%= link_to new_barcard_path(:mid => @person.member_id, :pid => @person.id), method: :get ,:class => 'btn  btn-primary' do %>
       <span class="glyphicon glyphicon-plus"></span>
     New Barcard

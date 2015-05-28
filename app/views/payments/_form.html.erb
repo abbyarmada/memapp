@@ -5,7 +5,7 @@
   <%= f.input :amount %>
   <%= f.association :privilege ,:label => "Member Class" ,:include_blank => false %>
   <%= f.association :payment_method ,:include_blank => false %>
-  <%= f.input :date_lodged ,:as => :date ,:order => [:day, :month, :year] ,:include_blank => false %>
+  <%= f.input :date_lodged ,:as => :date_picker  %>
   <%= f.input :comment %>
   <div class="form-actions">
     <%= f.button :submit , :class => 'btn-primary' %>

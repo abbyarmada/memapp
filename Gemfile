@@ -27,18 +27,22 @@ gem 'country_select', github: 'petercunning/country_select'
 gem 'formtastic'#, '~> 3.0.0'
 #gem 'formtastic-bootstrap', :git => 'https://github.com/jtomaszewski/formtastic-bootstrap.git'
 gem 'formtastic-bootstrap' ,:git => 'https://github.com/petercunning/formtastic-bootstrap'
-#, :git => 'https://github.com/0xCCD/formtastic-bootstrap.git'
-#see : https://github.com/mjbellantoni/formtastic-bootstrap/pull/110
-#gem 'formtastic-bootstrap', '~> 3.0.0'  #'~> 2.1.3'
 gem 'simple_form', '~> 3.1.0.rc2' #, github: 'plataformatec/simple_form'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-#gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
-gem 'autoprefixer-rails'
+
+
+#required for Less /css stuff
+#gem 'autoprefixer-rails'
 #gem 'bootstrap-datepicker-rails'
 #gem 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git',  \
 #    :branch => 'master', :submodules => true
-gem 'momentjs-rails', '>=2.7', :github => 'derekprior/momentjs-rails'
+
+#for date display
+gem 'momentjs-rails', '>=2.7.0'#, :github => 'derekprior/momentjs-rails'
+#gem 'bootstrap3-datetimepicker-rails', '~> 4.7.14'
+
+
 gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'nprogress-rails'
@@ -46,10 +50,11 @@ gem 'sass-rails'#, '~> 4.0.2'# '~> 3.1.5'
 gem 'coffee-rails' #, '~> 3.1.1'
 gem 'uglifier'     #, '>= 1.0.3'
 
+#bootstrap
+#gem 'less-rails'
 
-gem 'less-rails'
-gem 'railsstrap'
-
+#gem 'railsstrap'
+gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
 
 group :development do
   gem 'better_errors'

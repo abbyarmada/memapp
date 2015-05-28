@@ -4,8 +4,6 @@
 */
 @import "bootstrap";
 
-body { padding-top: 60px; }
-
 /*
  Glyphicons - included by default in bootstrap.
  If for any reason you prefer to have them as part of the asset pipeline, uncomment this.

@@ -1,4 +1,4 @@
-<%= simple_form_for(@payment, remote: true,  :authenticity_token => true )  do |f|  %>
+<%= simple_form_for(@payment, remote: false ,  :authenticity_token => true )  do |f|  %>
   <%= f.error_notification %>
   <%= f.input :member_id, :as => :hidden %>
   <%= f.association :paymenttype ,:label =>  "Payment Type" ,:include_blank => false %>

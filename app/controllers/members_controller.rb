@@ -14,7 +14,7 @@ class MembersController < ApplicationController
     @member.people.build
     @member.year_joined = Time.now.year
     @member.privilege = Privilege.find_by_name "Applicant"
-	@member.active = true
+	  @member.active = true
   end
 
   def edit
@@ -33,7 +33,7 @@ class MembersController < ApplicationController
       end
     end
   end
-  
+
   def update
     respond_to do |format|
       if @member.update(member_params)

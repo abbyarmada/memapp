@@ -14,14 +14,19 @@ class Member < ActiveRecord::Base
 
   #STATUSES = [ 'Active', 'Inactive']
   #validates_inclusion_of :status, :in => STATUSES,
-  #        :message => "{{value}} must be in #{STATUSES.join ','}"
+  #          :message => "{{value}} must be in #{STATUSES.join ','}"
 
-  scope :current_members,  -> {where(active: true ) }
-  scope :past_members,     -> {where(active: false)}
+  scope :active_members,  -> {where(active: true ) }
+  scope :inactive_members,     -> {where(active: false)}
   scope :internal_members, -> {where('privilege_id in (?,?)', 'X','Y' ) }
-  scope :parking_members,  -> {current_members.joins(:privilege).where('car_park > 0') }
-  scope :not_renewed,      -> {where('renew_date  >= ? and renew_date < ?',
+  scope :not_renewed,      -> {where('members.renew_date  >= ? and members.renew_date < ?',
     1.year.ago.beginning_of_year,Time.now.beginning_of_year )}
+  scope :renewed,      -> {where('members.renew_date  >= ?',Time.now.beginning_of_year )}
+  scope :current_members, -> { active_members.renewed }
+  scope :parking_members,  -> {current_members.joins(:privilege).where('car_park > 0') }
+  scope :past_members, ->  { where(' ( members.renew_date  >= ? and members.renew_date < ? )  or members.active = ? ',
+    1.year.ago.beginning_of_year,Time.now.beginning_of_year, 0  )}
+
 
   def main_member
     people[0].main_member

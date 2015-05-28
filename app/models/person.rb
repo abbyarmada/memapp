@@ -9,6 +9,8 @@ class Person < ActiveRecord::Base
 
   scope :current, -> { joins(:member,:privilege).merge(Member.current_members)  }
   scope :past,    -> { joins(:member,:privilege).merge(Member.past_members)  }
+  scope :not_renewed,    -> { joins(:member,:privilege).merge(Member.not_renewed)  }
+
   validates_presence_of :last_name, :first_name,:status
   #TODO validates_presence_of :member - causes problems wth nested attributes
   validates_presence_of :email_address, :if => Proc.new {|person| person.send_email? } ,:message => "Please correct the Email address"
@@ -22,8 +24,9 @@ class Person < ActiveRecord::Base
 
   def self.search(params)
     people = Person.all
-    people = people.current
-    people = people.past if params[:past_members]
+    people = people.current unless params[:past_members]
+    people = Person.past if params[:past_members]
+    people = Person.not_renewed if params[:not_renewed]
     people = people.where('last_name like :input'  , { :input => "%#{params[:search]}%"}) unless params[:search].blank?
     people = people.where('first_name like :input' , { :input => "%#{params[:searchfn]}%"}) unless params[:searchfn].blank?
     people = people.where(" people.status = 'm'" ) if params[:group]
@@ -113,7 +116,7 @@ people = people.paginate(:per_page => 30, :page => params[:page])
   end
 
   def partner
-    partner = Person.where(:status => 'p', :member_id => member_id ).first if status == 'm' 
+    partner = Person.where(:status => 'p', :member_id => member_id ).first if status == 'm'
   end
 
   def salutation_first_names
@@ -151,6 +154,3 @@ people = people.paginate(:per_page => 30, :page => params[:page])
 
 
 end
-
-
-

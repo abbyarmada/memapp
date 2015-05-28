@@ -2,17 +2,16 @@
 <table>
   <tr>
 	  <td>Memberships: </td> <td> <%= Member.current_members.count %> </td>
-    <td>Parking Memberships: </td> <td> <%= Member.current_members.parking_members.count %> </td>
-		<td>Total People: </td> <td> <%=  Person.current.count %> </td>
-		<td>Total Boats/Shares:  </td> <td> <%=  Boat.members_boats.count  %> </td>
+    <td>  Parking Memberships: </td> <td> <%= Member.current_members.parking_members.count %> </td>
+		<td>  Total People: </td> <td> <%=  Person.current.count %> </td>
+		<td>  Total Boats/Shares:  </td> <td> <%=  Boat.members_boats.count  %> </td>
 </tr>
 </table>
 <div class="noprint">
-  <%= form_tag :action => 'tot_by_member_class' do %>
+  <%= form_tag({ :action => 'tot_by_member_class'} , method: :get)  do %>
     <b>Select Month for Month End Figures:</b>
     <%=select_month(@endmonth, :prompt => 'Choose month',:include_blank => true) %>
     <%= submit_tag 'Go' %>
   <% end %>
 </div>
 <img src="<%= @chart_to_date %>"/>
-

@@ -13,9 +13,11 @@
   <%= collection_select(:searchmp, :privilege_id, Privilege.all, :id,:name, options, :class =>"select form-control" ) %>
 </div>
 <div class="form-group">
-<%= check_box_tag :past_members,true,params[:past_members], :class =>"boolean" %><%= label_tag(:past_members, " Past Members") %>
-<%= check_box_tag :group,true,params[:group] %><%= label_tag(:group, " Group Family Members") %>
-<%= check_box_tag :not_renewed,true,params[:not_renewed] %><%= label_tag(:not_renewed, " Not Renewed") %>
+<table>
+	<tr><td><%= check_box_tag :past_members,true,params[:past_members], :class =>"boolean" %><%= label_tag(:past_members, " Past Members") %></td></tr>
+  <tr><td><%= check_box_tag :group,true,params[:group] ,:class =>"boolean" %><%= label_tag(:group, " Group Family Members") %></td></tr>
+  <tr><td><%= check_box_tag :not_renewed,true,params[:not_renewed],:class =>"boolean"  %><%= label_tag(:not_renewed, " Not Renewed") %></td></tr>
+</table>
 </div>
 
 <div class="form-group">

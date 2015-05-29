@@ -18,7 +18,7 @@ class Payment < ActiveRecord::Base
   #attr_accessible :privilege_id , :amount, :date_lodged, :pay_type, :comment, :paymenttype_id, :member_id,:payment_method_id
 
   #scope :previous_renewals, -> { where([' (id <> ? or id <> 0 ) AND member_id = ?  AND date_lodged >= ? and paymenttype_id in (1,4)' , self.id, self.member_id, self.date_lodged.beginning_of_year  ] )  }
-  
+
   scope :renewal, -> { where('paymenttype_id in (1,4 ) ')   }
   scope :current_year, -> {  where('date_lodged >= ? ', Time.now.beginning_of_year)  }
   #scope :year, -> date_lodged {  where('date_lodged >= ? ', date_lodged )  }
@@ -29,6 +29,7 @@ class Payment < ActiveRecord::Base
   scope :membership_renewal_payments, -> {where('paymenttype_id in (1,4) ')}
   scope :all_membership_payments, -> {where('paymenttype_id in (1,4,5) ')}
   scope :real_membership_renewals, -> {where('member_class not in (?,?,?,?)','X','Y','E','T')  }
+
   scope :year_total , -> start_date, end_date {
     all_membership_payments.
       joins(:privilege,:paymenttype).
@@ -47,17 +48,17 @@ class Payment < ActiveRecord::Base
     select( "extract(year from date_lodged) as year, member_class, COUNT(*) as tot,SUM(amount) as money, privileges.name" ).
       group('privileges.member_class, privileges.name, year' )
     }
-    
+
   scope :rttypes, -> start_date, end_date {
   Payment.
       members_year_total(start_date, end_date).
-      select( "extract(year from date_lodged) ,member_class, COUNT(*) as paytot,COUNT(*) as paytot ,SUM(amount) as paysmoney, privileges.name" ).
+      select( "extract(year from date_lodged) ,member_class, COUNT(*) as paytot,SUM(amount) as paysmoney, privileges.name" ).
       group('privileges.member_class, privileges.name, year' )
     }
 
 
 
-  
+
   def main_member
     member.main_member
   end
@@ -97,7 +98,7 @@ class Payment < ActiveRecord::Base
   end
 
   def payment_final_and_first
-  #Must have a first payment in order to have a final payment. 
+  #Must have a first payment in order to have a final payment.
     if first_payments.count == 0
       errors.add( :paymenttype_id, "Must have a First payment to have a Final payment" )
     end

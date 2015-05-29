@@ -39,7 +39,7 @@ class PaymentsController < ApplicationController
     @payment.paymenttype_id = 1
     @payment.date_lodged = Time.now.to_date
   end
-  
+
   def create
     @payment = Payment.new(payment_params)
     respond_with(@payment, :location => person_path(@payment.main_member) + '#tabs-1') do |format|
@@ -76,17 +76,6 @@ class PaymentsController < ApplicationController
         format.js
       end
     end
-
-#new 
-#    respond_with(@payment, :location => person_path(@payment.main_member) + '#tabs-1') do |format|
-#    if  @payment.destroy
-        #set the default flash notice
-#        flash[:notice] = 'Payment was successfully deleted.'
-#        flash[:notice] =  @payment.delete_checks unless  @payment.delete_checks.blank?
- #   end
-  #  end
-
-
   end
   #=======================================
   def list_by_member_class
@@ -99,6 +88,175 @@ class PaymentsController < ApplicationController
   end
 
   #=======================================
+
+  def tot_by_member_class
+
+    #Start year is 2007
+
+    @years = 5
+
+    @month = ''
+
+    @typestd = []
+    @yeartotaltd = []
+    @types = []
+    @yeartotal = []
+    @memtotaltd = []
+    @memtotalyear = []
+
+      endmonth =   Time.now.month.to_s
+      endday =     Time.now.day.to_s
+
+    if params[:commit] == 'Go'
+      if params[:date][:month].to_i >  0
+        endmonth =   params[:date][:month].to_s
+        endday = (Time.now.year.to_s + '-' + endmonth + '-01').to_date.end_of_month.day.to_s
+       end
+    end
+
+    @end_month = endmonth.to_i
+
+    @years.times do |y|
+
+
+      date_start = (Time.now.year - y).to_s + "-01-01"
+      date_end = (Time.now.year - y).to_s + "." + endmonth + "." + endday
+
+find_sql =   " select renewals.tot,pays.tot as paytot, pays.money, pays.name from
+(
+SELECT   member_class,
+         COUNT(*) as tot,
+         SUM(amount) as money,
+         privileges.name
+
+FROM     payments
+         inner join privileges ON privileges.id = payments.privilege_id
+         left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
+WHERE    (date_lodged >= '#{date_start}'
+     AND date_lodged <= '#{date_end}'
+     AND privileges.member_class not in ('X','Y')
+     AND paymenttypes.id in ('1','4'))
+GROUP BY member_class, privileges.name
+ORDER BY member_class
+) as renewals
+,
+(
+SELECT   member_class,
+         COUNT(*) as tot,
+         SUM(amount) as money,
+         privileges.name as name
+
+FROM     payments
+         inner join privileges ON privileges.id = payments.privilege_id
+         left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
+WHERE    (date_lodged >= '#{date_start}'
+     AND date_lodged <= '#{date_end}'
+     AND privileges.member_class not in ('X','Y')
+     AND paymenttypes.id in ('1','4','5'))
+GROUP BY member_class, privileges.name
+ORDER BY member_class
+) pays
+where pays.member_class = renewals.member_class"
+
+
+total_mem_sql =   "SELECT
+         COUNT(*) as count
+FROM     payments
+         inner join privileges ON privileges.id = payments.privilege_id
+         left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
+WHERE    (date_lodged >= '#{date_start}'
+    AND date_lodged <= '#{date_end}'
+     AND privileges.member_class not in ('X','Y')
+     AND paymenttypes.id in ('1','4'))"
+
+
+      @typestd[y] = Payment.find_by_sql(find_sql)
+
+     @yeartotaltd[y] = Payment.find  :all,
+                          :select => "COUNT(*) as tot, SUM(amount) as money",
+                          :joins => "inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id",
+                          :conditions => " date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') "
+
+    @memtotaltd[y] = Payment.find_by_sql(total_mem_sql)
+
+
+     date_start = (Time.now.year - y).to_s + "-01-01"
+     date_end = (Time.now.year - y).to_s + "-12-31"
+
+  find_sql =   " select renewals.tot,pays.tot as paytot, pays.money, pays.name from
+(
+SELECT   member_class,
+         COUNT(*) as tot,
+         SUM(amount) as money,
+         privileges.name
+
+FROM     payments
+         inner join privileges ON privileges.id = payments.privilege_id
+         left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
+WHERE    (date_lodged >= '#{date_start}'
+     AND date_lodged <= '#{date_end}'
+     AND privileges.member_class not in ('X','Y')
+     AND paymenttypes.id in ('1','4'))
+GROUP BY member_class, privileges.name
+ORDER BY member_class
+) as renewals
+,
+(
+SELECT   member_class,
+         COUNT(*) as tot,
+         SUM(amount) as money,
+         privileges.name as name
+
+FROM     payments
+         inner join privileges ON privileges.id = payments.privilege_id
+         left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
+WHERE    (date_lodged >= '#{date_start}'
+     AND date_lodged <= '#{date_end}'
+     AND privileges.member_class not in ('X','Y')
+     AND paymenttypes.id in ('1','4','5'))
+GROUP BY member_class, privileges.name
+ORDER BY member_class
+) pays
+where pays.member_class = renewals.member_class"
+
+  total_mem_sql =   "SELECT
+         COUNT(*) as count
+FROM     payments
+         inner join privileges ON privileges.id = payments.privilege_id
+         left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
+WHERE    (date_lodged >= '#{date_start}'
+    AND date_lodged <= '#{date_end}'
+     AND privileges.member_class not in ('X','Y')
+     AND paymenttypes.id in ('1','4'))"
+     @types[y] = Payment.find_by_sql(find_sql)
+
+     @yeartotal[y] = Payment.find  :all,
+                          :select => "COUNT(*) as tot, SUM(amount) as money",
+                          :joins => "inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id",
+                          :conditions => "date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') "
+     @memtotalyear[y] = Payment.find_by_sql(total_mem_sql)
+
+     end
+
+
+    @chart_to_date = Payment.g_chart_mems(endmonth,endday)
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   def tot_by_member_class_2
     @totals = Payment.
       select("count(*) as count, sum(payments.amount) as total_amount, privileges.name as privilege_name, paymenttypes.name as payname, date_lodged").
@@ -110,14 +268,19 @@ class PaymentsController < ApplicationController
     #group_by{ |t| t.date_lodged.beginning_of_year }
     endmonth =   Time.now.month.to_s
     endday =     Time.now.day.to_s
+    if params[:commit] == 'Go'
+      if params[:date][:month].to_i >  0
+        endmonth =   params[:date][:month].to_s
+        endday = (Time.now.year.to_s + '-' + endmonth + '-01').to_date.end_of_month.day.to_s
+      end
+    end
     @chart_to_date = Payment.g_chart_mems(endmonth,endday)
-    puts Payment.g_chart_mems(endmonth,endday)
   end
 
 
-def tot_by_member_class
+def tot_by_member_class_3
 
-    @years = 5
+    @years = 2
     @month = ''
     @typestd = []
     @yeartotaltd = []
@@ -135,19 +298,19 @@ def tot_by_member_class
       end
     end
     @end_month = endmonth.to_i
-    #@years.times do |y|
-  #start_date = Time.now.years_ago(5).beginning_of_year
-  #end_date = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date
-  #@typestd =  Payment.yttypes( start_date,end_date).merge(Payment.rttypes( start_date,end_date))
-    #  @yeartotaltd = Payment.year_total( start_date,end_date).select( "COUNT(*) as tot, SUM(amount) as money")
-    #  @memtotaltd  = Payment.members_year_total( start_date,end_date).select( "COUNT(*) as count"   )
-  #start_date =  Time.now.years_ago(5).beginning_of_year
-  #end_date   =  Time.now.end_of_year
-   #   @types = Payment.yttypes( start_date,end_date ).merge(Payment.rttypes( start_date,end_date ))
+    @years.times do |y|
+      start_date = Time.now.years_ago(2).beginning_of_year
+      end_date = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date
+      @typestd[y] =  Payment.yttypes(start_date,end_date).merge(Payment.rttypes(start_date,end_date))
+      @yeartotaltd[y] = Payment.year_total( start_date,end_date).select( "COUNT(*) as tot, SUM(amount) as money")
+      @memtotaltd[y]  = Payment.members_year_total( start_date,end_date).select( "COUNT(*) as count"   )
+      start_date =  Time.now.years_ago(2).beginning_of_year
+      end_date   =  Time.now.end_of_year
+      @types[y] = Payment.yttypes( start_date,end_date ).merge(Payment.rttypes( start_date,end_date ))
       #TODO - do I need the left outer join in  below 2 statements ?
-     # @yeartotal = Payment.year_total( start_date,end_date ).select( "COUNT(*) as tot, SUM(amount) as money")
-     # @memtotalyear = Payment.members_year_total( start_date,end_date ).select( "COUNT(*) as count"   )
-   #end
+      @yeartotal[y] = Payment.year_total( start_date,end_date ).select( "COUNT(*) as tot, SUM(amount) as money")
+      @memtotalyear[y] = Payment.members_year_total( start_date,end_date ).select( "COUNT(*) as count"   )
+    end
    @chart_to_date = Payment.g_chart_mems(endmonth,endday)
 end
 
@@ -155,7 +318,6 @@ end
     @payments = Payment.current_year.includes(:member,:privilege,:payment_method,:paymenttype)
     respond_to do |format|
       format.html
-      format.xml { render :xml=>@payments }
     end
   end
 

@@ -36,6 +36,7 @@ R3::Application.routes.draw do
 			get 'listytd'
 			get 'list_by_member_class'
 			get 'tot_by_member_class'
+      get 'tot_by_member_class_2'
 			get 'receipts_breakdown'
 			get 'overduememberships'
 			get 'overduememberships2'
@@ -64,27 +65,27 @@ R3::Application.routes.draw do
       post 'paste'
 	  end
 	end
-	
+
 
 	resources :subscriptions
 	resources :privileges
 	resources :barcards
 	resources :peoplebarcards
-	resources :renewals do 
-     post :generate_pdfs, :on => :member 
-     post :generate_emails, :on => :member 
+	resources :renewals do
+     post :generate_pdfs, :on => :member
+     post :generate_emails, :on => :member
     # post 'renewals_email'
-	  collection do 
-	   get :download_zip 
+	  collection do
+	   get :download_zip
 	  end
-	
-	
+
+
 	end
-  
-  
+
+
   authenticated :user do
     root :to => 'people#index', :as => :authenticated_root
   end
-  root :to => redirect('/users/sign_in')	
+  root :to => redirect('/users/sign_in')
 
 end

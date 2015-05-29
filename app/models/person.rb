@@ -16,11 +16,11 @@ class Person < ActiveRecord::Base
   validates_presence_of :email_address, :if => Proc.new {|person| person.send_email? } ,:message => "Please correct the Email address"
   validates_presence_of :mobile_phone , :if => Proc.new {|person| person.send_txt? }
   validates_format_of :email_address, :if => Proc.new {|person| person.snd_eml == "Y" }, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  validates :status, uniqueness: { scope:  :member_id } ,   :if => Proc.new {|person| person.status == 'm' && !member_id.nil? }
-  validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists"    } , :if => Proc.new {|person| person.status == 'm' && !person.member_id.nil? }
-  validates :status, uniqueness: {scope: :member_id, message: "Partner Member already Exists" },  :if => Proc.new {|person| person.status == 'p' }
- # validate :main_member_exists? ,on: :update
-  validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member does not Exist" }, :if => Proc.new {|person| person.status != 'm' }
+  validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists check?" } , :if => Proc.new {|person| person.status == 'm' && !member_id.nil? }
+  validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists"        } , :if => Proc.new {|person| person.status == 'm' && !person.member_id.nil? }
+  validates :status, uniqueness: {scope: :member_id, message: "Partner Member already Exists"     },  :if => Proc.new {|person| person.status == 'p' }
+  validate :main_member_exists? ,on: :update
+  #validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member does not Exist" }, :if => Proc.new {|person| person.status != 'm' }
 
   def self.search(params)
     people = Person.all
@@ -34,12 +34,12 @@ class Person < ActiveRecord::Base
     people = people.paginate(:per_page => 30, :page => params[:page]).order(:last_name,:first_name)
   end
 
- # def main_member_exists?
- #   main_member_count = self.where("member_id = ? and status = ? ", self.member_id, 'm').count
- #    if main_member_count != 1
- #     errors.add(:status, "Must have a main member")
- #   end
- # end
+  def main_member_exists?
+    main_member_count = Person.where("member_id = ? and status = ? ", member_id, 'm').count
+    if main_member_count != 1
+     errors.add(:status, "Must have a main member")
+    end
+ end
 
   def adult?
     self.age >= 18 rescue nil

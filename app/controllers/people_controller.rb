@@ -3,7 +3,7 @@ class PeopleController < ApplicationController
   require 'csv'
   before_action :check_search_form_reset, :only => [:index]
   before_action :set_model, only: [:show, :edit, :update, :destroy,:cut, :renewal_email]
-  respond_to :html, :pdf, :js
+  respond_to :html, :pdf
 
   def show
     @member = Member.find(@person.member_id) #required for membership form

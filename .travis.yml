@@ -7,8 +7,8 @@ bundler_args: --without development --path=~/.bundle
 language: ruby
 
 install:
-  - gem uninstall bundler
-  - gem install bundler --version '1.8.0'
+#  - gem uninstall bundler
+#  - gem install bundler --version '1.8.0'
 
 
 cache: bundler
@@ -16,6 +16,9 @@ cache: bundler
 before_install:
  - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
  - ./script/travis/bundle_install.sh
+ - gem uninstall bundler
+ - gem install bundler --version '1.8.0'
+
 
 rvm:
   - 2.0.0

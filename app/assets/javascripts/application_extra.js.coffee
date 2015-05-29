@@ -19,7 +19,7 @@ NProgress.configure
 
 
 # Show spinner while saving:
-toggleSpinner = -> $("#spinner").toggle()
+#toggleSpinner = -> $("#spinner").toggle()
 #$('#spinner').hide()
 
 #$(document).on 'page:fetch',   ->

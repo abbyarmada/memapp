@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
     people = people.where('first_name like :input' , { :input => "%#{params[:searchfn]}%"}) unless params[:searchfn].blank?
     people = people.where(" people.status = 'm'" ) if params[:group]
     people = people.where('members.privilege_id = :input' ,{ :input => "#{params[:searchmp][:privilege_id]}"})  if params[:searchmp] && !params[:searchmp][:privilege_id].blank?
-people = people.paginate(:per_page => 30, :page => params[:page])
+    people = people.paginate(:per_page => 30, :page => params[:page]).order(:last_name,:first_name)
   end
 
  # def main_member_exists?

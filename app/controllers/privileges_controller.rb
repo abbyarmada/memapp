@@ -23,8 +23,8 @@ class PrivilegesController < ApplicationController
     @privilege = Privilege.new(privilege_params)
     respond_to do |format|
       if @privilege.save
-        format.html { redirect_to @privilege, notice: 'Member class was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @privilege }
+        format.html { redirect_to privileges_path, notice: 'Member class was successfully created.' }
+        format.json { render action: 'index', status: :created, location: @privilege }
       else
         format.html { render action: 'new', notice: 'Member class was not created - fix errors .' }
         format.json { render json: @privilege.errors, status: :unprocessable_entity }
@@ -43,10 +43,12 @@ class PrivilegesController < ApplicationController
     end
   end
 
- #def destroy
- #  @privilege.destroy
- #  respond_with(@privilege)
- #end
+   def destroy
+     @privilege.destroy
+     respond_to do |format| 
+       format.html  { redirect_to privileges_path, notice: 'Member class was successfully deleted.' }
+     end
+   end
 
  private
   def set_model

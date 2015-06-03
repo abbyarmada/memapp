@@ -9,6 +9,8 @@ class Subscription < ActiveRecord::Base
     where(start_date: date.beginning_of_year..date.end_of_year)
   end
 
+  default_scope { order(end_date: :desc, start_date: :desc) }
+
   scope :lastyear, -> privilege {subscription_for_year(1.year.ago)}
   scope :thisyear, -> privilege {subscription_for_year(Time.now)}
   scope :nextyear, -> privilege {subscription_for_year(1.year.from_now)}

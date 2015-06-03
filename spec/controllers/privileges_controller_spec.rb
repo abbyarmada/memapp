@@ -81,9 +81,9 @@ describe PrivilegesController, :type => :controller do
         expect(assigns(:privilege)).to be_persisted
       end
 
-      it "redirects to the created privilege" do
+      it "redirects to the index list" do
         post :create, {:privilege => valid_attributes}, valid_session
-        expect(response).to redirect_to(Privilege.last)
+        expect(response).to redirect_to(privileges_path)
       end
     end
 
@@ -150,19 +150,19 @@ describe PrivilegesController, :type => :controller do
     end
   end
 
-#  describe "DELETE destroy" do
-#    it "destroys the requested privilege" do
-#      privilege = Privilege.create! valid_attributes
-#      expect {
-#        delete :destroy, {:id => privilege.to_param}, valid_session
-#      }.to change(Privilege, :count).by(-1)
-#    end
+  describe "DELETE destroy" do
+    it "destroys the requested privilege" do
+      privilege = Privilege.create! valid_attributes
+      expect {
+        delete :destroy, {:id => privilege.to_param}, valid_session
+      }.to change(Privilege, :count).by(-1)
+    end
 
 #    it "redirects to the privileges list" do
 #      privilege = Privilege.create! valid_attributes
 #      delete :destroy, {:id => privilege.to_param}, valid_session
 #      expect(response).to redirect_to(privileges_url)
 #    end
-#  end
+  end
 
 end

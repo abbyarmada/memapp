@@ -10,6 +10,9 @@ class Privilege < ActiveRecord::Base
   validates_uniqueness_of :member_class
   validates_inclusion_of :bar_billies, in:  %w(Y N), :message => "must be Y or N"
   validates_length_of :member_class, :maximum => 1
+
+
+
   scope :real_member, -> {where(:bar_reference => 1 ) }
 
   before_save { |privilege|  privilege.member_class.upcase! }

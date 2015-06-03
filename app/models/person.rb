@@ -7,9 +7,11 @@ class Person < ActiveRecord::Base
   has_many :boats, :through => :member
   has_one :barcard, :through => :peoplebarcard
 
-  scope :current, -> { joins(:member,:privilege).merge(Member.current_members)  }
-  scope :past,    -> { joins(:member,:privilege).merge(Member.past_members)  }
-  scope :not_renewed,    -> { joins(:member,:privilege).merge(Member.not_renewed)  }
+  scope :current,         -> { joins(:member,:privilege).merge(Member.current_members)  }
+  scope :past,            -> { joins(:member,:privilege).merge(Member.past_members)  }
+  scope :not_renewed,     -> { joins(:member,:privilege).merge(Member.not_renewed)  }
+  scope :barcard_holders, -> { where.not( :status => 'g'  )   }
+
 
   validates_presence_of :last_name, :first_name,:status
   #TODO validates_presence_of :member - causes problems wth nested attributes
@@ -44,6 +46,7 @@ class Person < ActiveRecord::Base
   def adult?
     self.age >= 18 rescue nil
   end
+
 
   def self.main_person(mid)
     main_person = Person.where(" status = 'm' and member_id = ? ", mid ).first

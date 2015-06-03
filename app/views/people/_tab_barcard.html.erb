@@ -3,17 +3,18 @@
   <div id="tabs-5-1" class="tabs">
 	  <ul id="tabs" class="nav nav-tabs">
 	    <% y = 0 %>
-	    <% @person.member.people.each do |person| @person = person %>
+	    <% @person.member.people.barcard_holders.each do |person| %>
 	      <li>
 				  <a href=<%= "#tab-5-1-" + (y+=1).to_s %> > <span class="glyphicon glyphicon-glass"></span>
-					  <%=@person.first_name%> <%=@person.last_name%> </a>
+					  <%=person.first_name%> <%=person.last_name%>  </a>
 			  </li>
 	    <% end %>
 	  </ul>
 	  <% y = 0 %>
-	  <% @person.member.people.each do |person| @person = person %>
+	  <% @person.member.people.barcard_holders.each do |person|  %>
+    <% puts @person.member.people.barcard_holders.last.id %>
 	    <div id="<%= "tab-5-1-" + (y+=1).to_s %>"
-	      <%= form_for(@person) do |f| %>
+	      <%= form_for(person) do |f| %>
 	        <div class="table-responsive" >
 		      	<table class="table table-striped table-bordered table-hover">
 			      	<thead>
@@ -23,11 +24,11 @@
 					  	</thead>
 			  			<tbody>
 					  		<tr>
-							  	<td><%= link_to  "%05d" % @person.peoplebarcard.barcard.id, edit_peoplebarcard_path(@person.peoplebarcard.id,:person_id => @person.id) %> </td>
-							  	<td><%= number_to_currency( (@person.loyaltycard.Current_Points).to_f / 100, :unit => "€") rescue nil  %> </td>
-							  	<td><%= link_to 'Delete', peoplebarcard_path(@person.peoplebarcard.id) ,
+							  	<td><%= link_to  "%05d" % person.peoplebarcard.barcard.id, edit_peoplebarcard_path(person.peoplebarcard.id,:person_id => person.id)  %> </td>
+							  	<td><%= number_to_currency( (person.loyaltycard.try(:Current_Points)).to_f / 100, :unit => "€")  %> </td>
+							  	<td><%= link_to 'Delete', peoplebarcard_path(person.peoplebarcard.id) ,
 								  	data: { confirm: "Are you sure you want to delete this Barcard ?"} , :method => :delete,
-								  	:class => 'btn btn-xs btn-danger',remote: true %>
+								  	:class => 'btn btn-xs btn-danger',remote: true  %>
 							  	</td>
 						  	</tr>
 				   		</tbody>

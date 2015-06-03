@@ -19,10 +19,11 @@ class Member < ActiveRecord::Base
   scope :active_members,  -> {where(active: true ) }
   scope :inactive_members,     -> {where(active: false)}
   scope :internal_members, -> {where('privilege_id in (?,?)', 'X','Y' ) }
+  #scope :applicants,       -> {where(privilege_id: :'1'  ) }
   scope :not_renewed,      -> {where('members.renew_date  >= ? and members.renew_date < ?',
     1.year.ago.beginning_of_year,Time.now.beginning_of_year )}
   scope :renewed,      -> {where('members.renew_date  >= ?',Time.now.beginning_of_year )}
-  scope :current_members, -> { active_members.renewed }
+  scope :current_members, -> { active_members }
   scope :parking_members,  -> {current_members.joins(:privilege).where('car_park > 0') }
   scope :past_members, ->  { where(' ( members.renew_date  >= ? and members.renew_date < ? )  or members.active = ? ',
     1.year.ago.beginning_of_year,Time.now.beginning_of_year, 0  )}

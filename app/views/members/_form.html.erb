@@ -1,20 +1,19 @@
 <%= simple_form_for(@member) do |f| %>
 
-<% if @member.errors.any? %>
-  <div id="error_explanation">
+  <% if @member.errors.any? %>
     <% if 2 == 1 %>
-   <div class="alert alert-error">
-     The form contains <%= pluralize(@member.errors.count, "error") %>.
-   </div>
-
-  <ul>
-    <% @member.errors.full_messages.each do |msg| %>
-    <li>* <%= msg %></li>
-   <% end %>
- </ul>
- <% end %>
-</div>
-<% end %>
+      <div id="error_explanation">
+        <div class="alert alert-error">
+          The form contains <%= pluralize(@member.errors.count, "error") %>.
+        </div>
+        <ul>
+          <% @member.errors.full_messages.each do |msg| %>
+            <li>* <%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
 
   <%= f.error_notification %>
   <div class="row">

@@ -88,7 +88,7 @@ RSpec.describe MembersController, :type => :controller do
 
       it "redirects to the created member" do
         post :create, {:member => valid_attributes_with_main_person }, valid_session
-        expect(response).to redirect_to(Member.last)
+        expect(response).to redirect_to(Member.last.main_member)
       end
     end
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
-  protect_from_forgery
+  protect_from_forgery  with: :exception
   helper :all # include all helpers, all the time
   after_filter :discard_flash_if_xhr
 
@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     puts "Running rake...!"
     options[:rails_env] ||= Rails.env
     args = options.map { |n, v| "#{n.to_s.upcase}='#{v}'" }
-    system "rake #{task} #{args.join(' ')} & "
+    system("rake"," #{task} #{args.join(' ')} & ")
   end
 
 

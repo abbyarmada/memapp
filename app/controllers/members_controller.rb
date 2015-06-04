@@ -14,8 +14,7 @@ class MembersController < ApplicationController
     @member.people.build
     @member.year_joined = Time.now.year
     @member.privilege = Privilege.find_by_name "Applicant"
-	  @member.active = true
-    
+    @member.active = true
   end
 
   def edit
@@ -26,11 +25,9 @@ class MembersController < ApplicationController
     respond_to do |format|
       if @member.save
         @member.complete_new_member_process
-        format.html { redirect_to @member.main_member, notice: 'Member was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @member }
+        format.html { redirect_to person_path(@member.main_member), notice: 'Member was successfully created.' }
       else
         format.html { render action: 'new', notice: 'Member was not created - fix errors .' }
-        format.json { render json: @member.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -38,7 +35,7 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @member.update(member_params)
-        format.html { redirect_to @member.main_member, notice: 'Member was successfully updated.' }
+        format.html { redirect_to person_path(@member.main_member), notice: 'Member was successfully updated.' }
       else
         format.html { render action: 'edit' }
 

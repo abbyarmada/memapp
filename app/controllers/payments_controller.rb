@@ -132,8 +132,8 @@ SELECT   member_class,
 FROM     payments
          inner join privileges ON privileges.id = payments.privilege_id
          left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
-WHERE    (date_lodged >= '#{date_start}'
-     AND date_lodged <= '#{date_end}'
+WHERE    (date_lodged >= '?'
+     AND date_lodged <= '?'
      AND privileges.member_class not in ('X','Y')
      AND paymenttypes.id in ('1','4'))
 GROUP BY member_class, privileges.name
@@ -149,8 +149,8 @@ SELECT   member_class,
 FROM     payments
          inner join privileges ON privileges.id = payments.privilege_id
          left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
-WHERE    (date_lodged >= '#{date_start}'
-     AND date_lodged <= '#{date_end}'
+WHERE    (date_lodged >= '?'
+     AND date_lodged <= '?'
      AND privileges.member_class not in ('X','Y')
      AND paymenttypes.id in ('1','4','5'))
 GROUP BY member_class, privileges.name
@@ -158,24 +158,25 @@ ORDER BY member_class
 ) pays
 where pays.member_class = renewals.member_class"
 
+ ActiveRecord::Base::sanitize(find_sql,date_start,date_end)
 
 total_mem_sql =   "SELECT
          COUNT(*) as count
 FROM     payments
          inner join privileges ON privileges.id = payments.privilege_id
          left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
-WHERE    (date_lodged >= '#{date_start}'
-    AND date_lodged <= '#{date_end}'
+WHERE    (date_lodged >= '?'
+    AND date_lodged <= '?'
      AND privileges.member_class not in ('X','Y')
      AND paymenttypes.id in ('1','4'))"
-
+   ActiveRecord::Base::sanitize(total_mem_sql,date_start,date_end)
 
       @typestd[y] = Payment.find_by_sql(find_sql)
 
-     @yeartotaltd[y] = Payment.find  :all,
-                          :select => "COUNT(*) as tot, SUM(amount) as money",
-                          :joins => "inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id",
-                          :conditions => " date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') "
+     @yeartotaltd[y] = Payment.all
+                          .select("COUNT(*) as tot, SUM(amount) as money")
+                          .joins("inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id")
+                          .where("date_lodged >= '?' AND date_lodged <= '?' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ",date_start, date_end) 
 
     @memtotaltd[y] = Payment.find_by_sql(total_mem_sql)
 
@@ -193,8 +194,8 @@ SELECT   member_class,
 FROM     payments
          inner join privileges ON privileges.id = payments.privilege_id
          left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
-WHERE    (date_lodged >= '#{date_start}'
-     AND date_lodged <= '#{date_end}'
+WHERE    (date_lodged >= '?'
+     AND date_lodged <= '?'
      AND privileges.member_class not in ('X','Y')
      AND paymenttypes.id in ('1','4'))
 GROUP BY member_class, privileges.name
@@ -210,8 +211,8 @@ SELECT   member_class,
 FROM     payments
          inner join privileges ON privileges.id = payments.privilege_id
          left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
-WHERE    (date_lodged >= '#{date_start}'
-     AND date_lodged <= '#{date_end}'
+WHERE    (date_lodged >= '?'
+     AND date_lodged <= '?'
      AND privileges.member_class not in ('X','Y')
      AND paymenttypes.id in ('1','4','5'))
 GROUP BY member_class, privileges.name
@@ -219,21 +220,26 @@ ORDER BY member_class
 ) pays
 where pays.member_class = renewals.member_class"
 
+ ActiveRecord::Base::sanitize(find_sql,date_start,date_end)
+
   total_mem_sql =   "SELECT
          COUNT(*) as count
 FROM     payments
          inner join privileges ON privileges.id = payments.privilege_id
          left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
-WHERE    (date_lodged >= '#{date_start}'
-    AND date_lodged <= '#{date_end}'
+WHERE    (date_lodged >= '?'
+    AND date_lodged <= '?'
      AND privileges.member_class not in ('X','Y')
      AND paymenttypes.id in ('1','4'))"
+
+ ActiveRecord::Base::sanitize(total_mem_sql,date_start,date_end)
      @types[y] = Payment.find_by_sql(find_sql)
 
-     @yeartotal[y] = Payment.find  :all,
-                          :select => "COUNT(*) as tot, SUM(amount) as money",
-                          :joins => "inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id",
-                          :conditions => "date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') "
+     @yeartotal[y] = Payment.all
+                          .select("COUNT(*) as tot, SUM(amount) as money")
+r
+                          .joins("inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id")
+                          .where("date_lodged >= '?' AND date_lodged <= '?' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5')",date_start, date_end) 
      @memtotalyear[y] = Payment.find_by_sql(total_mem_sql)
 
      end

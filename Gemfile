@@ -82,6 +82,7 @@ group :test, :development  do
   gem 'capybara'
   gem 'cucumber-rails', require: nil
   gem 'cucumber', require: nil
+  gem 'spring-commands-cucumber'
 end
 
 group :test do

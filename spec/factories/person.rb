@@ -9,8 +9,6 @@ FactoryGirl.define do
      f.home_phone '01-845-1234'
      f.email_address 'john.doe@testmail.com'
      f.comm_prefs ''
-     f.snd_txt 'y'
-     f.snd_eml 'y'
      f.dob '01.01.2011'
      f.member_number 1
      f.txt_bridge 1
@@ -24,5 +22,8 @@ FactoryGirl.define do
      f.txt_test 1
      f.txt_op_co 1
      f.occupation 'ruby programmer '
+     f.send_txt 1
+     f.send_email 1
+     f.mobile_phone '12345'
    end
 end

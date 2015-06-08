@@ -17,7 +17,6 @@ describe "people/index" do
        :status => 'p'
       )
     ])
-#view.stub(:will_paginate)
   end
 
   it "renders a list of people" do

@@ -413,6 +413,7 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify
   rspec-activemodel-mocks
+  rspec-mocks
   rspec-rails (~> 3.0.0)
   sass-rails
   selenium-webdriver

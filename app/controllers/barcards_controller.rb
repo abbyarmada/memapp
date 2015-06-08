@@ -1,13 +1,6 @@
 class BarcardsController < ApplicationController
-   before_action :set_model, only: [:show, :edit, :update, :destroy]
+   before_action :set_model, only: [:edit, :update, :destroy]
    respond_to :html
-
-  def show
-    @barcards = Barcard.all
-  end
-  def index
-    show
-  end
 
   def new
     @barcard = Barcard.new
@@ -40,10 +33,13 @@ class BarcardsController < ApplicationController
 
   def create
     pid = params[:pid]
+    puts pid
     @barcard = Barcard.new
     @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
     # find the current personbarcard
     @currentbc = Peoplebarcard.find_by_person_id pid
+
+    flash[:notice] = 'Barcard was successfully updated.'
     respond_to do |format|
       if @barcard.save
         @peoplebarcard.person_id = pid
@@ -56,6 +52,7 @@ class BarcardsController < ApplicationController
         format.html { redirect_to person_path( :id =>   @peoplebarcard.person_id ) + '#tabs-6' }
       else
         format.html { render :action => "new" }
+        flash[:notice] = 'Barcard was not created.'
       end
     end
   end

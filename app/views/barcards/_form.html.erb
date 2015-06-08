@@ -1,13 +1,20 @@
 <% @mid = (params[:mid])%>
 <% @pid = (params[:pid])%>
+
 <%= form_for(@barcard) do |f| %>
-<table class ="listing">
-	<th>Field</th> <th> value</th> 
-	<tr>	<td>Member ID</td><td><%= @mid  %></td></tr>
-	<tr>	<td>Person ID</td><td><%= @pid %></td></tr>
+<% peoplebarcard = Peoplebarcard.find_by_person_id @pid %>
+
+<table class="table table-striped table-condensed table-responsive table-hover table-bordered">
+	<th>Last Name</th> <th> First Name</th><th> Current Barcard</th>
+	<tr><td><%= peoplebarcard.person.last_name rescue nil %></td>
+	    <td><%= peoplebarcard.person.first_name rescue nil %></td>
+	    <td><%= ENV['BARCARD_PREFIX']||'xxxx' + "%05d" % peoplebarcard.barcard_id rescue nil%></td>
+	</tr>
 </table>
-<p>
-    <%= f.submit button_label %>
-</p>
+<%= link_to barcards_path( :pid => @pid ),:class => 'btn  btn-primary', method: :post do %>
+	<span class="glyphicon glyphicon-plus"></span>
+Create New Barcard
 <% end %>
 
+
+<% end %>

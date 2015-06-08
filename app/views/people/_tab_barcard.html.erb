@@ -24,11 +24,11 @@
 					  	</thead>
 			  			<tbody>
 					  		<tr>
-							  	<td><%= link_to  "%05d" % person.peoplebarcard.barcard.id, edit_peoplebarcard_path(person.peoplebarcard.id,:person_id => person.id)  %> </td>
+							  	<td><%= link_to  "%05d" % person.peoplebarcard.barcard.id, edit_peoplebarcard_path(person.peoplebarcard.id,:person_id => person.id) rescue nil  %> </td>
 							  	<td><%= number_to_currency( (person.loyaltycard.try(:Current_Points)).to_f / 100, :unit => "€")  %> </td>
 							  	<td><%= link_to 'Delete', peoplebarcard_path(person.peoplebarcard.id) ,
 								  	data: { confirm: "Are you sure you want to delete this Barcard ?"} , :method => :delete,
-								  	:class => 'btn btn-xs btn-danger',remote: true  %>
+								  	:class => 'btn btn-xs btn-danger',remote: true rescue nil  %>
 							  	</td>
 						  	</tr>
 				   		</tbody>
@@ -37,7 +37,7 @@
 	  		<% end %>
 			</div>
 		<% end %>
-    <%= link_to new_barcard_path(:mid => @person.member_id, :pid => @person.id), method: :get ,:class => 'btn  btn-primary' do %>
+    <%= link_to new_barcard_path(:pid => @person.id), method: :get ,:class => 'btn  btn-primary' do %>
       <span class="glyphicon glyphicon-plus"></span>
     New Barcard
     <% end %>

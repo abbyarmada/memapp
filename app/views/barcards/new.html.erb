@@ -1,6 +1,5 @@
 <h1>New Barcard</h1>
 
-<% @mid = (params[:mid])%>
 <% @pid = (params[:pid])%>
 
 <%= link_to person_path(@pid) + '#tabs-6', :class => 'btn btn-default' do %>
@@ -15,7 +14,8 @@
 	The current Barcard will be removed from this user.
 </h3>
 
+<%=# render :partial => "formNew", :locals => { :button_label => "Create", :barcard => @barcard , :mid=> @mid  }
+%>
 
-<%= form_tag :action => 'create',:mid => @mid, :pid => @pid do %>
-
-<% end%>
+<%= render :partial => "form", :locals => { :button_label => "Create",:peoplebarcard => @peoplebarcard, :barcard => @barcard , :pid=> @pid  }
+ %>

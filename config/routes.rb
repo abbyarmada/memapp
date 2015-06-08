@@ -47,8 +47,6 @@ R3::Application.routes.draw do
 	end
 
 	resources :people do
-	  get :autocomplete_member_proposed  , :on => :collection
-	  get :autocomplete_member_seconded  , :on => :collection
 	  collection do
 	    get 'bar_interface'
 	    get 'paid_up_extract'

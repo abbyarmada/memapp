@@ -186,7 +186,7 @@ end
        classes = (@types[t].keys | classes).sort
     end
     keys = Hash[*classes.collect {|v| [classes.index(v) ,v.to_s] }.flatten.uniq ].sort
-    puts keys
+    #puts keys
     color_code = ['0000ff','ff0000','008000','FFd700','FFa500']
     yr_end = ((Time.now.year).to_s + "." + endmonth + "." + endday).to_date
     chart = GoogleChart::LineChart.new("600x200", "Membership Trends, Year To " + yr_end.strftime('%B %d') , false)

@@ -12,7 +12,6 @@
 	  </ul>
 	  <% y = 0 %>
 	  <% @person.member.people.barcard_holders.each do |person|  %>
-    <% puts @person.member.people.barcard_holders.last.id %>
 	    <div id="<%= "tab-5-1-" + (y+=1).to_s %>"
 	      <%= form_for(person) do |f| %>
 	        <div class="table-responsive" >

@@ -33,7 +33,6 @@ class BarcardsController < ApplicationController
 
   def create
     pid = params[:pid]
-    puts pid
     @barcard = Barcard.new
     @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
     # find the current personbarcard

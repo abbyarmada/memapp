@@ -14,7 +14,7 @@
   <tbody>
   <% @people.each do |person|  %>
     <tr>
-      <td><%= link_to person.last_name, person_path(person) %></td>
+      <td><%= link_to person.last_name, person_path(person.id) %></td>
       <td><%= person.first_name %></td>
       <td><%= person.member.privilege.name %></td>
       <td><%= person.member.renew_date.year rescue nil%></td>

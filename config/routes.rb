@@ -80,7 +80,6 @@ R3::Application.routes.draw do
 
 	end
 
-
   authenticated :user do
     root :to => 'people#index', :as => :authenticated_root
   end

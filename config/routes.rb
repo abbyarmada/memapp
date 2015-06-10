@@ -60,6 +60,7 @@ R3::Application.routes.draw do
 	    get 'create_renewals'
 	    get 'renewal_email'
       get 'cut'
+      post 'newmember'
       post 'paste'
 	  end
 	end

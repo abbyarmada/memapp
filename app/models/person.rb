@@ -21,7 +21,7 @@ class Person < ActiveRecord::Base
   validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists check?" } , :if => Proc.new {|person| person.status == 'm' && !member_id.nil? }
   validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists"        } , :if => Proc.new {|person| person.status == 'm' && !person.member_id.nil? }
   validates :status, uniqueness: {scope: :member_id, message: "Partner Member already Exists"     },  :if => Proc.new {|person| person.status == 'p' }
-  validate :main_member_exists? ,on: :update
+  #validate :main_member_exists? ,on: :update
   #validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member does not Exist" }, :if => Proc.new {|person| person.status != 'm' }
 
   def self.search(params)

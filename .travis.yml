@@ -52,12 +52,13 @@ addons:
 
 notifications:
   email: true
-  
-script: "bundle exec rake db:create db:test:load spec"
 
+script:
+  - bundle exec rake db:create db:test:load spec
+  - bundle exec rake cucumber
 
 after_failure:
-- "mysql -e 'show databases;'"
-- "cat ./config/database.yml"
-- "echo $RAILS_ENV"
-- "bundle exec rake --version"
+  - mysql -e 'show databases;'
+  - cat ./config/database.yml
+  - echo $RAILS_ENV
+  - bundle exec rake --version

@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20141121090103) do
     t.string   "postcode"
     t.string   "county"
     t.string   "country"
-    t.string   "email_renewal", limit: 1, default: "N", null: false
+    t.integer   "email_renewal", limit: 1, default: 0, null: false
     t.integer  "active",        limit: 1, default: 1,   null: false
   end
 

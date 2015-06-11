@@ -14,7 +14,7 @@ install:
 cache: bundler
 
 before_install:
- - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
+ - echo 'gem: --no-ri --no-rdoc' > ~/.gemrc
  - ./script/travis/bundle_install.sh
  - gem uninstall bundler
  - gem install bundler --version '1.8.0'
@@ -52,12 +52,13 @@ addons:
 
 notifications:
   email: true
-  
-script: "bundle exec rake db:create db:test:load spec"
 
+script:
+  - bundle exec rake db:create db:test:load spec
+  - bundle exec rake cucumber
 
 after_failure:
-- "mysql -e 'show databases;'"
-- "cat ./config/database.yml"
-- "echo $RAILS_ENV"
-- "bundle exec rake --version"
+  - mysql -e 'show databases;'
+  - cat ./config/database.yml
+  - echo $RAILS_ENV
+  - bundle exec rake --version

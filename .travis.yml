@@ -14,7 +14,7 @@ install:
 cache: bundler
 
 before_install:
- - echo 'gem: --no-ri --no-rdoc' > ~/.gemrc
+ - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
  - ./script/travis/bundle_install.sh
  - gem uninstall bundler
  - gem install bundler --version '1.8.0'

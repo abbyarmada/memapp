@@ -12,6 +12,9 @@ require 'capybara/rails'
 
 CodeClimate::TestReporter.start
 
+CodeClimate::TestReporter.configure do |config|
+        config.timeout = 900
+end
 require 'simplecov'
 SimpleCov.start
 

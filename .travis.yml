@@ -30,7 +30,6 @@ env:
 #  - DB=postgresql
   global:
     - RAILS_ENV=test
-    - BUNDLE_ARCHIVE='CACHE_$TRAVIS_BRANCH'
     - secure: "gEVIoM2ItXmMWhvHmBsfwDpom27JiiLZIuMXpguffDEMpSaYOFXpaKWBPhq3tN0Ocfb3CKBEiP9AWdQKqz+6ssXw81r/ge2eSczL92WHspmoyQhWPqjnlpJACJf6kVXjYuxqYQl0NkOAN/bbrC/54jd9Yl6Csm51hCr1u5jowrM="
 
 # - cp config/database.travis.yml config/database.yml

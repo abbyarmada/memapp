@@ -1,8 +1,7 @@
 <h1>New person</h1>
+
 <% member_id = params[:member_id] %>
-<% member_id = params[:member_id] %>
-<% @person = Person.main_person(member_id) %>
-<%= link_to person_path(@person) + '#tabs-3', :class => 'btn btn-default' do %>
+<%= link_to :back , :class => 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>

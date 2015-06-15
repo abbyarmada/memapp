@@ -3,7 +3,8 @@ Given(/^there's a person with first_name "(.*?)" and  last_name "(.*?)"$/) do |f
   #pending # express the regexp above with the code you wish you had
   #@person = FactoryGirl.create(:person, first_name: first_name, last_name: last_name)
 
-  @member =  FactoryGirl.create(:member       ,:people      => [FactoryGirl.create(:person)  ] )
+ #@privilege = FactoryGirl.create(:privilege)
+  @member =  FactoryGirl.create(:member,:people => [FactoryGirl.create(:person) ], :privilege => FactoryGirl.create(:privilege) )
   @person = @member.people.first
   @member.complete_new_member_process
 end

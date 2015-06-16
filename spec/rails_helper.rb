@@ -10,13 +10,18 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'capybara/rails'
 
-CodeClimate::TestReporter.start
+CodeClimate::TestReporter.start do 
+  #
+end if ENV["COVERAGE"]
 
 CodeClimate::TestReporter.configure do |config|
         config.timeout = 900
 end
+
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  # rules here
+end if ENV["COVERAGE"]
 
 
 

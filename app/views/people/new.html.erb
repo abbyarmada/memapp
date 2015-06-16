@@ -4,18 +4,14 @@
 <%= link_to :back , :class => 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
-  <% end %>
+<% end %>
 
 <%= simple_form_for(@person) do |f| %>
-
   <%= f.error_notification %>
-
   <div class="row">
-
     <%= render :partial => 'person', :locals => {:f => f  }  %>
     <div class="form-actions">
       <%= f.button :submit %>
     </div>
+  </div>
 <% end %>
-
-</div>

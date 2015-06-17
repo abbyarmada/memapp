@@ -13,7 +13,7 @@ env:
   - DB=mysql
   global:
   - RAILS_ENV=test
-  - AMAZON_S3_BUCKET=http://s3-eu-west-1.amazonaws.com/bundlecache
+  - AMAZON_S3_BUCKET=bundlecache
   - AMAZON_ACCESS_KEY_ID=AKIAJYLHOS47U4Y5WBDA
   - secure: IqNXoQDfW5DUnLzWraUX6seVZiqxvOIG3GK0Hu9m1VnTUh5hHNWnE2VhZIjC+SHXJdT3Gdu1Nb2kHkCU1zcQIjPjDfGZqSho/MjJTj62tCCCgnVXtHblKmiLREXkVh8icIBTdq7398vHY9sN/mz9WJW9vT1UebTMQXztNLDWNpM=
 before_script:

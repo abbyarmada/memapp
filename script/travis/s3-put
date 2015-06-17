@@ -58,7 +58,7 @@ acl="public-read"
 content_md5="$(bin_md5 < "$file" | base64)"
 date="$(date_string)"
 
-url="https://$bucket.s3.amazonaws.com/$remote_path"
+url="https://$bucket.s3-eu-west-1.amazonaws.com/$remote_path"
 
 curl -qsSf -T "$file" \
   -H "Authorization: $(authorization)" \

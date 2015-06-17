@@ -5,6 +5,7 @@ require "codeclimate-test-reporter"
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
+require 'simplecov'
 
 # Add this to load Capybara integration:
 require 'capybara/rspec'
@@ -17,12 +18,6 @@ end if ENV["COVERAGE"]
 CodeClimate::TestReporter.configure do |config|
         config.timeout = 900
 end
-
-require 'simplecov'
-SimpleCov.start do
-  # rules here
-end if ENV["COVERAGE"]
-
 
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

@@ -1,7 +1,7 @@
 bundler_args: "--without development --path=~/.bundle"
 language: ruby
-install: script/travis/cached-bundle install --deployment
-cache: bundler
+install: ./script/travis/cached-bundle install --deployment
+#cache: bundler
 before_install:
 - 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
 - gem uninstall bundler

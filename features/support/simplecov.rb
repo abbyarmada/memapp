@@ -1,4 +1,4 @@
-#to include code coverage using simplecov.
-#settings in .simplecov
-require 'simplecov' 
+# To include code coverage using simplecov.
+# Settings in .simplecov
+require "simplecov"
 

@@ -5,7 +5,7 @@ require "codeclimate-test-reporter"
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
-require 'simplecov'
+require "simplecov"
 
 # Add this to load Capybara integration:
 require 'capybara/rspec'

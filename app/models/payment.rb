@@ -245,6 +245,8 @@ end
             msg = 'Payment Deleted - Resetting Membership Renewal Date and Membership Class'
             self.member.save
           end
+        else
+          self.member.renew_date =''
         end
       end
     return msg

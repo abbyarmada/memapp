@@ -24,10 +24,8 @@ class PrivilegesController < ApplicationController
     respond_to do |format|
       if @privilege.save
         format.html { redirect_to privileges_path, notice: 'Member class was successfully created.' }
-        format.json { render action: 'index', status: :created, location: @privilege }
       else
         format.html { render action: 'new', notice: 'Member class was not created - fix errors .' }
-        format.json { render json: @privilege.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -35,10 +33,8 @@ class PrivilegesController < ApplicationController
     respond_to do |format|
       if @privilege.update(privilege_params)
         format.html { redirect_to @privilege, notice: 'Member Class was successfully updated.' }
-        format.json { head :ok }
       else
         format.html { render action: "edit" }
-        format.json { render json: @privilege.errors, status: :unprocessable_entity }
       end
     end
   end

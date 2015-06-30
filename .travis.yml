@@ -20,6 +20,8 @@ before_script:
 - cp config/database.$DB.yml config/database.yml
 - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
 - mysql -e 'create database memapp_$RAILS_ENV'
+- chmod +x script/travis/cached-bundle.sh
+- chmod +x script/travis/s3-put
 after_script:
 addons:
   code_climate:

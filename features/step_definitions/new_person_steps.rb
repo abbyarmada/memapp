@@ -1,9 +1,9 @@
 # features/step_definitions/home_page_steps.rb
 Given(/^I have a Family Membership$/) do
   @member =  FactoryGirl.create(:member,
-                                 people: [FactoryGirl.create(:person),
-             FactoryGirl.create(:person, 
-                                 status: :"p")], 
+                                 people: [FactoryGirl.create(:person), 
+                                          FactoryGirl.create(:person,  
+                                                              status: :"p")], 
                                  privilege: FactoryGirl.create(:privilege))
   @person = @member.people.first
   @partner = @member.people.last

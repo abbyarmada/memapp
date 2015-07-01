@@ -1,15 +1,15 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
-require 'spec_helper'
+ENV["RAILS_ENV"] ||= "test"
+require "spec_helper"
 require "codeclimate-test-reporter"
 require File.expand_path("../../config/environment", __FILE__)
-require 'rspec/rails'
+require "rspec/rails"
 
 require "simplecov"
 
 # Add this to load Capybara integration:
-require 'capybara/rspec'
-require 'capybara/rails'
+require "capybara/rspec"
+require "capybara/rails"
 
 CodeClimate::TestReporter.start do 
   #

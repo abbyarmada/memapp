@@ -4,7 +4,7 @@ Given(/^I have a Family Membership$/) do
                                  people: [FactoryGirl.create(:person),
              FactoryGirl.create(:person, 
                                  status: :"p")], 
-  privilege: FactoryGirl.create(:privilege))
+                                 privilege: FactoryGirl.create(:privilege))
   @person = @member.people.first
   @partner = @member.people.last
   @member.complete_new_member_process
@@ -35,8 +35,8 @@ Then(/^I should get the New person form$/) do
 end
 
 Then(/^I fill in the New person form$/) do
-  fill_in "First Name", with:"John"
-  fill_in "Last Name",  with:"Doe"
+  fill_in "First Name", with: "John"
+  fill_in "Last Name",  with: "Doe"
   select("Child of main member")
   save_page
 end

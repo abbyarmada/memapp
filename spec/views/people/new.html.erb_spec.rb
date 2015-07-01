@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "people/new", :type => :view do
+RSpec.describe "people/new", type: :view do
   before(:each) do
-    assign(:person, Person.new())
+    assign(:person, Person.new)
   end
 
   it "renders new person form" do

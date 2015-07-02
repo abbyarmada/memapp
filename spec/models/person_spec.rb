@@ -48,12 +48,12 @@ describe Person, :type => :model do
      expect(person.age).to be_nil
   end
   it "Age is calculated correctly" do
-    person = create(:person, dob:(Date.today - 10.year) )
-     expect(person.age).to eq(10)
+    person = create(:person, dob: (Date.today - 10.year))
+    expect(person.age).to eq(10)
   end
   it "Determins an adult correctly" do
-    person = create(:person, dob:(Date.today - 18.year) )
-     expect(person.adult?).to eq(true)
+    person = create(:person, dob: (Date.today - 18.year))
+    expect(person.adult?).to eq(true)
   end
   it "returns a person's first name and partner first name as salutation when surnames match" do
     person = create(:person, first_name: "John", last_name: "Doe")
@@ -76,9 +76,9 @@ describe Person, :type => :model do
     expect(person.salutation_first_names).to eq("John")
   end
   it "returns a Person's Caption" do
-  person = create(:person, first_name: "John", last_name: "Doe")
-  expect(person.caption).to eq("Doe, John")
-end
+    person = create(:person, first_name: "John", last_name: "Doe")
+    expect(person.caption).to eq("Doe, John")
+  end
     it "returns a Person's & Partners first name for Salutation" do
     person = create(:person, first_name: "John", last_name: "Doe")
     create(:person, first_name: "Jane", last_name: "Does", status: 'p', member_id: 1)

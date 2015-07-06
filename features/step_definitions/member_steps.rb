@@ -19,7 +19,7 @@ Then(/^I fill in the form$/) do
   # save_page
 end
 
-Then(/^I click button create$/) do
+Then(/^I click button create Member$/) do
   click_button "Create Member"
   # save_page
 end

@@ -8,5 +8,5 @@ Background:
     Given I am on the people index page
     Then I click button New Membership
     Then I fill in the form
-    Then I click button create
+    Then I click button create Member
     And  I should have a new Membership

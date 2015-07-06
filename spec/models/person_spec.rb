@@ -43,6 +43,11 @@ describe Person, :type => :model do
     person = create(:person)
     expect(person.main_person?).to eq(true)
   end
+  it "Determines a persons partner" do
+    person =  create(:person)
+    partner = create(:person, first_name: "Jane", status: 'p',member_id: person.member_id )
+    expect(person.partner.member_id).to eq(person.member_id)
+  end
    it "is valid to have a missing age" do
      person = create(:person, dob:nil )
      expect(person.age).to be_nil
@@ -94,4 +99,8 @@ describe Person, :type => :model do
     create(:person, status: 'p', member_id: 1)
     expect(person.main_member).to eq(person)
   end
+  # it "Determines if a main member is missing" do 
+  #  expect{ (create(:person, status: "p")) }.to raise_error
+  # end
 end
+

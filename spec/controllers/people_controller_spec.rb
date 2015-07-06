@@ -169,6 +169,6 @@ RSpec.describe PeopleController, :type => :controller do
       expect(response).to redirect_to(person_path)
     end
   end
-
+  
 
 end

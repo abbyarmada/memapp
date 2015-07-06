@@ -200,7 +200,7 @@ def paid_up_extract_five_year_ago
 
   if type == 'Bar'
       @people = Person.all.
-        includes(:member ,:peoplebarcard).
+        includes(:member ,:peoplebarcard).references(:members, :peopbbarcards).
         where("members.renew_date >= ? ", date).
         order("people.id,last_name,first_name")
   else

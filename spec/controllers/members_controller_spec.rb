@@ -34,6 +34,10 @@ RSpec.describe MembersController, :type => :controller do
     attributes_for(:member,proposed: "")
   }
 
+ let(:new_attributes) {
+     attributes_for(:member, year_joined: 2001)
+  }
+
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -113,27 +117,27 @@ RSpec.describe MembersController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested member" do
-        #skip" Update Member"
-        member = Member.create! valid_attributes
-        #member = create(:member)
-       # put :update, {:id => member.to_param, :member => new_attributes}, valid_session
-       # member.reload
-       # expect_any_instance_of(Member).to receive(:update_attributes).with({ "email_renewal" => "Y" })
+        member = create(:member)
+        person = create(:person ,member: member)
+        put :update, {:id => member.to_param, :member => new_attributes}, valid_session
         expect_any_instance_of(Member).to receive(:update).with({ "name_no" => "1.5" })
         put :update, {:id => member.to_param, :member => { "name_no" => "1.5" }}, valid_session
       end
 
-      #it "assigns the requested member as @member" do
-      #  member = Member.create! valid_attributes_with_main_person
-      #  put :update, {:id => member.to_param, :member => valid_attributes_with_main_person }, valid_session
-      #  expect(assigns(:member)).to eq(member)
-      #end
+      it "assigns the requested member as @member" do
+        member = create(:member)
+        person = create(:person ,member: member)
+        put :update, {:id => member.to_param, :member => valid_attributes_with_main_person }, valid_session
+        expect(assigns(:member)).to eq(member)
+      end
 
-      #it "redirects to the member" do
-      #  member = Member.create! valid_attributes
-      #  put :update, {:id => member.to_param, :member => valid_attributes}, valid_session
-      #  expect(response).to redirect_to(member)
-      #end
+      it "redirects to the member" do
+        member = create(:member)
+        person = create(:person ,member: member)  
+        put :update, {:id => member.to_param, :member => valid_attributes}, valid_session
+        expect(response).to redirect_to(Member.last.main_member)
+        
+      end
     end
 
     describe "with invalid params" do

@@ -6,7 +6,7 @@
 </div>
 
 <% if session[:copypersonid] and @person.member_id != session[:copypersonmid] %>
-  <%= link_to "Paste copied person" , {:id => session[:copypersonid], :member_id => @person.member_id ,:action => 'paste'} , :method => :post  %>
+  <%= link_to "Paste copied person" , {:id => session[:copypersonid], :member_id => @person.member_id ,:action => 'paste'} , method: :post  %>
 <% end %>
   <div id="tabs-3-1" class="tabs">
     <div class="table-responsive">
@@ -19,16 +19,18 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <%= content_tag_for(:tr, @person.member.people ) do |person| %>
-          <td><%= person.last_name %></td>
-          <td><%= person.first_name %></td>
-          <td><%= person.status %></td>
-          <td><%= link_to 'Edit', edit_person_path(person), :class => 'btn btn-xs btn-default' %></td>
-          <td><%= link_to "cut", cut_people_path(:id => person.id) , :class => 'btn btn-xs btn-default' %> </td>
-          <td><%= link_to 'Delete', person, method: :delete, data: { confirm: "Are you sure you want to delete this person" }, :class => 'btn btn-xs btn-danger' %></td>
+            <td><%= person.last_name %></td>
+            <td><%= person.first_name %></td>
+            <td><%= person.status %></td>
+            <td><%= link_to 'Edit', edit_person_path(person), :class => 'btn btn-xs btn-default' %></td>
+            <td><%= link_to "cut", cut_people_path(:id => person.id) , :class => 'btn btn-xs btn-default' %> </td>
+            <td><%= link_to "Move to NEW Membership", newmember_people_path(:id =>  person.id) , method: :post, :class => 'btn btn-xs btn-danger' %> </td>
+            <td><%= link_to 'Delete', person, method: :delete, data: { confirm: "Are you sure you want to delete this person" }, :class => 'btn btn-xs btn-danger' %></td>
           <% end %>
         </tbody>
       </table>

@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
 
   require 'csv'
   before_action :check_search_form_reset, :only => [:index]
-  before_action :set_model, only: [:show, :edit, :update, :destroy,:cut, :renewal_email]
+  before_action :set_model, only: [:show, :edit, :update, :destroy,:cut,:renewal_email,:newmember]
   respond_to :html, :pdf
 
   def show
@@ -103,24 +103,41 @@ class PeopleController < ApplicationController
     end
   end
   def cut
-     if @person.status == 'm'
-        redirect_to :back
-        flash[:notice] = 'Cannot Move the Main Member.'
-    else
+     #if @person.status == 'm'
+    #    redirect_to :back
+  #      flash[:notice] = 'Cannot Move the Main Member.'
+  #  else
        session[:copypersonid] = @person.id
        session[:copypersonmid] = @person.member_id
        redirect_to :back
        flash[:notice] = 'Person Cut to memory, go to other membership and select paste.'
-     end
+  #   end
   end
+
+  def newmember
+    @newmember = Member.new
+    @newmember = @person.member.dup
+    if @newmember.save
+      @person.member_id = @newmember.id
+      @person.save
+      redirect_to :back
+      flash[:notice] = 'Person moved to a newly created Membership.'
+    else
+      redirect_to :back
+      flash[:notice] = 'Oops.. something went wrong..'
+    end
+  end
+
   def paste
     @person = Person.find(session[:copypersonid])
     @person.member_id  = params[:member_id]
+    @person.status = 'ch'
     if @person.save
       session[:copypersonid] = ''
       redirect_to :back
       flash[:notice] = 'Person Moved to this membership'
     else
+      redirect_to :back
       flash[:notice] = 'An Error occured while moving this person to this membership'
     end
   end
@@ -183,7 +200,7 @@ def paid_up_extract_five_year_ago
 
   if type == 'Bar'
       @people = Person.all.
-        includes(:member ,:peoplebarcard).
+        includes(:member ,:peoplebarcard).references(:members, :peopbbarcards).
         where("members.renew_date >= ? ", date).
         order("people.id,last_name,first_name")
   else

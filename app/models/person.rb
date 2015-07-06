@@ -21,7 +21,7 @@ class Person < ActiveRecord::Base
   validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists check?" } , :if => Proc.new {|person| person.status == 'm' && !member_id.nil? }
   validates :status, uniqueness: {scope: :member_id, message: "Main Member already Exists"        } , :if => Proc.new {|person| person.status == 'm' && !person.member_id.nil? }
   validates :status, uniqueness: {scope: :member_id, message: "Partner Member already Exists"     },  :if => Proc.new {|person| person.status == 'p' }
-  validate :main_member_exists? ,on: :update
+  #validate :main_member_exists? ,on: :update
   #validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member does not Exist" }, :if => Proc.new {|person| person.status != 'm' }
 
   def self.search(params)
@@ -36,12 +36,12 @@ class Person < ActiveRecord::Base
     people = people.paginate(:per_page => 30, :page => params[:page]).order(:last_name,:first_name)
   end
 
-  def main_member_exists?
-    main_member_count = Person.where("member_id = ? and status = ? ", member_id, 'm').count
-    if main_member_count != 1
-     errors.add(:status, "Must have a main member")
-    end
- end
+#  def main_member_exists?
+#    main_member_count = Person.where("member_id = ? and status = ? ", member_id, 'm').count
+#    if main_member_count != 1
+#     errors.add(:status, "Must have a main member")
+#    end
+# end
 
   def adult?
     self.age >= 18 rescue nil
@@ -52,9 +52,9 @@ class Person < ActiveRecord::Base
     main_person = Person.where(" status = 'm' and member_id = ? ", mid ).first
   end
 
-  def self.partner(mid)
-    partner = Person.where(:status => 'p',:member_id => mid ).first
-  end
+# def self.partner(mid)
+#    partner = Person.where(:status => 'p',:member_id => mid ).first
+# end
 
   def main_person?
     status == "m"
@@ -92,31 +92,19 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def self.members_list_type
-    {'Current Members' => 'c', 'Past and Current members' => 'p' }
-  end
+#  def self.members_list_type
+#    {'Current Members' => 'c', 'Past and Current members' => 'p' }
+#  end
 
   def caption
     self.last_name + ', ' +  self.first_name
   end
 
- # def url
- #   "person/edit/" + self.id.to_s
- # end
+  # def self.proposers
 
-  #def self.peoplecount
-  #  this_yr_start = Time.now.year.to_s + "-01-01"#
-#
-#    @peoplecount = Person.count :include => [:member ],
-#                :joins => " inner join privileges on members.privilege_id = privileges.id ",
-#                :conditions => " (  renew_date >= '#{this_yr_start}' ) and privileges.bar_reference > 0 "
-#  end
+  #  @proposers = Person.find(:all, :conditions => ['last_name LIKE ?', "%#{params[:search]}%"])
 
-  def self.proposers
-
-    @proposers = Person.find(:all, :conditions => ['last_name LIKE ?', "%#{params[:search]}%"])
-
-  end
+  # end
 
   def partner
     partner = Person.where(:status => 'p', :member_id => member_id ).first if status == 'm'

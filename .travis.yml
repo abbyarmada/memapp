@@ -1,63 +1,38 @@
-# Speed up travis builds see : https://gist.github.com/ArturT/5792488
-# encrypt the ftp login see: http://docs.travis-ci.com/user/encryption-keys/
-# travis encrypt CI_FTP_URL="ftp-app.example.com" CI_FTP_HOST="ftp.example.com" CI_FTP_USER="YOUR_FTP_USER" CI_FTP_PASS="YOUR_FTP_PASSWORD"
-
-
-bundler_args: --without development --path=~/.bundle
+bundler_args: "--without development --path=~/.bundle"
 language: ruby
-
-install:
-#  - gem uninstall bundler
-#  - gem install bundler --version '1.8.0'
-
-
-cache: bundler
-
+install: ./script/travis/cached-bundle.sh install --deployment
+#cache: bundler
 before_install:
- - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
- - ./script/travis/bundle_install.sh
- - gem uninstall bundler
- - gem install bundler --version '1.8.0'
-
-
+- 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
+- gem uninstall bundler
+- gem install bundler --version '1.8.0'
 rvm:
-  - 2.0.0
-
+- 2.0.0
 env:
   matrix:
   - DB=mysql
-#  - DB=sqlite
-#  - DB=postgresql
   global:
-    - RAILS_ENV=test
-    - BUNDLE_ARCHIVE='CACHE_$TRAVIS_BRANCH'
-    - secure: "gEVIoM2ItXmMWhvHmBsfwDpom27JiiLZIuMXpguffDEMpSaYOFXpaKWBPhq3tN0Ocfb3CKBEiP9AWdQKqz+6ssXw81r/ge2eSczL92WHspmoyQhWPqjnlpJACJf6kVXjYuxqYQl0NkOAN/bbrC/54jd9Yl6Csm51hCr1u5jowrM="
-
-# - cp config/database.travis.yml config/database.yml
+  - RAILS_ENV=test
+  - AMAZON_S3_BUCKET=bundlecache
+  - AMAZON_ACCESS_KEY_ID=AKIAJYLHOS47U4Y5WBDA
+  - secure: IqNXoQDfW5DUnLzWraUX6seVZiqxvOIG3GK0Hu9m1VnTUh5hHNWnE2VhZIjC+SHXJdT3Gdu1Nb2kHkCU1zcQIjPjDfGZqSho/MjJTj62tCCCgnVXtHblKmiLREXkVh8icIBTdq7398vHY9sN/mz9WJW9vT1UebTMQXztNLDWNpM=
 before_script:
-  - cp config/database.$DB.yml config/database.yml
-  - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
-  - mysql -e 'create database memapp_$RAILS_ENV'
-#  - psql -c 'create database memapp_$RAILS_ENV' -U postgres
-#  - touch 'db/$RAILS_ENV.sqlite3'
-
+- cp config/database.$DB.yml config/database.yml
+- cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
+- mysql -e 'create database memapp_$RAILS_ENV'
+- chmod +x script/travis/cached-bundle.sh
+- chmod +x script/travis/s3-put
 after_script:
-  - ruby script/travis/bundle_cache.rb
-
 addons:
-  - code_climate:
-      - repo_token:
-        - secure: XF1pHDHcZMdsMuW4mTtmyz4Qx0TlMeg0XL1NhUkWniQo4d++Zim74oi47Av2kHtJ8x9JX8k9QVQaNkUFxUJo3w8V2CpPQHp6I6RyJhp04s4jECnF10j92hMeDboTs89mh8tF0lTLwHGgqTac3IFvoIK6iwoqGKkZ8zhiF41NyaA=
-
-
+  code_climate:
+    repo_token: 58ea4eeba73061c6684c99921ccfa25702de631d221130cbc68a3ae32c91067c
 notifications:
   email: true
-  
-script: "bundle exec rake db:create db:test:load spec"
-
-
+script:
+- bundle exec rake db:create db:test:load spec
+- bundle exec rake cucumber
 after_failure:
-- "mysql -e 'show databases;'"
-- "cat ./config/database.yml"
-- "echo $RAILS_ENV"
-- "bundle exec rake --version"
+- mysql -e 'show databases;'
+- cat ./config/database.yml
+- echo $RAILS_ENV
+- bundle exec rake --version

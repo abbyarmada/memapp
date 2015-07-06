@@ -62,6 +62,7 @@ group :development do
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-rspec'
+  gem 'guard-cucumber'
   gem 'quiet_assets'
   gem 'hub', :require=>nil
   gem 'rails_layout'
@@ -96,6 +97,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist'
+  gem 'simplecov', :require => false
 end
 
 group :test,:production do

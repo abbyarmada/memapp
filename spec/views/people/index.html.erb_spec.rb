@@ -1,19 +1,19 @@
 require 'rails_helper'
-require 'will_paginate/array'
+
 
 describe "people/index" do
   before(:each) do
-    @privilege = create(:privilege,id: 1)
-    @member    = create(:member,privilege_id: @privilege.id)
+    privilege = build_stubbed(:privilege)
+    member    = build_stubbed(:member,privilege: privilege)
     assign(:people, [
       build_stubbed(Person,
-       :member_id => @member.id,
+       :member => member,
        :first_name => 'John',
         :last_name => 'Doe',
         'status' => 'm'
       ),
       build_stubbed(Person,
-       :member_id => @member.id,
+       :member => member,
        :first_name => 'Jane',
        :last_name => 'Doe',
        :status => 'p'
@@ -22,7 +22,7 @@ describe "people/index" do
   end
 
   it "renders a list of people" do
-    allow(view).to receive_messages(:will_paginate => nil)
+    allow(view).to receive_messages(:will_paginate => false )
     render
     assert_select "tr>td", :text => 'John', :count => 1
     assert_select "tr>td", :text => 'Jane', :count => 1

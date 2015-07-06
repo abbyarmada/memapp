@@ -8,17 +8,7 @@ Given(/^I have a Family2 Membership$/) do
   @person = @member.people.first
   @partner = @member.people.last
   @member.complete_new_member_process
-  # @partner.complete_new_member_process
 end
-
-# Scenario: Add a new person to an existing Membership
-#  Given I have a Family member class
-#  Given I am on the people show page
-#  Then I click button New Person
-#  Then I should get the New person form
-#  Then I fill in the form
-#  Then I click button create
-#  And  I should have a new person
 
 Given(/^I am on the people show page$/) do
   visit person_path(@member.main_member)

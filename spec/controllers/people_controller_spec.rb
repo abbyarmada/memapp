@@ -38,13 +38,14 @@ RSpec.describe PeopleController, :type => :controller do
   let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
 
   describe "GET index" do
-    skip("skip")
+    # skip("skip")
    it "assigns all people as @people" do
-      skip
-      member = create(:member)
-      person = create(:person,member: member)
+      skip "broken!" 
+      allow(@people).to receive_messages(:will_paginate => true )
+      @member = create(:member)
+      @person = create(:person,member: @member)
       get :index, {}, valid_session
-      expect(assigns(:people)).to eq([person])
+      expect(assigns(:people)).to eq([@person]) 
     end
   end
 
@@ -88,7 +89,7 @@ RSpec.describe PeopleController, :type => :controller do
 
       it "redirects to the created person" do
         post :create, {:person => valid_attributes}, valid_session
-        expect(response).to redirect_to(Person.last)
+        expect(response).to redirect_to(person_url(assigns(:person)) + '#tabs-3')
       end
     end
 
@@ -108,15 +109,17 @@ RSpec.describe PeopleController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        attributes_for(:person,status: 'p')
+        attributes_for(:person, status: 'ch')
       }
 
       it "updates the requested person" do
         member = create(:member)
-        person = create(:person ,member: member)
+        mainperson = create(:person ,member: member)
+        person   = create(:person, status: 'p', member: member)  
         put :update, {:id => person.to_param, :person => new_attributes}, valid_session
         person.reload
-        skip("Add assertions for updated state")
+        expect(assigns(:person).status).to eq('ch')
+        #skip("Add assertions for updated state")
       end
 
       it "assigns the requested person as @person" do
@@ -161,12 +164,11 @@ RSpec.describe PeopleController, :type => :controller do
     end
 
     it "redirects to the people list" do
-      skip("Skip")
       member = create(:member)
       person = create(:person ,member: member)
       otherperson = create(:person, status: 'p' , member: member)
       delete :destroy, {:id => otherperson.to_param}, valid_session
-      expect(response).to redirect_to(person_path)
+      expect(response).to redirect_to(person_url(person) + '#tabs-3')
     end
   end
   

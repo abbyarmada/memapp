@@ -66,7 +66,7 @@ class PeopleController < ApplicationController
           @peoplebarcard.save
         end
         flash[:notice] = 'Person successfully created.'
-        format.html { redirect_to :controller =>'people', :action => 'show',:id => @person.id   }
+        format.html { redirect_to person_path(@person) + '#tabs-3'  }
       else
         format.html { render :action => "new" }
       end
@@ -89,29 +89,26 @@ class PeopleController < ApplicationController
       end
     end
   end
-  def destroy
 
+  def destroy
     @main_member = Person.main_person(@person.member_id)
     if @person.status == 'm'
       #redirect_to :back
       flash[:error] = 'Cannot delete the Main Member.'
-      render :action => "show" ,:id => @person.id
+      redirect_to person_path(@person) + '#tabs-3'
     else
       @person.destroy
-        flash[:notice] = 'Person Deleted.'
-        render :action => "show" ,:id => @main_member.id
+        respond_to do |format|
+           format.html { redirect_to person_url(@main_member.id) + '#tabs-3', notice: 'Person was successfully deleted.'}
+        end
     end
   end
+
   def cut
-     #if @person.status == 'm'
-    #    redirect_to :back
-  #      flash[:notice] = 'Cannot Move the Main Member.'
-  #  else
-       session[:copypersonid] = @person.id
-       session[:copypersonmid] = @person.member_id
-       redirect_to :back
-       flash[:notice] = 'Person Cut to memory, go to other membership and select paste.'
-  #   end
+    session[:copypersonid] = @person.id
+    session[:copypersonmid] = @person.member_id
+    redirect_to person_path(@person) + '#tabs-3'
+    flash[:notice] = 'Person Cut to memory, go to other membership and select paste.'
   end
 
   def newmember
@@ -120,7 +117,7 @@ class PeopleController < ApplicationController
     if @newmember.save
       @person.member_id = @newmember.id
       @person.save
-      redirect_to :back
+      redirect_to person_path(@person) + '#tabs-3'
       flash[:notice] = 'Person moved to a newly created Membership.'
     else
       redirect_to :back
@@ -134,7 +131,7 @@ class PeopleController < ApplicationController
     @person.status = 'ch'
     if @person.save
       session[:copypersonid] = ''
-      redirect_to :back
+      redirect_to person_path(@person) + '#tabs-3'
       flash[:notice] = 'Person Moved to this membership'
     else
       redirect_to :back

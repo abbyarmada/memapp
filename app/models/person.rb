@@ -11,7 +11,7 @@ class Person < ActiveRecord::Base
   scope :past,            -> { joins(:member,:privilege).merge(Member.past_members)  }
   scope :not_renewed,     -> { joins(:member,:privilege).merge(Member.not_renewed)  }
   scope :barcard_holders, -> { where.not( :status => 'g'  )   }
-
+  scope :grouped,         -> { where(status: 'm')}
 
   validates_presence_of :last_name, :first_name,:status
   #TODO validates_presence_of :member - causes problems wth nested attributes
@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
     people = Person.not_renewed if params[:not_renewed]
     people = people.where('last_name like :input'  , { :input => "%#{params[:search]}%"}) unless params[:search].blank?
     people = people.where('first_name like :input' , { :input => "%#{params[:searchfn]}%"}) unless params[:searchfn].blank?
-    people = people.where(" people.status in 'm','g' " ) if params[:group]
+    people = people.grouped if params[:group]
     people = people.where('members.privilege_id = :input' ,{ :input => "#{params[:searchmp][:privilege_id]}"})  if params[:searchmp] && !params[:searchmp][:privilege_id].blank?
     people = people.paginate(:per_page => 30, :page => params[:page]).order(:last_name,:first_name)
   end

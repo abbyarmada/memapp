@@ -100,16 +100,16 @@ describe Person, :type => :model do
     expect(person.main_member).to eq(person)
   end
   it "Counts the number of active members - no past members" do
-    privilege = create(:privilege) 
-    member = create(:member, privilege: privilege) 
-    person = create(:person,member: member) 
+    privilege = create(:privilege)
+    member = create(:member, privilege: privilege)
+    person = create(:person,member: member)
     expect(Person.current.count).to eq(1)
-    expect(Person.past.count).to eq(0) 
-    expect(Person.not_renewed.count).to eq(0)    
+    expect(Person.past.count).to eq(0)
+    expect(Person.not_renewed.count).to eq(0)
   end
   it "Counts the number of active members - 1 not renewed member" do
     privilege = create(:privilege)
-    member = create(:member, privilege: privilege, active: false, renew_date: 1.year.ago ) 
+    member = create(:member, privilege: privilege, active: false, renew_date: 1.year.ago )
     person = create(:person,member: member)
     expect(Person.current.count).to eq(0)
     expect(Person.past.count).to eq(1)
@@ -138,21 +138,26 @@ describe Person, :type => :model do
     expect(Person.search(search: "sm",past_members: true).count).to eq(1)
   end
   it "Finds the member Last name beginning 'Sm' if not renewed member" do
-   skip "#FIXME"
     privilege = create(:privilege)
     member = create(:member, privilege: privilege, active: false, renew_date: 1.year.ago )
-    person = create(:person,member: member)
+    person = create(:person,member: member,last_name: "Smith")
     expect(Person.search(search: "Sm",not_renewed: true, past_members: true).count).to eq(1)
     expect(Person.search(search: "sm",not_renewed: true, past_members: true).count).to eq(1)
+  end
+  it "Counts the number of members - Grouped" do
+    privilege = create(:privilege)
+    member = create(:member, privilege: privilege)
+    person = create(:person,member: member)
+    other_person = create(:person, status: 'ch', member: member)
+    expect(Person.current.count).to eq(2)
+    expect(Person.count).to eq(2)
+    expect(Person.grouped.count).to eq(1)
   end
 
 
 
 
-
-
-  # it "Determines if a main member is missing" do 
+  # it "Determines if a main member is missing" do
   #  expect{ (create(:person, status: "p")) }.to raise_error
   # end
 end
-

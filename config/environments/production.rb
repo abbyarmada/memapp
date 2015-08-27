@@ -39,6 +39,8 @@ R3::Application.configure do
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
 
+  # for devise
+  config.action_mailer.default_url_options = { host: 'memapp.myc.ie' }
 
 
   # Enable serving of images, stylesheets, and javascripts from an asset server

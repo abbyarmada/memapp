@@ -3,14 +3,16 @@
 Number of Payments <%= @payments.size%><br/>
 
 <table class="listing">
- <th>Amount</th> <th>Member Class</th> <th>Payment Method</th> <th>Last Name</th> <th>First Name</th> <th>Date Lodged</th>
+ <th>Amount</th> <th>Payment Type</th><th>Comments</th><th>Member Class</th> <th>Payment Method</th> <th>Last Name</th> <th>First Name</th> <th>Date Lodged</th>
 <%@payments.each do |payment| %>
    <tr class="<%= cycle('odd', 'even') %>">
      <td><%= link_to payment.amount , edit_payment_path(:id => payment.id) %></td>
+     <td><%= payment.paymenttype.name %> </td>
+     <td><%= payment.comment %> </td>
      <td><%= payment.privilege.name %></td>
 	 <td><%= payment.payment_method.name %></td>
-     <td><%= payment.member.people[0].last_name %></td> 
-	  <td><%= payment.member.people[0].first_name %></td> 
+     <td><%= payment.member.people[0].last_name %></td>
+	  <td><%= payment.member.people[0].first_name %></td>
      <td><%= payment.date_lodged.to_date%></td>
   </tr>
 <% end %>

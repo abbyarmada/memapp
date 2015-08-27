@@ -1,12 +1,12 @@
 sudo: false
 bundler_args: "--without development --path=~/.bundle"
 language: ruby
-#install: ./script/travis/cached-bundle.sh install --deployment
+# install: ./script/travis/cached-bundle.sh install --deployment
 cache: bundler
 before_install:
 - 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
-- gem uninstall bundler
-- gem install bundler --version '1.8.0'
+  #- gem uninstall bundler
+  #- gem install bundler --version '1.8.0'
 rvm:
 - 2.0.0
 env:
@@ -21,8 +21,8 @@ before_script:
 - cp config/database.$DB.yml config/database.yml
 - cp config/initializers/secret_token.travis.rb config/initializers/secret_token.rb
 - mysql -e 'create database memapp_$RAILS_ENV'
-- chmod +x script/travis/cached-bundle.sh
-- chmod +x script/travis/s3-put
+  #- chmod +x script/travis/cached-bundle.sh
+  #- chmod +x script/travis/s3-put
 after_script:
 addons:
   code_climate:

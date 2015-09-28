@@ -9,7 +9,9 @@ before_install:
   #- gem install bundler --version '1.8.0'
 rvm:
   - 2.0.0
+    gemfile: Gemfile 
   - 2.2.3
+    gemfile: gemfiles/Gemfile.2.2.3
 env:
   matrix:
   - DB=mysql

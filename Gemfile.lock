@@ -420,6 +420,7 @@ DEPENDENCIES
   rails (~> 4.0.0)
   rails_12factor
   rails_layout
+  rake
   rb-fchange
   rb-fsevent
   rb-inotify

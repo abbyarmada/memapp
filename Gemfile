@@ -100,6 +100,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist'
   gem 'simplecov', :require => false
+  gem 'rake'
 end
 
 group :test,:production do

@@ -8,7 +8,7 @@ gem 'therubyracer', :platforms => :ruby
 #gem 'capistrano'
 gem 'devise'
 gem 'cancan'
-#gem 'zipruby'
+gem 'zipruby'
 
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQL Server 5.5"'#
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'
@@ -18,7 +18,7 @@ gem 'gchartrb', :require => 'google_chart'
 gem 'prawn'
 gem 'prawn-table'
 gem 'prawnto'
-gem 'puma' 
+gem 'puma'
 
 #gem 'country_select', github: 'stefanpenner/country_select'
 #Store the country name in the data base rather than country code.. forked Country Select.

@@ -8,7 +8,7 @@ gem 'therubyracer', :platforms => :ruby
 #gem 'capistrano'
 gem 'devise'
 gem 'cancan'
-gem 'zipruby'
+#gem 'zipruby'
 
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQL Server 5.5"'#
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'

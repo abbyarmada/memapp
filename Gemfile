@@ -18,7 +18,7 @@ gem 'gchartrb', :require => 'google_chart'
 gem 'prawn'
 gem 'prawn-table'
 gem 'prawnto'
-gem 'puma' 
+gem 'puma'
 
 #gem 'country_select', github: 'stefanpenner/country_select'
 #Store the country name in the data base rather than country code.. forked Country Select.
@@ -100,6 +100,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist'
   gem 'simplecov', :require => false
+  gem 'rake'
 end
 
 group :test,:production do

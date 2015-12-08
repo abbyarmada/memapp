@@ -25,7 +25,7 @@ class Person < ActiveRecord::Base
   #validates :status, :uniqueness => {:scope => :member_id ,:message => "Main Member does not Exist" }, :if => Proc.new {|person| person.status != 'm' }
 
   def self.search(params)
-    people = Person.all
+    people = Person.all.includes([:member => :privilege],:peoplebarcard)
     people = people.current unless params[:past_members]
     people = Person.past if params[:past_members]
     people = Person.not_renewed if params[:not_renewed]

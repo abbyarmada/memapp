@@ -158,7 +158,7 @@ ORDER BY member_class
 ) pays
 where pays.member_class = renewals.member_class",date_start,date_end,date_start,date_end]
 
- 
+
 total_mem_sql =   ["SELECT
          COUNT(*) as count
 FROM     payments
@@ -169,13 +169,13 @@ WHERE    (date_lodged >= ?
      AND privileges.member_class not in ('X','Y')
      AND paymenttypes.id in ('1','4'))",date_start,date_end]
 
-      
+
   @typestd[y] = Payment.find_by_sql(find_sql)
 
      @yeartotaltd[y] = Payment.all
                           .select("COUNT(*) as tot, SUM(amount) as money")
                           .joins("inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id")
-                          .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ",date_start, date_end) 
+                          .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ",date_start, date_end)
 
     @memtotaltd[y] = Payment.find_by_sql(total_mem_sql)
 
@@ -229,13 +229,13 @@ WHERE    (date_lodged >= ?
     AND date_lodged <= ?
      AND privileges.member_class not in ('X','Y')
      AND paymenttypes.id in ('1','4'))",date_start,date_end]
- 
+
      @types[y] = Payment.find_by_sql(find_sql)
 
      @yeartotal[y] = Payment.all
                           .select("COUNT(*) as tot, SUM(amount) as money")
                           .joins("inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id")
-                          .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5')",date_start, date_end) 
+                          .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5')",date_start, date_end)
      @memtotalyear[y] = Payment.find_by_sql(total_mem_sql)
 
      end
@@ -317,7 +317,7 @@ def tot_by_member_class_3
 end
 
   def listytd
-    @payments = Payment.current_year.includes(:member,:privilege,:payment_method,:paymenttype)
+    @payments = Payment.current_year.includes(:privilege,:payment_method,:paymenttype,[:member => :people])
     respond_to do |format|
       format.html
     end
@@ -325,7 +325,7 @@ end
 
 
  def overduememberships
-   @overdues = Member.overduesubs
+   @overdues = Member.overduesubs.includes(:people,:privilege)
    #if params[:commit] == 'Export CSV file'
      extract = CSV.generate do |csv|
        csv << ['First Name', 'Last Name', 'Home Phone', 'Mobile', 'Email','name_no','Street1','Street2','Town','City', 'Postcode','County','Country','Member Class', 'Age', 'last Payment date']

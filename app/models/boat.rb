@@ -21,7 +21,7 @@ class Boat < ActiveRecord::Base
 
   scope :other, ->  { where( ['boat_class NOT IN ( ?,?,?,?,?)', 'Optimist','Topaz Uno Plus', 'Laser','Kona','Kona One' ] ) }
 
-  scope :members_boats, ->  { where('members.renew_date >= ? and people.status = \'m\'  '  , Time.now.prev_year.beginning_of_year).joins(:member => [:privilege,:people]) }
+  scope :members_boats, ->  { where('members.renew_date >= ? and people.status = \'m\'  '  , Time.now.prev_year.beginning_of_year).includes(:member => :people).joins(:member => [:privilege,:people]) }
 
 
 

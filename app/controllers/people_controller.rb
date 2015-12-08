@@ -6,7 +6,7 @@ class PeopleController < ApplicationController
   respond_to :html, :pdf
 
   def show
-    @member = Member.find(@person.member_id) #required for membership form
+    @member = Member.find(@person.member_id)  #required for membership form
     respond_to do |format|
       format.html
       format.pdf do

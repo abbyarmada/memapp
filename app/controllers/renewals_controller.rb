@@ -36,7 +36,6 @@ class RenewalsController < ApplicationController
 
   def download_zip
      path = Rails.root.join("tmp","renewals","Renewals_For_Printing.zip")
-#     puts "path=" +path.to_s
      File.open(path,'rb') do |f|
         send_data f.read, :type => 'application/zip',:filename => 'Renewals_For_Printing.zip', :disposition => 'attachment', :encoding => 'utf8'
      end

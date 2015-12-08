@@ -2,7 +2,7 @@ class SubscriptionsController < ApplicationController
   before_action :set_model, only: [:show, :edit, :update, :destroy]
 
   def index
-    @subscriptions = Subscription.all
+    @subscriptions = Subscription.all.includes(:privilege)
   end
 
   def new

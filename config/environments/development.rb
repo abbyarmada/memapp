@@ -18,22 +18,22 @@ R3::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.asset_host = "http://localhost:3000"
-  
-  #for devise 
+
+  #for devise
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  
+
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
- 
+
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
- 
+
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
@@ -42,9 +42,29 @@ R3::Application.configure do
    # Checks for improperly declared sprockets dependencies.
    # Raises helpful error messages.
    config.assets.raise_runtime_errors = true
- 
+
    # Raises error for missing translations
    # config.action_view.raise_on_missing_translations = true
 
-end
 
+   config.after_initialize do
+     Bullet.enable = true
+     Bullet.alert = true
+     Bullet.bullet_logger = true
+     Bullet.console = true
+  #   Bullet.growl = true
+  #   Bullet.xmpp = { :account  => 'bullets_account@jabber.org',
+  #                   :password => 'bullets_password_for_jabber',
+  #                   :receiver => 'your_account@jabber.org',
+  #                   :show_online_status => true }
+     Bullet.rails_logger = true
+  #   Bullet.honeybadger = true
+  #   Bullet.bugsnag = true
+  #   Bullet.airbrake = true
+  #   Bullet.rollbar = true
+     Bullet.add_footer = true
+  #   Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
+  #   Bullet.slack = { webhook_url: 'http://some.slack.url', foo: 'bar' }
+  Bullet.add_whitelist :type => :n_plus_one_query, :class_name => "Person", :association => :privilege
+   end
+end

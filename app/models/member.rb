@@ -5,6 +5,7 @@ class Member < ActiveRecord::Base
   belongs_to  :privilege
   has_many :peoplebarcards ,:through => :people
   has_many :loyaltycards, :through => :people
+  has_many :paymenttypes, :through => :payments
 
   accepts_nested_attributes_for :people
   validates_associated :people

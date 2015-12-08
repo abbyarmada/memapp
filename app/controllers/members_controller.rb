@@ -59,7 +59,7 @@ class MembersController < ApplicationController
   private
 
   def process_carpark_passes
-    @mems = Member.current_members.parking_members  #.all #:all
+    @mems = Member.current_members.parking_members.includes(:people =>  [:member => :privilege] )  #.all #:all
     @cp = []
     @carpark = []
     @carparks = []

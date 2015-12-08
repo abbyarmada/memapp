@@ -8,7 +8,8 @@ gem 'therubyracer', :platforms => :ruby
 #gem 'capistrano'
 gem 'devise'
 gem 'cancan'
-gem 'zipruby'
+gem 'rubyzip', '>= 1.0.0'
+#gem 'zipruby'
 
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQL Server 5.5"'#
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'
@@ -74,6 +75,7 @@ group :development do
   gem 'spring-commands-rspec'
   #gem 'debugger'
   gem 'travis'
+  gem "bullet"
 end
 
 group :test, :development  do

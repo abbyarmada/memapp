@@ -438,7 +438,8 @@ end
        [  @member.city.blank? || @member.city == @member.county ? '' : @member.city              ] ,
        [  @member.county.blank?  ? '' +  (@member.postcode.blank?    ? '' : @member.postcode )  :  @member.county + ' ' +  (@member.postcode.blank?    ? '' : @member.postcode )           ] ,
        [  @member.country.blank? || @member.country == 'Ireland'  ? '' : @member.country    ] ,
-       ].compact
+       ]
+       pad.compact
   end
 
 

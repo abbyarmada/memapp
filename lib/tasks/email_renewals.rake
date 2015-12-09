@@ -7,7 +7,7 @@ task :create_renewal_emails => :environment do
      :conditions =>  "members.email_renewal = 'Y' and people.status = 'm' and ( members.renew_date  >= '#{last_yr_start}' or members.year_joined = Year(CURDATE()) ) AND members.privilege_id not in ('1','3','11','13','14')",
      :order => "members.country,members.county,members.city,members.town,members.street1"
      @renews.each do |person| @person = person
-       RenewalMailer.renewal_letter(@person).deliver.now
+       RenewalMailer.renewal_letter(@person).deliver_now
      end
    renewal.generate_completed
 end

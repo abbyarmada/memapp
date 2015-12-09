@@ -89,5 +89,8 @@ config.log_formatter = ::Logger::Formatter.new
 # Do not dump schema after migrations.
 #config.active_record.dump_schema_after_migration = false
 
+# Set to `:info` to match the current default, or set to `:debug` to opt-into
+# the future default.
+config.log_level = :info
 
 end

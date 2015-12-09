@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 ruby '2.1.7'
-gem 'rails', '~> 4.0.0'
+gem 'rails', '~> 4.1.0'
 gem  'mail'
 gem "paperclip"#, "~> 3.0"
 gem "execjs"

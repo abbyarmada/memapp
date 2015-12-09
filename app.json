@@ -1,0 +1,41 @@
+{
+  "name": "memapp",
+  "scripts": {
+  },
+  "env": {
+    "BARCARD_PREFIX": {
+      "required": true
+    },
+    "DATABASE_URL": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "LOG_LEVEL": {
+      "required": true
+    },
+    "MAIL_DOMAIN": {
+      "required": true
+    },
+    "MAIL_HOST": {
+      "required": true
+    },
+    "MAIL_PASSWORD": {
+      "required": true
+    },
+    "MAIL_USERNAME": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    }
+  },
+  "addons": [
+    "bugsnag",
+    "papertrail"
+  ]
+}

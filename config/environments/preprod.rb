@@ -1,4 +1,4 @@
-R3::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -40,13 +40,8 @@ R3::Application.configure do
   # In production, Apache or nginx will already do this
   config.serve_static_files = false
 
-
-
-
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
-
-
 
   # Enable threaded mode
   # config.threadsafe!
@@ -54,40 +49,37 @@ R3::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
   config.assets.js_compressor = :uglifier
-  # config.assets.css_compressor = :sass
 
- # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
+  # Don't fallback to assets pipeline if a precompiled asset is missed
+  config.assets.compile = false
 
-# Don't fallback to assets pipeline if a precompiled asset is missed
-config.assets.compile = false
+  # Generate digests for assets URLs
+  config.assets.digest = true
 
-# Generate digests for assets URLs
-config.assets.digest = true
+  # Defaults to Rails.root.join("public/assets")
+  # config.assets.manifest = YOUR_PATH
 
-# Defaults to Rails.root.join("public/assets")
-# config.assets.manifest = YOUR_PATH
+  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+  # config.assets.precompile += %w( search.js )
 
-# Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-# config.assets.precompile += %w( search.js )
+  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # config.force_ssl = true
 
-# Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-# config.force_ssl = true
+  # Turn off auto TLS for e-mail
+  ActionMailer::Base.smtp_settings[:enable_starttls_auto] = false
 
-# Turn off auto TLS for e-mail
-ActionMailer::Base.smtp_settings[:enable_starttls_auto] = false
+  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
+  # the I18n.default_locale when a translation cannot be found).
+  config.i18n.fallbacks = true
 
-# Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-# the I18n.default_locale when a translation cannot be found).
-config.i18n.fallbacks = true
+  # Send deprecation notices to registered listeners.
+  config.active_support.deprecation = :notify
 
-# Send deprecation notices to registered listeners.
-config.active_support.deprecation = :notify
+  # Use default logging formatter so that PID and timestamp are not suppressed.
+  config.log_formatter = ::Logger::Formatter.new
 
-# Use default logging formatter so that PID and timestamp are not suppressed.
-config.log_formatter = ::Logger::Formatter.new
-
-# Do not dump schema after migrations.
-#config.active_record.dump_schema_after_migration = false
+  # Do not dump schema after migrations.
+  #config.active_record.dump_schema_after_migration = false
 
 
 end

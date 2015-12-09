@@ -68,8 +68,7 @@ module R3
     # stop the I18n messages...
     I18n.enforce_available_locales = false
 
-    #for Heroku
+    # for Heroku
     config.assets.initialize_on_precompile = false
-
   end
 end

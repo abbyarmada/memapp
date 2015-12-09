@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.1.7'
-gem 'rails', '~> 4.1.0'
+gem 'rails', '~> 4.2.0'
+gem 'responders', '~> 2.0'
 gem  'mail'
 gem "paperclip"#, "~> 3.0"
 gem "execjs"
@@ -30,7 +31,7 @@ gem 'country_select', github: 'petercunning/country_select'
 gem 'formtastic'#, '~> 3.0.0'
 #gem 'formtastic-bootstrap', :git => 'https://github.com/jtomaszewski/formtastic-bootstrap.git'
 gem 'formtastic-bootstrap' ,:git => 'https://github.com/petercunning/formtastic-bootstrap'
-gem 'simple_form', '~> 3.1.0.rc2' #, github: 'plataformatec/simple_form'
+gem 'simple_form', '~> 3.2.0' #, github: 'plataformatec/simple_form'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
@@ -72,15 +73,15 @@ group :development do
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
-  gem 'spring-commands-rspec'
   #gem 'debugger'
   gem 'travis'
   gem "bullet"
+  gem "web-console", "~> 2.0"
 end
 
 group :test, :development  do
 #  gem 'pg'
-  gem "rspec-rails", "~> 3.0.0"
+  gem "rspec-rails", "~> 3.4.0"
   gem 'rspec-mocks'
   gem 'factory_girl_rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/sprin
@@ -89,6 +90,7 @@ group :test, :development  do
   gem 'cucumber-rails', require: nil
   gem 'cucumber', require: nil
   gem 'spring-commands-cucumber'
+  gem 'spring-commands-rspec'
 end
 
 group :test do

@@ -9,7 +9,7 @@ before_install:
   #- gem install bundler --version '1.8.0'
 rvm:
   - 2.1.7
-  #  gemfile: Gemfile 
+  #  gemfile: Gemfile
   # - 2.2.3
   #   gemfile: gemfiles/Gemfile.2.2.3
 env:
@@ -34,7 +34,7 @@ notifications:
   email: true
 script:
 - bundle exec rake db:create db:test:load spec
-- bundle exec rake cucumber
+- bundle exec rake db:create db:test:load cucumber
 after_failure:
 - mysql -e 'show databases;'
 - cat ./config/database.yml

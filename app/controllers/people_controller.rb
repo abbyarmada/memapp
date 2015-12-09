@@ -141,7 +141,7 @@ class PeopleController < ApplicationController
 
   def renewal_email
     RenewalMailer.renewal_letter(@person).deliver_now
-    redirect_to :back , :flash => { :success => "Renewal sent via Email" }
+    redirect_to :back, :flash => { success: "Renewal sent via Email" }
   end
 
  def paid_up_extract_current

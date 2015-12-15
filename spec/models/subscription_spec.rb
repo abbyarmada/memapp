@@ -5,8 +5,8 @@ RSpec.describe Subscription, :type => :model do
     expect(create(:subscription)).to be_valid
   end
   it "can determine the rate for this year" do
-    date = DateTime.now
-    sub = create(:subscription,start_date: date, end_date: date ,amount: 200.00)
+    date = DateTime.now.utc
+    create(:subscription,start_date: date, end_date: date ,amount: 200.00)
     expect(Subscription.subscription_for_year(date)).to eq(200)
   end
 end

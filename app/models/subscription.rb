@@ -8,9 +8,7 @@ class Subscription < ActiveRecord::Base
     sub = where("start_date <= ?", date).order(start_date: :desc).first
     sub.amount
   end
-
-
-
+  
   default_scope { order(end_date: :desc, start_date: :desc) }
 
   scope :lastyear, -> privilege {subscription_for_year(1.year.ago)}

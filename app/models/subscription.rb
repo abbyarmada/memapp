@@ -5,8 +5,11 @@ class Subscription < ActiveRecord::Base
   validates_presence_of :amount,:privilege_id,:start_date,:end_date
 
   def self.subscription_for_year(date)
-    where(start_date: date.beginning_of_year..date.end_of_year)
+    sub = where("start_date <= ?", date).order(start_date: :desc).first
+    sub.amount
   end
+
+
 
   default_scope { order(end_date: :desc, start_date: :desc) }
 

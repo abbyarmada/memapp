@@ -455,8 +455,8 @@ def cart
   cart_totals = []
     cart_total = 0
     cart << [ 'Description',  ' ',  ' ',  ' ',  ' ' ]
-    cart << ["#{@person.member.privilege.name } Membership Renewal", " " ," " ," = ","#{number_to_euro(@person.member.privilege.subscriptions.thisyear(@person.member.privilege.id)[0].amount ) }"  ]
-    cart_totals << [@person.member.privilege.subscriptions.thisyear(@person.member.privilege.id)[0].amount]
+    cart << ["#{@person.member.privilege.name } Membership Renewal", " " ," " ," = ","#{number_to_euro(@person.member.privilege.subscriptions.thisyear(@person.member.privilege.id)) }"  ]
+    cart_totals << [@person.member.privilege.subscriptions.thisyear(@person.member.privilege.id)]
 
     if num_pentags > 0
     @person.member.boats.windsurfer.other.each do |penboats|

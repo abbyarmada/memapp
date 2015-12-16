@@ -40,20 +40,20 @@ describe PaymentsController, :type => :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # PaymentsController. Be sure to keep this updated too.
 #  let(:valid_session) { {} }
-    let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
+  let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
 
- # describe "GET list_by_member_class" do
- #   it "assigns all payments as @payments" do
- #     #payment = Payment.create! valid_attributes
- #     build_stubbed(:member)
- #     build_stubbed(:person)
- #     build_stubbed(:privilege)
- #
- #     payment = create(:payment)
+  describe "GET list_by_member_class" do
+    it "assigns all payments as @payments" do
+      member = create(:member, :people => [  create(:person) ] )
+      payment = create(:payment,:member => member)
+      payment2 = create(:payment,paymenttype_id: 2 ,:member => member)
+      #@payment2 = create(:payment,:member => member)
+      get :list_by_member_class, {}, valid_session
+      expect(assigns(:payments)).to eq(@payments.to_a)
  #     get :list_by_member_class, {}, valid_session
  #     assigns(:payments).should eq([payment])
- #   end
- #end
+    end
+ end
 
 #  describe "GET show" do
 #    it "assigns the requested payment as @payment" do
@@ -215,10 +215,10 @@ describe PaymentsController, :type => :controller do
     end
     it "Display Flash warning on failed delete" do
       member = create(:member, :people => [  create(:person) ] )
-      @payment = create(:payment,:member => member)
-      allow(Payment).to receive(:find).and_return(@payment)
-      allow(@payment).to receive(:destroy).and_return(false)
-      delete :destroy, :id => @payment.id
+      payment = create(:payment,:member => member)
+      allow(Payment).to receive(:find).and_return(payment)
+      allow(payment).to receive(:destroy).and_return(false)
+      delete :destroy, :id => payment.id
       expect(flash[:warning]).to eq("delete failed.")
     end
   end

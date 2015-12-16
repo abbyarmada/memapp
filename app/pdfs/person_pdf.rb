@@ -63,12 +63,7 @@ move_down(50)
     text "Please make full use of the section relating to club messages. You will see that it is possible to send separate messages to partners or children. Until the end of March messages will continue to be sent to all members on last years membership list, however from the beginning of April messages will only be sent to members who have paid this years subscriptions. Many members have elected to receive their renewal form by email this year thereby reducing the costs involved. If you wish to do the same please tick the relevant box at the end of the communications section.",:size => 10, :style => :normal, :align => :justify
     move_down(1)
     text "With best wishes for an enjoyable sailing season, " ,:size => 10, :style => :normal, :align => :justify
-   # if Config::CONFIG['target_os'] = 'mingw32'
-   #    sig = Rails.root + "app/assets/images/DMS.png"
-   # else
-   #    sig = 'images/DMS.png'
-   # end
-   # image(sig, :at => [0,cursor],:height => 25, :position => :center, :border => 2)
+
     move_down(25)
     text "Des Dillon " ,:size => 10, :style => :normal, :align => :justify
     text "Hon Membership Secretary                                                                Email: membership.myc@gmail.com  " ,:size => 10, :style => :normal, :align => :justify
@@ -154,13 +149,7 @@ move_down(4)
         end
 
     end #if
-
-
-
-
-
-
-     stroke_bounds
+    stroke_bounds
   )
 end
 
@@ -234,13 +223,7 @@ stroke_bounds
         t.row(0).style :background_color => 'FFFFFF', :text_color => '000000'
         t.cells.row(1).background_color = entry_fields_background_colour
         t.cells.row(1).text_color = entry_fields_txt_colour
-
-        #for pavillion - only Social..
-        #t.cells.row(1).column(5..(t.column_length)).style :borders => [ ]
-        #t.cells.row(1).column(5).style :borders => [:left]
-        #t.cells.row((t.row_length - 2)..(t.row_length)).text_color = new_entry_fields_txt_colour
         end
-
   end #if
 
 move_down(5)

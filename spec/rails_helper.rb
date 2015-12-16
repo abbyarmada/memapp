@@ -2,7 +2,7 @@ require "simplecov"
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start do
   #
-end if ENV["COVERAGE"]
+end # if ENV["COVERAGE"]
 
 CodeClimate::TestReporter.configure do |config|
         config.timeout = 900
@@ -16,14 +16,9 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 
-
-
-
 # Add this to load Capybara integration:
 require "capybara/rspec"
 require "capybara/rails"
-
-
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

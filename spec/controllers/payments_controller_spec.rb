@@ -48,7 +48,7 @@ describe PaymentsController, :type => :controller do
  #     build_stubbed(:member)
  #     build_stubbed(:person)
  #     build_stubbed(:privilege)
- #     
+ #
  #     payment = create(:payment)
  #     get :list_by_member_class, {}, valid_session
  #     assigns(:payments).should eq([payment])
@@ -213,8 +213,13 @@ describe PaymentsController, :type => :controller do
       member.reload
       expect(member.privilege_id).to eq(priorpayment.privilege_id)
     end
+    it "Display Flash warning on failed delete" do
+      member = create(:member, :people => [  create(:person) ] )
+      @payment = create(:payment,:member => member)
+      allow(Payment).to receive(:find).and_return(@payment)
+      allow(@payment).to receive(:destroy).and_return(false)
+      delete :destroy, :id => @payment.id
+      expect(flash[:warning]).to eq("delete failed.")
+    end
   end
-
-
 end
-

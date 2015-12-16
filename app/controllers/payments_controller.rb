@@ -35,7 +35,7 @@ class PaymentsController < ApplicationController
     @payment = Payment.new
     @payment.member_id  = (params[:member_id])
     @payment.privilege_id = @payment.member.privilege.id
-    #default to Subscription renewal
+    # default to Subscription renewal
     @payment.paymenttype_id = 1
     @payment.date_lodged = Time.now.to_date
   end

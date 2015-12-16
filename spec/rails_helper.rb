@@ -1,3 +1,13 @@
+require "simplecov"
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start do
+  #
+end if ENV["COVERAGE"]
+
+CodeClimate::TestReporter.configure do |config|
+        config.timeout = 900
+end
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../../config/environment", __FILE__)
@@ -6,20 +16,13 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 
-require "codeclimate-test-reporter"
-require "simplecov"
+
+
 
 # Add this to load Capybara integration:
 require "capybara/rspec"
 require "capybara/rails"
 
-CodeClimate::TestReporter.start do
-  #
-end if ENV["COVERAGE"]
-
-CodeClimate::TestReporter.configure do |config|
-        config.timeout = 900
-end
 
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

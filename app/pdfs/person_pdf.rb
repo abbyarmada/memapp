@@ -65,7 +65,7 @@ move_down(50)
     text "With best wishes for an enjoyable sailing season, " ,:size => 10, :style => :normal, :align => :justify
 
     move_down(25)
-    text "Des Dillon " ,:size => 10, :style => :normal, :align => :justify
+    text "Nigel Mc Keaney " ,:size => 10, :style => :normal, :align => :justify
     text "Hon Membership Secretary                                                                Email: membership.myc@gmail.com  " ,:size => 10, :style => :normal, :align => :justify
     #
 

@@ -43,6 +43,8 @@ Rails.application.configure do
    # Raises helpful error messages.
    config.assets.raise_runtime_errors = true
 
+   config.web_console.whitelisted_ips = '10.0.2.2'
+
    # Raises error for missing translations
    # config.action_view.raise_on_missing_translations = true
 
@@ -65,6 +67,6 @@ Rails.application.configure do
      Bullet.add_footer = true
   #   Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
   #   Bullet.slack = { webhook_url: 'http://some.slack.url', foo: 'bar' }
-  Bullet.add_whitelist :type => :n_plus_one_query, :class_name => "Person", :association => :privilege
+  #Bullet.add_whitelist :type => :n_plus_one_query, :class_name => "Person", :association => :privilege
    end
 end

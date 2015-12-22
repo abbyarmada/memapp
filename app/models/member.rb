@@ -13,19 +13,16 @@ class Member < ActiveRecord::Base
   validates_presence_of :privilege_id,:proposed,:seconded,:year_joined,:active
   validates_presence_of :street1, :message => "Please correct the members address data :- Street1 should not be blank" ,:except => :delete
 
-  #STATUSES = [ 'Active', 'Inactive']
-  #validates_inclusion_of :status, :in => STATUSES,
-  #          :message => "{{value}} must be in #{STATUSES.join ','}"
 
   scope :active_members,  -> {where(active: true ) }
   scope :inactive_members,     -> {where(active: false)}
   scope :internal_members, -> {where('privilege_id in (?,?)', 'X','Y' ) }
-  #scope :applicants,       -> {where(privilege_id: :'1'  ) }
   scope :not_renewed,      -> {where('members.renew_date  >= ? and members.renew_date < ?',
     1.year.ago.beginning_of_year,Time.now.beginning_of_year )}
   scope :renewed,      -> {where('members.renew_date  >= ?',Time.now.beginning_of_year )}
   scope :current_members, -> { active_members }
-  scope :parking_members,  -> {current_members.joins(:privilege).where('car_park > 0') }
+  scope :parking_members,  -> {current_members.joins(:privilege).where("privileges.car_park > 0") }
+
   scope :past_members, ->  { where(' ( members.renew_date  >= ? and members.renew_date < ? )  or members.active = ? ',
     1.year.ago.beginning_of_year,Time.now.beginning_of_year, 0  )}
 

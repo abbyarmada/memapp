@@ -76,7 +76,7 @@ class MembersController < ApplicationController
             p.email_address,
             p.mobile_phone,
             p.member.privilege.name,
-            p.member.renew_date.to_date rescue nil,
+            p.member.renew_date.to_date,
             p.member.id.to_s + Time.now.year.to_s.slice(2,2) + i.to_s,
             p.salutation,
             p.member.name_no,
@@ -86,7 +86,7 @@ class MembersController < ApplicationController
             p.member.city,
             p.member.postcode,
             p.member.county,
-            p.status] if i <= 2
+            p.status] rescue nil  if i <= 2
         end
       end
     end

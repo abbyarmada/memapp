@@ -3,8 +3,8 @@ FactoryGirl.define do
     #privilege
     proposed "Proposed"
     seconded "Seconded"
-    year_joined 2015
-    renew_date "2015-01-02 10:38:10"
+    year_joined (Time.zone.now.year - 1)
+    renew_date (Time.zone.now.beginning_of_year + 1.day )
     privilege_id 1
     name_no "Apt 123"
     street1 "Street 1"

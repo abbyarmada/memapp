@@ -5,7 +5,8 @@ FactoryGirl.define do
     f.privilege_id 1
     f.member_id 1
     f.amount 480
-    f.date_lodged "01.01.2015"
+    f.date_lodged Time.zone.now.beginning_of_year.to_s
+#    f.date_lodged "01.01.2016"
 ##  f.pay_type "crap"
     f.comment "payment"
     f.paymenttype_id 1

@@ -1,3 +1,3 @@
 BarBillies,MemClass,CardNo,LastName,FirstName,MemNumber,Salutation,HouseNameNo,StreetAddr,StreetAddr2,Town,City,PostCode,County,Country,RenewedCurrentYear,RenewedDate,dob,occupation,HomePhone,Mobile,Email,Social,Racing,Cruiser,Dinghy,Junior,MembershipId,member_type
-Y,1,,Doe,John,1,John & John Doe,Apt 123,Street 1,Street 2,Town,City,Postcode,County,Country,Y,02/01/2015,01/01/2011,,01-845-1234,12345,john.doe@testmail.com,X,X,X,X,X,1,m
-N,1,,Doe,John,2,John Doe,Apt 123,Street 1,Street 2,Town,City,Postcode,County,Country,Y,02/01/2015,01/01/2011,,01-845-1234,12345,john.doe@testmail.com,X,X,X,X,X,1,p
+Y,1,,Doe,John,1,John & John Doe,Apt 123,Street 1,Street 2,Town,City,Postcode,County,Country,Y,02/01/2016,01/01/2011,,01-845-1234,12345,john.doe@testmail.com,X,X,X,X,X,1,m
+N,1,,Doe,John,2,John Doe,Apt 123,Street 1,Street 2,Town,City,Postcode,County,Country,Y,02/01/2016,01/01/2011,,01-845-1234,12345,john.doe@testmail.com,X,X,X,X,X,1,p

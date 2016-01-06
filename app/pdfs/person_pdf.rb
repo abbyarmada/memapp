@@ -291,15 +291,9 @@ text  "Subscriptions" ,:size => 14, :style => :bold
 end
 
 if ( (@person.loyaltycard.Current_Points rescue 0 ).to_f > 0 and (@person.loyaltycard.RedeemedTD rescue 0 ).to_f < 11 )  and (1 == 0)
-
-bounding_box([310,top_subs ], :width => 200,:padding => 1) do (
-
+  bounding_box([310,top_subs ], :width => 200,:padding => 1) do (
     move_down(0)
     text "You haven't used your barcard for some time, here is the balance available to spend",:size => 8, :style => :italic,:horizontal_padding => 2
-    #font "Times-Roman"         , :size => 10
-    #text "Barcard Balance"         #:size => 10, :style => :normal
-
-   # header = ["First Name", "Balance"]
     table(  @memberloyalty , :header => :true ,
     :cell_style => {:padding => 4, :borders => [], :border_width => 1 }
     ) do
@@ -311,19 +305,10 @@ bounding_box([310,top_subs ], :width => 200,:padding => 1) do (
 end
 end
 
-move_down(2)
-
- if RbConfig::CONFIG['target_os'] = 'mingw32'
-    payment = Rails.root + "app/assets/images/Renew2014.JPG"
- else
-    payment = 'images/Renew2014.JPG'
- end
-
-    image(payment, :at => [0,cursor],:height => 350, :position => :center, :border => 2)
-   move_down(350)
-
-
-
+  move_down(2)
+  payment =  Rails.root + "app/assets/images/renewal.png"
+  image(payment, :at => [0,cursor],:height => 350, :position => :center, :border => 2)
+  move_down(350)
 
    text "Please complete and return this form with all required signatures and the appropriate fee to the Membership Secretary, MYC. Acknowledgement of receipt of your application will be sent if you have provided a valid email address.",
         :size => 8, :style => :bold, :align => :center
@@ -340,12 +325,6 @@ number_pages( "Page <page> of <total>, MYC Renewal #{Time.now.year}, #{@person.f
               :color => "007700" }
               )
 
-
-
-
-
-
-
  ## doc end.. init end...
 end
 
@@ -353,12 +332,8 @@ end
 
 
   def logo
-    if RbConfig::CONFIG['target_os'] = 'mingw32'
-      logo = Rails.root + "app/assets/images/MYCLogo2013.png"
-   else
-      logo = 'images/MYCLogo2013.png'
-   end
-   image(logo, :at => [0,cursor],:height => 80, :position => :centre, :border => 2)
+    logo =  Rails.root + "app/assets/images/MYCLogo2013.png"
+    image(logo, :at => [0,cursor],:height => 80, :position => :centre, :border => 2)
   end
 
   def address_txt

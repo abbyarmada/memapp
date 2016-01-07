@@ -19,9 +19,10 @@ class Boat < ActiveRecord::Base
 
   scope :oppi ,  -> { where( ['boat_class LIKE ? ','Opti%'] ) }
 
-  scope :canoe ,  -> { where( ['boat_class LIKE ? ','Canoe%'] ) }
+  scope :canoe, -> {where(["boat_class LIKE ? ", "Canoe%"])}
 
-  scope :other, ->  { where( ['boat_class NOT IN ( ?,?,?,?,?,?)', 'Optimist','Topaz Uno Plus', 'Laser','Kona','Kona One' ,"Canoe"] ) }
+  scope :other, -> {where(["boat_class NOT IN ( ?,?,?,?,?,?)", "Optimist",
+    "Topaz Uno Plus", "Laser", "Kona", "Kona One", "Canoe"])}
 
   scope :members_boats, ->  { where('members.renew_date >= ? and people.status = \'m\'  '  , Time.now.prev_year.beginning_of_year).includes(:member => :people).joins(:member => [:privilege,:people]) }
 

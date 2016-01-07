@@ -444,10 +444,10 @@ def cart
     end
     @person.member.boats.dinghy.canoe.each do |penboats|
       cart << ["Pen Fees ",
-        "#{penboats.boat_type}",
-        "#{penboats.boat_class}",
-        " = ",
-        "#{number_to_euro(00)}"]
+               "#{penboats.boat_type}",
+               "#{penboats.boat_class}",
+               " = ",
+               "#{number_to_euro(00)}"]
       cart_totals << [00]
     end
 

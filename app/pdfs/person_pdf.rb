@@ -442,6 +442,11 @@ def cart
     cart << ["Pen Fees ", "#{penboats.boat_type}","#{penboats.boat_class}"," = ", "#{number_to_euro(30)}"]
     cart_totals << [30]
     end
+    @person.member.boats.dinghy.canoe.each do |penboats|
+    cart << ["Pen Fees ", "#{penboats.boat_type}","#{penboats.boat_class}"," = ", "#{number_to_euro(00)}"]
+    cart_totals << [00]
+    end
+
   end
 
     cart_sum = eval cart_totals.join('+')

@@ -57,7 +57,6 @@
 		<tr class="<%= cycle('odd', 'even')%>">
 		  <td></td>
 		  <td>
-		  	<%#= Member.memyear(( y.years.ago.beginning_of_year)).monthend(Date.new(y.years.ago.year,@end_month,1)).count %>
 			<%=@memtotaltd[y][0].count%></td>
 			</td>
 		  <td><%=@yeartotaltd[y][0].tot%></td><td><%=@yeartotaltd[y][0].money%></td>
@@ -84,7 +83,6 @@
 		<tr class="<%= cycle('odd', 'even')%>">
 			<td> </td>
 		  <td>
-		  	<%#= Member.memyear(( y.years.ago.beginning_of_year)).monthend(Date.new(y.years.ago.year,12,1)).count %>
 			<%=@memtotalyear[y][0].count%></td>
 		  </td>
 		  <td><%=@yeartotal[y][0].tot%></td><td><%=@yeartotal[y][0].money%></td>

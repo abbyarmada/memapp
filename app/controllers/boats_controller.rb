@@ -45,7 +45,7 @@ class BoatsController < ApplicationController
   end
 
   def create_csv
-    @boats = Boat.members_boats.includes(:member => :privilege).includes(:member => :people)
+    @boats = Boat.members_boats
       extract = CSV.generate do |csv|
         csv << [ 'Last Name', 'First Name', 'Boat Name', 'boat Type', 'boat class', 'Sail No.','Pen Tag','Home Phone', 'Mobile', 'Email','address','renewal', 'Member Class']
         @boats.each do |b|

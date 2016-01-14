@@ -16,6 +16,7 @@ describe "boats/index", :type => :view do
     ])
  end
   it "renders a list of boats" do
+    allow(view).to receive_messages(:will_paginate => false )
     render
 #    # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "tr>td", :text => "Doe".to_s, :count => 2

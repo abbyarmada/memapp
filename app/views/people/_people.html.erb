@@ -21,7 +21,7 @@
 
       <td><%= ENV['BARCARD_PREFIX'] + '%05d' %  person.peoplebarcard.barcard_id rescue nil  %></td>
       <td><%= link_to "pdf", person_path(:id => person.id,:format => 'pdf') ,:class => "pretty_button pdf_button" if person.status == 'm' %>
-          <% if person.email_address? && person.member.email_renewal && person.status == 'm' %>
+          <% if person.email_address? && person.member.email_renewal && person.status == 'm' %> | 
         <%= link_to "Email", renewal_email_people_path(:id => person.id) , data: { confirm: 'Confirm send renewal by Email?' } , :class => "pretty_button pdf_button"  %>
           <% end %></td>
     </tr>

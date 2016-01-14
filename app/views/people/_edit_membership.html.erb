@@ -1,9 +1,3 @@
-<div class="page-header">
-</div>
-  <%= simple_form_for(@person.member) do |form|  %>
+<%= simple_form_for(@person.member) do |form|  %>
   <%= render :partial => 'membership' , :locals => { :f => form } %>
- <div class="form-actions">
-    <%= form.button :submit , :class => 'btn-default' %>
-  </div>
-
 <% end %>

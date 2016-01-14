@@ -1,14 +1,43 @@
+<div class="col-sm-12">
+  <div class="col-sm-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">Membership Details</div>
+      <div class="panel-body">
+        <div class="form-inputs">
+          <%= f.input :proposed %>
+          <%= f.input :seconded %>
+          <%= f.input :year_joined %>
+          <%= f.association :privilege, label: "Member Class" %>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div class="col-sm-6">
-  <div class="panel panel-info">
-    <div class="panel-heading">Membership Details</div>
-    <div class="panel-body">
-      <div class="form-inputs">
-        <%= f.input :proposed %>
-        <%= f.input :seconded %>
-        <%= f.input :year_joined %>
-        <%= f.association :privilege, label: "Member Class" %>
-        <div class="panel-body">
+  <div class="col-sm-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">Address Details</div>
+      <div class="panel-body">
+        <div class="form-inputs">
+          <%= f.input :name_no %>
+          <%= f.input :street1 %>
+          <%= f.input :street2 %>
+          <%= f.input :town %>
+          <%= f.input :city %>
+          <%= f.input :postcode %>
+          <%= f.input :county %>
+          <%= f.input :country,  priority: ['IE', 'GB']  %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <div class="col-sm-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">Member Status </div>
+      <div class="panel-body">
+        <div class="form-inputs">
           <%= f.input :email_renewal, :as => :boolean  %>
           <%= f.input :active, :as => :boolean  %>
         </div>
@@ -17,20 +46,6 @@
   </div>
 </div>
 
-<div class="col-sm-6">
-  <div class="panel panel-info">
-    <div class="panel-heading">Address Details</div>
-    <div class="panel-body">
-      <div class="form-inputs">
-        <%= f.input :name_no %>
-        <%= f.input :street1 %>
-        <%= f.input :street2 %>
-        <%= f.input :town %>
-        <%= f.input :city %>
-        <%= f.input :postcode %>
-        <%= f.input :county %>
-        <%= f.input :country,  priority: ['IE', 'GB']  %>
-      </div>
-    </div>
-</div>
+<div class="form-actions">
+  <%= f.button :submit , :class => 'btn-default' %>
 </div>

@@ -15,10 +15,7 @@ class Payment < ActiveRecord::Base
   validate :payment_final_and_first  , :unless => Proc.new {|payment| payment.date_lodged.nil?   } , :if => :final_payment?
   validate :check_unknown_payment_method
 
-  #attr_accessible :privilege_id , :amount, :date_lodged, :pay_type, :comment, :paymenttype_id, :member_id,:payment_method_id
-
-  #scope :previous_renewals, -> { where([' (id <> ? or id <> 0 ) AND member_id = ?  AND date_lodged >= ? and paymenttype_id in (1,4)' , self.id, self.member_id, self.date_lodged.beginning_of_year  ] )  }
-
+  #default_scope { includes(:paymenttype,:privilege,:payment_method)}
   scope :renewal, -> { where('paymenttype_id in (1,4 ) ')   }
   scope :current_year, -> {  where('date_lodged >= ? ', Time.now.beginning_of_year)  }
   #scope :year, -> date_lodged {  where('date_lodged >= ? ', date_lodged )  }
@@ -119,7 +116,7 @@ class Payment < ActiveRecord::Base
  end
 
   def self.countpays_for_year(date)
-    Payment.by_year(date).membership_renewal_payments.real_membership_renewals.joins(:privilege).group('name, member_class').order('member_class ASC').count
+    Payment.by_year(date).membership_renewal_payments.real_membership_renewals.joins(:privilege).group('privileges.name, member_class').order('member_class ASC').count
   end
 
   def self.g_chart_mems(endmonth,endday)

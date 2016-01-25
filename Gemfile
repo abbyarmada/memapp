@@ -73,15 +73,19 @@ group :development do
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
-  #gem 'debugger'
+  # gem 'debugger'
   gem 'travis'
   gem "bullet"
   gem "web-console", "~> 2.0"
-gem 'pry-remote'
-gem 'pry-stack_explorer'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'jazz_hands2'
 #gem 'pry-debugger'
 #gem 'debugger2', :git => "git://github.com/ko1/debugger2.git"
 gem "pry-byebug"
+   gem 'rubocop', '< 0.36', require: false   # Check code style
+   gem 'rubocop-rspec', require: false       # Rspec plugin for rubocop
+
 end
 
 group :test, :development  do

@@ -38,10 +38,15 @@ Rails.application.configure do
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
-  config.serve_static_files = false
+
+  # for devise
+  config.action_mailer.default_url_options = { host: 'memapp.myc.ie' }
+
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
+
+
 
   # Enable threaded mode
   # config.threadsafe!
@@ -81,5 +86,8 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   # config.active_record.dump_schema_after_migration = false
 
+  # Set to `:info` to match the current default, or set to `:debug` to opt-into
+  # the future default.
+  config.log_level = :info
 
 end

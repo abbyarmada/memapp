@@ -7,7 +7,7 @@ gem 'paperclip', '~> 4.3.0'
 gem 'execjs', '~> 2.6.0'
 gem 'therubyracer', :platforms => :ruby
 #gem 'capistrano'
-gem 'devise', '~> 3.5.0'
+gem 'devise', github: 'plataformatec/devise', branch: 'master' #, '~> 3.5.0'
 gem 'cancan', '~> 1.6.10'
 gem 'rubyzip', '~> 1.2.0'
 #gem 'zipruby'
@@ -56,15 +56,17 @@ gem 'uglifier', '~> 2.7.2'
 
 #gem 'railsstrap'
 gem 'bootstrap-sass', '~> 3.3.6'
+gem 'record_tag_helper', '~> 1.0'  # content_tag_for deprecated R5
+gem 'rails-controller-testing'     # R5 depraced method assigns
 
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_20]
   gem 'guard-bundler'
   gem 'guard-rails'
-  gem 'guard-rspec'
+  #gem 'guard-rspec'
   gem 'guard-cucumber'
-  gem 'quiet_assets'
+  #gem 'quiet_assets'
   gem 'hub', :require=>nil
   gem 'rails_layout'
   gem 'rb-fchange', :require=>false
@@ -87,8 +89,11 @@ end
 
 group :test, :development  do
 #  gem 'pg'
-  gem 'rspec-rails'#, '~> 3.4.0'
-  gem 'rspec-mocks'
+#  gem 'rspec-rails', github: 'rspec/rspec-rails', branch: 'master'#, '~> 3.4.0'
+%w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support rspec-activemodel-mocks].each do |lib|
+  gem lib, :git => "https://github.com/rspec/#{lib}.git", :branch => 'master'
+end
+  #gem 'rspec-mocks'
   gem 'factory_girl_rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/sprin
   gem 'spring'
@@ -105,7 +110,7 @@ group :test do
   gem 'launchy'
   gem 'nokogiri'#, '>= 1.3.3'
   gem 'database_cleaner'
-  gem 'rspec-activemodel-mocks'
+  #gem 'rspec-activemodel-mocks'
   gem 'selenium-webdriver'
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist'

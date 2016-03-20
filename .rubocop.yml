@@ -1,5 +1,5 @@
 require: rubocop-rspec
-# inherit_from: .rubocop_todo.yml
+inherit_from: .rubocop_todo.yml
 
 Metrics/LineLength:
   Enabled: false
@@ -10,8 +10,20 @@ Documentation:
 Style/DoubleNegation:
   Enabled: false
 
+Style/MutableConstant:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
 AllCops:
-  RunRailsCops: true
+  TargetRubyVersion: 2.3
   Exclude:
     - db/schema.rb
     - tmp/**/*
@@ -20,5 +32,3 @@ AllCops:
     - vendor/**/*
     - node_modules/**/*
     - bower_components/**/*
- 
-

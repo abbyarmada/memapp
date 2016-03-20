@@ -2,38 +2,35 @@ source 'http://rubygems.org'
 ruby '2.3.0'
 gem 'rails', '~> 4.2.0'
 gem 'responders', '~> 2.0'
-gem  'mail'
-gem "paperclip"#, "~> 3.0"
-gem "execjs"
+gem  'mail', '~> 2.6.0'
+gem 'paperclip', '~> 4.3.0'
+gem 'execjs', '~> 2.6.0'
 gem 'therubyracer', :platforms => :ruby
 #gem 'capistrano'
-gem 'devise'
-gem 'cancan'
-gem 'rubyzip', '>= 1.0.0'
+gem 'devise', '~> 3.5.0'
+gem 'cancan', '~> 1.6.10'
+gem 'rubyzip', '~> 1.2.0'
 #gem 'zipruby'
 
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQL Server 5.5"'#
 #gem install mysql2 --platform=ruby -- '--with-mysql-dir="C:/Program Files/MySQL/MySQLC6"'
 
-gem 'will_paginate'
+gem 'will_paginate', '~> 3.1.0'
 gem 'gchartrb', :require => 'google_chart'
-gem 'prawn'
-gem 'prawn-table'
-gem 'prawnto'
-gem 'puma'
+gem 'prawn', '~> 2.1.0'
+gem 'prawn-table', '~> 0.2.2'
+gem 'prawnto', '~> 0.1.1'
+gem 'puma', '~> 3.2.0'
 
 #gem 'country_select', github: 'stefanpenner/country_select'
 #Store the country name in the data base rather than country code.. forked Country Select.
 gem 'country_select', github: 'petercunning/country_select'
 
-
-#gem 'formtastic' ,'~> 2.3.0.rc2'
-gem 'formtastic'#, '~> 3.0.0'
-#gem 'formtastic-bootstrap', :git => 'https://github.com/jtomaszewski/formtastic-bootstrap.git'
+gem 'formtastic', '~> 3.1.0'
 gem 'formtastic-bootstrap' ,:git => 'https://github.com/petercunning/formtastic-bootstrap'
 gem 'simple_form', '~> 3.2.0' #, github: 'plataformatec/simple_form'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-rails', '~> 4.1.1'
+gem 'jquery-ui-rails', '~> 5.0.5'
 
 
 #required for Less /css stuff
@@ -47,18 +44,18 @@ gem 'momentjs-rails', '>=2.7.0'#, :github => 'derekprior/momentjs-rails'
 #gem 'bootstrap3-datetimepicker-rails', '~> 4.7.14'
 
 
-gem 'jquery-turbolinks'
-gem 'turbolinks'
+gem 'jquery-turbolinks', '~> 2.1.0'
+gem 'turbolinks', '~> 2.5.3'
 gem 'nprogress-rails'
-gem 'sass-rails'#, '~> 4.0.2'# '~> 3.1.5'
+gem 'sass-rails', '~> 5.0.4'
 gem 'coffee-rails' #, '~> 3.1.1'
-gem 'uglifier'     #, '>= 1.0.3'
+gem 'uglifier', '~> 2.7.2'
 
 #bootstrap
 #gem 'less-rails'
 
 #gem 'railsstrap'
-gem 'bootstrap-sass'#, '~> 3.1.1.0'  #'~> 2.3.2.2' #
+gem 'bootstrap-sass', '~> 3.3.6'
 
 group :development do
   gem 'better_errors'
@@ -121,9 +118,9 @@ group :test,:production do
 end
 
 group :production do
-  gem 'bugsnag'
-  gem 'rails_12factor'
-  gem 'unicorn'
+  gem 'bugsnag', '~> 4.0.0'
+  gem 'rails_12factor', '~> 0.0.3'
+  gem 'unicorn', '~> 5.0.1'
 end
 
 #rails 4 upgrade gems

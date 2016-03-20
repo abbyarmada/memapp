@@ -472,10 +472,10 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
-  bootstrap-sass
-  bugsnag
+  bootstrap-sass (~> 3.3.6)
+  bugsnag (~> 4.0.0)
   bullet
-  cancan
+  cancan (~> 1.6.10)
   capybara
   codeclimate-test-reporter
   coffee-rails
@@ -483,11 +483,11 @@ DEPENDENCIES
   cucumber
   cucumber-rails
   database_cleaner
-  devise
-  execjs
+  devise (~> 3.5.0)
+  execjs (~> 2.6.0)
   factory_girl_rails
   faker
-  formtastic
+  formtastic (~> 3.1.0)
   formtastic-bootstrap!
   gchartrb
   guard-bundler
@@ -496,28 +496,28 @@ DEPENDENCIES
   guard-rspec
   hub
   jazz_hands2
-  jquery-rails
-  jquery-turbolinks
-  jquery-ui-rails
+  jquery-rails (~> 4.1.1)
+  jquery-turbolinks (~> 2.1.0)
+  jquery-ui-rails (~> 5.0.5)
   launchy
-  mail
+  mail (~> 2.6.0)
   momentjs-rails (>= 2.7.0)
   mysql2
   nokogiri
   nprogress-rails
   overcommit
-  paperclip
+  paperclip (~> 4.3.0)
   poltergeist
-  prawn
-  prawn-table
-  prawnto
+  prawn (~> 2.1.0)
+  prawn-table (~> 0.2.2)
+  prawnto (~> 0.1.1)
   pry-byebug
   pry-remote
   pry-stack_explorer
-  puma
+  puma (~> 3.2.0)
   quiet_assets
   rails (~> 4.2.0)
-  rails_12factor
+  rails_12factor (~> 0.0.3)
   rails_layout
   rake
   rb-fchange
@@ -529,8 +529,8 @@ DEPENDENCIES
   rspec-rails (~> 3.4.0)
   rubocop (< 0.36)
   rubocop-rspec
-  rubyzip (>= 1.0.0)
-  sass-rails
+  rubyzip (~> 1.2.0)
+  sass-rails (~> 5.0.4)
   selenium-webdriver
   simple_form (~> 3.2.0)
   simplecov
@@ -540,11 +540,11 @@ DEPENDENCIES
   sqlite3
   therubyracer
   travis
-  turbolinks
-  uglifier
-  unicorn
+  turbolinks (~> 2.5.3)
+  uglifier (~> 2.7.2)
+  unicorn (~> 5.0.1)
   web-console (~> 2.0)
-  will_paginate
+  will_paginate (~> 3.1.0)
 
 BUNDLED WITH
    1.11.2

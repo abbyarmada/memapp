@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 ruby '2.3.0'
-gem 'rails', '~> 4.2.0'
+gem 'rails', '~> 5.0.0.beta3'
 gem 'responders', '~> 2.0'
 gem  'mail', '~> 2.6.0'
 gem 'paperclip', '~> 4.3.0'
@@ -87,7 +87,7 @@ end
 
 group :test, :development  do
 #  gem 'pg'
-  gem "rspec-rails", "~> 3.4.0"
+  gem 'rspec-rails'#, '~> 3.4.0'
   gem 'rspec-mocks'
   gem 'factory_girl_rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/sprin

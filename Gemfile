@@ -85,7 +85,7 @@ group :development do
 gem "pry-byebug"
    gem 'rubocop', '< 0.36', require: false   # Check code style
    gem 'rubocop-rspec', require: false       # Rspec plugin for rubocop
-
+   gem 'overcommit', require: false
 end
 
 group :test, :development  do

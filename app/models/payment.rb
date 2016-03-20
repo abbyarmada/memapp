@@ -107,7 +107,7 @@ class Payment < ActiveRecord::Base
 
   def self.types
 
-  {'CS' => 'Cash', 'CH' => 'Cheque', 'CC'=>'Credit Card','VC'=>'Visa','MC'=>'Mastercard','AC'=>'Amex','LA'=>'Laser', '??'=>'Unknown','NP'=>'Not Paid' }
+  {'CS' => 'Cash', 'CH' => 'Cheque', 'CC'=>'Credit Card','VC'=>'Visa','MC'=>'Mastercard','AC'=>'Amex','LA'=>'Laser', '??'=>'Unknown','NP'=>'Not Paid'}
 
   end
 

@@ -198,6 +198,7 @@ GEM
     hub (1.12.4)
     i18n (0.7.0)
     i18n_data (0.7.0)
+    iniparse (1.4.2)
     jazz_hands2 (1.0.2)
       hirb (~> 0.7, >= 0.7.3)
       pry (~> 0.10, >= 0.10.1)
@@ -251,6 +252,9 @@ GEM
       shellany (~> 0.0)
     nprogress-rails (0.1.6.7)
     orm_adapter (0.5.0)
+    overcommit (0.32.0)
+      childprocess (~> 0.5.8)
+      iniparse (~> 1.4)
     paperclip (4.3.5)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -503,6 +507,7 @@ DEPENDENCIES
   mysql2
   nokogiri
   nprogress-rails
+  overcommit
   paperclip
   poltergeist
   prawn

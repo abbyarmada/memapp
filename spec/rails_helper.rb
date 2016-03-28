@@ -1,24 +1,26 @@
-require "simplecov"
-require "codeclimate-test-reporter"
+require 'simplecov'
+require 'simplecov-json'
+SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
+require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start do
   #
-end # if ENV["COVERAGE"]
+end # if ENV['COVERAGE']
 
 CodeClimate::TestReporter.configure do |config|
-        config.timeout = 900
+  config.timeout = 900
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= "test"
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
 
 # Add this to load Capybara integration:
-require "capybara/rspec"
-require "capybara/rails"
+require 'capybara/rspec'
+require 'capybara/rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -27,14 +29,14 @@ require "capybara/rails"
 # run twice. It is recommended that you do not name files matching this glob to
 # end with _spec.rb. You can configure this pattern with the --pattern
 # option on the command line or in ~/.rspec, .rspec or `.rspec-local`.
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  #config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -60,5 +62,5 @@ RSpec.configure do |config|
   # Filter lines from Rails gems in backtraces.
   # config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
-  config.filter_gems_from_backtrace("gem name")
+  config.filter_gems_from_backtrace('gem name')
 end

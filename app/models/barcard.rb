@@ -7,5 +7,3 @@ class Barcard < ActiveRecord::Base
   has_many :peoplebarcards
   has_many :people
 end
-
-

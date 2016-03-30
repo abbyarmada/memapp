@@ -8,21 +8,23 @@ class PaymenttypesController < ApplicationController
   end
 
   def show
-  respond_with(@paymenttype)
+    respond_with(@paymenttype)
   end
+
   def new
     @paymenttype = Paymenttype.new
   end
-  def edit
 
+  def edit
   end
+
   def create
     @paymenttype = Paymenttype.new(paymenttype_params)
     flash[:notice] = 'Paymenttype was successfully created.' if @paymenttype.save
     respond_with(@paymenttype)
   end
 
-   def update
+  def update
     respond_to do |format|
       if @paymenttype.update(paymenttype_params)
         format.html { redirect_to @paymenttype, notice: 'Paymenttype was successfully updated.' }
@@ -30,7 +32,7 @@ class PaymenttypesController < ApplicationController
         format.html { render action: 'edit' }
       end
     end
-  end
+ end
 
   def destroy
     @paymenttype.destroy
@@ -38,6 +40,7 @@ class PaymenttypesController < ApplicationController
   end
 
   private
+
   def set_model
     @paymenttype = Paymenttype.find(params[:id])
   end
@@ -45,5 +48,4 @@ class PaymenttypesController < ApplicationController
   def paymenttype_params
     params.require(:paymenttype).permit(:name)
   end
-
 end

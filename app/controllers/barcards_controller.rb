@@ -1,13 +1,13 @@
 class BarcardsController < ApplicationController
-   before_action :set_model, only: [:edit, :update, :destroy]
-   respond_to :html
+  before_action :set_model, only: [:edit, :update, :destroy]
+  respond_to :html
 
   def new
     @barcard = Barcard.new
     @peoplebarcard = Peoplebarcard.new
     respond_to do |format|
-     format.html  # new.html.erb
-   end
+      format.html # new.html.erb
+    end
   end
 
   def destroy
@@ -18,15 +18,14 @@ class BarcardsController < ApplicationController
   end
 
   def update
-
     pid = params[:pid]
     mid = params[:mid]
     respond_to do |format|
       if @barcard.update(barcard_params)
         flash[:notice] = 'Barcard was successfully updated.'
-        format.html {redirect_to :back }
+        format.html { redirect_to :back }
       else
-        format.html { render :action => "edit" }
+        format.html { render action: 'edit' }
       end
     end
   end
@@ -44,13 +43,11 @@ class BarcardsController < ApplicationController
         @peoplebarcard.person_id = pid
         @peoplebarcard.barcard_id = @barcard.id
         @peoplebarcard.save
-        if @currentbc
-          @currentbc.destroy
-        end
+        @currentbc.destroy if @currentbc
         flash[:notice] = 'Barcard was successfully created.'
-        format.html { redirect_to person_path( :id =>   @peoplebarcard.person_id ) + '#tabs-6' }
+        format.html { redirect_to person_path(id: @peoplebarcard.person_id) + '#tabs-6' }
       else
-        format.html { render :action => "new" }
+        format.html { render action: 'new' }
         flash[:notice] = 'Barcard was not created.'
       end
     end
@@ -65,5 +62,4 @@ class BarcardsController < ApplicationController
   def barcard_params
     params.require(:barcard)
   end
-
 end

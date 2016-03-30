@@ -4,5 +4,4 @@ class Paymenttype < ActiveRecord::Base
   def self.types
     types = Paymenttype.all.order(:name)
   end
-
 end

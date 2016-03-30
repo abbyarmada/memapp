@@ -407,6 +407,9 @@ GEM
       json (~> 1.8)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
+    simplecov-json (0.2)
+      json
+      simplecov
     slop (3.6.0)
     spring (1.6.4)
     spring-commands-cucumber (1.0.1)
@@ -536,6 +539,7 @@ DEPENDENCIES
   selenium-webdriver
   simple_form (~> 3.2.0)
   simplecov
+  simplecov-json
   spring
   spring-commands-cucumber
   spring-commands-rspec

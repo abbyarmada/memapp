@@ -28,11 +28,10 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-
   def update
     respond_to do |format|
       if @subscription.update(subscription_params)
-        format.html {  redirect_to @subscription, notice: 'Subscription was successfully updated.' }
+        format.html { redirect_to @subscription, notice: 'Subscription was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -44,18 +43,18 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription.destroy
     respond_to do |format|
-      format.html { redirect_to subscriptions_url , notice: 'Subscription was successfully deleted.'}
+      format.html { redirect_to subscriptions_url, notice: 'Subscription was successfully deleted.' }
       format.json { head :no_content }
     end
   end
 
   private
+
   def set_model
     @subscription = Subscription.find(params[:id])
   end
 
   def subscription_params
-    params.require(:subscription).permit(:amount,:start_date,:end_date,:privilege_id)
+    params.require(:subscription).permit(:amount, :start_date, :end_date, :privilege_id)
   end
-
 end

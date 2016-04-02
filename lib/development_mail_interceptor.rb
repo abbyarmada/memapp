@@ -4,4 +4,3 @@ class DevelopmentMailInterceptor
     message.to = INTERCEPT_MAIL_ADDRESS
   end
 end
-

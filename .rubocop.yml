@@ -32,3 +32,4 @@ AllCops:
     - vendor/**/*
     - node_modules/**/*
     - bower_components/**/*
+    - 'app/pdfs/person_pdf.rb'

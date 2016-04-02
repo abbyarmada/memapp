@@ -20,7 +20,7 @@ Rails.application.configure do
   config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  config.action_controller.allow_forgery_protection = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -35,13 +35,10 @@ Rails.application.configure do
   # Randomize the order test cases are executed
   config.active_support.test_order = :random
 
-
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_files = true
-  config.static_cache_control = "public, max-age=3600"
-
-
+  config.static_cache_control = 'public, max-age=3600'
 end

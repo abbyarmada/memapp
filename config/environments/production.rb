@@ -8,7 +8,7 @@ Rails.application.configure do
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
-  #Rake tasks automatically ignore this option for performance.
+  # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on
@@ -16,10 +16,10 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   # Specifies the header that your server uses for sending files
-  config.action_dispatch.x_sendfile_header = "X-Sendfile"
+  config.action_dispatch.x_sendfile_header = 'X-Sendfile'
 
   # temp fix for noise in log files
-  #config.action_dispatch.rack_cache[:verbose] = false
+  # config.action_dispatch.rack_cache[:verbose] = false
 
   # For nginx:
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
@@ -42,11 +42,8 @@ Rails.application.configure do
   # for devise
   config.action_mailer.default_url_options = { host: 'memapp.myc.ie' }
 
-
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
-
-
 
   # Enable threaded mode
   # config.threadsafe!
@@ -89,5 +86,4 @@ Rails.application.configure do
   # Set to `:info` to match the current default, or set to `:debug` to opt-into
   # the future default.
   config.log_level = :info
-
 end

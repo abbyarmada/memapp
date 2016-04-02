@@ -14,30 +14,30 @@ class PrivilegesControllerTest < ActionController::TestCase
 
   def test_should_create_privilege
     assert_difference('Privilege.count') do
-      post :create, :privilege => {:member_class => 'T',:name => 'Test Class', :bar_billies => 'n' ,:car_park => 0 ,:votes => 0,:bar_reference => 0}
+      post :create, privilege: { member_class: 'T', name: 'Test Class', bar_billies: 'n', car_park: 0, votes: 0, bar_reference: 0 }
     end
 
     assert_redirected_to privilege_path(assigns(:privilege))
   end
 
   def test_should_show_privilege
-    get :show, :id => privileges(:one).id
+    get :show, id: privileges(:one).id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => privileges(:one).id
+    get :edit, id: privileges(:one).id
     assert_response :success
   end
 
   def test_should_update_privilege
-    put :update, :id => privileges(:one).id, :privilege => { }
+    put :update, id: privileges(:one).id, privilege: {}
     assert_redirected_to privilege_path(assigns(:privilege))
   end
 
   def test_should_destroy_privilege
     assert_difference('Privilege.count', -1) do
-      delete :destroy, :id => privileges(:one).id
+      delete :destroy, id: privileges(:one).id
     end
 
     assert_redirected_to privileges_path

@@ -2,7 +2,7 @@ class Boat < ActiveRecord::Base
   belongs_to :member
   validates :boat_class, :boat_type, :member_id, presence: true
   # validates_presence_of :boat_class, :boat_type, :member_id
-  # validates_inclusion_of :boat_type, in: %w(Dinghy Cruiser Motor Windsurfer), message: 'must be Dinghy, Windsurfer, Cruiser or Motor'
+  # validates_inclusion_of :boat_type, { in: %w(Dinghy Cruiser Motor Windsurfer)}, message: 'must be Dinghy, Windsurfer, Cruiser or Motor'
   validates :boat_type, inclusion: %w(Dinghy Cruiser Motor Windsurfer), message: 'must be Dinghy, Windsurfer, Cruiser or Motor'
   # attr_accessible :boat_class, :boat_type, :boat_name ,:sail_number, :pen_tag, :member_id
 

@@ -32,7 +32,7 @@ class Person < ActiveRecord::Base
     people = people.where('last_name like :input', input: "%#{params[:search]}%") unless params[:search].blank?
     people = people.where('first_name like :input', input: "%#{params[:searchfn]}%") unless params[:searchfn].blank?
     people = people.grouped if params[:group]
-    people = people.where('members.privilege_id = :input', input: "#{params[:searchmp][:privilege_id]}") if params[:searchmp] && !params[:searchmp][:privilege_id].blank?
+    people = people.where('members.privilege_id = :input', input: (params[:searchmp][:privilege_id]).to_s) if params[:searchmp] && !params[:searchmp][:privilege_id].blank?
     people = people.paginate(per_page: 30, page: params[:page]).order(:last_name, :first_name)
   end
 
@@ -49,27 +49,19 @@ class Person < ActiveRecord::Base
     nil
   end
 
-  def self.main_person(mid)
-    main_person = Person.where(" status = 'm' and member_id = ? ", mid).first
+  def self.main_person(member_id)
+    Person.find_by(status: 'm', member_id: member_id)
   end
-
-  # def self.partner(mid)
-  #    partner = Person.where(:status => 'p',:member_id => mid ).first
-  # end
 
   def main_person?
     status == 'm'
   end
 
   def main_member
-    main_member = Person.where(status: :m, member_id: member_id).first
+    Person.find_by(status: 'm', member_id: member_id)
   end
-  # def main_member
-  #  Person.where(status: :'m' ).first
-  # end
 
   def self.status
-    # {'m' =>'Main Member', 'ch' => 'Child of main member' , 'p' => 'Partner of main member' ,'g' => 'Parent/Guardian of Cadet Member'}
     { 'Main Member' => 'm', 'Child of main member' => 'ch', 'Partner of main member' => 'p', 'Parent/Guardian of Cadet Member' => 'g' }
   end
 
@@ -95,48 +87,36 @@ class Person < ActiveRecord::Base
     end
   end
 
-  #  def self.members_list_type
-  #    {'Current Members' => 'c', 'Past and Current members' => 'p' }
-  #  end
-
   def caption
     last_name + ', ' + first_name
   end
 
-  # def self.proposers
-
-  #  @proposers = Person.find(:all, :conditions => ['last_name LIKE ?', "%#{params[:search]}%"])
-
-  # end
-
   def partner
-    partner = Person.where(status: 'p', member_id: member_id).first if status == 'm'
+    Person.find_by(status: 'p', member_id: member_id) if status == 'm'
   end
 
   def salutation_first_names
-    if partner
-      salutation = [first_name, partner.first_name].join(' & ')
-    else
-      salutation = first_name
-    end
+    return first_name unless partner
+    [first_name, partner.first_name].join(' & ')
   end
 
   def salutation
-    if partner
-      if partner.last_name == last_name
-        salutation = [[first_name, partner.first_name].join(' & '), last_name].join(' ')
-      else
-        salutation = [[first_name, last_name].join(' '), [partner.first_name, partner.last_name].join(' ')].join(' & ')
-      end
+    return [first_name, last_name].join(' ') unless partner
+    if same_surname?
+      [[first_name, partner.first_name].join(' & '), last_name].join(' ')
     else
-      salutation = [first_name, last_name].join(' ')
+      [[first_name, last_name].join(' '), [partner.first_name, partner.last_name].join(' ')].join(' & ')
     end
   end
 
   def age
-    ((Date.today - dob) / 365).to_i
+    ((Time.zone.today - dob) / 365).to_i
   rescue
     nil
+  end
+
+  def same_surname?
+    partner.last_name == last_name
   end
 
   def complete_new_person_process

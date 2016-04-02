@@ -11,6 +11,6 @@ class Subscription < ActiveRecord::Base
   default_scope { order(end_date: :desc, start_date: :desc) }
 
   scope :lastyear, -> (_privilege) { subscription_for_year(1.year.ago) }
-  scope :thisyear, -> (_privilege) { subscription_for_year(Time.now) }
+  scope :thisyear, -> (_privilege) { subscription_for_year(Time.now.utc) }
   scope :nextyear, -> (_privilege) { subscription_for_year(1.year.from_now) }
 end

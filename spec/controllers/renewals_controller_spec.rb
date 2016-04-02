@@ -18,28 +18,25 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe RenewalsController, :type => :controller do
+RSpec.describe RenewalsController, type: :controller do
   login_user
   # This should return the minimal set of attributes required to create a valid
   # Renewal. As you add validations to Renewal, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) { attributes_for(:renewal, subject: 'testing') }
-  #let(:valid_attributes) { { "subject" => "1.5" } }
-  let(:invalid_attributes) { attributes_for(:renewal,subject: nil )   }
+  # let(:valid_attributes) { { "subject" => "1.5" } }
+  let(:invalid_attributes) { attributes_for(:renewal, subject: nil) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # RenewalsController. Be sure to keep this updated too.
-  let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
+  let(:valid_session) { { 'warden.user.user.key' => session['warden.user.user.key'] } }
 
-  describe "GET index" do
-    it "assigns all renewals as @renewals" do
+  describe 'GET index' do
+    it 'assigns all renewals as @renewals' do
       renewal = Renewal.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:renewals)).to eq([renewal])
     end
   end
-
-
-
 end

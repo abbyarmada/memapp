@@ -1,5 +1,5 @@
 Given(/^I have an Applicant member class$/) do
-  FactoryGirl.create(:privilege, name: :"Applicant")
+  FactoryGirl.create(:privilege, name: :Applicant)
 end
 
 Given(/^I am on the people index page$/) do
@@ -7,20 +7,20 @@ Given(/^I am on the people index page$/) do
 end
 
 Then(/^I click button New Membership$/) do
-  click_link "New Membership"
+  click_link 'New Membership'
 end
 
 Then(/^I fill in the form$/) do
-  fill_in 'First Name', :with => 'John'
-  fill_in 'Last Name',  :with => 'Doe'
-  fill_in 'Proposed', :with => 'Proposer'
-  fill_in 'Seconded', :with => 'Seconder'
-  fill_in 'Street1', :with => 'Test Street1'
+  fill_in 'First Name', with: 'John'
+  fill_in 'Last Name',  with: 'Doe'
+  fill_in 'Proposed', with: 'Proposer'
+  fill_in 'Seconded', with: 'Seconder'
+  fill_in 'Street1', with: 'Test Street1'
   # save_page
 end
 
 Then(/^I click button create Member$/) do
-  click_button "Create Member"
+  click_button 'Create Member'
   # save_page
 end
 

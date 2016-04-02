@@ -1,5 +1,5 @@
 class RenewalsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, only: [:generate_pdfs]
+  skip_before_action :verify_authenticity_token, only: [:generate_pdfs]
 
   # before_action :set_model, only: [:generate_pdfs,:generate_emails]
   respond_to :html, :zip
@@ -85,6 +85,6 @@ class RenewalsController < ApplicationController
 
   def renewal_params
     params.require(:renewal)
-      .permit(:subject, :content, :delivered_at, :requested_at)
+          .permit(:subject, :content, :delivered_at, :requested_at)
   end
 end

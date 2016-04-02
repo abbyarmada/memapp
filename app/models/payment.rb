@@ -4,8 +4,9 @@ class Payment < ActiveRecord::Base
   belongs_to :paymenttype
   belongs_to :payment_method
   belongs_to :person
-  validates_presence_of :amount, :privilege_id, :payment_method_id, :paymenttype_id, :member_id
-  validates_presence_of :date_lodged, allow_nil: false
+  validates :amount, :privilege_id, :payment_method_id, :paymenttype_id, :member_id, presence: true
+  # validates_presence_of :amount, :privilege_id, :payment_method_id, :paymenttype_id, :member_id
+  validates :date_lodged, allow_nil: false, presence: true
   validates :amount, numericality: true
 
   # validates_associated :member
@@ -16,7 +17,7 @@ class Payment < ActiveRecord::Base
 
   # default_scope { includes(:paymenttype,:privilege,:payment_method)}
   scope :renewal, -> { where('paymenttype_id in (1,4 ) ') }
-  scope :current_year, -> { where('date_lodged >= ? ', Time.now.beginning_of_year) }
+  scope :current_year, -> { where('date_lodged >= ? ', Time.now.utc.beginning_of_year) }
   # scope :year, -> date_lodged {  where('date_lodged >= ? ', date_lodged )  }
   scope :member, -> { where('member_id = ?', member_id) }
   scope :first_payment, -> (date_lodged) { where('paymenttype_id = ? and date_lodged >= ? ', '4', date_lodged.beginning_of_year) }
@@ -52,13 +53,7 @@ class Payment < ActiveRecord::Base
       .group('privileges.member_class, privileges.name, year')
   }
 
-  def main_member
-    member.main_member
-  end
-
-  def renewal_payment?
-    paymenttype_id == 1 || paymenttype_id == 4
-  end
+  delegate :main_member, to: :member
 
   def check_unknown_payment_method
     if pay_type == '??'
@@ -80,7 +75,7 @@ class Payment < ActiveRecord::Base
   end
 
   def num_duplicates
-    num_duplicates = renewals.by_year(date_lodged).count
+    renewals.by_year(date_lodged).count
   end
 
   def renewals
@@ -107,7 +102,7 @@ class Payment < ActiveRecord::Base
   end
 
   def self.cardname(pay_type)
-    cardname = types[pay_type]
+    types[pay_type]
   end
 
   def self.countpays_for_year(date)
@@ -115,45 +110,36 @@ class Payment < ActiveRecord::Base
   end
 
   def self.g_chart_mems(endmonth, endday)
-    # require 'google_chart'
-
-    endmonth = Time.now.month.to_s if endmonth.blank?
-    endday = Time.now.day.to_s if endday.blank?
-
+    endmonth = Time.now.utc.month.to_s if endmonth.blank?
+    endday = Time.now.utc.day.to_s if endday.blank?
     years = 5
     @types = []
     years.times do |y|
-      yr_start = (Time.now.year - y).to_s + '-01-01'
-      yr_end = ((Time.now.year - y).to_s + '.' + endmonth + '.' + endday).to_date
+      yr_end = ((Time.now.utc.year - y).to_s + '.' + endmonth + '.' + endday).to_date
       @types[y] = countpays_for_year(yr_end)
     end
     classes = []
     years.times do |t|
       classes = (@types[t].keys | classes).sort
     end
-    # puts "Classes:"
-    # puts classes
     keys = Hash[*classes.collect { |v| [classes.index(v), v.to_s] }.flatten.uniq].sort
-    # puts "KEYS:"
-    # puts keys
     color_code = %w(0000ff ff0000 008000 FFd700 FFa500)
-    yr_end = ((Time.now.year).to_s + '.' + endmonth + '.' + endday).to_date
+    yr_end = (Time.now.utc.year.to_s + '.' + endmonth + '.' + endday).to_date
     chart = GoogleChart::LineChart.new('600x200', 'Membership Trends, Year To ' + yr_end.strftime('%B %d'), false)
     years.times do |x|
       chart.shape_marker :circle, color: color_code[x], data_set_index: x, data_point_index: -1, pixel_size: 10
-      chart.data((Time.now.year - x), keys.collect { |_k, v| @types[x][v].nil? ? 0 : @types[x][v] }, color_code[x])
+      chart.data((Time.now.utc.year - x), keys.collect { |_k, v| @types[x][v].nil? ? 0 : @types[x][v] }, color_code[x])
     end
     lab2 = []
-    x = 0
     classes.each do |v|
       lab2 << [v]
     end
-    labels = Hash[*lab2.collect { |v| [lab2, v.to_s] }.flatten]
+    # labels = Hash[*lab2.collect { |v| [lab2, v.to_s] }.flatten]
     chart.axis :y, range: [0, 100], font_size: 10, alignment: :center
     chart.axis :x, labels: lab2, font_size: 10, alignment: :center
     chart.show_legend = true
     @line_graph = chart.to_url
-end
+  end
 
   def year
     date_lodged.strftime('%Y')
@@ -162,14 +148,13 @@ end
   def self.g_chart_mems2(endmonth, endday)
     # require 'google_chart'
 
-    endmonth = Time.now.month.to_s if endmonth.blank?
-    endday = Time.now.day.to_s if endday.blank?
+    endmonth = Time.now.utc.month.to_s if endmonth.blank?
+    endday = Time.now.utc.day.to_s if endday.blank?
 
     years = 5
     @types = []
     years.times do |y|
-      yr_start = (Time.now.year - y).to_s + '-01-01'
-      yr_end = ((Time.now.year - y).to_s + '.' + endmonth + '.' + endday).to_date
+      yr_end = ((Time.now.utc.year - y).to_s + '.' + endmonth + '.' + endday).to_date
       @types[y] = countpays_for_year(yr_end)
     end
     classes = []
@@ -179,18 +164,17 @@ end
     keys = Hash[*classes.collect { |v| [classes.index(v), v.to_s] }.flatten.uniq].sort
     # puts keys
     color_code = %w(0000ff ff0000 008000 FFd700 FFa500)
-    yr_end = ((Time.now.year).to_s + '.' + endmonth + '.' + endday).to_date
+    yr_end = (Time.now.utc.year.to_s + '.' + endmonth + '.' + endday).to_date
     chart = GoogleChart::LineChart.new('600x200', 'Membership Trends, Year To ' + yr_end.strftime('%B %d'), false)
     years.times do |x|
       chart.shape_marker :circle, color: color_code[x], data_set_index: x, data_point_index: -1, pixel_size: 10
-      chart.data((Time.now.year - x), keys.collect { |_k, v| @types[x][v].nil? ? 0 : @types[x][v] }, color_code[x])
+      chart.data((Time.now.utc.year - x), keys.collect { |_k, v| @types[x][v].nil? ? 0 : @types[x][v] }, color_code[x])
     end
     lab2 = []
-    x = 0
     classes.each do |v|
       lab2 << [v]
     end
-    labels = Hash[*lab2.collect { |v| [lab2, v.to_s] }.flatten]
+    # labels = Hash[*lab2.collect { |v| [lab2, v.to_s] }.flatten]
     chart.axis :y, range: [0, 100], font_size: 10, alignment: :center
     chart.axis :x, labels: lab2, font_size: 10, alignment: :center
     chart.show_legend = true
@@ -198,7 +182,7 @@ end
   end
 
   def check_renewal_date
-    if (date_lodged.year == Time.now.year) && renewal_payment?
+    if (date_lodged.year == Time.now.utc.year) && renewal_payment?
       member.renew_date = date_lodged
       member.active = 1
       member.save
@@ -241,6 +225,4 @@ end
     end
     msg
   end
-
-  #####
 end

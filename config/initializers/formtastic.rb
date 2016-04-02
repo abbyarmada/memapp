@@ -86,5 +86,3 @@ Formtastic::FormBuilder.action_class_finder = Formtastic::ActionClassFinder
 # Formtastic::FormBuilder.action_namespaces = [ ::Object, ::MyActionsModule, ::Formtastic::Actions ]
 # Formtastic-bootstrap gem..
 Formtastic::Helpers::FormHelper.builder = FormtasticBootstrap::FormBuilder
-
-

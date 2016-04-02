@@ -1,7 +1,8 @@
 class Paymenttype < ActiveRecord::Base
   has_many :payments
-  validates_presence_of :name
+  validates :name, presence: true
+
   def self.types
-    types = Paymenttype.all.order(:name)
+    Paymenttype.all.order(:name)
   end
 end

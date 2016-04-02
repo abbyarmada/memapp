@@ -31,7 +31,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
-    @payment.member_id = (params[:member_id])
+    @payment.member_id = params[:member_id]
     @payment.privilege_id = @payment.member.privilege.id
     # default to Subscription renewal
     @payment.paymenttype_id = 1
@@ -79,9 +79,9 @@ class PaymentsController < ApplicationController
     #  this_yr_start = Time.now.year.to_s + "-01-01"
     this_yr_start = Time.now.beginning_of_year
     @payments = Payment.all
-                .includes(:privilege)
-                .where("paymenttype_id in ('1','4','5') and  date_lodged > ? ", this_yr_start)
-                .order('privileges.name, date_lodged')
+                       .includes(:privilege)
+                       .where("paymenttype_id in ('1','4','5') and  date_lodged > ? ", this_yr_start)
+                       .order('privileges.name, date_lodged')
   end
 
   #=======================================
@@ -165,9 +165,9 @@ class PaymentsController < ApplicationController
       @typestd[y] = Payment.find_by_sql(find_sql)
 
       @yeartotaltd[y] = Payment.all
-                        .select('COUNT(*) as tot, SUM(amount) as money')
-                        .joins('inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id')
-                        .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ", date_start, date_end)
+                               .select('COUNT(*) as tot, SUM(amount) as money')
+                               .joins('inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id')
+                               .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ", date_start, date_end)
 
       @memtotaltd[y] = Payment.find_by_sql(total_mem_sql)
 
@@ -223,9 +223,9 @@ class PaymentsController < ApplicationController
       @types[y] = Payment.find_by_sql(find_sql)
 
       @yeartotal[y] = Payment.all
-                      .select('COUNT(*) as tot, SUM(amount) as money')
-                      .joins('inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id')
-                      .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5')", date_start, date_end)
+                             .select('COUNT(*) as tot, SUM(amount) as money')
+                             .joins('inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id')
+                             .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5')", date_start, date_end)
       @memtotalyear[y] = Payment.find_by_sql(total_mem_sql)
     end
 
@@ -273,7 +273,7 @@ class PaymentsController < ApplicationController
     @end_month = endmonth.to_i
     @years.times do |y|
       start_date = Time.now.years_ago(2).beginning_of_year
-      end_date = ((Time.now.year).to_s + '.' + endmonth + '.' + endday).to_date
+      end_date = (Time.now.year.to_s + '.' + endmonth + '.' + endday).to_date
       @typestd[y] = Payment.yttypes(start_date, end_date).merge(Payment.rttypes(start_date, end_date))
       @yeartotaltd[y] = Payment.year_total(start_date, end_date).select('COUNT(*) as tot, SUM(amount) as money')
       @memtotaltd[y]  = Payment.members_year_total(start_date, end_date).select('COUNT(*) as count')

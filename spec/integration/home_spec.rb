@@ -1,6 +1,5 @@
-#require 'spec_helper'
+# require 'spec_helper'
 require 'rails_helper'
-
 
 describe 'home page' do
   it 'Displays the sign in box' do
@@ -11,16 +10,13 @@ describe 'home page' do
   end
 end
 
-
 describe 'login correctly page' do
-  it 'confirms successful login', :js => true do
-   user = FactoryGirl.create(:user)
+  it 'confirms successful login', js: true do
+    user = FactoryGirl.create(:user)
     visit '/'
-    fill_in 'Email', :with => user.email
-    fill_in 'Password', :with => user.password
-    click_on 'Sign in'  # this be an Ajax button -- requires Selenium
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_on 'Sign in' # this be an Ajax button -- requires Selenium
     expect(page).to have_text('Membership Class')
   end
 end
-
-

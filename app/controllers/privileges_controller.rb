@@ -54,6 +54,6 @@ class PrivilegesController < ApplicationController
 
   def privilege_params
     params.require(:privilege)
-      .permit(:member_class, :name, :bar_billies, :car_park, :votes, :bar_reference, :boat_storage)
+          .permit(:member_class, :name, :bar_billies, :car_park, :votes, :bar_reference, :boat_storage)
   end
 end

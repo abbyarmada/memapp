@@ -18,143 +18,142 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe SubscriptionsController, :type => :controller do
+describe SubscriptionsController, type: :controller do
   login_user
   # This should return the minimal set of attributes required to create a valid
   # Subscription. As you add validations to Subscription, be sure to
   # adjust the attributes here as well.
-  #let(:valid_attributes) { { "amount" => "1.5" } }
+  # let(:valid_attributes) { { "amount" => "1.5" } }
   let(:valid_attributes) { attributes_for(:subscription) }
-    let(:invalid_attributes) { attributes_for(:subscription,amount: nil ) }
+  let(:invalid_attributes) { attributes_for(:subscription, amount: nil) }
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # SubscriptionsController. Be sure to keep this updated too.
-  #let(:valid_session) { {} }
-  let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
+  # let(:valid_session) { {} }
+  let(:valid_session) { { 'warden.user.user.key' => session['warden.user.user.key'] } }
 
-  describe "GET index" do
-    it "assigns all subscriptions as @subscriptions" do
+  describe 'GET index' do
+    it 'assigns all subscriptions as @subscriptions' do
       subscription = Subscription.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:subscriptions)).to eq([subscription])
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested subscription as @subscription" do
+  describe 'GET show' do
+    it 'assigns the requested subscription as @subscription' do
       subscription = Subscription.create! valid_attributes
-      get :show, {:id => subscription.to_param}, valid_session
+      get :show, { id: subscription.to_param }, valid_session
       expect(assigns(:subscription)).to eq(subscription)
     end
   end
 
-  describe "GET new" do
-    it "assigns a new subscription as @subscription" do
-      get :new, { }, valid_session
+  describe 'GET new' do
+    it 'assigns a new subscription as @subscription' do
+      get :new, {}, valid_session
       expect(assigns(:subscription)).to be_a_new(Subscription)
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested subscription as @subscription" do
+  describe 'GET edit' do
+    it 'assigns the requested subscription as @subscription' do
       subscription = Subscription.create! valid_attributes
-      get :edit, {:id => subscription.to_param}, valid_session
+      get :edit, { id: subscription.to_param }, valid_session
       expect(assigns(:subscription)).to eq(subscription)
     end
   end
 
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Subscription" do
-        expect {
-          post :create, {:subscription => valid_attributes}, valid_session
-        }.to change(Subscription, :count).by(1)
-     end
+  describe 'POST create' do
+    describe 'with valid params' do
+      it 'creates a new Subscription' do
+        expect do
+          post :create, { subscription: valid_attributes }, valid_session
+        end.to change(Subscription, :count).by(1)
+      end
 
-     it "assigns a newly created subscription as @subscription" do
-       post :create, {:subscription => valid_attributes}, valid_session
-       expect(assigns(:subscription)).to be_a(Subscription)
-       expect(assigns(:subscription)).to be_persisted
-     end
+      it 'assigns a newly created subscription as @subscription' do
+        post :create, { subscription: valid_attributes }, valid_session
+        expect(assigns(:subscription)).to be_a(Subscription)
+        expect(assigns(:subscription)).to be_persisted
+      end
 
-      it "redirects to the subscription" do
-        post :create, {:subscription => valid_attributes}, valid_session
+      it 'redirects to the subscription' do
+        post :create, { subscription: valid_attributes }, valid_session
         expect(response).to redirect_to(Subscription.last)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved subscription as @subscription" do
-        #skip"WTF?"
+    describe 'with invalid params' do
+      it 'assigns a newly created but unsaved subscription as @subscription' do
+        # skip"WTF?"
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Subscription).to receive(:save).and_return(false)
-        post :create, {:subscription => invalid_attributes }, valid_session
+        post :create, { subscription: invalid_attributes }, valid_session
         expect(assigns(:subscription)).to be_a_new(Subscription)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:subscription =>  invalid_attributes }, valid_session
-        expect(response).to render_template("new")
+        post :create, { subscription: invalid_attributes }, valid_session
+        expect(response).to render_template('new')
       end
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested subscription" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      it 'updates the requested subscription' do
         subscription = Subscription.create! valid_attributes
         # Assuming there are no other subscriptions in the database, this
         # specifies that the Subscription created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Subscription).to receive(:update).with({ "amount" => "1.5" })
-        put :update, {:id => subscription.to_param, :subscription => { "amount" => "1.5" }}, valid_session
+        expect_any_instance_of(Subscription).to receive(:update).with('amount' => '1.5')
+        put :update, { id: subscription.to_param, subscription: { 'amount' => '1.5' } }, valid_session
       end
 
-      it "assigns the requested subscription as @subscription" do
+      it 'assigns the requested subscription as @subscription' do
         subscription = Subscription.create! valid_attributes
-        put :update, {:id => subscription.to_param, :subscription => valid_attributes}, valid_session
+        put :update, { id: subscription.to_param, subscription: valid_attributes }, valid_session
         expect(assigns(:subscription)).to eq(subscription)
       end
 
-      it "redirects to the subscriptions" do
+      it 'redirects to the subscriptions' do
         subscription = Subscription.create! valid_attributes
-        put :update, {:id => subscription.to_param, :subscription => valid_attributes}, valid_session
+        put :update, { id: subscription.to_param, subscription: valid_attributes }, valid_session
         expect(response).to redirect_to(subscription)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns the subscription as @subscription" do
+    describe 'with invalid params' do
+      it 'assigns the subscription as @subscription' do
         subscription = Subscription.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Subscription).to receive(:save).and_return(false)
-        put :update, {:id => subscription.to_param, :subscription =>  invalid_attributes }, valid_session
+        put :update, { id: subscription.to_param, subscription: invalid_attributes }, valid_session
         expect(assigns(:subscription)).to eq(subscription)
       end
 
       it "re-renders the 'edit' template" do
         subscription = Subscription.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        put :update, {:id => subscription.to_param, :subscription => invalid_attributes }, valid_session
-        expect(response).to render_template("edit")
+        put :update, { id: subscription.to_param, subscription: invalid_attributes }, valid_session
+        expect(response).to render_template('edit')
       end
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested subscription" do
+  describe 'DELETE destroy' do
+    it 'destroys the requested subscription' do
       subscription = Subscription.create! valid_attributes
-      expect {
-        delete :destroy, {:id => subscription.to_param}, valid_session
-      }.to change(Subscription, :count).by(-1)
+      expect do
+        delete :destroy, { id: subscription.to_param }, valid_session
+      end.to change(Subscription, :count).by(-1)
     end
 
-    it "redirects to the subscriptions list" do
+    it 'redirects to the subscriptions list' do
       subscription = Subscription.create! valid_attributes
-      delete :destroy, {:id => subscription.to_param}, valid_session
+      delete :destroy, { id: subscription.to_param }, valid_session
       expect(response).to redirect_to(subscriptions_url)
     end
   end
-
 end

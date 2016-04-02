@@ -4,7 +4,7 @@ require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-#Bundler.require(:default, Rails.env)
+# Bundler.require(:default, Rails.env)
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -35,10 +35,10 @@ module R3
     # config.i18n.default_locale = :de
 
     # JavaScript files you want as :defaults (application.js is always included).
-    #config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
+    # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
@@ -53,13 +53,13 @@ module R3
     # scaffolding..
     config.generators do |g|
       g.test_framework :rspec,
-        :fixtures => true,
-        :view_specs => true,
-        :helper_specs => false,
-        :routing_specs => true,
-        :controller_specs => true,
-        :request_specs => true
-      g.fixture_replacement :factory_girl, :dir => "spec/factories"
+                       fixtures: true,
+                       view_specs: true,
+                       helper_specs: false,
+                       routing_specs: true,
+                       controller_specs: true,
+                       request_specs: true
+      g.fixture_replacement :factory_girl, dir: 'spec/factories'
       g.stylesheets false
       g.scss false
       g.javascripts false

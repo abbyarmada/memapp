@@ -1,43 +1,43 @@
 require 'test_helper'
 
 class PaymenttypesControllerTest < ActionController::TestCase
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:paymenttypes)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create paymenttype" do
+  test 'should create paymenttype' do
     assert_difference('Paymenttype.count') do
-      post :create, :paymenttype => { }
+      post :create, paymenttype: {}
     end
 
     assert_redirected_to paymenttype_path(assigns(:paymenttype))
   end
 
-  test "should show paymenttype" do
-    get :show, :id => paymenttypes(:one).to_param
+  test 'should show paymenttype' do
+    get :show, id: paymenttypes(:one).to_param
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, :id => paymenttypes(:one).to_param
+  test 'should get edit' do
+    get :edit, id: paymenttypes(:one).to_param
     assert_response :success
   end
 
-  test "should update paymenttype" do
-    put :update, :id => paymenttypes(:one).to_param, :paymenttype => { }
+  test 'should update paymenttype' do
+    put :update, id: paymenttypes(:one).to_param, paymenttype: {}
     assert_redirected_to paymenttype_path(assigns(:paymenttype))
   end
 
-  test "should destroy paymenttype" do
+  test 'should destroy paymenttype' do
     assert_difference('Paymenttype.count', -1) do
-      delete :destroy, :id => paymenttypes(:one).to_param
+      delete :destroy, id: paymenttypes(:one).to_param
     end
 
     assert_redirected_to paymenttypes_path

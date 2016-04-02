@@ -1,5 +1,5 @@
 require: rubocop-rspec
-# inherit_from: .rubocop_todo.yml
+inherit_from: .rubocop_todo.yml
 
 Metrics/LineLength:
   Enabled: false
@@ -32,3 +32,4 @@ AllCops:
     - vendor/**/*
     - node_modules/**/*
     - bower_components/**/*
+    - 'app/pdfs/person_pdf.rb'

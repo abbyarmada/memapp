@@ -28,27 +28,27 @@ class PersonPdf < Prawn::Document
     move_down(50)
 
     # FORM_START
-    bounding_box([000,cursor], width: (full_width ) ) do
+    bounding_box([000, cursor], width: (full_width)) do
       move_down(5)
-      text " Dear #{@person.salutation_first_names },
-      Please complete and return the #{@person.member.privilege.name } Membership Renewal Form overleaf with your subscription at your earliest convenience. An early response from members greatly assists the Club's financial position especially in these challenging times. A €30 bar credit will apply to all Family memberships, €20 to Ordinary memberships and  €10 to Pavilion and Senior memberships renewed in full by 31st January. Please note that this credit will expire if unused by 30 September this year. " ,size: 10, style: :normal, align: :justify
+      text " Dear #{@person.salutation_first_names},
+      Please complete and return the #{@person.member.privilege.name} Membership Renewal Form overleaf with your subscription at your earliest convenience. An early response from members greatly assists the Club's financial position especially in these challenging times. A €30 bar credit will apply to all Family memberships, €20 to Ordinary memberships and  €10 to Pavilion and Senior memberships renewed in full by 31st January. Please note that this credit will expire if unused by 30 September this year. " ,size: 10, style: :normal, align: :justify
       move_down(1)
-      text " Again this year in consideration of many people's changing circumstances it is proposed to allow Ordinary and Family members to pay their subscriptions in two separate installments, one half by 31 January and the balance by 30 April but a bar credit does not apply in this circumstance. ",size: 10, style: :normal, align: :justify
+      text " Again this year in consideration of many people's changing circumstances it is proposed to allow Ordinary and Family members to pay their subscriptions in two separate installments, one half by 31 January and the balance by 30 April but a bar credit does not apply in this circumstance. ", size: 10, style: :normal, align: :justify
 
       move_down(1)
-      text "Parking Permits for St. James's Terrace car park will be issued to all paid up Ordinary, Family and Senior members at the end of January but please allow a minimum of seven days for your renewal to be processed. Seasonal Dinghy Pen Fees have been included on your renewal form to ease administration. Boat stickers will be issued and should be attached to all dinghies before the start of the sailing season.",size: 10, style: :normal, align: :justify
+      text "Parking Permits for St. James's Terrace car park will be issued to all paid up Ordinary, Family and Senior members at the end of January but please allow a minimum of seven days for your renewal to be processed. Seasonal Dinghy Pen Fees have been included on your renewal form to ease administration. Boat stickers will be issued and should be attached to all dinghies before the start of the sailing season.", size: 10, style: :normal, align: :justify
       move_down(1)
-      text "Any Family or Ordinary member wishing to transfer to senior membership should, if they satisfy the requirements of Rule 4 of the clubs constitution, complete an application form available from the website www.myc.ie or James Terrace clubhouse and return it with this renewal.",size: 10, style: :normal, align: :justify
+      text "Any Family or Ordinary member wishing to transfer to senior membership should, if they satisfy the requirements of Rule 4 of the clubs constitution, complete an application form available from the website www.myc.ie or James Terrace clubhouse and return it with this renewal.", size: 10, style: :normal, align: :justify
       move_down(1)
       formatted_text([
-        {text: "Your renewal form has been completed with details from the club's database. Please check these details and amend if necessary prior to returning your form " , size: 10, style: :normal , align: :justify },
-        {text: "please pay particular attention to phone numbers and email addresses. ", size: 12, style: :bold , align: :justify },
-        {text: "All cadet members should also include their date of birth and if over 18 should include the name of the educational establishment at which they are FULL TIME students.", size: 10, style: :normal , align: :justify }
+        { text: "Your renewal form has been completed with details from the club's database. Please check these details and amend if necessary prior to returning your form ", size: 10, style: :normal, align: :justify },
+        { text: "please pay particular attention to phone numbers and email addresses. ", size: 12, style: :bold, align: :justify },
+        { text: "All cadet members should also include their date of birth and if over 18 should include the name of the educational establishment at which they are FULL TIME students.", size: 10, style: :normal, align: :justify }
       ])
       move_down(1)
-      text "Please make full use of the section relating to club messages. You will see that it is possible to send separate messages to partners or children. Until the end of March messages will continue to be sent to all members on last years membership list, however from the beginning of April messages will only be sent to members who have paid this years subscriptions. Many members have elected to receive their renewal form by email this year thereby reducing the costs involved. If you wish to do the same please tick the relevant box at the end of the communications section.",size: 10, style: :normal, align: :justify
+      text "Please make full use of the section relating to club messages. You will see that it is possible to send separate messages to partners or children. Until the end of March messages will continue to be sent to all members on last years membership list, however from the beginning of April messages will only be sent to members who have paid this years subscriptions. Many members have elected to receive their renewal form by email this year thereby reducing the costs involved. If you wish to do the same please tick the relevant box at the end of the communications section.", size: 10, style: :normal, align: :justify
       move_down(1)
-      text "With best wishes for an enjoyable sailing season, " ,size: 10, style: :normal, align: :justify
+      text "With best wishes for an enjoyable sailing season, ", size: 10, style: :normal, align: :justify
 
       move_down(25)
       text "Nigel Mc Keaney " ,size: 10, style: :normal, align: :justify
@@ -66,8 +66,8 @@ class PersonPdf < Prawn::Document
                      cell_style: { border_width: 1, borders: [] }) do |t|
         t.column(0).style background_color: 'ffffff', text_color: '000000'
         t.column(2).style background_color: 'ffffff', text_color: '000000'
-        t.column(1).style  text_color: entry_fields_txt_colour
-        t.column(3).style  text_color: entry_fields_txt_colour
+        t.column(1).style text_color: entry_fields_txt_colour
+        t.column(3).style text_color: entry_fields_txt_colour
       end
       stroke_bounds
     end
@@ -79,9 +79,9 @@ class PersonPdf < Prawn::Document
       move_down(4)
       text "Membership information" ,size: 14, style: :bold,horizontal_padding: 2
       move_down(1)
-      text "Please check that all members data here is correct." ,size: 8, style: :italic,horizontal_padding: 2
+      text "Please check that all members data here is correct." , size: 8, style: :italic, horizontal_padding: 2
       text "We require Date of birth for Cadet members. It can be an advantage when applying for funding to be able to give an acurate age profile of club members so if you wish, please also give dates of birth for all members. " \
-       "Please state school/College name for Cadet Members as occupation.",size: 8, style: :italic,horizontal_padding: 2
+       "Please state school/College name for Cadet Members as occupation.", size: 8, style: :italic, horizontal_padding: 2
 
       header = ['First Name', 'Last Name', "Date of birth \n yyyy-mm-dd", 'Mobile', 'Occupation', 'Status']
       header2 = [' ']
@@ -111,7 +111,7 @@ class PersonPdf < Prawn::Document
     move_down(3)
 
     #################### COMMUNICATIONS ######################################
-    bounding_box([000,cursor], width: full_width ) do (
+    bounding_box([000, cursor], width: full_width) do (
       move_down(2)
       text "Communication Preferences" ,size: 14, style: :bold
       text "Help MYC to reduce costs by only selecting to receive TXT messages where you " \
@@ -132,19 +132,19 @@ class PersonPdf < Prawn::Document
       offset = 15
       rotate = 90
 
-      header = ["First Name","email","Send \nTxt","Send \nEmail"]
-      header2 = [" "," "," "," "," "," "," "," "," "," "," "," "]
-      draw_text 'Social', at: [x += offset ,y], size: 8, rotate: rotate
-      draw_text 'Cruiser Racing', at: [x += offset ,y], size: 8, rotate: rotate
-      draw_text 'Cruiser Race Skipper', at: [x += offset ,y], size: 8, rotate: rotate
-      draw_text 'Cruising', at: [x += offset ,y], size: 8, rotate: rotate
-      draw_text 'Cruising Skipper', at: [x += offset ,y], size: 8, rotate: rotate
-      draw_text 'Dinghy Sailing', at: [x += offset ,y], size: 8, rotate: rotate
-      draw_text 'Junior Sailing', at: [x += offset ,y], size: 8, rotate: rotate
-      draw_text 'Optimist Coaching', at: [x += offset ,y], size: 8, rotate: rotate
+      header = ['First Name', 'email', 'Send \nTxt', 'Send \nEmail']
+      header2 = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+      draw_text 'Social', at: [x += offset, y], size: 8, rotate: rotate
+      draw_text 'Cruiser Racing', at: [x += offset, y], size: 8, rotate: rotate
+      draw_text 'Cruiser Race Skipper', at: [x += offset, y], size: 8, rotate: rotate
+      draw_text 'Cruising', at: [x += offset, y], size: 8, rotate: rotate
+      draw_text 'Cruising Skipper', at: [x += offset, y], size: 8, rotate: rotate
+      draw_text 'Dinghy Sailing', at: [x += offset, y], size: 8, rotate: rotate
+      draw_text 'Junior Sailing', at: [x += offset, y], size: 8, rotate: rotate
+      draw_text 'Optimist Coaching', at: [x += offset, y], size: 8, rotate: rotate
 
       if @person.member.privilege.id == 2 || @person.member.privilege.id == 4
-        table([header] +  commspref + [header2],
+        table([header] + commspref + [header2],
               cell_style: { padding: 4,
                             borders: [:left, :right, :top, :bottom]
               },
@@ -159,38 +159,33 @@ class PersonPdf < Prawn::Document
 
       else
 
-        table([header] +  commspref,
+        table([header] + commspref,
               cell_style: { padding: 4,
                             borders: [:left, :top, :right, :bottom]
-                #:borders => []
-              },
+                          },
               column_widths: { 0 => 100, 1 => 200, 2 => 35, 3 => 35, 4 => 15, 5 => 15, 6 => 15, 7 => 15, 8 => 15, 9 => 15, 10 => 15, 11 => 15, 12 => 15 }
              ) do |t|
           t.row(0).style background_color: 'FFFFFF', text_color: '000000'
           t.cells.row(1).background_color = entry_fields_background_colour
           t.cells.row(1).text_color = entry_fields_txt_colour
         end
-     end
-
+      end
       move_down(5)
-
       stroke_bounds
     )
     end
 
     ############   boats ##################
 
-    if @person.member.privilege.boat_storage == 1 then
+    if @person.member.privilege.boat_storage == 1
       (
-      # start_new_page
-
-      bounding_box([000,cursor], width: full_width ) do
+      bounding_box([000, cursor], width: full_width) do
         (
       move_down(10)
       text 'Boats', size: 16, style: :bold
-      text "You have #{num_boats} boat(s) registered ", size: 10, style: :normal,horizontal_padding: 2
+      text "You have #{num_boats} boat(s) registered ", size: 10, style: :normal, horizontal_padding: 2
 
-      header = ["Boat Name","Boat Type ","Boat Class","Sail Number","Pen Tag"]
+      header = ['Boat Name','Boat Type ','Boat Class','Sail Number','Pen Tag']
 
       table([header] + boats,options={header: true, column_widths: {0 => 100, 1=> 100, 2=> 100, 3 => 80, 4 => 80 }} ) do |t|
         t.column(2).style align: :right
@@ -218,7 +213,7 @@ class PersonPdf < Prawn::Document
     bounding_box([000,cursor], width: 300 ) do (
 
       move_down(5)
-      text "Subscriptions" ,size: 14, style: :bold
+      text 'Subscriptions' ,size: 14, style: :bold
       table(cart) do |t|
         t.column(2).style align: :right,size: 8
         t.column(4).style align: :right,size: 8
@@ -232,58 +227,50 @@ class PersonPdf < Prawn::Document
     )
     end
 
-    if ( (@person.loyaltycard.Current_Points rescue 0 ).to_f > 0 && (@person.loyaltycard.RedeemedTD rescue 0 ).to_f < 11 ) && (1 == 0)
-      bounding_box([310,top_subs ], width: 200,padding: 1) do (
-
-
-
+    if ( (@person.loyaltycard.Current_Points rescue 0).to_f > 0 && (@person.loyaltycard.RedeemedTD rescue 0).to_f < 11) && (1 == 0)
+      bounding_box([310, top_subs], width: 200,padding: 1) do (
         move_down(0)
-        text "You haven't used your barcard for some time, here is the balance available to spend",size: 8, style: :italic,horizontal_padding: 2
-        table( @memberloyalty , header: :true ,
-                                cell_style: {padding: 4, borders: [], border_width: 1 }
-             ) do
-          # style column(0), :border_width => 1#, :borders => [:right,:left,:top]
-          # style row(0), :border_width => 1#, :borders => [:right,:left,:top]
+        text "You haven't used your barcard for some time, here is the balance available to spend",size: 8, style: :italic, horizontal_padding: 2
+        table(@memberloyalty, header: :true, cell_style: { padding: 4, borders: [], border_width: 1 }) do
         end
-      # stroke_bounds
       )
       end
     end
 
     move_down(2)
-    payment = Rails.root + "app/assets/images/renewal.png"
+    payment = Rails.root + 'app/assets/images/renewal.png'
     image(payment, at: [0,cursor],height: 350, position: :center, border: 2)
     move_down(350)
 
-    text "Please complete and return this form with all required signatures and the appropriate fee to the Membership Secretary, MYC. Acknowledgement of receipt of your application will be sent if you have provided a valid email address.",
+    text 'Please complete and return this form with all required signatures and the appropriate fee to the Membership Secretary, MYC. Acknowledgement of receipt of your application will be sent if you have provided a valid email address.',
          size: 8, style: :bold, align: :center
     ########    Number Pages    ##########
 
-    number_pages( "Page <page> of <total>, MYC Renewal #{Time.now.year}, #{@person.first_name + ' ' + @person.last_name}", options = {
-                   at: [ bounds.right / 3 , 0],
+    number_pages("Page <page> of <total>, MYC Renewal #{Time.now.year}, #{@person.first_name + ' ' + @person.last_name}", options = {
+                   at: [bounds.right / 3, 0],
                    width: 150,
                    align: :center,
                    page_filter: (1..7),
                    start_count_at: 1,
-                   color: "007700" }
+                   color: '007700' }
                 )
 
     ## doc end.. init end...
   end
 
   def logo
-    logo = Rails.root + "app/assets/images/MYCLogo2013.png"
-    image(logo, at: [0,cursor],height: 80, position: :centre, border: 2)
+    logo = Rails.root + 'app/assets/images/MYCLogo2013.png'
+    image(logo, at: [0, cursor], height: 80, position: :centre, border: 2)
   end
 
   def address_txt
-    # text "Malahide Yacht Club" ,:size => 10, :style => :bold,:horizontal_padding => 10
-    text "St. James Terrace" ,size: 10, style: :normal,horizontal_padding: 2
-    text "Malahide" ,size: 10, style: :normal,horizontal_padding: 2
-    text "Co. Dublin" ,size: 10, style: :normal,horizontal_padding: 2
-    text "Phone: 353 (0)1 8453372" ,size: 8, style: :normal,horizontal_padding: 2
-    text "www.myc.ie" ,size: 8, style: :normal,horizontal_padding: 2
-    text "#{Time.now.to_date.to_s(:long)}" ,size: 8, style: :normal,horizontal_padding: 2
+    # text 'Malahide Yacht Club' ,:size => 10, :style => :bold,:horizontal_padding => 10
+    text 'St. James Terrace', size: 10, style: :normal, horizontal_padding: 2
+    text 'Malahide', size: 10, style: :normal, horizontal_padding: 2
+    text 'Co. Dublin', size: 10, style: :normal, horizontal_padding: 2
+    text 'Phone: 353 (0)1 8453372', size: 8, style: :normal, horizontal_padding: 2
+    text 'www.myc.ie' ,size: 8, style: :normal, horizontal_padding: 2
+    text "#{Time.now.to_date.to_s(:long)}", size: 8, style: :normal, horizontal_padding: 2
   end
 
   def first_name
@@ -294,11 +281,11 @@ class PersonPdf < Prawn::Document
     boats = []
     boats = @person.member.boats.map do |boat|
       [
-        boat.boat_name.blank? ? 'Boat Name': boat.boat_name ,
-        boat.boat_type.blank?   ? '       ': boat.boat_type,
-        boat.boat_class.blank? ? '      ': boat.boat_class,
-        boat.sail_number.blank? ? '     ': boat.sail_number,
-        boat.pen_tag.blank?   ? '         ': boat.pen_tag
+        boat.boat_name.blank?   ? 'Boat Name' : boat.boat_name,
+        boat.boat_type.blank?   ? '         ' : boat.boat_type,
+        boat.boat_class.blank?  ? '         ' : boat.boat_class,
+        boat.sail_number.blank? ? '         ' : boat.sail_number,
+        boat.pen_tag.blank?     ? '         ' : boat.pen_tag
       ]
     end
     boats << [' ', ' ', ' ', ' ', ' ']
@@ -312,11 +299,11 @@ class PersonPdf < Prawn::Document
   def address
     address = [[]]
     address =
-           [ 'House Name or Number:' ,@member.name_no.blank?     ? 'House Name/No'           : @member.name_no   , 'City:'            ,@member.city.blank?        ? ''       : @member.city     ],
-           [ 'Street1:'              ,@member.street1.blank?     ? ''                        : @member.street1   , 'County:'          ,@member.county.blank?      ? ''       : @member.county   ],
-           [ 'Street2:'              ,@member.street2.blank?     ? ''                        : @member.street2   , 'Country:'         ,@member.country.blank?     ? ''       : @member.country  ],
-           [ 'Town:' ,@member.town.blank? ? '' : @member.town , 'Post Code:' ,@member.postcode.blank? ? '' : @member.postcode ],
-           [ 'Home Phone:' ,@person.home_phone.blank? ? 'e.g. 353 x xxx xxxx' : @person.home_phone ]
+           ['House Name or Number:', @member.name_no.blank?     ? 'House Name/No'           : @member.name_no   , 'City:'            , @member.city.blank?        ? ''       : @member.city     ],
+           ['Street1:'             , @member.street1.blank?     ? ''                        : @member.street1   , 'County:'          , @member.county.blank?      ? ''       : @member.county   ],
+           ['Street2:'             , @member.street2.blank?     ? ''                        : @member.street2   , 'Country:'         , @member.country.blank?     ? ''       : @member.country  ],
+           ['Town:' , @member.town.blank? ? '' : @member.town, 'Post Code:', @member.postcode.blank? ? '' : @member.postcode],
+           ['Home Phone:', @person.home_phone.blank? ? 'e.g. 353 x xxx xxxx' : @person.home_phone]
     end
 
   def pad

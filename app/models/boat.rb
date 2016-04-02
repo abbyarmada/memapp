@@ -1,7 +1,7 @@
 class Boat < ActiveRecord::Base
   belongs_to :member
   validates :boat_class, :boat_type, :member_id, presence: true
-  validates :boat_type, inclusion: { in: %w(Dinghy Cruiser Motor Windsurfer), message: 'must be Dinghy, Windsurfer, Cruiser or Motor' }
+  validates :boat_type, inclusion: { in: %w(Dinghy Cruiser Motor Windsurfer) }, message: 'must be Dinghy, Windsurfer, Cruiser or Motor'
 
   scope :penboats, -> { where(['boat_type = ? or boat_type = ? ', 'Dinghy', 'Windsurfer']) }
 

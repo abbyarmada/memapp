@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   protect_from_forgery with: :exception
   helper :all # include all helpers, all the time
-  after_filter :discard_flash_if_xhr
+  after_action :discard_flash_if_xhr
 
   def call_rake(task, options = {})
     # puts "Running rake...!"
@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  before_filter :jumpback
+  before_action :jumpback
   def jumpback
     session[:jumpback] = session[:jumpcurrent] unless session[:jumpback] == session[:jumpcurrent]
     session[:jumpcurrent] = request.fullpath

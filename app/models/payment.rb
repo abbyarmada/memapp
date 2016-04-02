@@ -52,9 +52,7 @@ class Payment < ActiveRecord::Base
       .group('privileges.member_class, privileges.name, year')
   }
 
-  def main_member
-    member.main_member
-  end
+  delegate :main_member, to: :member
 
   def renewal_payment?
     paymenttype_id == 1 || paymenttype_id == 4
@@ -137,7 +135,7 @@ class Payment < ActiveRecord::Base
     # puts "KEYS:"
     # puts keys
     color_code = %w(0000ff ff0000 008000 FFd700 FFa500)
-    yr_end = ((Time.now.year).to_s + '.' + endmonth + '.' + endday).to_date
+    yr_end = (Time.now.year.to_s + '.' + endmonth + '.' + endday).to_date
     chart = GoogleChart::LineChart.new('600x200', 'Membership Trends, Year To ' + yr_end.strftime('%B %d'), false)
     years.times do |x|
       chart.shape_marker :circle, color: color_code[x], data_set_index: x, data_point_index: -1, pixel_size: 10
@@ -179,7 +177,7 @@ end
     keys = Hash[*classes.collect { |v| [classes.index(v), v.to_s] }.flatten.uniq].sort
     # puts keys
     color_code = %w(0000ff ff0000 008000 FFd700 FFa500)
-    yr_end = ((Time.now.year).to_s + '.' + endmonth + '.' + endday).to_date
+    yr_end = (Time.now.year.to_s + '.' + endmonth + '.' + endday).to_date
     chart = GoogleChart::LineChart.new('600x200', 'Membership Trends, Year To ' + yr_end.strftime('%B %d'), false)
     years.times do |x|
       chart.shape_marker :circle, color: color_code[x], data_set_index: x, data_point_index: -1, pixel_size: 10

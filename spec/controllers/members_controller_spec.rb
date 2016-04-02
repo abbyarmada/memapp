@@ -18,156 +18,153 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe MembersController, :type => :controller do
+RSpec.describe MembersController, type: :controller do
   login_user
   # This should return the minimal set of attributes required to create a valid
   # Member. As you add validations to Member, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-     attributes_for(:member)
-  }
-  let(:valid_attributes_with_main_person) {
-     attributes_for(:member,:people_attributes => [attributes_for(:person)])
-  }
+  let(:valid_attributes) do
+    attributes_for(:member)
+  end
+  let(:valid_attributes_with_main_person) do
+    attributes_for(:member, people_attributes: [attributes_for(:person)])
+  end
 
-  let(:invalid_attributes) {
-    attributes_for(:member,proposed: "")
-  }
+  let(:invalid_attributes) do
+    attributes_for(:member, proposed: '')
+  end
 
- let(:new_attributes) {
-     attributes_for(:member, year_joined: 2001)
-  }
-
+  let(:new_attributes) do
+    attributes_for(:member, year_joined: 2001)
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # MembersController. Be sure to keep this updated too.
-  let(:valid_session) { {"warden.user.user.key" => session["warden.user.user.key"]} }
+  let(:valid_session) { { 'warden.user.user.key' => session['warden.user.user.key'] } }
 
-  describe "GET index" do
-    it "assigns all members as @members" do
+  describe 'GET index' do
+    it 'assigns all members as @members' do
       member = Member.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:members)).to eq([member])
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested member as @member" do
+  describe 'GET show' do
+    it 'assigns the requested member as @member' do
       member = Member.create! valid_attributes
-      get :show, {:id => member.to_param}, valid_session
+      get :show, { id: member.to_param }, valid_session
       expect(assigns(:member)).to eq(member)
     end
   end
 
-  describe "GET new" do
-    it "assigns a new member as @member" do
+  describe 'GET new' do
+    it 'assigns a new member as @member' do
       get :new, {}, valid_session
       expect(assigns(:member)).to be_a_new(Member)
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested member as @member" do
+  describe 'GET edit' do
+    it 'assigns the requested member as @member' do
       member = Member.create! valid_attributes
-      get :edit, {:id => member.to_param}, valid_session
+      get :edit, { id: member.to_param }, valid_session
       expect(assigns(:member)).to eq(member)
     end
   end
-  ###member = create(:member, :people => [  create(:person) ] )
-  ###post :create,{:payment => build(:payment , :member => member).attributes }, valid_session
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Member" do
-        expect {
-           post :create, {:member => valid_attributes_with_main_person }, valid_session
-        }.to change(Member, :count).by(1)
+  # ##member = create(:member, :people => [  create(:person) ] )
+  # ##post :create,{:payment => build(:payment , :member => member).attributes }, valid_session
+  describe 'POST create' do
+    describe 'with valid params' do
+      it 'creates a new Member' do
+        expect do
+          post :create, { member: valid_attributes_with_main_person }, valid_session
+        end.to change(Member, :count).by(1)
       end
 
-      it "assigns a newly created member as @member" do
-        post :create, {:member => valid_attributes_with_main_person }, valid_session
+      it 'assigns a newly created member as @member' do
+        post :create, { member: valid_attributes_with_main_person }, valid_session
         expect(assigns(:member)).to be_a(Member)
         expect(assigns(:member)).to be_persisted
       end
 
-      it "redirects to the created member" do
-        post :create, {:member => valid_attributes_with_main_person }, valid_session
+      it 'redirects to the created member' do
+        post :create, { member: valid_attributes_with_main_person }, valid_session
         expect(response).to redirect_to(Member.last.main_member)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved member as @member" do
-        #expect_any_instance_of(Member).to receive(:complete_new_member_process).and_return(true)
-        #mock_model(Member, :complete_new_member_process => true )
-        #allow(Member).to receive(:complete_new_member_process) { false }
-        #expect_any_instance_of(Member).to receive(:complete_new_member_process)
-        post :create, {:member => invalid_attributes}, valid_session
+    describe 'with invalid params' do
+      it 'assigns a newly created but unsaved member as @member' do
+        # expect_any_instance_of(Member).to receive(:complete_new_member_process).and_return(true)
+        # mock_model(Member, :complete_new_member_process => true )
+        # allow(Member).to receive(:complete_new_member_process) { false }
+        # expect_any_instance_of(Member).to receive(:complete_new_member_process)
+        post :create, { member: invalid_attributes }, valid_session
         expect(assigns(:member)).to be_a_new(Member)
       end
 
       it "re-renders the 'new' template" do
-        #Member.any_instance.stub(:complete_new_member_process)
-        post :create, {:member => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
+        # Member.any_instance.stub(:complete_new_member_process)
+        post :create, { member: invalid_attributes }, valid_session
+        expect(response).to render_template('new')
       end
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested member" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      it 'updates the requested member' do
         member = create(:member)
-        person = create(:person ,member: member)
-        put :update, {:id => member.to_param, :member => new_attributes}, valid_session
-        expect_any_instance_of(Member).to receive(:update).with({ "name_no" => "1.5" })
-        put :update, {:id => member.to_param, :member => { "name_no" => "1.5" }}, valid_session
+        person = create(:person, member: member)
+        put :update, { id: member.to_param, member: new_attributes }, valid_session
+        expect_any_instance_of(Member).to receive(:update).with('name_no' => '1.5')
+        put :update, { id: member.to_param, member: { 'name_no' => '1.5' } }, valid_session
       end
 
-      it "assigns the requested member as @member" do
+      it 'assigns the requested member as @member' do
         member = create(:member)
-        person = create(:person ,member: member)
-        put :update, {:id => member.to_param, :member => valid_attributes_with_main_person }, valid_session
+        person = create(:person, member: member)
+        put :update, { id: member.to_param, member: valid_attributes_with_main_person }, valid_session
         expect(assigns(:member)).to eq(member)
       end
 
-      it "redirects to the member" do
+      it 'redirects to the member' do
         member = create(:member)
-        person = create(:person ,member: member)  
-        put :update, {:id => member.to_param, :member => valid_attributes}, valid_session
+        person = create(:person, member: member)
+        put :update, { id: member.to_param, member: valid_attributes }, valid_session
         expect(response).to redirect_to(Member.last.main_member)
-        
       end
     end
 
-    describe "with invalid params" do
-      it "assigns the member as @member" do
+    describe 'with invalid params' do
+      it 'assigns the member as @member' do
         member = Member.create! valid_attributes
-        put :update, {:id => member.to_param, :member => invalid_attributes}, valid_session
+        put :update, { id: member.to_param, member: invalid_attributes }, valid_session
         expect(assigns(:member)).to eq(member)
       end
 
       it "re-renders the 'edit' template" do
         member = Member.create! valid_attributes
-        put :update, {:id => member.to_param, :member => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
+        put :update, { id: member.to_param, member: invalid_attributes }, valid_session
+        expect(response).to render_template('edit')
       end
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested member" do
+  describe 'DELETE destroy' do
+    it 'destroys the requested member' do
       member = Member.create! valid_attributes
-      expect {
-        delete :destroy, {:id => member.to_param}, valid_session
-      }.to change(Member, :count).by(-1)
+      expect do
+        delete :destroy, { id: member.to_param }, valid_session
+      end.to change(Member, :count).by(-1)
     end
 
-    it "redirects to the members list" do
+    it 'redirects to the members list' do
       member = Member.create! valid_attributes
-      delete :destroy, {:id => member.to_param}, valid_session
+      delete :destroy, { id: member.to_param }, valid_session
       expect(response).to redirect_to(members_url)
     end
   end
-
 end

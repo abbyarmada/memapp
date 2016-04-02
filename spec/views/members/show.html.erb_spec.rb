@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe "members/show", :type => :view do
+RSpec.describe 'members/show', type: :view do
   before(:each) do
-    @member = create(:member) 
+    @member = create(:member)
   end
 
-  it "renders attributes in <p>" do
+  it 'renders attributes in <p>' do
     render
-    #skip("Members Show")
+    # skip("Members Show")
     expect(rendered).to match(/Proposed/)
     expect(rendered).to match(/Seconded/)
     expect(rendered).to match(/Name No/)

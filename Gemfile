@@ -75,8 +75,8 @@ group :development do
   # gem 'pry-debugger'
   # gem 'debugger2', :git => "git://github.com/ko1/debugger2.git"
   gem 'pry-byebug'
-  gem 'rubocop', '< 0.36', require: false   # Check code style
-  gem 'rubocop-rspec', require: false       # Rspec plugin for rubocop
+  gem 'rubocop', '~> 0.37.0', require: false # Check code style
+  gem 'rubocop-rspec', require: false # Rspec plugin for rubocop
   gem 'overcommit', require: false
 end
 

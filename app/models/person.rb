@@ -32,7 +32,7 @@ class Person < ActiveRecord::Base
     people = people.where('last_name like :input', input: "%#{params[:search]}%") unless params[:search].blank?
     people = people.where('first_name like :input', input: "%#{params[:searchfn]}%") unless params[:searchfn].blank?
     people = people.grouped if params[:group]
-    people = people.where('members.privilege_id = :input', input: "#{params[:searchmp][:privilege_id]}") if params[:searchmp] && !params[:searchmp][:privilege_id].blank?
+    people = people.where('members.privilege_id = :input', input: (params[:searchmp][:privilege_id]).to_s) if params[:searchmp] && !params[:searchmp][:privilege_id].blank?
     people = people.paginate(per_page: 30, page: params[:page]).order(:last_name, :first_name)
   end
 
@@ -114,23 +114,23 @@ class Person < ActiveRecord::Base
   end
 
   def salutation_first_names
-    if partner
-      salutation = [first_name, partner.first_name].join(' & ')
-    else
-      salutation = first_name
-    end
+    salutation = if partner
+                   [first_name, partner.first_name].join(' & ')
+                 else
+                   first_name
+                 end
   end
 
   def salutation
-    if partner
-      if partner.last_name == last_name
-        salutation = [[first_name, partner.first_name].join(' & '), last_name].join(' ')
-      else
-        salutation = [[first_name, last_name].join(' '), [partner.first_name, partner.last_name].join(' ')].join(' & ')
-      end
-    else
-      salutation = [first_name, last_name].join(' ')
-    end
+    salutation = if partner
+                   if partner.last_name == last_name
+                     [[first_name, partner.first_name].join(' & '), last_name].join(' ')
+                   else
+                     [[first_name, last_name].join(' '), [partner.first_name, partner.last_name].join(' ')].join(' & ')
+                                end
+                 else
+                   [first_name, last_name].join(' ')
+                 end
   end
 
   def age

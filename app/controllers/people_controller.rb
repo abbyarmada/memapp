@@ -20,8 +20,8 @@ class PeopleController < ApplicationController
   def create_renewals
     last_yr_start = (Time.now.year - 1).to_s + '-01-01'
     @renews = Person.all
-              .includes(:member)
-              .where("people.status = 'm' and ( members.renew_date  >= ? or members.year_joined = Year(CURDATE())  ) AND privilege_id = 5", last_yr_start)
+                    .includes(:member)
+                    .where("people.status = 'm' and ( members.renew_date  >= ? or members.year_joined = Year(CURDATE())  ) AND privilege_id = 5", last_yr_start)
 
     @renews.each do |person|
       @person = person
@@ -144,7 +144,7 @@ class PeopleController < ApplicationController
   end
 
   def paid_up_extract_current
-    date = (Time.now.year).to_s + '-01-01'
+    date = Time.now.year.to_s + '-01-01'
     filename = 'PaidupExtract.csv'
     type = 'Paidup'
     bar_interface2(date, filename, type)
@@ -195,14 +195,14 @@ class PeopleController < ApplicationController
   def bar_interface2(date, filename, type)
     if type == 'Bar'
       @people = Person.all
-                .includes(:member, :peoplebarcard).references(:members, :peopbbarcards)
-                .where('members.renew_date >= ? ', date)
-                .order('people.id,last_name,first_name')
+                      .includes(:member, :peoplebarcard).references(:members, :peopbbarcards)
+                      .where('members.renew_date >= ? ', date)
+                      .order('people.id,last_name,first_name')
     else
       enddate = date.slice(0, 4) + '-12-31'
       @people = Person.all.includes(:member, :peoplebarcard, :payments)
-                .where(' payments.paymenttype_id in (1,4,5) and payments.date_lodged >= ? and payments.date_lodged <= ?  ', date, enddate)
-                .order('people.id,last_name,first_name')
+                      .where(' payments.paymenttype_id in (1,4,5) and payments.date_lodged >= ? and payments.date_lodged <= ?  ', date, enddate)
+                      .order('people.id,last_name,first_name')
     end
     extract = CSV.generate do |csv|
       # header row
@@ -282,16 +282,16 @@ class PeopleController < ApplicationController
 
   def person_params
     params.require(:person)
-      .permit(
-        :member_id,
-        :first_name, :last_name, :status,
-        :home_phone, :mobile_phone, :email_address,
-        :comm_prefs, :snd_txt, :snd_eml,
-        :dob,
-        :txt_bridge, :txt_social, :txt_crace, :txt_cruiser_race_skipper, :txt_cruising,
-        :txt_cruiser_skipper, :txt_dinghy_sailing, :txt_junior, :txt_test, :txt_op_co,
-        :occupation,
-        :send_txt, :send_email
-      )
+          .permit(
+            :member_id,
+            :first_name, :last_name, :status,
+            :home_phone, :mobile_phone, :email_address,
+            :comm_prefs, :snd_txt, :snd_eml,
+            :dob,
+            :txt_bridge, :txt_social, :txt_crace, :txt_cruiser_race_skipper, :txt_cruising,
+            :txt_cruiser_skipper, :txt_dinghy_sailing, :txt_junior, :txt_test, :txt_op_co,
+            :occupation,
+            :send_txt, :send_email
+          )
   end
 end # class

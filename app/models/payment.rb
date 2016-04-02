@@ -110,11 +110,8 @@ class Payment < ActiveRecord::Base
   end
 
   def self.g_chart_mems(endmonth, endday)
-    # require 'google_chart'
-
     endmonth = Time.now.utc.month.to_s if endmonth.blank?
     endday = Time.now.utc.day.to_s if endday.blank?
-
     years = 5
     @types = []
     years.times do |y|
@@ -125,11 +122,7 @@ class Payment < ActiveRecord::Base
     years.times do |t|
       classes = (@types[t].keys | classes).sort
     end
-    # puts "Classes:"
-    # puts classes
     keys = Hash[*classes.collect { |v| [classes.index(v), v.to_s] }.flatten.uniq].sort
-    # puts "KEYS:"
-    # puts keys
     color_code = %w(0000ff ff0000 008000 FFd700 FFa500)
     yr_end = (Time.now.utc.year.to_s + '.' + endmonth + '.' + endday).to_date
     chart = GoogleChart::LineChart.new('600x200', 'Membership Trends, Year To ' + yr_end.strftime('%B %d'), false)
@@ -232,6 +225,4 @@ class Payment < ActiveRecord::Base
     end
     msg
   end
-
-  #####
 end

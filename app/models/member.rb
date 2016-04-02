@@ -11,7 +11,7 @@ class Member < ActiveRecord::Base
   validates_associated :people
   validates :privilege_id, :proposed, :seconded, :year_joined, :active, presence: true
   # validates :street1, presence: { message: 'Please correct the members address data :- Street1 should not be blank'}, except: :delete
-  validates_presence_of :street1, message: 'Please correct the members address data :- Street1 should not be blank', except: :delete
+  validates :street1, presence: true, on: [:create, :update]
 
   scope :active_members, -> { where(active: true) }
   scope :inactive_members, -> { where(active: false) }

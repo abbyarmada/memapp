@@ -4,9 +4,9 @@ begin
 
   DatabaseCleaner.strategy = :truncation
 rescue NameError
-  raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
+  raise 'You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it.'
 end
 
-Around do |scenario, block|
+Around do |_, block|
   DatabaseCleaner.cleaning(&block)
 end

@@ -32,6 +32,3 @@ development:
 
 production:
   <<: *defaults
-
-cucumber:
-  <<: *test

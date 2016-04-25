@@ -118,11 +118,3 @@ group :production do
   gem 'rails_12factor'
   gem 'unicorn'
 end
-
-# rails 4 upgrade gems
-# gem 'rails4_upgrade'
-# gem 'protected_attributes'
-# gem 'rails-observers'
-# gem 'actionpack-page_caching'
-# gem 'actionpack-action_caching'
-# gem 'activerecord-deprecated_finders'

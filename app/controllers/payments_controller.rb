@@ -74,9 +74,7 @@ class PaymentsController < ApplicationController
     end
   end
 
-  #=======================================
   def list_by_member_class
-    #  this_yr_start = Time.now.year.to_s + "-01-01"
     this_yr_start = Time.now.beginning_of_year
     @payments = Payment.all
                        .includes(:privilege)
@@ -84,13 +82,8 @@ class PaymentsController < ApplicationController
                        .order('privileges.name, date_lodged')
   end
 
-  #=======================================
-
   def tot_by_member_class
-    # Start year is 2007
-
-    @years = 5
-
+    @years = 1..5
     @month = ''
 
     @typestd = []
@@ -112,8 +105,8 @@ class PaymentsController < ApplicationController
 
     @end_month = endmonth.to_i
 
-    @years.times do |y|
-      date_start = (Time.now.year - y).to_s + '-01-01'
+    @years.each do |y|
+      date_start = y.years.ago.beginning_of_year
       date_end = (Time.now.year - y).to_s + '.' + endmonth + '.' + endday
 
       find_sql = [" select renewals.tot,pays.tot as paytot, pays.money, pays.name from
@@ -209,50 +202,33 @@ class PaymentsController < ApplicationController
     ORDER BY member_class
     ) pays
     where pays.member_class = renewals.member_class", date_start, date_end, date_start, date_end]
-
-      total_mem_sql = ["SELECT
-             COUNT(*) as count
-    FROM     payments
-             inner join privileges ON privileges.id = payments.privilege_id
-             left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id
-    WHERE    (date_lodged >= ?
-        AND date_lodged <= ?
-         AND privileges.member_class not in ('X','Y')
-         AND paymenttypes.id in ('1','4'))", date_start, date_end]
-
       @types[y] = Payment.find_by_sql(find_sql)
+
+     total_mem_sql = <<-SQL
+        SELECT
+                 COUNT(*) as count
+        FROM     payments
+                 INNER JOIN privileges ON privileges.id = payments.privilege_id
+                 LEFT OUTER JOIN paymenttypes on payments.paymenttype_id = paymenttypes.id
+        WHERE    ('date_lodged >= :date_start
+                 AND date_lodged <= :date_end')
+                 AND privileges.member_class not in ('X','Y')
+                 AND paymenttypes.id in ('1','4')
+      SQL
+      @memtotalyear[y] = Payment.find_by_sql(total_mem_sql, [date_start, date_end])
+
 
       @yeartotal[y] = Payment.all
                              .select('COUNT(*) as tot, SUM(amount) as money')
                              .joins('inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id')
                              .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5')", date_start, date_end)
-      @memtotalyear[y] = Payment.find_by_sql(total_mem_sql)
+
     end
 
     @chart_to_date = Payment.g_chart_mems(endmonth, endday)
   end
 
   def tot_by_member_class_2
-    @totals = Payment
-              .select('count(*) as count, sum(payments.amount) as total_amount, privileges.name as privilege_name, paymenttypes.name as payname, date_lodged')
-              .group([:date_lodged, :privilege_id, 'privileges.name, paymenttypes.name'])
-              .joins(:privilege, :paymenttype)
-    @totals_years = @totals.group_by { |t| t.date_lodged.beginning_of_year }
-    # @counts = Payment.count(:group => [:date_lodged,:privilege_id])
-    # @payments = Payment.group()
-    # group_by{ |t| t.date_lodged.beginning_of_year }
-    endmonth =   Time.now.month.to_s
-    endday =     Time.now.day.to_s
-    if params[:commit] == 'Go'
-      if params[:date][:month].to_i > 0
-        endmonth = params[:date][:month].to_s
-        endday = (Time.now.year.to_s + '-' + endmonth + '-01').to_date.end_of_month.day.to_s
-      end
-    end
-    @chart_to_date = Payment.g_chart_mems(endmonth, endday)
-  end
-
-  def tot_by_member_class_3
     @years = 2
     @month = ''
     @typestd = []
@@ -359,58 +335,6 @@ class PaymentsController < ApplicationController
                             .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5') ", date_start, date_end)
                             .group('month, monthname')
                             .order('month, pay_type')
-    end
-  end
-
-  def drill_pay
-    # @drill = []
-    date_start = Date.new(params[:year].to_i, params[:month].to_i, '01'.to_i).to_date
-    date_end = date_start.end_of_month
-    @pay_type = params[:pay_type].to_s
-    @drill = Payment
-             .select('month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions,  pay_type, sum(amount) as sum')
-             .joins('inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id')
-             .where("date_lodged >= '?' AND date_lodged <= '?' and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5')", date_start, date_end)
-             .group('pay_type, month, monthname')
-             .order('month, pay_type')
-
-    # @paytypestotaltd[y]  = Payment.find :all,
-    #                     :select => "month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions, sum(amount) as sum",
-    #                     :joins => "inner join privileges ON privileges.id = payments.privilege_id",
-    #                     :conditions => "date_lodged >= '#{date_start}' AND date_lodged <= '#{date_end}' and member_class not in ('X','Y') ",
-    #                     :group => "month, monthname",
-    #                     :order => "month, pay_type"
-
-    respond_to do |format|
-      format.html
-      format.xml
-      format.json
-    end
-  end
-
-  def auto_renew_life_honorary
-    @renews = Member.memclass(5, 6)
-    @renews.each do |renew|
-      @payment = Payment.new
-      @payment.member_id = renew.id
-      @payment.amount = 0
-      @payment.date_lodged = 1.year.from_now.beginning_of_year
-      # renew.renew_date = @payment.date_lodged
-      # @renew.save
-      @payment.privilege_id = renew.privilege.id
-      @pid = Person.main_person(renew.id)
-      # default to Subscription renewal
-      @payment.pay_type = 'NP'
-      @payment.paymenttype_id = 1
-      @payment.comment = 'Auto Renewed by System'
-      @payment.save
-      if @payment.save
-        renew.renew_date = @payment.date_lodged
-        @renew.save
-        flash[:notice] = 'Members Renewed'
-      else
-        flash[:notice] = 'Error'
-      end
     end
   end
 

@@ -83,7 +83,7 @@ class PaymentsController < ApplicationController
   end
 
   def tot_by_member_class
-    @years = 1..5
+    @years = 0..4
     @month = ''
 
     @typestd = []
@@ -93,21 +93,19 @@ class PaymentsController < ApplicationController
     @memtotaltd = []
     @memtotalyear = []
 
-    endmonth =   Time.now.month.to_s
-    endday =     Time.now.day.to_s
+    @endmonth =   Time.now.month.to_s
+    @endday =     Time.now.day.to_s
 
     if params[:commit] == 'Go'
       if params[:date][:month].to_i > 0
-        endmonth = params[:date][:month].to_s
-        endday = (Time.now.year.to_s + '-' + endmonth + '-01').to_date.end_of_month.day.to_s
+        @endmonth = params[:date][:month].to_s
+        @endday = (Time.now.year.to_s + '-' + @endmonth + '-01').to_date.end_of_month.day.to_s
       end
     end
-
-    @end_month = endmonth.to_i
-
+    @end_month = @endmonth.to_i
     @years.each do |y|
       date_start = y.years.ago.beginning_of_year
-      date_end = (Time.now.year - y).to_s + '.' + endmonth + '.' + endday
+      date_end = (Time.now.year - y).to_s + '.' + @endmonth + '.' + @endday
 
       find_sql = [" select renewals.tot,pays.tot as paytot, pays.money, pays.name from
       (
@@ -216,16 +214,13 @@ class PaymentsController < ApplicationController
                  AND paymenttypes.id in ('1','4')
       SQL
       @memtotalyear[y] = Payment.find_by_sql(total_mem_sql, [date_start, date_end])
-
-
       @yeartotal[y] = Payment.all
                              .select('COUNT(*) as tot, SUM(amount) as money')
                              .joins('inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id')
                              .where("date_lodged >= ? AND date_lodged <= ? and member_class not in ('X','Y') and paymenttypes.id in ('1','4','5')", date_start, date_end)
-
     end
 
-    @chart_to_date = Payment.g_chart_mems(endmonth, endday)
+    # @chart_to_date = Payment.g_chart_mems(@endmonth, @endday)
   end
 
   def tot_by_member_class_2

@@ -5,3 +5,4 @@ languages:
 exclude_paths:
 # - "foo/bar.rb"
   "app/controllers/users"
+  "features"

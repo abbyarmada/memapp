@@ -109,76 +109,8 @@ class Payment < ActiveRecord::Base
     Payment.by_year(date).membership_renewal_payments.real_membership_renewals.joins(:privilege).group('privileges.name, member_class').order('member_class ASC').count
   end
 
-  def self.g_chart_mems(endmonth, endday)
-    endmonth = Time.now.utc.month.to_s if endmonth.blank?
-    endday = Time.now.utc.day.to_s if endday.blank?
-    years = 5
-    @types = []
-    years.times do |y|
-      yr_end = ((Time.now.utc.year - y).to_s + '.' + endmonth + '.' + endday).to_date
-      @types[y] = countpays_for_year(yr_end)
-    end
-    classes = []
-    years.times do |t|
-      classes = (@types[t].keys | classes).sort
-    end
-    keys = Hash[*classes.collect { |v| [classes.index(v), v.to_s] }.flatten.uniq].sort
-    color_code = %w(0000ff ff0000 008000 FFd700 FFa500)
-    yr_end = (Time.now.utc.year.to_s + '.' + endmonth + '.' + endday).to_date
-    chart = GoogleChart::LineChart.new('600x200', 'Membership Trends, Year To ' + yr_end.strftime('%B %d'), false)
-    years.times do |x|
-      chart.shape_marker :circle, color: color_code[x], data_set_index: x, data_point_index: -1, pixel_size: 10
-      chart.data((Time.now.utc.year - x), keys.collect { |_k, v| @types[x][v].nil? ? 0 : @types[x][v] }, color_code[x])
-    end
-    lab2 = []
-    classes.each do |v|
-      lab2 << [v]
-    end
-    # labels = Hash[*lab2.collect { |v| [lab2, v.to_s] }.flatten]
-    chart.axis :y, range: [0, 100], font_size: 10, alignment: :center
-    chart.axis :x, labels: lab2, font_size: 10, alignment: :center
-    chart.show_legend = true
-    @line_graph = chart.to_url
-  end
-
   def year
     date_lodged.strftime('%Y')
-  end
-
-  def self.g_chart_mems2(endmonth, endday)
-    # require 'google_chart'
-
-    endmonth = Time.now.utc.month.to_s if endmonth.blank?
-    endday = Time.now.utc.day.to_s if endday.blank?
-
-    years = 5
-    @types = []
-    years.times do |y|
-      yr_end = ((Time.now.utc.year - y).to_s + '.' + endmonth + '.' + endday).to_date
-      @types[y] = countpays_for_year(yr_end)
-    end
-    classes = []
-    years.times do |t|
-      classes = (@types[t].keys | classes).sort
-    end
-    keys = Hash[*classes.collect { |v| [classes.index(v), v.to_s] }.flatten.uniq].sort
-    # puts keys
-    color_code = %w(0000ff ff0000 008000 FFd700 FFa500)
-    yr_end = (Time.now.utc.year.to_s + '.' + endmonth + '.' + endday).to_date
-    chart = GoogleChart::LineChart.new('600x200', 'Membership Trends, Year To ' + yr_end.strftime('%B %d'), false)
-    years.times do |x|
-      chart.shape_marker :circle, color: color_code[x], data_set_index: x, data_point_index: -1, pixel_size: 10
-      chart.data((Time.now.utc.year - x), keys.collect { |_k, v| @types[x][v].nil? ? 0 : @types[x][v] }, color_code[x])
-    end
-    lab2 = []
-    classes.each do |v|
-      lab2 << [v]
-    end
-    # labels = Hash[*lab2.collect { |v| [lab2, v.to_s] }.flatten]
-    chart.axis :y, range: [0, 100], font_size: 10, alignment: :center
-    chart.axis :x, labels: lab2, font_size: 10, alignment: :center
-    chart.show_legend = true
-    @line_graph = chart.to_url
   end
 
   def check_renewal_date

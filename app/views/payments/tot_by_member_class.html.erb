@@ -21,7 +21,7 @@
 <%= form_tag({ :action => 'tot_by_member_class'} , method: :get)  do %>
 <b>Select Month for Month End Figures:</b>
 
-<%=select_month(@endmonth, :prompt => 'Choose month',:include_blank => true) %>
+<%=select_month(@selected_month, :prompt => 'Choose month',:include_blank => true) %>
 <%= submit_tag 'Go' %>
 <%= link_to_function("Print this Page", "javascript:print()") %>
 </div>
@@ -29,9 +29,7 @@
 
 <p align=centre>
 
-<img src="<%= @chart_to_date %>"/>
-
-</p>
+<img src="<%=g_chart_mems %>"/></p>
 
 
 

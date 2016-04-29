@@ -273,3 +273,4 @@ config/initializers/constants.rb
 tmp/email_renewals/config/initializers/dev_mail.rb
 .env.env
 .env
+.byebug_history

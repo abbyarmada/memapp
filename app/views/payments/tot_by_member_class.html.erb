@@ -28,8 +28,9 @@
 
 
 <p align=centre>
-
-<img src="<%=g_chart_mems %>"/></p>
+<% month = @selected_month ? @selected_month.to_s : Time.now.utc.month.to_s
+day = @selected_month ? @selected_month.end_of_month.day.to_s : Time.now.utc.end_of_month.day.to_s %>
+<img src="<%=g_chart_mems(endmonth= month, endday= day)%>"/></p>
 
 
 

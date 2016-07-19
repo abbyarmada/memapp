@@ -150,40 +150,40 @@ class PeopleController < ApplicationController
     bar_interface2(date, filename, type)
   end
 
-  def paid_up_extract_last_year
-    date = (Time.now.year - 1).to_s + '-01-01'
-    filename = 'PaidupExtractLastYear.csv'
-    type = 'Paidup'
-    bar_interface2(date, filename, type)
-  end
-
-  def paid_up_extract_two_year_ago
-    date = (Time.now.year - 2).to_s + '-01-01'
-    filename = 'PaidupExtractTwoYearsAgo.csv'
-    type = 'Paidup'
-    bar_interface2(date, filename, type)
-  end
-
-  def paid_up_extract_three_year_ago
-    date = (Time.now.year - 3).to_s + '-01-01'
-    filename = 'PaidupExtractThreeYearsAgo.csv'
-    type = 'Paidup'
-    bar_interface2(date, filename, type)
-  end
-
-  def paid_up_extract_four_year_ago
-    date = (Time.now.year - 4).to_s + '-01-01'
-    filename = 'PaidupExtractFourYearsAgo.csv'
-    type = 'Paidup'
-    bar_interface2(date, filename, type)
-  end
-
-  def paid_up_extract_five_year_ago
-    date = (Time.now.year - 5).to_s + '-01-01'
-    filename = 'PaidupExtractFiveYearsAgo.csv'
-    type = 'Paidup'
-    bar_interface2(date, filename, type)
-   end
+  # def paid_up_extract_last_year
+  #   date = (Time.now.year - 1).to_s + '-01-01'
+  #   filename = 'PaidupExtractLastYear.csv'
+  #   type = 'Paidup'
+  #   bar_interface2(date, filename, type)
+  # end
+  #
+  # def paid_up_extract_two_year_ago
+  #   date = (Time.now.year - 2).to_s + '-01-01'
+  #   filename = 'PaidupExtractTwoYearsAgo.csv'
+  #   type = 'Paidup'
+  #   bar_interface2(date, filename, type)
+  # end
+  #
+  # def paid_up_extract_three_year_ago
+  #   date = (Time.now.year - 3).to_s + '-01-01'
+  #   filename = 'PaidupExtractThreeYearsAgo.csv'
+  #   type = 'Paidup'
+  #   bar_interface2(date, filename, type)
+  # end
+  #
+  # def paid_up_extract_four_year_ago
+  #   date = (Time.now.year - 4).to_s + '-01-01'
+  #   filename = 'PaidupExtractFourYearsAgo.csv'
+  #   type = 'Paidup'
+  #   bar_interface2(date, filename, type)
+  # end
+  #
+  # def paid_up_extract_five_year_ago
+  #   date = (Time.now.year - 5).to_s + '-01-01'
+  #   filename = 'PaidupExtractFiveYearsAgo.csv'
+  #   type = 'Paidup'
+  #   bar_interface2(date, filename, type)
+  #  end
 
   def bar_interface
     date = (Time.now.year - 1).to_s + '-01-01'

@@ -69,12 +69,6 @@ group :development do
   gem 'travis'
   gem 'bullet'
   gem 'web-console', '~> 2.0'
-  gem 'pry-remote'
-  gem 'pry-stack_explorer'
-  gem 'jazz_hands2'
-  # gem 'pry-debugger'
-  # gem 'debugger2', :git => "git://github.com/ko1/debugger2.git"
-  gem 'pry-byebug'
   gem 'rubocop', '~> 0.37.0', require: false # Check code style
   gem 'rubocop-rspec', require: false # Rspec plugin for rubocop
   gem 'overcommit', require: false
@@ -92,6 +86,12 @@ group :test, :development do
   gem 'cucumber', require: nil
   gem 'spring-commands-cucumber'
   gem 'spring-commands-rspec'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'jazz_hands2'
+  # gem 'pry-debugger'
+  # gem 'debugger2', :git => "git://github.com/ko1/debugger2.git"
+  gem 'pry-byebug'
 end
 
 group :test do
@@ -118,11 +118,3 @@ group :production do
   gem 'rails_12factor'
   gem 'unicorn'
 end
-
-# rails 4 upgrade gems
-# gem 'rails4_upgrade'
-# gem 'protected_attributes'
-# gem 'rails-observers'
-# gem 'actionpack-page_caching'
-# gem 'actionpack-action_caching'
-# gem 'activerecord-deprecated_finders'

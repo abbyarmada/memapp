@@ -3,19 +3,22 @@ development:
   database: memapp_development
   username: travis
   encoding: utf8
-  host: 127.0.0.1 
-  
+  host: 127.0.0.1
+
 test:
   adapter: mysql2
   database: memapp_test
   username: travis
   encoding: utf8
-  host: 127.0.0.1 
-  
+  host: 127.0.0.1
+
 production:
   adapter: mysql2
   database: memapp_production
   username: travis
   encoding: utf8
-  host: 127.0.0.1 
+  host: 127.0.0.1
 
+
+# cucumber:
+#   <<: *test

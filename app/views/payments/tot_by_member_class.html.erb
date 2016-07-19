@@ -21,21 +21,20 @@
 <%= form_tag({ :action => 'tot_by_member_class'} , method: :get)  do %>
 <b>Select Month for Month End Figures:</b>
 
-<%=select_month(@endmonth, :prompt => 'Choose month',:include_blank => true) %>
+<%=select_month(@selected_month, :prompt => 'Choose month',:include_blank => true) %>
 <%= submit_tag 'Go' %>
 <%= link_to_function("Print this Page", "javascript:print()") %>
 </div>
 
 
 <p align=centre>
-
-<img src="<%= @chart_to_date %>"/>
-
-</p>
-
+<% month = @selected_month ? @selected_month.to_s : Time.now.utc.month.to_s
+day = @selected_month ? @selected_month.end_of_month.day.to_s : Time.now.utc.end_of_month.day.to_s %>
+<img src="<%=g_chart_mems(endmonth= month, endday= day)%>"/></p>
 
 
-<% @years.times do |y| %>
+
+<% @years.each do |y| %>
 
 <table class="table table-striped table-condensed table-responsive table-hover table-bordered">
  <caption> <h2><%= Time.now.year - y %> </h2></caption>

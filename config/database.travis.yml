@@ -16,8 +16,8 @@ sqlite: &sqlite
   database: db/<%= Rails.env %>.sqlite3
   pool: 5
   timeout: 5000
-  host: localhost 
-  
+  host: localhost
+
 defaults: &defaults
 <<: *<%= ENV['DB'] || "postgresql" %>
 
@@ -26,10 +26,9 @@ test:
   database: memapp_<%= Rails.env %>
   username: travis
   encoding: utf8
- 
+
 development:
   <<: *defaults
 
 production:
   <<: *defaults
-

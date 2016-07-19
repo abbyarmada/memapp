@@ -1,18 +1,16 @@
 module PaymentHelper
-  def g_chart_mems
+  def g_chart_mems(endmonth, endday)
     now = Time.now.utc
-    @endmonth = params[:date] ? params[:date][:month] : now.month.to_s
-    @endday   = now.day.to_s
     years = 5
     types = []
     years.times do |y|
-      yr_end = ((now.year - y).to_s + '.' + @endmonth + '.' + @endday).to_date
+      yr_end = ((now.year - y).to_s + '.' + endmonth + '.' + endday).to_date
       types[y] = Payment.countpays_for_year(yr_end)
     end
     member_classes = member_classes(years, types)
     keys = Hash[*member_classes.collect { |v| [member_classes.index(v), v] }.flatten.uniq].sort
     color_code = %w(0000ff ff0000 008000 FFd700 FFa500)
-    yr_end = (now.year.to_s + '.' + @endmonth + '.' + @endday).to_date
+    yr_end = (now.year.to_s + '.' + endmonth + '.' + endday).to_date
     chart = GoogleChart::LineChart.new('600x200', 'Membership Trends, Year To ' + yr_end.strftime('%B %d'), false)
     years.times do |x|
       chart.shape_marker :circle, color: color_code[x], data_set_index: x, data_point_index: -1, pixel_size: 10

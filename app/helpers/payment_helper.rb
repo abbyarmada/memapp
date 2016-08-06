@@ -1,5 +1,4 @@
 module PaymentHelper
-  now = Time.now.utc
   def g_chart_mems(endmonth = now.month.to_s, endday = now.end_of_month.day.to_s)
     now = Time.now.utc
     years = 5

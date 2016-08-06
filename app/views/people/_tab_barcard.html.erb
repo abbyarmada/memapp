@@ -3,7 +3,7 @@
   <div id="tabs-5-1" class="tabs">
 	  <ul id="tabs" class="nav nav-tabs">
 	    <% y = 0 %>
-	    <% @person.member.people.barcard_holders.each do |person| %>
+	    <% @person.member.people.includes(:loyaltycard,peoplebarcard: :barcard).barcard_holders.each do |person| %>
 	      <li>
 				  <a href=<%= "#tab-5-1-" + (y+=1).to_s %> > <span class="glyphicon glyphicon-glass"></span>
 					  <%=person.first_name%> <%=person.last_name%>  </a>

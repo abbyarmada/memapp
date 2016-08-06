@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   require 'csv'
   before_action :check_search_form_reset, only: [:index]
   before_action :set_model, only: [:update, :destroy, :cut, :renewal_email, :newmember]
-  before_action :set_model_with_payment, only: [:show, :edit]
+  before_action :set_model_with_payment_and_barcards, only: [:show, :edit]
   respond_to :html, :pdf
 
   def show
@@ -273,8 +273,8 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
   end
 
-  def set_model_with_payment
-    @person = Person.includes([payments: [:paymenttype, :privilege, :payment_method]]).find(params[:id])
+  def set_model_with_payment_and_barcards
+    @person = Person.includes(:peoplebarcard, :loyaltycard, [payments: [:paymenttype, :privilege, :payment_method]]).find(params[:id])
   end
 
   def person_params

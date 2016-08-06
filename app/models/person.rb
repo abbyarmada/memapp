@@ -44,9 +44,7 @@ class Person < ActiveRecord::Base
   # end
 
   def adult?
-    age >= 18
-  rescue
-    nil
+    age.present? ? age >= 18 : nil
   end
 
   def self.main_person(member_id)
@@ -110,9 +108,7 @@ class Person < ActiveRecord::Base
   end
 
   def age
-    ((Time.zone.today - dob) / 365).to_i
-  rescue
-    nil
+    dob.present? ? ((Time.zone.today - dob) / 365).to_i : ' '
   end
 
   def same_surname?

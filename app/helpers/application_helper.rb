@@ -1,3 +1,3 @@
-# -*- coding: utf-8 -*-
+include PaymentHelper
 module ApplicationHelper
 end

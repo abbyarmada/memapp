@@ -43,7 +43,7 @@ day = @selected_month ? @selected_month.end_of_month.day.to_s : Time.now.utc.end
 	<table class="table table-striped table-condensed table-responsive table-hover table-bordered">
 		 <caption> <h2>  Year To Date</h2></caption>
 <tr class="info">
-		<th>Mtype</th><th> Member<br>  Count</th><th> Payment<br>  Count</th> <th>Tot Value</th>
+		<th>Mtype</th><th> Member<br>  Count</th><th> Payment<br>  Count</th> <th>Total Value</th>
 </tr>
 		<% @typestd[y].each do |p| %>
 		   <tr class="<%= cycle('odd', 'even') %>">
@@ -67,7 +67,7 @@ day = @selected_month ? @selected_month.end_of_month.day.to_s : Time.now.utc.end
 	<table class="table table-striped table-condensed table-responsive table-hover table-bordered">
 		 <caption> <h2>  Full Year </h2></caption>
      <tr class="info">
-		<th>Mtype</th> <th> Member<br>  Count</th><th> Payment<br>  Count</th> <th>Tot Value</th>
+		<th>Mtype</th> <th> Member<br>  Count</th><th> Payment<br>  Count</th> <th>Total Value</th>
 </tr>
 
 		<% @types[y].each do |p| %>

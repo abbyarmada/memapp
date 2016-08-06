@@ -50,7 +50,7 @@ describe Person, type: :model do
   end
   it 'is valid to have a missing age' do
     person = create(:person, dob: nil)
-    expect(person.age).to be_nil
+    expect(person.age).to eq(' ')
   end
   it 'Age is calculated correctly' do
     person = create(:person, dob: (Date.today - 10.years))
@@ -59,6 +59,14 @@ describe Person, type: :model do
   it 'Determins an adult correctly' do
     person = create(:person, dob: (Date.today - 18.years))
     expect(person.adult?).to eq(true)
+  end
+  it 'Determins an adult correctly < 18 ' do
+    person = create(:person, dob: (Date.today - 11.years))
+    expect(person.adult?).to eq(false)
+  end
+  it 'does not error determining an adult - no dob ' do
+    person = create(:person, dob: nil)
+    expect(person.adult?).to eq(nil)
   end
   it "returns a person's first name and partner first name as salutation when surnames match" do
     person = create(:person, first_name: 'John', last_name: 'Doe')

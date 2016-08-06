@@ -110,9 +110,7 @@ class Person < ActiveRecord::Base
   end
 
   def age
-    ((Time.zone.today - dob) / 365).to_i
-  rescue
-    nil
+    dob.present? ? ((Time.zone.today - dob) / 365).to_i : ' '
   end
 
   def same_surname?

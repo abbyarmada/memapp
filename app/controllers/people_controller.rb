@@ -1,7 +1,8 @@
 class PeopleController < ApplicationController
   require 'csv'
   before_action :check_search_form_reset, only: [:index]
-  before_action :set_model, only: [:show, :edit, :update, :destroy, :cut, :renewal_email, :newmember]
+  before_action :set_model, only: [:update, :destroy, :cut, :renewal_email, :newmember]
+  before_action :set_model_with_payment, only: [:show, :edit]
   respond_to :html, :pdf
 
   def show
@@ -25,22 +26,14 @@ class PeopleController < ApplicationController
 
     @renews.each do |person|
       @person = person
-      #  respond_to do |format|
-      # format.pdf
       pdf = PersonPdf.new(@person, view_context)
-      send_data pdf.render, filename: "#{@person.last_name}_#{@person.first_name}.pdf",
-                            type: 'application/pdf'
-      # end
+      send_data pdf.render, filename: "#{@person.last_name}_#{@person.first_name}.pdf", type: 'application/pdf'
     end
   end
 
   def index
     @people = Person.search(params)
     session[:search] = session[:jumpcurrent]
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   def new
@@ -278,6 +271,10 @@ class PeopleController < ApplicationController
 
   def set_model
     @person = Person.find(params[:id])
+  end
+
+  def set_model_with_payment
+    @person = Person.includes([payments: [:paymenttype, :privilege, :payment_method]]).find(params[:id])
   end
 
   def person_params

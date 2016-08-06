@@ -224,7 +224,7 @@ class PaymentsController < ApplicationController
   end
 
   def tot_by_member_class_2
-    @years = 2
+    @years = 0..4
     @month = ''
     @typestd = []
     @yeartotaltd = []
@@ -242,27 +242,25 @@ class PaymentsController < ApplicationController
       end
     end
     @end_month = endmonth.to_i
-    @years.times do |y|
-      start_date = Time.now.years_ago(2).beginning_of_year
-      end_date = (Time.now.year.to_s + '.' + endmonth + '.' + endday).to_date
+    @years.each do |y|
+      start_date = Time.now.years_ago(y).beginning_of_year
+      end_date = (Time.now.years_ago(y).year.to_s + '.' + endmonth + '.' + endday).to_date
       @typestd[y] = Payment.yttypes(start_date, end_date).merge(Payment.rttypes(start_date, end_date))
       @yeartotaltd[y] = Payment.year_total(start_date, end_date).select('COUNT(*) as tot, SUM(amount) as money')
       @memtotaltd[y]  = Payment.members_year_total(start_date, end_date).select('COUNT(*) as count')
-      start_date =  Time.now.years_ago(2).beginning_of_year
-      end_date   =  Time.now.end_of_year
+      start_date =  Time.now.years_ago(y).beginning_of_year
+      end_date   =  Time.now.years_ago(y).end_of_year
       @types[y] = Payment.yttypes(start_date, end_date).merge(Payment.rttypes(start_date, end_date))
       # TODO: - do I need the left outer join in  below 2 statements ?
       @yeartotal[y] = Payment.year_total(start_date, end_date).select('COUNT(*) as tot, SUM(amount) as money')
       @memtotalyear[y] = Payment.members_year_total(start_date, end_date).select('COUNT(*) as count')
     end
     @chart_to_date = Payment.g_chart_mems(endmonth, endday)
+    render 'tot_by_member_class'
   end
 
   def listytd
     @payments = Payment.current_year.includes(:privilege, :payment_method, :paymenttype, [member: :people])
-    respond_to do |format|
-      format.html
-    end
   end
 
   def overduememberships

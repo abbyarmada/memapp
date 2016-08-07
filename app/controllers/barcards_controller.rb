@@ -18,8 +18,6 @@ class BarcardsController < ApplicationController
   end
 
   def update
-    pid = params[:pid]
-    mid = params[:mid]
     respond_to do |format|
       if @barcard.update(barcard_params)
         flash[:notice] = 'Barcard was successfully updated.'
@@ -31,7 +29,6 @@ class BarcardsController < ApplicationController
   end
 
   def create
-    pid = params[:pid]
     @barcard = Barcard.new
     @peoplebarcard = Peoplebarcard.new(params[:peoplebarcard])
     # find the current personbarcard

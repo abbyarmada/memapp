@@ -46,7 +46,6 @@ class PaymentsController < ApplicationController
         if @payment.changed_privilege?
           @payment.update_member_privilege
           flash[:notice] = 'Payment Successfully Processed -  Membership Class Updated'
-          format.js
         else
           flash[:notice] = 'Payment Successfully Processed'
           format.js
@@ -64,18 +63,15 @@ class PaymentsController < ApplicationController
         # set the default flash notice
         flash[:notice] = 'Payment was successfully deleted.'
         flash[:notice] = @payment.delete_checks unless @payment.delete_checks.blank?
-        format.html { redirect_to person_path(@payment.main_member) }
-        format.js
       else
         flash[:warning] = 'delete failed.'
-        format.html { redirect_to(person_path(@payment.main_member)) }
-        format.js
       end
+      format.html { redirect_to person_path(@payment.main_member) }
     end
   end
 
   def list_by_member_class
-    this_yr_start = Time.now.beginning_of_year
+    this_yr_start = Time.now.utc.beginning_of_year
     @payments = Payment.all
                        .includes(:privilege)
                        .where("paymenttype_id in ('1','4','5') and  date_lodged > ? ", this_yr_start)
@@ -91,24 +87,24 @@ class PaymentsController < ApplicationController
     @yeartotal = []
     @memtotaltd = []
     @memtotalyear = []
-    endmonth =   Time.now.month.to_s
-    endday =     Time.now.day.to_s
+    endmonth =   Time.now.utc.month.to_s
+    endday =     Time.now.utc.day.to_s
 
     if params[:commit] == 'Go'
       if params[:date][:month].to_i > 0
         endmonth = params[:date][:month].to_s
-        endday = (Time.now.year.to_s + '-' + endmonth + '-01').to_date.end_of_month.day.to_s
+        endday = (Time.now.utc.year.to_s + '-' + endmonth + '-01').to_date.end_of_month.day.to_s
       end
     end
     @end_month = endmonth.to_i
     @years.each do |y|
-      start_date = Time.now.years_ago(y).beginning_of_year
-      end_date = (Time.now.years_ago(y).year.to_s + '.' + endmonth + '.' + endday).to_date
+      start_date = Time.now.utc.years_ago(y).beginning_of_year
+      end_date = (Time.now.utc.years_ago(y).year.to_s + '.' + endmonth + '.' + endday).to_date
       @typestd[y] = Payment.yttypes(start_date, end_date).merge(Payment.rttypes(start_date, end_date))
       @yeartotaltd[y] = Payment.year_total(start_date, end_date).select('COUNT(*) as tot, SUM(amount) as money')
       @memtotaltd[y]  = Payment.members_year_total(start_date, end_date).select('COUNT(*) as count')
-      start_date =  Time.now.years_ago(y).beginning_of_year
-      end_date   =  Time.now.years_ago(y).end_of_year
+      start_date =  Time.now.utc.years_ago(y).beginning_of_year
+      end_date   =  Time.now.utc.years_ago(y).end_of_year
       @types[y] = Payment.yttypes(start_date, end_date).merge(Payment.rttypes(start_date, end_date))
       # TODO: - do I need the left outer join in  below 2 statements ?
       @yeartotal[y] = Payment.year_total(start_date, end_date).select('COUNT(*) as tot, SUM(amount) as money')
@@ -153,27 +149,26 @@ class PaymentsController < ApplicationController
   end
 
   def receipts_breakdown
-    # Start year is 2007
-    @years = Time.now.year - 2006 + 1
+    @years = Time.now.utc.year - 2006 + 1
     @month = ''
     @paytypestd = []
     @paytypestotaltd = []
 
     if params[:commit] == 'Go'
       if params[:date][:month].to_i == 0
-        @month = Time.now.month.to_s
-        endday = Time.now.day.to_s
+        @month = Time.now.utc.month.to_s
+        endday = Time.now.utc.day.to_s
       end
       @month = params[:date][:month].to_s
       endday = '31'
     else
-      @month = Time.now.month.to_s
-      endday =     Time.now.day.to_s
+      @month = Time.now.utc.month.to_s
+      endday = Time.now.utc.day.to_s
     end
 
     @years.times do |y|
-      date_start = (Time.now.year - y).to_s + '.' + @month + '.01'
-      date_end =   (Time.now.year - y).to_s + '.' + @month + '.' + endday
+      date_start = (Time.now.utc.year - y).to_s + '.' + @month + '.01'
+      date_end =   (Time.now.utc.year - y).to_s + '.' + @month + '.' + endday
       @paytypestd[y] = Payment
                        .select('month(date_lodged) as month, monthname(date_lodged) as monthname, count(*) as transactions,  pay_type, sum(amount) as sum')
                        .joins('inner join privileges ON privileges.id = payments.privilege_id left outer join paymenttypes on payments.paymenttype_id = paymenttypes.id')

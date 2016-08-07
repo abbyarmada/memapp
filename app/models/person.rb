@@ -13,11 +13,10 @@ class Person < ActiveRecord::Base
   scope :barcard_holders, -> { where.not(status: 'g') }
   scope :grouped,         -> { where(status: 'm') }
 
-  validates_presence_of :last_name, :first_name, :status
-  # TODO: validates_presence_of :member - causes problems wth nested attributes
-  validates_presence_of :email_address, if: proc { |person| person.send_email? }, message: 'Please correct the Email address'
-  validates_presence_of :mobile_phone, if: proc { |person| person.send_txt? }
-  validates_format_of :email_address, if: proc { |person| person.snd_eml == 'Y' }, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  validates :last_name, :first_name, :status, presence: true
+  validates :email_address, if: proc { |person| person.send_email? }, presence: { message: 'Please correct the Email address' }
+  validates :mobile_phone, if: proc { |person| person.send_txt? }, presence: true
+  validates :email_address, if: proc { |person| person.snd_eml == 'Y' }, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, presence: true
   validates :status, uniqueness: { scope: :member_id, message: 'Main Member already Exists check?' }, if: proc { |person| person.status == 'm' && !member_id.nil? }
   validates :status, uniqueness: { scope: :member_id, message: 'Main Member already Exists'        }, if: proc { |person| person.status == 'm' && !person.member_id.nil? }
   validates :status, uniqueness: { scope: :member_id, message: 'Partner Member already Exists'     }, if: proc { |person| person.status == 'p' }
@@ -33,7 +32,7 @@ class Person < ActiveRecord::Base
     people = people.where('first_name like :input', input: "%#{params[:searchfn]}%") unless params[:searchfn].blank?
     people = people.grouped if params[:group]
     people = people.where('members.privilege_id = :input', input: (params[:searchmp][:privilege_id]).to_s) if params[:searchmp] && !params[:searchmp][:privilege_id].blank?
-    people = people.paginate(per_page: 30, page: params[:page]).order(:last_name, :first_name)
+    people.paginate(per_page: 30, page: params[:page]).order(:last_name, :first_name)
   end
 
   #  def main_member_exists?

@@ -1,7 +1,7 @@
 class Subscription < ActiveRecord::Base
-  belongs_to :privilege # foreign key privilege_id
+  belongs_to :privilege
 
-  validates_presence_of :amount, :privilege_id, :start_date, :end_date
+  validates :amount, :privilege_id, :start_date, :end_date, presence: true
 
   def self.subscription_for_year(date)
     sub = where('start_date <= ?', date).order(start_date: :desc).first

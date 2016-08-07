@@ -191,6 +191,9 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    guard-rubocop (1.2.0)
+      guard (~> 2.0)
+      rubocop (~> 0.20)
     highline (1.7.8)
     hirb (0.7.3)
     hub (1.12.4)
@@ -498,6 +501,7 @@ DEPENDENCIES
   guard-cucumber
   guard-rails
   guard-rspec
+  guard-rubocop
   hub
   jazz_hands2
   jquery-rails

@@ -12,14 +12,14 @@ class PeoplebarcardsController < ApplicationController
 
   def list
     show
- end
+  end
 
   def new
     @peoplebarcard = Peoplebarcard.new(peoplebarcard_params)
     respond_to do |format|
       format.html # new.html.erb
     end
- end
+  end
 
   def delete
     destroy
@@ -35,8 +35,6 @@ class PeoplebarcardsController < ApplicationController
   end
 
   def update
-    pid = params[:pid]
-    mid = params[:mid]
     respond_to do |format|
       if @peoplebarcard.update(peoplebarcard_params)
         flash[:notice] = 'Barcard was successfully updated.'
@@ -45,7 +43,7 @@ class PeoplebarcardsController < ApplicationController
         format.html { render action: 'edit' }
       end
     end
- end
+  end
 
   def create
     @peoplebarcard = Peoplebarcard.new(params[:barcard])
@@ -57,7 +55,7 @@ class PeoplebarcardsController < ApplicationController
         format.html { render action: 'new' }
       end
     end
-   end
+  end
 
   def expired
     @expiredmems = Member.expired_members

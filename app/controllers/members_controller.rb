@@ -76,7 +76,7 @@ class MembersController < ApplicationController
                     p.mobile_phone,
                     p.member.privilege.name,
                     p.member.renew_date.to_date,
-                    p.member.id.to_s + Time.now..utc.year.to_s.slice(2, 2) + i.to_s,
+                    p.member.id.to_s + Time.now.utc.year.to_s.slice(2, 2) + i.to_s,
                     p.salutation,
                     p.member.name_no,
                     p.member.street1,

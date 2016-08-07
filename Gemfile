@@ -29,12 +29,6 @@ gem 'simple_form', '~> 3.2.0' # , github: 'plataformatec/simple_form'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
-# required for Less /css stuff
-# gem 'autoprefixer-rails'
-# gem 'bootstrap-datepicker-rails'
-# gem 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git',  \
-#    :branch => 'master', :submodules => true
-
 # for date display
 gem 'momentjs-rails', '>=2.7.0' # , :github => 'derekprior/momentjs-rails'
 # gem 'bootstrap3-datetimepicker-rails', '~> 4.7.14'
@@ -46,9 +40,6 @@ gem 'sass-rails' # , '~> 4.0.2'# '~> 3.1.5'
 gem 'coffee-rails' # , '~> 3.1.1'
 gem 'uglifier'     # , '>= 1.0.3'
 
-# bootstrap
-# gem 'less-rails'
-
 # gem 'railsstrap'
 gem 'bootstrap-sass' # , '~> 3.1.1.0'  #'~> 2.3.2.2' #
 
@@ -59,6 +50,9 @@ group :development do
   gem 'guard-rails'
   gem 'guard-rspec'
   gem 'guard-cucumber'
+  gem 'guard-rubocop', require: false       # Guard integration for Rubocop
+  gem 'guard-bundler', require: false       # Guard integration for bundler
+  gem 'rubocop-rspec', require: false
   gem 'quiet_assets'
   gem 'hub', require: nil
   gem 'rails_layout'

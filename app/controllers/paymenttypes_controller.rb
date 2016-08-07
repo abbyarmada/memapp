@@ -32,7 +32,7 @@ class PaymenttypesController < ApplicationController
         format.html { render action: 'edit' }
       end
     end
- end
+  end
 
   def destroy
     @paymenttype.destroy

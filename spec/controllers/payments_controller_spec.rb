@@ -45,8 +45,8 @@ describe PaymentsController, type: :controller do
   describe 'GET list_by_member_class' do
     it 'assigns all payments as @payments' do
       member = create(:member, people: [create(:person)])
-      payment = create(:payment, member: member)
-      payment2 = create(:payment, paymenttype_id: 2, member: member)
+      create(:payment, member: member)
+      create(:payment, paymenttype_id: 2, member: member)
       # @payment2 = create(:payment,:member => member)
       get :list_by_member_class, {}, valid_session
       expect(assigns(:payments)).to eq(@payments.to_a)

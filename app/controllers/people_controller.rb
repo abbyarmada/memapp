@@ -11,15 +11,13 @@ class PeopleController < ApplicationController
       format.html
       format.pdf do
         pdf = PersonPdf.new(@person)
-        send_data pdf.render, filename: "#{@person.last_name}_#{@person.first_name}.pdf",
-                              type: 'application/pdf',
-                              disposition: 'inline'
+        send_data pdf.render, filename: "#{@person.last_name}_#{@person.first_name}.pdf", type: 'application/pdf', disposition: 'inline'
       end
     end
   end
 
   def create_renewals
-    last_yr_start = (Time.now.year - 1).to_s + '-01-01'
+    last_yr_start = (Time.now.utc.year - 1).to_s + '-01-01'
     @renews = Person.all
                     .includes(:member)
                     .where("people.status = 'm' and ( members.renew_date  >= ? or members.year_joined = Year(CURDATE())  ) AND privilege_id = 5", last_yr_start)
@@ -137,7 +135,7 @@ class PeopleController < ApplicationController
   end
 
   def paid_up_extract_current
-    date = Time.now.year.to_s + '-01-01'
+    date = Time.now.utc.year.to_s + '-01-01'
     filename = 'PaidupExtract.csv'
     type = 'Paidup'
     bar_interface2(date, filename, type)
@@ -179,7 +177,7 @@ class PeopleController < ApplicationController
   #  end
 
   def bar_interface
-    date = (Time.now.year - 1).to_s + '-01-01'
+    date = (Time.now.utc.year - 1).to_s + '-01-01'
     filename = 'BarInterface.csv'
     type = 'Bar'
     bar_interface2(date, filename, type)
@@ -207,14 +205,12 @@ class PeopleController < ApplicationController
         # privilege = Privilege.find_by_id p.member.privilege_id
         barreference = p.privilege.bar_reference if type == 'Bar'
         barreference = p.privilege.name if type == 'Paidup'
-        salutation = ''
-        renewedcurrentyear = ''
         # bar billies, based on member class  defaulted to N, set to Y if member class allows
         # and membership renewed.
         # new members do not get bar billies.
         bar_billies = 'N'
         renewedcurrentyear = 'N'
-        if p.member.renew_date.year == Time.now.year
+        if p.member.renew_date.year == Time.now.utc.year
           renewedcurrentyear = 'Y'
           if p.status == 'm' && p.member.renew_date < Privilege.billie_cutoff_date
             bar_billies = p.privilege.bar_billies
@@ -255,7 +251,6 @@ class PeopleController < ApplicationController
       end
     end # do csv
     send_data(extract, type: 'text/csv; charset=iso-8859-1; header=present', filename: filename, disposition: 'attachment', encoding: 'utf8')
-
     # end #if
   end # def
 

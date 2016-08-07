@@ -114,7 +114,7 @@ RSpec.describe PeopleController, type: :controller do
 
       it 'updates the requested person' do
         member = create(:member)
-        mainperson = create(:person, member: member)
+        create(:person, member: member)
         person = create(:person, status: 'p', member: member)
         put :update, { id: person.to_param, person: new_attributes }, valid_session
         person.reload
@@ -156,7 +156,7 @@ RSpec.describe PeopleController, type: :controller do
   describe 'DELETE destroy' do
     it 'destroys the requested person' do
       member = create(:member)
-      main_person = create(:person, member: member)
+      create(:person, member: member)
       person = create(:person, status: 'p', member: member)
       expect do
         delete :destroy, { id: person.to_param }, valid_session

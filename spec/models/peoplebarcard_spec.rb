@@ -10,10 +10,10 @@ RSpec.describe Peoplebarcard, type: :model do
     member = create(:member)
     person = create(:person, status: 'm', first_name: 'John', member: member)
     partner = create(:person, status: 'p', first_name: 'Jane', member: member)
-    barcard1 = create(:barcard)
-    barcard2 = create(:barcard)
-    personbarcard  = create(:peoplebarcard, person: person)
-    partnerbarcard = create(:peoplebarcard, person: partner)
+    create(:barcard)
+    create(:barcard)
+    create(:peoplebarcard, person: person)
+    create(:peoplebarcard, person: partner)
     expect(described_class.familybarcards(member.id)).to eq(member.id)
     # expect(familybarcards(
   end

@@ -1,7 +1,6 @@
 # features/step_definitions/home_page_steps.rb
 Given(/^there's a person with first_name "(.*?)" and  last_name "(.*?)"$/) do |_first_name, _last_name|
   member = FactoryGirl.create(:member, people: [FactoryGirl.create(:person)], privilege: FactoryGirl.create(:privilege))
-  person = member.people.first
   member.complete_new_member_process
 end
 

@@ -15,8 +15,6 @@ Then(/^I fill in the membership renewal form$/) do
   fill_in 'Amount', with: 380
   select  'Ordinary', from: 'Member Class'
   select  'Cash', from: 'Payment method'
-  #  select_date("Date lodged", with: Time.now.strftime("%F") )
-  # taking the default date!
   fill_in 'Comment', with: 'Testing '
 end
 
@@ -29,7 +27,7 @@ Then(/^I should have a new payment$/) do
 end
 
 Then(/^the renewal date should be updated$/) do
-  @member.renew_date = Date.today
+  @member.renew_date = Time.now.utc
 end
 
 Then(/^the Membership should be set to active$/) do

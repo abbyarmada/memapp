@@ -1,6 +1,0 @@
-Ruby: true
-JavaScript: true
-
-exclude_paths:
-- "app/controllers/users"
-- "features"
